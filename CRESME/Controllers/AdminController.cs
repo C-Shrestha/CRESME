@@ -7,6 +7,7 @@ using System.Diagnostics;
 using CRESME.Data;
 using CRESME.Models;
 using CRESME.Constants;
+using System.Xml.Linq;
 
 namespace CRESME.Controllers
 {
@@ -101,6 +102,8 @@ namespace CRESME.Controllers
                     {
                         var PasswordHash = worksheet.Cells[row, 7].Value.ToString();
 
+                        var assignRole = worksheet.Cells[row, 17].Value.ToString().Trim();
+
 
                         var user = new ApplicationUser
                         {
@@ -119,10 +122,24 @@ namespace CRESME.Controllers
                             TwoFactorEnabled = false,
                             LockoutEnd = null,
                             LockoutEnabled = true,
-                            AccessFailedCount = 0
+                            AccessFailedCount = 0,
+                            Name = worksheet.Cells[row, 16].Value.ToString().Trim(),
+                            Role = worksheet.Cells[row, 17].Value.ToString().Trim()
+
                         };
                         var result = await _userManager.CreateAsync(user, PasswordHash);
-                        await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+
+                        // assign roles
+                        if (assignRole == "Instructor")
+                        {
+                            await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                        }
+
+                        if (assignRole == "Student")
+                        {
+                            await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                        }
+
 
 
                     }
