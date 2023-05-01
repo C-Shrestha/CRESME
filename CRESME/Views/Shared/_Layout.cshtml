@@ -33,13 +33,16 @@
                             </li>
                         }
 
-                        @if (User.IsInRole("Admin"))
+                        
+                            @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="GetAll">Inventory</a>
                             </li>
                         }
-
+                        
+                        @*checks if roles of the user and only displays "Create Accounts for Admins"*@
+                        
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
