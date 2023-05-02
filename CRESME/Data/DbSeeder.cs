@@ -21,8 +21,10 @@ namespace CRESME.Data
                 UserName = "admin@gmail.com",
                 Email = "admin@gmail.com",
                 Name = "Admin",
+                Role = "Admin",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
+                
             };
             var userInDb = await userManager.FindByEmailAsync(user.Email);
             if (userInDb == null)

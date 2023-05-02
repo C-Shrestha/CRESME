@@ -56,47 +56,7 @@ namespace CRESME.Controllers
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
                     var rowcount = worksheet.Dimension.Rows;
 
-                    /*
-                    for (int row = 2; row <= rowcount; row++)
-                    {
-                        list.Add(new ApplicationUser
-                        {
-                            Id = worksheet.Cells[row, 1].Value.ToString().Trim(),
-                            
-                            UserName = worksheet.Cells[row, 2].Value.ToString().Trim(),
-                            PasswordHash = worksheet.Cells[row, 7].Value.ToString().Trim(),
-                            NormalizedUserName = worksheet.Cells[row, 3].Value.ToString().Trim(),
-                            Email = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                            NormalizedEmail = worksheet.Cells[row, 5].Value.ToString().Trim(),
-                            EmailConfirmed = true,
-                        
-                            //SecurityStamp = worksheet.Cells[row, 8].Value.ToString().Trim(),
-                            //ConcurrencyStamp = worksheet.Cells[row, 9].Value.ToString().Trim(),
-                            PhoneNumber = worksheet.Cells[row, 10].Value.ToString().Trim(),
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            LockoutEnd = null,
-                            LockoutEnabled = true,
-                            AccessFailedCount = 0
-
-                            
-                            PasswordHash = worksheet.Cells[row, 7].Value.ToString().Trim(),
-                            SecurityStamp = worksheet.Cells[row, 8].Value.ToString().Trim(),
-                            ConcurrencyStamp = worksheet.Cells[row, 9].Value.ToString().Trim(),
-                            PhoneNumber = worksheet.Cells[row, 10].Value.ToString().Trim(),
-                            PhoneNumberConfirmed = (bool)worksheet.Cells[row, 11].Value,
-                            TwoFactorEnabled = (bool)worksheet.Cells[row, 12].Value,
-                            LockoutEnd = null,
-                            LockoutEnabled = true,
-                            AccessFailedCount = 0
-                            
-
-
-                        });
-                    }
-
-                    */
-
+                  
 
                     for (int row = 2; row <= rowcount; row++)
                     {
@@ -159,11 +119,99 @@ namespace CRESME.Controllers
 
         } // import
 
+        // GET: Users
+        public async Task<IActionResult> ListUsers()
+        {
+            return _context.Users != null ?
+                        View(await _userManager.Users.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
+
+       
 
 
+        /*// GET: 
+        public async Task<IActionResult> EditUsers(string id)
+        {
+            if (id == null || _context.Users == null)
+            {
+                return NotFound();
+            }
+
+            var test = await _context.Users.FindAsync(id);
+            if (test == null)
+            {
+                return NotFound();
+            }
+            return View(await _userManager.Users.ToListAsync());
+        }*/
+
+        // POST: Tests/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUsers(string id, [Bind("UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Role ")] ApplicationUser test)
+        {
+            if (id != test.UserName)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                _context.Update(test);
+                await _context.SaveChangesAsync();
+                /*try
+                {
+                    _context.Update(test);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TestExists(test.Course))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }*/
+                return RedirectToAction(nameof(Index));
+            }
+            return View(test);
+        }
 
 
+        // GET: Tests/Create
+        public IActionResult CreateUsers()
+        {
+            return View();
+        }
 
+        // GET: Tests/Create
+        public IActionResult EditUsers()
+        {
+            return View();
+        }
+
+        // POST: Tests/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUsers([Bind("UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Role ")] ApplicationUser newUser)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(newUser);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(newUser);
+        }
 
     } // end Admin Controller
 }

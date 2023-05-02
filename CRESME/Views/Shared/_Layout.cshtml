@@ -34,7 +34,7 @@
                         }
 
                         
-                            @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="GetAll">Inventory</a>
@@ -49,6 +49,14 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateAccounts">Create Accounts</a>
                             </li>
                         }
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tests" asp-action="Index">Test</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListUsers">Users</a>
+                        </li>
 
 
                     </ul>
