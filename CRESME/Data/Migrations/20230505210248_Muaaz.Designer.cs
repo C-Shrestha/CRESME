@@ -4,6 +4,7 @@ using CRESME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230505210248_Muaaz")]
+    partial class Muaaz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,145 +97,6 @@ namespace CRESME.Data.Migrations
 
             modelBuilder.Entity("CRESME.Data.Quiz", b =>
                 {
-                    b.Property<string>("QuizName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BlockAssignment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CourseAssignment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DiagnosisA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosisB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosisC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosisD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FeedBackA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FeedBackB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FeedBackC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FeedBackD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("FeedBackEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("HistoryA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HistoryB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HistoryC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HistoryD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image10")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image7")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image8")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image9")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeyWordsA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeyWordsB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeyWordsC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeyWordsD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NIDAssignment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("YearAssignment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isPublished")
-                        .HasColumnType("bit");
-
-                    b.HasKey("QuizName");
-
-                    b.ToTable("Quiz");
-                });
-
-            modelBuilder.Entity("CRESME.Data.Test", b =>
-                {
                     b.Property<string>("Course")
                         .HasColumnType("nvarchar(450)");
 
@@ -241,6 +104,179 @@ namespace CRESME.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Course");
+
+                    b.ToTable("Quiz");
+                });
+
+            modelBuilder.Entity("CRESME.Data.Test", b =>
+                {
+                    b.Property<string>("QuizName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BlockAssignment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseAssignment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DiagnosisA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosisB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosisC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosisD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FeedBackA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeedBackB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeedBackC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeedBackD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("FeedBackEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("HistoryA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HistoryB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HistoryC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HistoryD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image10")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image4")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image5")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image6")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image7")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image8")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image9")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyWordsA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyWordsB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyWordsC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeyWordsD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StudentAssignment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isPublished")
+                        .HasColumnType("bit");
+
+                    b.HasKey("QuizName");
 
                     b.ToTable("Test");
                 });

@@ -1,0 +1,60 @@
+﻿@model CRESME.Data.Quiz
+
+@{
+    ViewData["Title"] = "Create Quiz";
+}
+
+<h1>Create Quiz</h1>
+
+
+<hr />
+<div class="text-center">
+    <div class="container">
+        <form asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
+
+            <label for="QuizName">Quiz Name:</label><br>
+            <input type="text" id="QuizName" name="QuizName"><br>
+
+            <label for="excelfile">Upload quiz excel sheet:</label>
+            <input type="file" name="excelfile" />
+            <br />
+
+            <input type="checkbox" id="feedback" name="feedback" value="feedback">
+            <label for="feedback"> Enable feedback and score report for students</label><br>
+
+            <input type="checkbox" id="publish" name="publish" value="publish">
+            <label for="publish"> Publish</label><br>
+
+            <label for="startdate">start date:</label>
+            <input type="date" id="startdate" name="startdate">
+
+            <label for="enddate">end date:</label>
+            <input type="date" id="enddate" name="enddate">
+            <br />
+
+            <label for="assignNID">Student's NID(ex "NID1, NID2,..."):</label><br>
+            <input type="text" id="assignNID" name="assignNID"><br>
+            
+            <label for="assignYear">Year:</label><br>
+            <input type="text" id="assignYear" name="assignYear"><br>
+
+            <label for="assignCourse">Course:</label><br>
+            <input type="text" id="assignCourse" name="assignCourse"><br>
+
+            <label for="assignBlock">Blocks:</label><br>
+            <input type="text" id="assignBlock" name="assignBlock"><br>
+
+
+
+
+            <button type="submit">Create Quiz</button>
+
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
