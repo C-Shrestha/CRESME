@@ -16,35 +16,30 @@
             <input type="text" id="QuizName" name="QuizName"><br>
 
             <label for="excelfile">Upload quiz excel sheet:</label>
-            <input type="file" name="excelfile" />
+            <input type="file" name="fileUpload" />
             <br />
 
-            <input type="checkbox" id="feedback" name="feedback" value="feedback">
-            <label for="feedback"> Enable feedback and score report for students</label><br>
-
-            <input type="checkbox" id="publish" name="publish" value="publish">
-            <label for="publish"> Publish</label><br>
+            <label for="feedback"> Enable feedback and score report for students</label>
+            <input type="checkbox" id="feedback" name="feedback"><br>
+            
+            <label for="publish"> Publish</label>
+            <input type="checkbox" id="publish" name="publish"><br>
 
             <label for="startdate">start date:</label>
-            <input type="date" id="startdate" name="startdate">
+            <input type="date" id="startdate" name="StartDate">
 
             <label for="enddate">end date:</label>
-            <input type="date" id="enddate" name="enddate">
+            <input type="date" id="enddate" name="EndDate">
             <br />
 
-            <label for="assignNID">Student's NID(ex "NID1, NID2,..."):</label><br>
-            <input type="text" id="assignNID" name="assignNID"><br>
-            
-            <label for="assignYear">Year:</label><br>
-            <input type="text" id="assignYear" name="assignYear"><br>
+            <label for="NIDAssignment">Student's NID(ex "NID1, NID2,..."):</label><br>
+            <input type="text" id="NIDAssignment" name="NIDAssignment"><br>
 
-            <label for="assignCourse">Course:</label><br>
-            <input type="text" id="assignCourse" name="assignCourse"><br>
+            <label for="CourseAssignment">Course:</label><br>
+            <input type="text" id="CourseAssignment" name="CourseAssignment"><br>
 
-            <label for="assignBlock">Blocks:</label><br>
-            <input type="text" id="assignBlock" name="assignBlock"><br>
-
-
+            <label for="BlockAssignment">Blocks:</label><br>
+            <input type="text" id="BlockAssignment" name="BlockAssignment"><br>
 
 
             <button type="submit">Create Quiz</button>

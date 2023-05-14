@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CRESME.Data
@@ -7,26 +8,33 @@ namespace CRESME.Data
     public class Quiz
     {
         [Required]
-        [Key]   
+        [Key]
+        [BindProperty]
         public string QuizName { get; set; } = "";
 
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
 
         [DataType(DataType.Date)]
+        [BindProperty]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
+        [BindProperty]
         public DateTime EndDate { get; set; }
 
-        public bool isPublished { get; set; }
+        public string isPublished { get; set; } = "";
 
-        public bool FeedBackEnabled { get; set; }
+        public string FeedBackEnabled { get; set; } = "";
 
+        [BindProperty]
         public string? NIDAssignment { get; set; } = ""; // comma seperated NID
-        public string? YearAssignment { get; set; } = "";
+
+        [BindProperty]
         public string? CourseAssignment { get; set; } = "";
-        public string? BlockAssignment { get; set; } = "";
+        
+        [BindProperty]
+        public string? BlockAssignment { get; set; } = ""; // comma seperated course blocks
 
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
