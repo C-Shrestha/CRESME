@@ -149,26 +149,30 @@ namespace CRESME.Controllers
 
 
 
-        // POST: Tests/Edit/5
+        /*// POST: Tests/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        //public async Task<IActionResult> EditUsers([Bind("UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Role ")] ApplicationUser test)
-        public async Task<IActionResult> EditUsers([Bind("UserName, Name ")] ApplicationUser test)
+        public async Task<IActionResult> EditUserss([Bind("Id, UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed,PasswordHash, SecurityStamp, ConcurrencyStamp PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name, Role")] ApplicationUser test)
+      
         {
-            /*if (id != test.UserName)
+            if (test.Id != "35fb320c-0930-49a2-abc1-7c3925434ae3")
             {
                 return NotFound();
-            }*/
+            }
 
             if (ModelState.IsValid)
             {
 
-                _context.Update(test);
+                
+                await _userManager.UpdateAsync(test);
+
                 await _context.SaveChangesAsync();
-                /*try
+
+
+                *//*try
                 {
                     _context.Update(test);
                     await _context.SaveChangesAsync();
@@ -183,10 +187,43 @@ namespace CRESME.Controllers
                     {
                         throw;
                     }
-                }*/
-                return RedirectToAction(nameof(Index));
+                }*//*
+
+
+                return RedirectToAction(nameof(ListUsers));
             }
+
+           
             return View(test);
+           
+
+            
+        }*/
+
+
+        /*public async Task<IActionResult> EditUsers([Bind("Id, UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed,PasswordHash, SecurityStamp, ConcurrencyStamp PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name, Role")] ApplicationUser test)*/
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(string Id, string Name, string UserName)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user != null)
+            {
+                user.UserName = UserName;
+                user.Name = Name;
+            
+                    IdentityResult result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                        return RedirectToAction("ListUsers");
+                   
+                
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+
+            return RedirectToAction("CreateAccounts");
         }
 
 
