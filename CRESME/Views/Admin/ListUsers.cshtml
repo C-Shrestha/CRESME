@@ -20,11 +20,12 @@
             </th>
 
             <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Role)
-                    </th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
                     
             <th></th>
         </tr>
@@ -42,8 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                <a asp-asp-controller="Admin"  asp-action="EditUsers" asp-route-id="@item.UserName">Edit Users</a> |
-                @*<a asp-action="Details" asp-route-id="@item.Course">Details</a> |
+                @*<a asp-asp-controller="Admin"  asp-action="EditUsers" asp-route-id="@item.UserName">Edit Users</a> *@
+                <a asp-action="EditUsers" asp-route-id="@item.Id">Edit</a> 
+                @*<a asp-action="Details" asp-route-id="@item.Course">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.Course">Delete</a>*@
             </td>
         </tr>

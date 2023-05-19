@@ -127,36 +127,41 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
-       
 
 
-        /*// GET: 
-        public async Task<IActionResult> EditUsers(string id)
-        {
-            if (id == null || _context.Users == null)
-            {
-                return NotFound();
-            }
 
-            var test = await _context.Users.FindAsync(id);
-            if (test == null)
-            {
-                return NotFound();
-            }
-            return View(await _userManager.Users.ToListAsync());
-        }*/
+        /* // GET: 
+         public async Task<IActionResult> EditUsers(string id)
+         {
+             if (id == null || _context.Users == null)
+             {
+                 return NotFound();
+             }
+
+             var test = await _context.Users.FindAsync(id);
+             if (test == null)
+             {
+                 return NotFound();
+             }
+             return View(await _userManager.Users.ToListAsync());
+         }*/
+
+
+
 
         // POST: Tests/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUsers(string id, [Bind("UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Role ")] ApplicationUser test)
+        
+        //public async Task<IActionResult> EditUsers([Bind("UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Role ")] ApplicationUser test)
+        public async Task<IActionResult> EditUsers([Bind("UserName, Name ")] ApplicationUser test)
         {
-            if (id != test.UserName)
+            /*if (id != test.UserName)
             {
                 return NotFound();
-            }
+            }*/
 
             if (ModelState.IsValid)
             {
@@ -170,7 +175,7 @@ namespace CRESME.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TestExists(test.Course))
+                    if (!TestExists(test.UserName))
                     {
                         return NotFound();
                     }
@@ -185,17 +190,27 @@ namespace CRESME.Controllers
         }
 
 
+
+
+
         // GET: Tests/Create
         public IActionResult CreateUsers()
         {
             return View();
         }
 
+
+
         // GET: Tests/Create
-        public IActionResult EditUsers()
+        public IActionResult EditUsers(String id)
         {
-            return View();
+            //return View();
+            return View(_context.Users.Find(id));
+            
         }
+
+
+
 
         // POST: Tests/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
