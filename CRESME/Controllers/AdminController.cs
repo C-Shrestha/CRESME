@@ -265,5 +265,28 @@ namespace CRESME.Controllers
             return View(newUser);
         }
 
+
+        //POST:Delete
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("ListUsers");
+               
+                    
+            }
+            else
+            {
+                ModelState.AddModelError("", "User Not Found");
+            }
+
+            return RedirectToAction("CreateAccounts");
+        }
+
     } // end Admin Controller
 }
