@@ -38,7 +38,7 @@ namespace CRESME.Data
 
         public int? NumImages { get; set; }
 
-        public string? PatientInto { get; set; } = ""; //might be the same as QuizName, check with Melissa
+        public string? PatientIntro { get; set; } = ""; //might be the same as QuizName, check with Melissa
 
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
