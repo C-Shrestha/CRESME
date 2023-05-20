@@ -254,16 +254,128 @@ namespace CRESME.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUsers([Bind("UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Role ")] ApplicationUser newUser)
+        public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, SecurityStamp,ConcurrencyStamp, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name")] ApplicationUser newUser, string PasswordHash, string Role, string UserName, string Name)
         {
-            if (ModelState.IsValid)
+
+            /*_context.Add(newUser);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));*/
+            /*string checkrole = Role;*/
+            /*var PasswordHash = Password;*/
+            if (UserName == null)
             {
-                _context.Add(newUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ListUsers");
             }
+
+
+            ApplicationUser user = new ApplicationUser
+            {
+
+                UserName = UserName,
+                Name = Name,
+
+                NormalizedUserName = UserName.ToUpper(),
+                Email = UserName,
+                NormalizedEmail = UserName.ToUpper(),
+                EmailConfirmed = true,
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0,
+                Role = Role,
+                
+
+            };
+
+
+            IdentityResult result = await _userManager.CreateAsync(user, PasswordHash);
+
+                // assign roles
+                /*if (assignRole == "Instructor")
+                {
+                    await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                }
+
+                if (assignRole == "Student")
+                {
+                    await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                }*/
+
+                _context.SaveChanges();
+
+
+            
             return View(newUser);
         }
+
+
+        /*   [HttpPost]
+           [ValidateAntiForgeryToken]
+           *//*public async Task<IActionResult> Create(string newUserName, string  newName, string newRole, string newPasswordHash)*//*
+           public async Task<IActionResult> Create(string newUserName, string newName, string newRole, string newPasswordHash)
+           {
+               if (newName != null) { return RedirectToAction("EditUsers"); }
+
+               if (ModelState.IsValid)
+               {
+                   *//*return RedirectToAction("EditUsers");*//*
+                   var PasswordHash = newPasswordHash;
+                   var assignRole = newRole;
+
+                   var user = new ApplicationUser
+                   {
+
+                       UserName = newUserName,
+                       Name = newName,
+
+                       NormalizedUserName = newUserName.ToUpper(),
+                       Email = newUserName,
+                       NormalizedEmail = newUserName,
+                       EmailConfirmed = true,
+                       PhoneNumber = null,
+                       PhoneNumberConfirmed = false,
+                       TwoFactorEnabled = false,
+                       LockoutEnd = null,
+                       LockoutEnabled = true,
+                       AccessFailedCount = 0,
+                       Role = newRole, 
+
+                   };
+
+
+                   IdentityResult result = await _userManager.CreateAsync(user, PasswordHash);
+
+                   // assign roles
+                   if (assignRole == "Instructor")
+                   {
+                       await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                   }
+
+                   if (assignRole == "Student")
+                   {
+                       await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                   }
+
+
+
+                   if (result.Succeeded)
+                       return RedirectToAction("ListUsers");
+                   else
+                   {
+                       foreach (IdentityError error in result.Errors)
+                           ModelState.AddModelError("", error.Description);
+                   }
+
+                   return RedirectToAction("ListUsers");
+               }
+
+               return RedirectToAction("CreateAccounts");
+
+           }
+   */
+
 
 
         //POST:Delete

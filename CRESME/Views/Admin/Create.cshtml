@@ -1,18 +1,16 @@
 ﻿@model CRESME.Data.ApplicationUser
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create Users";
 }
 
-<h1>CREATE</h1>
+<h1>Create</h1>
 
-<h4>Edit Users</h4>
+<h4>Create User</h4>
 <hr />
-
-
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" onsubmit="return confirm('Are you sure you want to EDIT this user data?');">
+        <form asp-action="Create">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -40,37 +38,12 @@
                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
             </div>
 
-            
-
-            @*Id variable is the primary key and it must be passed so that the Update action method can lookup the unique row to Update.*@
-            @*<input type="hidden" asp-for="Id" />*@
-
-            <input type="hidden" asp-for="NormalizedUserName" />
-            <input type="hidden" asp-for="Email" />
-            <input type="hidden" asp-for="NormalizedEmail" />
-            <input type="hidden" asp-for="EmailConfirmed" />
-            <input type="hidden" asp-for="PhoneNumber" />
-            <input type="hidden" asp-for="PhoneNumberConfirmed" />
-            <input type="hidden" asp-for="TwoFactorEnabled" />
-            <input type="hidden" asp-for="LockoutEnd" />
-            <input type="hidden" asp-for="LockoutEnabled" />
-            <input type="hidden" asp-for="AccessFailedCount" />
-            
-
-            <input type="hidden" asp-for="SecurityStamp" />
-            <input type="hidden" asp-for="ConcurrencyStamp" />
-            <input type="hidden" asp-for="Id" value="check"/>
-            
-
-
-            
-
-
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
             </div>
 
         </form>
+
     </div>
 </div>
 
@@ -79,7 +52,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
