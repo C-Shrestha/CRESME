@@ -23,7 +23,7 @@ namespace CRESME.Data
         [BindProperty]
         public DateTime EndDate { get; set; }
 
-        public string isPublished { get; set; } = "";
+        public string Published { get; set; } = "";
 
         public string FeedBackEnabled { get; set; } = "";
 
@@ -35,6 +35,10 @@ namespace CRESME.Data
         
         [BindProperty]
         public string? BlockAssignment { get; set; } = ""; // comma seperated course blocks
+
+        public int? NumImages { get; set; }
+
+        public string? PatientInto { get; set; } = ""; //might be the same as QuizName, check with Melissa
 
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
@@ -77,5 +81,16 @@ namespace CRESME.Data
         public string? Image8 { get; set; } = "";
         public string? Image9 { get; set; } = "";
         public string? Image10 { get; set; } = "";
+
+        public string? Image1Pos { get; set; } = "";
+        public string? Image2Pos { get; set; } = "";
+        public string? Image3Pos { get; set; } = "";
+        public string? Image4Pos { get; set; } = "";
+        public string? Image5Pos { get; set; } = "";
+        public string? Image6Pos { get; set; } = "";
+        public string? Image7Pos { get; set; } = "";
+        public string? Image8Pos { get; set; } = "";
+        public string? Image9Pos { get; set; } = "";
+        public string? Image10Pos { get; set; } = "";
     }
 }

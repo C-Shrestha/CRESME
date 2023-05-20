@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
-
+using Microsoft.AspNetCore.Hosting;
 
 namespace CRESME.Controllers
 {
     public class QuizController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IWebHostEnvironment _environment;
 
         // Authorize makes the page availabe to only to specified Roles
         [Authorize(Roles = "Admin, Instructor")]
@@ -18,8 +19,10 @@ namespace CRESME.Controllers
         }
 
 
-        public QuizController(ApplicationDbContext context) {
+        public QuizController(ApplicationDbContext context, IWebHostEnvironment environment = null)
+        {
             _context = context;
+            _environment = environment;
         }
 
         [HttpPost]
@@ -27,7 +30,8 @@ namespace CRESME.Controllers
         public ActionResult Create(Quiz quiz) 
         {
             //checkboxes only send output if they are checked(default is "on"), otherwise null
-            if (Request.Form["feedback"] == "on") {
+            if (Request.Form["feedback"] == "on") 
+            {
                 quiz.FeedBackEnabled = "true";
             }
             else {
@@ -36,25 +40,22 @@ namespace CRESME.Controllers
 
             if (Request.Form["publish"] == "on")
             {
-                quiz.isPublished = "true";
+                quiz.Published = "true";
             }
             else
             {
-                quiz.isPublished = "false";
+                quiz.Published = "false";
             }
             
             //might want to limit this to just the day or just the hour
             quiz.DateCreated = DateTime.Now;
-
-            quiz.NIDAssignment = Request.Form["NIDAssignment"];
-            quiz.CourseAssignment = Request.Form["CourseAssignment"];
-            quiz.BlockAssignment = Request.Form["BlockAssignment"];
             
             
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             using (var stream = new MemoryStream())
             {
-                Request.Form.Files[0].CopyToAsync(stream);
+                Request.Form.Files["fileUpload"].CopyToAsync(stream);
                 using (var package = new ExcelPackage(stream))
                 {
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
@@ -90,7 +91,46 @@ namespace CRESME.Controllers
                     quiz.FeedBackD = worksheet.Cells[6, 4].Value.ToString().Trim();
                 }
             }
-            
+
+            quiz.NumImages = Request.Form.Files.Count - 1; //image count = fileuploads - excel upload
+
+            switch (quiz.NumImages) {
+                case 10:
+                    quiz.Image10 = UploadImagetoFile(Request.Form.Files["Image10"]);
+                    goto case 9;
+                case 9:
+                    quiz.Image9 = UploadImagetoFile(Request.Form.Files["Image9"]);
+                    goto case 8;
+                case 8:
+                    quiz.Image8 = UploadImagetoFile(Request.Form.Files["Image8"]);
+                    goto case 7;
+                case 7:
+                    quiz.Image7 = UploadImagetoFile(Request.Form.Files["Image7"]);
+                    goto case 6;
+                case 6:
+                    quiz.Image6 = UploadImagetoFile(Request.Form.Files["Image6"]);
+                    goto case 5;
+                case 5:
+                    quiz.Image5 = UploadImagetoFile(Request.Form.Files["Image5"]);
+                    goto case 4;
+                case 4:
+                    quiz.Image4 = UploadImagetoFile(Request.Form.Files["Image4"]);
+                    goto case 3;
+                case 3:
+                    quiz.Image3 = UploadImagetoFile(Request.Form.Files["Image3"]);
+                    goto case 2;
+                case 2:
+                    quiz.Image2 = UploadImagetoFile(Request.Form.Files["Image2"]);
+                    goto case 1;
+                case 1:
+                    quiz.Image1 = UploadImagetoFile(Request.Form.Files["Image1"]);
+                    break;
+                default: //no images or more than 10 images somehow
+                    break;
+            }
+           
+
+
             _context.Add(quiz);
             _context.SaveChanges();
 
@@ -98,49 +138,20 @@ namespace CRESME.Controllers
             return View("CreateQuiz");
         }
 
-
-        /*
-        [HttpPost]
-
-        public IActionResult Index(IFormFile file, [FromServices] IWebHostEnvironment hostEnvironment)
-        {
-            string fileName = $"{hostEnvironment.WebRootPath}\\files\\{file.FileName}";
-            using (FileStream fileStream = System.IO.File.Create(fileName))
+        public string UploadImagetoFile(IFormFile ImageUpload) {
+            string RootPath = this._environment.WebRootPath;
+            string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+            string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
+            string newImageName = ImageName + ImageGuidExtension;
+            string savepath = Path.Combine(RootPath + "/images/", newImageName);
+            
+            using (var filestream = new FileStream(savepath, FileMode.Create))
             {
-                file.CopyTo(fileStream);
-                fileStream.Flush();
-            }
-            var quizzes = this.GetQuizList(file.FileName);
-            return Index(quizzes);
-        }
-        private List<Quiz> GetQuizList(string fName)
-        {
-            List<Quiz> quizzes = new List<Quiz>();
-            var fileName = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fName;
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            using (var stream = System.IO.File.Open(fileName, FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    while (reader.Read())
-                    {
-                        quizzes.Add(new Quiz()
-                        {
-                            History = reader.GetValue(0).ToString(),
-                            Physical = reader.GetValue(1).ToString(), //maybe add .trim()??
-                            Diagnostic = reader.GetValue(2).ToString(),
-                            Diagnosis = reader.GetValue(3).ToString()
-                        });
-                        System.Diagnostics.Debug.Print(reader.GetValue(0).ToString());
-                        System.Diagnostics.Debug.Print(quizzes[0].History);
-                    }
-                }
+                ImageUpload.CopyTo(filestream);
             }
 
-            return quizzes;
+                return "/images/" + newImageName;
         }
-        */
-
 
     }
 }
