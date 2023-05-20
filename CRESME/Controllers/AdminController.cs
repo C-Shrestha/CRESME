@@ -254,7 +254,8 @@ namespace CRESME.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, SecurityStamp,ConcurrencyStamp, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name")] ApplicationUser newUser, string PasswordHash, string Role, string UserName, string Name)
+       /* public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, SecurityStamp,ConcurrencyStamp, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name")] ApplicationUser newUser, string PasswordHash, string Role, string UserName, string Name)*/
+        public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name)
         {
 
             /*_context.Add(newUser);
@@ -262,6 +263,8 @@ namespace CRESME.Controllers
             return RedirectToAction(nameof(Index));*/
             /*string checkrole = Role;*/
             /*var PasswordHash = Password;*/
+
+
             if (UserName == null)
             {
                 return RedirectToAction("ListUsers");
@@ -285,29 +288,29 @@ namespace CRESME.Controllers
                 LockoutEnabled = true,
                 AccessFailedCount = 0,
                 Role = Role,
-                
+
 
             };
 
 
-            IdentityResult result = await _userManager.CreateAsync(user, PasswordHash);
+            /*IdentityResult result =*/ await _userManager.CreateAsync(user, PasswordHash);
 
-                // assign roles
-                /*if (assignRole == "Instructor")
-                {
-                    await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
-                }
+            // assign roles
+            if (Role == "Instructor")
+            {
+                await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+            }
 
-                if (assignRole == "Student")
-                {
-                    await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
-                }*/
+            if (Role == "Student")
+            {
+                await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+            }
 
-                _context.SaveChanges();
+            _context.SaveChanges();
 
 
-            
-            return View(newUser);
+
+            return RedirectToAction("ListUsers");
         }
 
 
