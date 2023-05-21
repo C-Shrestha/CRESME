@@ -1,7 +1,7 @@
 ﻿@model CRESME.Data.ApplicationUser
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create User";
 }
 
 <h1>CREATE</h1>
@@ -32,12 +32,6 @@
 
             <br />   
 
-            @*<div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
-                <span asp-validation-for="Role" class="text-danger"></span>
-            </div>*@
-
             <div class="form-group">
                 <label for="Password" class="control-label">Password</label>
                 <input asp-for="PasswordHash" class="form-control" />
@@ -60,30 +54,6 @@
             </div>
 
             <br />
-            
-
-            @*Id variable is the primary key and it must be passed so that the Update action method can lookup the unique row to Update.*@
-            @*<input type="hidden" asp-for="Id" />*@
-
-            @*<input type="hidden" asp-for="NormalizedUserName" />
-            <input type="hidden" asp-for="Email" />
-            <input type="hidden" asp-for="NormalizedEmail" />
-            <input type="hidden" asp-for="EmailConfirmed" />
-            <input type="hidden" asp-for="PhoneNumber" />
-            <input type="hidden" asp-for="PhoneNumberConfirmed" />
-            <input type="hidden" asp-for="TwoFactorEnabled" />
-            <input type="hidden" asp-for="LockoutEnd" />
-            <input type="hidden" asp-for="LockoutEnabled" />
-            <input type="hidden" asp-for="AccessFailedCount" />
-            
-
-            <input type="hidden" asp-for="SecurityStamp" />
-            <input type="hidden" asp-for="ConcurrencyStamp" />
-            <input type="hidden" asp-for="Id" value="check"/>*@
-            
-
-
-            
 
 
             <div class="form-group">

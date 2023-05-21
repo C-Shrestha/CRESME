@@ -66,16 +66,12 @@ namespace CRESME.Controllers
 
                         var user = new ApplicationUser
                         {
-                            //PasswordHash = worksheet.Cells[row, 7].Value.ToString().Trim(),
+                            
                             UserName = worksheet.Cells[row, 2].Value.ToString().Trim(),
-
                             NormalizedUserName = worksheet.Cells[row, 3].Value.ToString().Trim(),
                             Email = worksheet.Cells[row, 4].Value.ToString().Trim(),
                             NormalizedEmail = worksheet.Cells[row, 5].Value.ToString().Trim(),
                             EmailConfirmed = true,
-
-                            //////SecurityStamp = worksheet.Cells[row, 8].Value.ToString().Trim(),
-                            //////ConcurrencyStamp = worksheet.Cells[row, 9].Value.ToString().Trim(),
                             PhoneNumber = worksheet.Cells[row, 10].Value.ToString().Trim(),
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -118,6 +114,8 @@ namespace CRESME.Controllers
 
         } // import
 
+
+
         // GET: Users
         public async Task<IActionResult> ListUsers()
         {
@@ -127,81 +125,16 @@ namespace CRESME.Controllers
         }
 
 
-
-
-        /* // GET: 
-         public async Task<IActionResult> EditUsers(string id)
-         {
-             if (id == null || _context.Users == null)
-             {
-                 return NotFound();
-             }
-
-             var test = await _context.Users.FindAsync(id);
-             if (test == null)
-             {
-                 return NotFound();
-             }
-             return View(await _userManager.Users.ToListAsync());
-         }*/
-
-
-
-
-        /*// POST: Tests/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        
-        public async Task<IActionResult> EditUserss([Bind("Id, UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed,PasswordHash, SecurityStamp, ConcurrencyStamp PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name, Role")] ApplicationUser test)
-      
-        {
-            if (test.Id != "35fb320c-0930-49a2-abc1-7c3925434ae3")
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-
-                
-                await _userManager.UpdateAsync(test);
-
-                await _context.SaveChangesAsync();
-
-
-                *//*try
-                {
-                    _context.Update(test);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TestExists(test.UserName))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }*//*
-
-
-                return RedirectToAction(nameof(ListUsers));
-            }
-
-           
-            return View(test);
-           
-
-            
-        }*/
-
-
         /*public async Task<IActionResult> EditUsers([Bind("Id, UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed,PasswordHash, SecurityStamp, ConcurrencyStamp PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name, Role")] ApplicationUser test)*/
 
+
+        // GET: Tests/Create
+        public IActionResult EditUsers(String id)
+        {
+            //return View();
+            return View(_context.Users.Find(id));
+
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -211,6 +144,7 @@ namespace CRESME.Controllers
             if (user != null)
             {
                 user.UserName = UserName;
+                user.Email = UserName; 
                 user.Name = Name;
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
@@ -227,8 +161,6 @@ namespace CRESME.Controllers
 
 
 
-
-
         // GET: Tests/Create
         public IActionResult CreateUsers()
         {
@@ -236,34 +168,13 @@ namespace CRESME.Controllers
         }
 
 
-
-        // GET: Tests/Create
-        public IActionResult EditUsers(String id)
-        {
-            //return View();
-            return View(_context.Users.Find(id));
-
-        }
-
-
-
-
         // POST: Tests/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        /* public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, SecurityStamp,ConcurrencyStamp, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name")] ApplicationUser newUser, string PasswordHash, string Role, string UserName, string Name)*/
         public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name)
         {
 
-            /*_context.Add(newUser);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));*/
-            /*string checkrole = Role;*/
-            /*var PasswordHash = Password;*/
-
-
+  
             if (UserName == null)
             {
                 return RedirectToAction("ListUsers");
@@ -314,73 +225,6 @@ namespace CRESME.Controllers
         }
 
 
-        /*   [HttpPost]
-           [ValidateAntiForgeryToken]
-           *//*public async Task<IActionResult> Create(string newUserName, string  newName, string newRole, string newPasswordHash)*//*
-           public async Task<IActionResult> Create(string newUserName, string newName, string newRole, string newPasswordHash)
-           {
-               if (newName != null) { return RedirectToAction("EditUsers"); }
-
-               if (ModelState.IsValid)
-               {
-                   *//*return RedirectToAction("EditUsers");*//*
-                   var PasswordHash = newPasswordHash;
-                   var assignRole = newRole;
-
-                   var user = new ApplicationUser
-                   {
-
-                       UserName = newUserName,
-                       Name = newName,
-
-                       NormalizedUserName = newUserName.ToUpper(),
-                       Email = newUserName,
-                       NormalizedEmail = newUserName,
-                       EmailConfirmed = true,
-                       PhoneNumber = null,
-                       PhoneNumberConfirmed = false,
-                       TwoFactorEnabled = false,
-                       LockoutEnd = null,
-                       LockoutEnabled = true,
-                       AccessFailedCount = 0,
-                       Role = newRole, 
-
-                   };
-
-
-                   IdentityResult result = await _userManager.CreateAsync(user, PasswordHash);
-
-                   // assign roles
-                   if (assignRole == "Instructor")
-                   {
-                       await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
-                   }
-
-                   if (assignRole == "Student")
-                   {
-                       await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
-                   }
-
-
-
-                   if (result.Succeeded)
-                       return RedirectToAction("ListUsers");
-                   else
-                   {
-                       foreach (IdentityError error in result.Errors)
-                           ModelState.AddModelError("", error.Description);
-                   }
-
-                   return RedirectToAction("ListUsers");
-               }
-
-               return RedirectToAction("CreateAccounts");
-
-           }
-   */
-
-
-
         //POST:Delete
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
@@ -409,10 +253,6 @@ namespace CRESME.Controllers
             var users = await _userManager.Users.ToListAsync();
             if (users != null)
             {
-                /*IdentityResult result = await _userManager.DeleteAsync(user);
-                if (result.Succeeded)
-                    return RedirectToAction("ListUsers");*/
-
 
                 foreach (var item in users)
                 {
