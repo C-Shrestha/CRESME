@@ -6,7 +6,12 @@
     <title>@ViewData["Title"] - CRESME</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/DataTableCss/jquery.datatables.css" rel="stylesheet" />
+    <link href="~/css/DataTableCss/jquery.datatables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/CRESME.styles.css" asp-append-version="true" />
+
+   
+
 </head>
 <body>
     <header>
@@ -77,6 +82,8 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/DataTable/jquery.datatables.js"></script>
+    <script src="~/DataTable/jquery.datatables.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
