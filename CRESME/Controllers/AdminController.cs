@@ -29,7 +29,7 @@ namespace CRESME.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-      
+
 
         public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -56,7 +56,7 @@ namespace CRESME.Controllers
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
                     var rowcount = worksheet.Dimension.Rows;
 
-                  
+
 
                     for (int row = 2; row <= rowcount; row++)
                     {
@@ -213,12 +213,12 @@ namespace CRESME.Controllers
             {
                 user.UserName = UserName;
                 user.Name = Name;
-            
-                    IdentityResult result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                        return RedirectToAction("ListUsers");
-                   
-                
+
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("ListUsers");
+
+
             }
             else
                 ModelState.AddModelError("", "User Not Found");
@@ -243,7 +243,7 @@ namespace CRESME.Controllers
         {
             //return View();
             return View(_context.Users.Find(id));
-            
+
         }
 
 
@@ -254,7 +254,7 @@ namespace CRESME.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       /* public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, SecurityStamp,ConcurrencyStamp, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name")] ApplicationUser newUser, string PasswordHash, string Role, string UserName, string Name)*/
+        /* public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed, SecurityStamp,ConcurrencyStamp, PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name")] ApplicationUser newUser, string PasswordHash, string Role, string UserName, string Name)*/
         public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name)
         {
 
@@ -293,7 +293,8 @@ namespace CRESME.Controllers
             };
 
 
-            /*IdentityResult result =*/ await _userManager.CreateAsync(user, PasswordHash);
+            /*IdentityResult result =*/
+            await _userManager.CreateAsync(user, PasswordHash);
 
             // assign roles
             if (Role == "Instructor")
@@ -382,7 +383,6 @@ namespace CRESME.Controllers
 
 
         //POST:Delete
-
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
@@ -392,8 +392,8 @@ namespace CRESME.Controllers
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                     return RedirectToAction("ListUsers");
-               
-                    
+
+
             }
             else
             {
@@ -403,5 +403,40 @@ namespace CRESME.Controllers
             return RedirectToAction("CreateAccounts");
         }
 
-    } // end Admin Controller
-}
+        //POST:DeleteAll
+        [HttpPost]
+        public async Task<IActionResult> DeleteAll()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            if (users != null)
+            {
+                /*IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("ListUsers");*/
+
+
+                foreach (var item in users)
+                {
+                    if (item.UserName != "admin@gmail.com")
+                    {
+                        await _userManager.DeleteAsync(item);
+                    }
+
+                }
+
+
+            }
+
+            /* else
+             {
+                 ModelState.AddModelError("", "User Not Found");
+             }*/
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+    }// end Admin Controller
+
+}// CRESME.Controller
