@@ -1,0 +1,76 @@
+﻿@model CRESME.Data.ApplicationUser
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<h1>CREATE</h1>
+
+<h4>Create New User</h4>
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" onsubmit="return confirm('Are you sure you want to CREATE a new user?');">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label for="UserName" class="control-label">NID</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <br />   
+
+            <div class="form-group">
+                <label for="Password" class="control-label">Password</label>
+                <input asp-for="PasswordHash" class="form-control" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="Role" value="Student" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Student
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="Role" value="Instructor">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Instructor
+                </label>
+            </div>
+
+            <br />
+
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            <br />
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListUsers">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
