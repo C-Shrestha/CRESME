@@ -24,7 +24,7 @@ namespace CRESME.Data
                 Role = "Admin",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
-                
+
             };
             var userInDb = await userManager.FindByEmailAsync(user.Email);
             if (userInDb == null)

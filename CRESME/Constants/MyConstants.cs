@@ -4,7 +4,7 @@
     public enum Roles
     {
         Admin,
-        Instructor, 
+        Instructor,
         Student
     }
     public class MyConstants

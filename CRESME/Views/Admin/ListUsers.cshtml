@@ -6,15 +6,25 @@
 
 <h1>List all Users</h1>
 
-<p>
+@*<p>
     <a asp-action="CreateUsers">Create New</a>
-</p>
+</p>*@
+
+<form asp-action="CreateUsers">
+    <button type="submit" class="btn btn-md btn-primary">
+        <i class="fa-solid fa-trash-can"></i>
+       Create New
+    </button>
+</form>
+
+
+<br />
 
 
 <form asp-action="DeleteAll" onclick="return confirm('Are you sure you want to DELETE ALL the users?')">
-                                <button type="submit" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-md btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
-                                    Delete
+                                    Delete All Users
                                 </button>
 </form>
 
@@ -53,6 +63,12 @@
             
                 @*<a asp-asp-controller="Admin"  asp-action="EditUsers" asp-route-id="@item.UserName">Edit Users</a> *@
                 @*<a asp-action="EditUsers" asp-route-id="@item.Id">Edit</a>*@
+
+
+
+
+
+
                 
                 <td>
                     <form asp-action="EditUsers" asp-route-id="@item.Id" method="post">

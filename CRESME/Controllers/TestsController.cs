@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CRESME.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CRESME.Data;
 
 namespace CRESME.Controllers
 {
@@ -21,9 +16,9 @@ namespace CRESME.Controllers
         // GET: Tests
         public async Task<IActionResult> Index()
         {
-              return _context.Test != null ? 
-                          View(await _context.Test.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+            return _context.Test != null ?
+                        View(await _context.Test.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
         // GET: Tests/Details/5
@@ -149,14 +144,14 @@ namespace CRESME.Controllers
             {
                 _context.Test.Remove(test);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TestExists(string id)
         {
-          return (_context.Test?.Any(e => e.Course == id)).GetValueOrDefault();
+            return (_context.Test?.Any(e => e.Course == id)).GetValueOrDefault();
         }
     }
 }
