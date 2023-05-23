@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using System.Data;
 using System.Diagnostics;
 
 namespace CRESME.Controllers
@@ -274,6 +275,37 @@ namespace CRESME.Controllers
             return RedirectToAction("ListUsers");
 
         }
+
+
+
+        //Export Excel Data
+        
+
+        public IActionResult ExportToExcel()
+        {
+            db dbop = new db();
+            DataSet ds = dbop.Getrecord(); 
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+                worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
+                package.Save(); 
+            }
+
+            stream.Position = 0;
+            string excelname = $"StudentGrades.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname); 
+        }
+
+
+
+
+
+
+
+
 
 
     }// end Admin Controller
