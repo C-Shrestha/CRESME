@@ -38,6 +38,7 @@ namespace CRESME.Data
 
         public int? NumImages { get; set; }
 
+        [BindProperty]
         public string? PatientIntro { get; set; } = ""; //might be the same as QuizName, check with Melissa
 
         public string? HistoryA { get; set; } = "";
@@ -82,15 +83,25 @@ namespace CRESME.Data
         public string? Image9 { get; set; } = "";
         public string? Image10 { get; set; } = "";
 
+        [BindProperty]
         public string? Image1Pos { get; set; } = "";
+        [BindProperty]
         public string? Image2Pos { get; set; } = "";
+        [BindProperty]
         public string? Image3Pos { get; set; } = "";
+        [BindProperty]
         public string? Image4Pos { get; set; } = "";
+        [BindProperty]
         public string? Image5Pos { get; set; } = "";
+        [BindProperty]
         public string? Image6Pos { get; set; } = "";
+        [BindProperty]
         public string? Image7Pos { get; set; } = "";
+        [BindProperty]
         public string? Image8Pos { get; set; } = "";
+        [BindProperty]
         public string? Image9Pos { get; set; } = "";
+        [BindProperty]
         public string? Image10Pos { get; set; } = "";
     }
 }
