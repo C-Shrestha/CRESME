@@ -12,6 +12,9 @@ namespace CRESME.Data
         [BindProperty]
         public string QuizName { get; set; } = "";
 
+
+        public int ColumnAmount { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
 
@@ -72,16 +75,15 @@ namespace CRESME.Data
         public string? FeedBackC { get; set; } = "";
         public string? FeedBackD { get; set; } = "";
 
-        public string? Image1 { get; set; } = "";
-        public string? Image2 { get; set; } = "";
-        public string? Image3 { get; set; } = "";
-        public string? Image4 { get; set; } = "";
-        public string? Image5 { get; set; } = "";
-        public string? Image6 { get; set; } = "";
-        public string? Image7 { get; set; } = "";
-        public string? Image8 { get; set; } = "";
-        public string? Image9 { get; set; } = "";
-        public string? Image10 { get; set; } = "";
+        public string? imageFile0 { get; set; } = "";
+        public string? imageFile1 { get; set; } = "";
+        public string? imageFile2 { get; set; } = "";
+        public string? imageFile3 { get; set; } = "";
+        public string? imageFile4 { get; set; } = "";
+        public string? imageFile5 { get; set; } = "";
+        public string? imageFile6 { get; set; } = "";
+        public string? imageFile7 { get; set; } = "";
+
 
         [BindProperty]
         public string? Image1Pos { get; set; } = "";

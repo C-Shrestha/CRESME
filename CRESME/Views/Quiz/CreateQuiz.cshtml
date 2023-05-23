@@ -1,57 +1,215 @@
-﻿@model CRESME.Data.Quiz
-
-@{
-    ViewData["Title"] = "Create Quiz";
+﻿@{
+    ViewData["Title"] = "Instructor Page";
 }
 
-<h1>Create Quiz</h1>
-
-
-<hr />
-<div class="text-center">
-    <div class="container">
-        <form asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
-
-            <label for="QuizName">Quiz Name:</label><br>
-            <input type="text" id="QuizName" name="QuizName" required><br>
-
-            <label for="excelfile">Upload quiz excel sheet:</label>
-            <input type="file" name="FileUpload" accept=".xlsx" required>
-            <br />
-
-            <label for="feedback"> Enable feedback and score report for students</label>
-            <input type="checkbox" id="feedback" name="Feedback"><br>
-            
-            <label for="publish"> Publish</label>
-            <input type="checkbox" id="publish" name="Publish"><br>
-
-            <label for="startdate">start date:</label>
-            <input type="date" id="startdate" name="StartDate" required>
-
-            <label for="enddate">end date:</label>
-            <input type="date" id="enddate" name="EndDate" required>
-            <br />
-
-            <label for="NIDAssignment">Student's NID(ex "NID1, NID2,..."):</label><br>
-            <input type="text" id="NIDAssignment" name="NIDAssignment" required><br>
-
-            <label for="CourseAssignment">Course:</label><br>
-            <input type="text" id="CourseAssignment" name="CourseAssignment" required><br>
-
-            <label for="BlockAssignment">Blocks:</label><br>
-            <input type="text" id="BlockAssignment" name="BlockAssignment" required><br>
-
-            <label for="Image1">Upload Image:</label><br>
-            <input type="file" name="Image1" accept="image/*"><br>
-
-            <button type="submit">Create Quiz</button>
-
-        </form>
+<form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="d-flex align-items-center min-vh-100">
+        <div class="container  border p-3 mb-5 bg-white rounded" style="width: 50%;">
+            <div class="row gx-5 justify-content-center gy-2">
+                <div class="w-100"></div>
+                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter Quiz Name" required>
+                <div class="w-100"></div>
+                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Patient Intro" required>
+                <div class="w-100"></div>
+                <input type="datetime-local" class="col-5" id="startDate" name="StartDate" runat="server" required>
+                <div class="col-1">-</div>
+                <input type="datetime-local" class="col-5" id="endDate" name="EndDate" runat="server" required>
+                <div class="w-100"></div>
+                <div class="col-2" style="font-weight: bold;">Publish</div>
+                <input class="col-1" type="checkbox" id="publish" name="Publish" value="1">
+                <div class="w-100"></div>
+                <div class="col-2" style="font-weight: bold;">Feedback</div>
+                <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1">
+                <div class="w-100"></div>
+                <button type="button" id="imageButton" class="col-4 btn btn-link" onclick="addImage()">+Image</button>
+                <div class="w-100"></div>
+                <input type="file" name="ExcelFileUpload" id="excelButton" accept=".xlsx" style="display: none;" required />
+                <label class="col-4 row justify-content-center border" id="excelLabel" for="excelButton" style="border-color: black !important;">
+                    <i class="col-md-auto fa-sharp fa-solid fa-upload"></i>
+                </label>
+                <div class="w-100"></div>
+                <select class="form-select col-5" aria-label="Default select example" style="text-align-last: center; width:50%">
+                    <option selected>Term</option>
+                    <option value="1" name="term">1</option>
+                    <option value="2" name="term">2</option>
+                    <option value="3" name="term">3</option>
+                </select>
+                <div class="w-100"></div>
+                <select class="form-select col-5" multiple aria-label="Default select example" style="text-align-last: center; width:50%">
+                    <option selected>Block</option>
+                    <option value="1" name="Block1">1</option>
+                    <option value="2" name="Block2">2</option>
+                    <option value="3" name="Block3">3</option>
+                    <option value="4" name="Block1">4</option>
+                    <option value="5" name="Block2">5</option>
+                    <option value="6" name="Block3">6</option>
+                    <option value="7" name="Block1">7</option>
+                    <option value="8" name="Block2">8</option>
+                    <option value="9" name="Block3">9</option>
+                    <option value="10" name="Block1">10</option>
+                    <option value="11" name="Block2">11</option>
+                    <option value="12" name="Block3">12</option>
+                </select>
+                <div class="w-100"></div>
+                <select class="form-select col-5" multiple aria-label="Default select example" style="text-align-last: center; width:50%">
+                    <option selected>Courses</option>
+                    <option value="1" name="CHM-2050">CHM-2050</option>
+                </select>
+                <div class="w-100"></div>
+                <button type="submit" class="custom_btn col-5">Create Quiz</button>
+                <div class="w-100"></div>
+            </div>
+        </div>
     </div>
-</div>
+</form>
+
+<style>
+    .container {
+        border-color: #F1C400 !important;
+        border-radius: 20px !important;
+    }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+    .upload-btn {
+        border-color: #F1C400 !important;
+        background: transparent;
+    }
+
+    .input-field {
+        border-color: black;
+    }
+
+    label {
+        background-color: white;
+        padding: 0.5rem;
+        border-color: #F1C400 !important;
+        cursor: pointer;
+    }
+
+</style>
 
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+
+    var i = 0;
+
+    function addImage() {
+
+        var newDiv = document.createElement("div");
+        newDiv.setAttribute("class", 'w-100');
+
+        var imageButton = document.getElementById("imageButton");
+
+        var newfile = document.createElement("input");
+        newfile.setAttribute("type", 'file');
+        newfile.setAttribute("name", 'imageFile' + i);
+        newfile.setAttribute("id", 'imageFile' + i);
+        newfile.setAttribute("accept", '.jpg, .jpeg');
+        newfile.setAttribute("onchange", 'checkForImage()');
+        newfile.style.display = "none";
+
+        imageButton.after(newfile);
+        imageButton.after(newDiv);
+
+
+        var newlabel = document.createElement("Label");
+        newlabel.setAttribute("class", 'col-4 row justify-content-center border');
+        newlabel.setAttribute("for", 'imageFile' + i);
+        newlabel.setAttribute("id", 'imageLabel' + i);
+        newlabel.style.setProperty("border-color", "black", "important");
+
+        var newi = document.createElement("i");
+        newi.setAttribute("class", "col-md-auto fa-solid fa-image");
+        newlabel.appendChild(newi);
+
+        imageButton.after(newDiv);
+        newfile.after(newlabel);
+
+
+        i++;
+
+    }
+
+    function checkForImage() {
+
+
+        for (var j = 0; j < i; j++) {
+            var imageButton = document.getElementById('imageFile' + j);
+
+            if (imageButton.value != "") {
+
+                var checkForI = document.getElementById("imgCheckMark" + j);
+
+                if (checkForI == null) {
+
+                    var newi = document.createElement("i");
+                    newi.setAttribute("class", "col-1 fa-solid fa-check");
+                    newi.setAttribute("id", "imgCheckMark" + j);
+
+                    var newBreak = document.createElement("div");
+                    newBreak.setAttribute("class", 'w-100');
+
+                    document.getElementById("imageLabel" + j).after(newi);
+                    newi.after(newBreak);
+
+                    var newdiv = document.createElement("div");
+                    newdiv.setAttribute("class", "col-6");
+                    newdiv.style.fontWeight = "bold";
+                    newdiv.innerHTML = imageButton.value.substr(imageButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+
+                    newBreak.after(newdiv);
+
+                    var newBreak1 = document.createElement("div");
+                    newBreak.setAttribute("class", 'w-100');
+
+                    newdiv.after(newBreak1)
+                }
+
+
+            }
+        }
+    }
+
+    var fileButton = document.getElementById("excelButton");
+
+    fileButton.onchange = function () {
+
+        var checkForI = document.getElementById("excelCheckMark");
+
+        if ((fileButton.value) != "" && (checkForI == null)) {
+
+            var newi = document.createElement("i");
+            newi.setAttribute("class", "col-1 fa-solid fa-check");
+            newi.setAttribute("id", "excelCheckMark");
+
+            var newBreak = document.createElement("div");
+            newBreak.setAttribute("class", 'w-100');
+
+            document.getElementById("excelLabel").after(newi);
+            newi.after(newBreak);
+
+            var newdiv = document.createElement("div");
+            newdiv.setAttribute("class", "col-6");
+            newdiv.style.fontWeight = "bold";
+            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+            newBreak.after(newdiv);
+
+            var newBreak1 = document.createElement("div");
+            newBreak.setAttribute("class", 'w-100');
+
+            newdiv.after(newBreak1)
+
+        }
+
+
+    }
+
+
+</script>

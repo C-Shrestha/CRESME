@@ -4,6 +4,7 @@ using CRESME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523154235_mergeMuaaz")]
+    partial class mergeMuaaz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,9 +103,6 @@ namespace CRESME.Data.Migrations
                     b.Property<string>("BlockAssignment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ColumnAmount")
-                        .HasColumnType("int");
-
                     b.Property<string>("CourseAssignment")
                         .HasColumnType("nvarchar(max)");
 
@@ -165,31 +164,61 @@ namespace CRESME.Data.Migrations
                     b.Property<string>("HistoryD")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image10")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image10Pos")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image1Pos")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image2")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image2Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image3Pos")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image4")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image4Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image5")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image5Pos")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image6")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image6Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image7")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image7Pos")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image8")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image8Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image9")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image9Pos")
@@ -234,30 +263,6 @@ namespace CRESME.Data.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("imageFile0")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("imageFile7")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QuizName");
 

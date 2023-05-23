@@ -29,8 +29,12 @@ namespace CRESME.Controllers
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) 
         {
+
+            //read multiple choice and insert value into ColumnAmount
+
+                
             //checkboxes only send output if they are checked(default is "on"), otherwise null
-            if (Request.Form["Feedback"] == "on") 
+            if (Request.Form["Feedback"] == "1") 
             {
                 quiz.FeedBackEnabled = "true";
             }
@@ -38,7 +42,7 @@ namespace CRESME.Controllers
                 quiz.FeedBackEnabled = "false";
             }
 
-            if (Request.Form["Publish"] == "on")
+            if (Request.Form["Publish"] == "1")
             {
                 quiz.Published = "true";
             }
@@ -52,12 +56,12 @@ namespace CRESME.Controllers
             
             
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            if (Request.Form.Files["FileUpload"] != null) {
+            if (Request.Form.Files["ExcelFileUpload"] != null) {
                 try
                 {
                     using (var stream = new MemoryStream())
                     {
-                        Request.Form.Files["FileUpload"].CopyToAsync(stream);
+                        Request.Form.Files["ExcelFileUpload"].CopyToAsync(stream);
                         using (var package = new ExcelPackage(stream))
                         {
                             ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
@@ -102,74 +106,74 @@ namespace CRESME.Controllers
             quiz.NumImages = Request.Form.Files.Count - 1; //image count = fileuploads - excel upload
 
 
-            if (Request.Form.Files["Image1"] != null) {
-                quiz.Image1 = UploadImagetoFile(Request.Form.Files["Image1"]);
+            if (Request.Form.Files["imageFile0"] != null) {
+                quiz.imageFile0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
             }
             else {
-                quiz.Image1 = null;
+                quiz.imageFile0 = null;
             }
 
-            if (Request.Form.Files["Image2"] != null)
+            if (Request.Form.Files["imageFile1"] != null)
             {
-                quiz.Image2 = UploadImagetoFile(Request.Form.Files["Image2"]);
+                quiz.imageFile1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
             }
             else
             {
-                quiz.Image2 = null;
+                quiz.imageFile1 = null;
             }
 
-            if (Request.Form.Files["Image3"] != null)
+            if (Request.Form.Files["imageFile2"] != null)
             {
-                quiz.Image3 = UploadImagetoFile(Request.Form.Files["Image3"]);
+                quiz.imageFile2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
             }
             else
             {
-                quiz.Image3 = null;
+                quiz.imageFile2 = null;
             }
 
-            if (Request.Form.Files["Image4"] != null)
+            if (Request.Form.Files["imageFile3"] != null)
             {
-                quiz.Image4 = UploadImagetoFile(Request.Form.Files["Image4"]);
+                quiz.imageFile3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
             }
             else
             {
-                quiz.Image4 = null;
+                quiz.imageFile3 = null;
             }
 
-            if (Request.Form.Files["Image5"] != null)
+            if (Request.Form.Files["imageFile4"] != null)
             {
-                quiz.Image5 = UploadImagetoFile(Request.Form.Files["Image5"]);
+                quiz.imageFile4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
             }
             else
             {
-                quiz.Image5 = null;
+                quiz.imageFile4 = null;
             }
 
-            if (Request.Form.Files["Image6"] != null)
+            if (Request.Form.Files["imageFile5"] != null)
             {
-                quiz.Image6 = UploadImagetoFile(Request.Form.Files["Image6"]);
+                quiz.imageFile5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
             }
             else
             {
-                quiz.Image6 = null;
+                quiz.imageFile5 = null;
             }
 
-            if (Request.Form.Files["Image7"] != null)
+            if (Request.Form.Files["imageFile6"] != null)
             {
-                quiz.Image7 = UploadImagetoFile(Request.Form.Files["Image7"]);
+                quiz.imageFile6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
             }
             else
             {
-                quiz.Image7 = null;
+                quiz.imageFile6 = null;
             }
 
-            if (Request.Form.Files["Image8"] != null)
+            if (Request.Form.Files["imageFile7"] != null)
             {
-                quiz.Image8 = UploadImagetoFile(Request.Form.Files["Image8"]);
+                quiz.imageFile7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
             }
             else
             {
-                quiz.Image8 = null;
+                quiz.imageFile7 = null;
             }
 
 
@@ -182,7 +186,7 @@ namespace CRESME.Controllers
             return View("CreateQuiz");
         }
 
-        public string UploadImagetoFile(IFormFile ImageUpload) {
+        public string UploadImagetoFile(IFormFile ImageUpload) { //make this async
             string RootPath = this._environment.WebRootPath;
             string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
             string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
