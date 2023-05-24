@@ -1,6 +1,9 @@
-﻿using CRESME.Constants;
+﻿using ClosedXML.Excel;
+using CRESME.Constants;
 using CRESME.Data;
 using CRESME.Models;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -114,6 +117,89 @@ namespace CRESME.Controllers
             return list;
 
         } // import
+
+
+
+        public async Task<List<ApplicationUser>> ImportExcel(IFormFile file)
+        {
+            var list = new List<ApplicationUser>();
+            using (var stream = new MemoryStream())
+            {
+                
+                await file.CopyToAsync(stream);
+
+                if (stream.Length <= 0) {
+                    return list;
+                }
+               
+                using (XLWorkbook workbook = new XLWorkbook(stream))
+                
+                {                    
+                    IXLWorksheet worksheet = workbook.Worksheets.First();
+                        
+                    int rowCount = worksheet.RowsUsed().Count();
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        var PasswordHash = worksheet.Cell(row, 7).Value.ToString();
+                        
+
+                        var assignRole = worksheet.Cell(row, 17).Value.ToString().Trim();
+
+
+                        var user = new ApplicationUser
+                        {
+
+                            UserName = worksheet.Cell(row, 2).Value.ToString().Trim(),
+                            NormalizedUserName = worksheet.Cell(row, 3).Value.ToString().Trim(),
+                            Email = worksheet.Cell(row, 4).Value.ToString().Trim(),
+                            NormalizedEmail = worksheet.Cell(row, 5).Value.ToString().Trim(),
+                            EmailConfirmed = true,
+                            PhoneNumber = worksheet.Cell(row, 10).Value.ToString().Trim(),
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            LockoutEnd = null,
+                            LockoutEnabled = true,
+                            AccessFailedCount = 0,
+                            Name = worksheet.Cell(row, 16).Value.ToString().Trim(),
+                            Role = worksheet.Cell(row, 17).Value.ToString().Trim()
+
+                        };
+                        var result = await _userManager.CreateAsync(user, PasswordHash);
+
+                        // assign roles
+                        if (assignRole == "Instructor")
+                        {
+                            await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                        }
+
+                        if (assignRole == "Student")
+                        {
+                            await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                        }
+
+
+
+                    }
+
+
+                }
+            }
+
+            _context.Users.AddRange(list);
+
+
+            _context.SaveChanges();
+
+
+
+            return list;
+
+        } // importToExcel
+
+
+
+
 
 
 
@@ -297,6 +383,60 @@ namespace CRESME.Controllers
             stream.Position = 0;
             string excelname = $"StudentGrades.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname); 
+        }
+
+
+        public IActionResult ExportExcel()
+        {
+            db dbop = new db();
+            DataSet ds = dbop.Getrecord();
+            var stream = new MemoryStream();
+
+            /*using (var package = new ExcelPackage(stream))*/
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+                
+                
+                /*
+                var worksheet = package.workbook.Worksheets.Add("Sheet1");*/
+
+                /*IXLWorksheet worksheet = workbook.Worksheets.Add("Sheet1");*/
+
+
+                /*  worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
+
+                  worksheet.Cells.Lo*/
+
+
+
+                foreach (DataTable dataTable in ds.Tables)
+                {
+                    // Add a worksheet for each DataTable in the DataSet
+                    IXLWorksheet worksheet = workbook.Worksheets.Add(dataTable.TableName);
+
+                    // Write column headers
+                    for (int i = 0; i < dataTable.Columns.Count; i++)
+                    {
+                        worksheet.Cell(1, i + 1).Value = dataTable.Columns[i].ColumnName;
+                    }
+
+                    // Write data rows
+                    for (int row = 0; row < dataTable.Rows.Count; row++)
+                    {
+                        for (int col = 0; col < dataTable.Columns.Count; col++)
+                        {
+                            worksheet.Cell(row + 2, col + 1).Value = dataTable.Rows[row][col].ToString();
+                        }
+                    }
+                }
+
+                /*workbook.Save();*/
+                workbook.SaveAs(stream);
+            }
+
+            stream.Position = 0;
+            string excelname = $"StudentGrades.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }
 
 
