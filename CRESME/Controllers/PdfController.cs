@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace CRESME.Controllers
 {
-    [Route("pdf")]
+    /*[Route("pdf")]*/
     public class PdfController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -49,7 +49,7 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
-        [Route("quiz")]
+        /*[Route("quiz")]*/
         public async Task<IActionResult> GeneratePDF()
         {
 
@@ -98,7 +98,7 @@ namespace CRESME.Controllers
 
 
 
-        [Route("website")]
+        /*[Route("website")]*/
         public async Task<IActionResult> WebsiteAsync()
         {
             // Imported package "Select.HtmlToPdf.NetCore" from  SelectPDF
@@ -132,5 +132,22 @@ namespace CRESME.Controllers
 
             return File(pdfBytes, "application/pdf");
         }
+
+
+        //Showing Students Graades
+        // GET: Tests/Create
+        public IActionResult Grades()
+        {
+            //return View();
+            
+            return View();
+
+        }
+
+
+
+
+
+
     }
 }
