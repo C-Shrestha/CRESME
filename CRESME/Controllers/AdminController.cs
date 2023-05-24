@@ -48,79 +48,91 @@ namespace CRESME.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<List<ApplicationUser>> Import(IFormFile file)
-        {
-            var list = new List<ApplicationUser>();
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                using (var package = new ExcelPackage(stream))
+
+        /*        //remove later
+                public async Task<List<ApplicationUser>> Import(IFormFile file)
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                    var rowcount = worksheet.Dimension.Rows;
-
-
-
-                    for (int row = 2; row <= rowcount; row++)
+                    var list = new List<ApplicationUser>();
+                    using (var stream = new MemoryStream())
                     {
-                        var PasswordHash = worksheet.Cells[row, 7].Value.ToString();
-
-                        var assignRole = worksheet.Cells[row, 17].Value.ToString().Trim();
-
-
-                        var user = new ApplicationUser
+                        await file.CopyToAsync(stream);
+                        using (var package = new ExcelPackage(stream))
                         {
-                            
-                            UserName = worksheet.Cells[row, 2].Value.ToString().Trim(),
-                            NormalizedUserName = worksheet.Cells[row, 3].Value.ToString().Trim(),
-                            Email = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                            NormalizedEmail = worksheet.Cells[row, 5].Value.ToString().Trim(),
-                            EmailConfirmed = true,
-                            PhoneNumber = worksheet.Cells[row, 10].Value.ToString().Trim(),
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            LockoutEnd = null,
-                            LockoutEnabled = true,
-                            AccessFailedCount = 0,
-                            Name = worksheet.Cells[row, 16].Value.ToString().Trim(),
-                            Role = worksheet.Cells[row, 17].Value.ToString().Trim()
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                            var rowcount = worksheet.Dimension.Rows;
 
-                        };
-                        var result = await _userManager.CreateAsync(user, PasswordHash);
 
-                        // assign roles
-                        if (assignRole == "Instructor")
-                        {
-                            await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+
+                            for (int row = 2; row <= rowcount; row++)
+                            {
+                                var PasswordHash = worksheet.Cells[row, 7].Value.ToString();
+
+                                var assignRole = worksheet.Cells[row, 17].Value.ToString().Trim();
+
+
+                                var user = new ApplicationUser
+                                {
+
+                                    UserName = worksheet.Cells[row, 2].Value.ToString().Trim(),
+                                    NormalizedUserName = worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                    Email = worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                    NormalizedEmail = worksheet.Cells[row, 5].Value.ToString().Trim(),
+                                    EmailConfirmed = true,
+                                    PhoneNumber = worksheet.Cells[row, 10].Value.ToString().Trim(),
+                                    PhoneNumberConfirmed = false,
+                                    TwoFactorEnabled = false,
+                                    LockoutEnd = null,
+                                    LockoutEnabled = true,
+                                    AccessFailedCount = 0,
+                                    Name = worksheet.Cells[row, 16].Value.ToString().Trim(),
+                                    Role = worksheet.Cells[row, 17].Value.ToString().Trim()
+
+                                };
+                                var result = await _userManager.CreateAsync(user, PasswordHash);
+
+                                // assign roles
+                                if (assignRole == "Instructor")
+                                {
+                                    await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                                }
+
+                                if (assignRole == "Student")
+                                {
+                                    await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                                }
+
+
+
+                            }
+
+
                         }
-
-                        if (assignRole == "Student")
-                        {
-                            await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
-                        }
-
-
-
                     }
 
-
-                }
-            }
-
-            _context.Users.AddRange(list);
+                    _context.Users.AddRange(list);
 
 
-            _context.SaveChanges();
+                    _context.SaveChanges();
 
 
 
-            return list;
+                    return list;
 
-        } // import
+                } // import
+
+        */
 
 
+        // GET: Users
+        public async Task<IActionResult> ListUsers()
+        {
+            return _context.Users != null ?
+                        View(await _userManager.Users.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
 
         public async Task<List<ApplicationUser>> ImportExcel(IFormFile file)
+
         {
             var list = new List<ApplicationUser>();
             using (var stream = new MemoryStream())
@@ -128,10 +140,11 @@ namespace CRESME.Controllers
                 
                 await file.CopyToAsync(stream);
 
-                if (stream.Length <= 0) {
+                if (stream.Length <= 0)
+                {
                     return list;
                 }
-               
+
                 using (XLWorkbook workbook = new XLWorkbook(stream))
                 
                 {                    
@@ -191,25 +204,13 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-
+            RedirectToAction("ListUsers");
 
             return list;
 
+
         } // importToExcel
 
-
-
-
-
-
-
-        // GET: Users
-        public async Task<IActionResult> ListUsers()
-        {
-            return _context.Users != null ?
-                        View(await _userManager.Users.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
-        }
 
 
         /*public async Task<IActionResult> EditUsers([Bind("Id, UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed,PasswordHash, SecurityStamp, ConcurrencyStamp PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name, Role")] ApplicationUser test)*/
@@ -364,7 +365,7 @@ namespace CRESME.Controllers
 
 
 
-        //Export Excel Data
+    /*    //Export Excel Data REMOVE LATER
         
 
         public IActionResult ExportToExcel()
@@ -384,7 +385,7 @@ namespace CRESME.Controllers
             string excelname = $"StudentGrades.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname); 
         }
-
+*/
 
         public IActionResult ExportExcel()
         {
@@ -392,22 +393,9 @@ namespace CRESME.Controllers
             DataSet ds = dbop.Getrecord();
             var stream = new MemoryStream();
 
-            /*using (var package = new ExcelPackage(stream))*/
             using (XLWorkbook workbook = new XLWorkbook())
             {
                 
-                
-                /*
-                var worksheet = package.workbook.Worksheets.Add("Sheet1");*/
-
-                /*IXLWorksheet worksheet = workbook.Worksheets.Add("Sheet1");*/
-
-
-                /*  worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
-
-                  worksheet.Cells.Lo*/
-
-
 
                 foreach (DataTable dataTable in ds.Tables)
                 {
@@ -430,7 +418,7 @@ namespace CRESME.Controllers
                     }
                 }
 
-                /*workbook.Save();*/
+                
                 workbook.SaveAs(stream);
             }
 
