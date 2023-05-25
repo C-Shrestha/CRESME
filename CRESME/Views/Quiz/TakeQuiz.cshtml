@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Quiz";
+}
+<h1>@ViewData["Title"]</h1>
+
+<header>
+    <div style="width: 100%; height: 25px; background-color: #000;"></div>
+    <div>
+        <img src="./UCFCollegeOfMedicineLogo.png" alt="LOGO">
+    </div>
+    <div style="width: 100%; height: 5px; background-color: #f1c400;"></div>
+    <nav class="navbar navbar-expand-sm" style="width:100%;">
+        <div align="justify" class="container" style="max-width:1980px; padding:0px; margin:0px;">
+            <div>
+                <a class="nav-link text-dark" asp-area="" asp-page="/Index">About</a>
+            </div>
+            <h3>Welcome to CRESME</h3>
+            <div align="justify">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="width: 100%; height: 5px; background-color: #f1c400;"></div>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+<div class="container-fluid border sticky-top m-3 w-auto mw-50" style="height:670px;">
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br/>
+<h4 class="text-center">
+    Introduction:
+    <div id="introduction">51 year-old male with chest pain</div>
+</h4>
+<br /><br />
+<h4 class="text-center">
+    Instructions:
+    <p id="instructions">
+        For each case presention detail the anticipated "classic" physical exam
+        findings and match the case and PE box to the corresponding lab findings.
+        Finally, enter the lead diagnosis for each case presentation and align
+        these in the column with the HPI and physical findings. When done, save
+        your slide to PDF or JPG and submit to the assignment in Webcourses.
+    </p>
+</h4>
+</div>
+
+<footer class="footer text-muted">
+    <div style="width: 100%; height: 5px; background-color: #fcf4cf;"></div>
+    <div class="container">
+        2023 CRESME &copy; UCF
+    </div>
+    <div style="width: 100%; height: 5px; background-color: #f1c400;"></div>
+    <div style="width: 100%; height: 25px; background-color: #000;"></div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
