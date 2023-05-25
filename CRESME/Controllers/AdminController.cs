@@ -140,11 +140,11 @@ namespace CRESME.Controllers
                 
                 await file.CopyToAsync(stream);
 
-                if (stream.Length <= 0)
+                /*if (stream.Length <= 0)
                 {
                     return list;
                 }
-
+*/
                 using (XLWorkbook workbook = new XLWorkbook(stream))
                 
                 {                    
