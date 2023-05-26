@@ -98,7 +98,9 @@ namespace CRESME.Controllers
 
 
 
-        /*[Route("website")]*/
+        /*[Route("website")]
+         This requires a website and is not used in this website currently.
+         */
         public async Task<IActionResult> WebsiteAsync()
         {
             // Imported package "Select.HtmlToPdf.NetCore" from  SelectPDF
