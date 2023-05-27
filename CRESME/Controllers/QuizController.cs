@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Hosting;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CRESME.Controllers
 {
@@ -18,6 +20,10 @@ namespace CRESME.Controllers
             return View();
         }
 
+        public IActionResult TakeQuiz() {
+            Quiz quiz = _context.Quiz.Find("test");
+            return View(quiz);
+        }
 
         public QuizController(ApplicationDbContext context, IWebHostEnvironment environment = null)
         {
@@ -27,18 +33,15 @@ namespace CRESME.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]  
-        public ActionResult Create(Quiz quiz) 
+        public ActionResult Create(Quiz quiz) //closedxml update
         {
-
-            //read multiple choice and insert value into ColumnAmount
-
-                
             //checkboxes only send output if they are checked(default is "on"), otherwise null
-            if (Request.Form["Feedback"] == "1") 
+            if (Request.Form["Feedback"] == "1")
             {
                 quiz.FeedBackEnabled = "true";
             }
-            else {
+            else
+            {
                 quiz.FeedBackEnabled = "false";
             }
 
@@ -50,130 +53,133 @@ namespace CRESME.Controllers
             {
                 quiz.Published = "false";
             }
-            
+
             //might want to limit this to just the day or just the hour
             quiz.DateCreated = DateTime.Now;
-            
-            
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            if (Request.Form.Files["ExcelFileUpload"] != null) {
+
+
+         
+            if (Request.Form.Files["ExcelFileUpload"] != null)
+            {
                 try
                 {
                     using (var stream = new MemoryStream())
                     {
                         Request.Form.Files["ExcelFileUpload"].CopyToAsync(stream);
-                        using (var package = new ExcelPackage(stream))
+                        using (XLWorkbook package = new XLWorkbook(stream))
                         {
-                            ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                            var rowcount = worksheet.Dimension.Rows;
-                            quiz.HistoryA = worksheet.Cells[1, 1].Value.ToString().Trim();
-                            quiz.HistoryB = worksheet.Cells[1, 2].Value.ToString().Trim();
-                            quiz.HistoryC = worksheet.Cells[1, 3].Value.ToString().Trim();
-                            quiz.HistoryD = worksheet.Cells[1, 4].Value.ToString().Trim();
+                            IXLWorksheet worksheet = package.Worksheets.First();
+                            int rowcount = worksheet.RowsUsed().Count();
+                            quiz.HistoryA = worksheet.Cell(1, 1).Value.ToString().Trim();
+                            quiz.HistoryB = worksheet.Cell(1, 2).Value.ToString().Trim();
+                            quiz.HistoryC = worksheet.Cell(1, 3).Value.ToString().Trim();
+                            quiz.HistoryD = worksheet.Cell(1, 4).Value.ToString().Trim();
 
-                            quiz.PhysicalA = worksheet.Cells[2, 1].Value.ToString().Trim();
-                            quiz.PhysicalB = worksheet.Cells[2, 2].Value.ToString().Trim();
-                            quiz.PhysicalC = worksheet.Cells[2, 3].Value.ToString().Trim();
-                            quiz.PhysicalD = worksheet.Cells[2, 4].Value.ToString().Trim();
+                            quiz.PhysicalA = worksheet.Cell(2, 1).Value.ToString().Trim();
+                            quiz.PhysicalB = worksheet.Cell(2, 2).Value.ToString().Trim();
+                            quiz.PhysicalC = worksheet.Cell(2, 3).Value.ToString().Trim();
+                            quiz.PhysicalD = worksheet.Cell(2, 4).Value.ToString().Trim();
 
-                            quiz.DiagnosticA = worksheet.Cells[3, 1].Value.ToString().Trim();
-                            quiz.DiagnosticB = worksheet.Cells[3, 2].Value.ToString().Trim();
-                            quiz.DiagnosticC = worksheet.Cells[3, 3].Value.ToString().Trim();
-                            quiz.DiagnosticD = worksheet.Cells[3, 4].Value.ToString().Trim();
+                            quiz.DiagnosticA = worksheet.Cell(3, 1).Value.ToString().Trim();
+                            quiz.DiagnosticB = worksheet.Cell(3, 2).Value.ToString().Trim();
+                            quiz.DiagnosticC = worksheet.Cell(3, 3).Value.ToString().Trim();
+                            quiz.DiagnosticD = worksheet.Cell(3, 4).Value.ToString().Trim();
 
-                            quiz.DiagnosisA = worksheet.Cells[4, 1].Value.ToString().Trim();
-                            quiz.DiagnosisB = worksheet.Cells[4, 2].Value.ToString().Trim();
-                            quiz.DiagnosisC = worksheet.Cells[4, 3].Value.ToString().Trim();
-                            quiz.DiagnosisD = worksheet.Cells[4, 4].Value.ToString().Trim();
+                            quiz.DiagnosisA = worksheet.Cell(4, 1).Value.ToString().Trim();
+                            quiz.DiagnosisB = worksheet.Cell(4, 2).Value.ToString().Trim();
+                            quiz.DiagnosisC = worksheet.Cell(4, 3).Value.ToString().Trim();
+                            quiz.DiagnosisD = worksheet.Cell(4, 4).Value.ToString().Trim();
 
-                            quiz.KeyWordsA = worksheet.Cells[5, 1].Value.ToString().Trim();
-                            quiz.KeyWordsB = worksheet.Cells[5, 2].Value.ToString().Trim();
-                            quiz.KeyWordsC = worksheet.Cells[5, 3].Value.ToString().Trim();
-                            quiz.KeyWordsD = worksheet.Cells[5, 4].Value.ToString().Trim();
+                            quiz.KeyWordsA = worksheet.Cell(5, 1).Value.ToString().Trim();
+                            quiz.KeyWordsB = worksheet.Cell(5, 2).Value.ToString().Trim();
+                            quiz.KeyWordsC = worksheet.Cell(5, 3).Value.ToString().Trim();
+                            quiz.KeyWordsD = worksheet.Cell(5, 4).Value.ToString().Trim();
 
-                            quiz.FeedBackA = worksheet.Cells[6, 1].Value.ToString().Trim();
-                            quiz.FeedBackB = worksheet.Cells[6, 2].Value.ToString().Trim();
-                            quiz.FeedBackC = worksheet.Cells[6, 3].Value.ToString().Trim();
-                            quiz.FeedBackD = worksheet.Cells[6, 4].Value.ToString().Trim();
+                            quiz.FeedBackA = worksheet.Cell(6, 1).Value.ToString().Trim();
+                            quiz.FeedBackB = worksheet.Cell(6, 2).Value.ToString().Trim();
+                            quiz.FeedBackC = worksheet.Cell(6, 3).Value.ToString().Trim();
+                            quiz.FeedBackD = worksheet.Cell(6, 4).Value.ToString().Trim();
                         }
                     }
                 }
-                catch (Exception error) { 
+                catch (Exception error)
+                {
                     //this should redirect to an error page
                 }
             }
-            
-            quiz.NumImages = Request.Form.Files.Count - 1; //image count = fileuploads - excel upload
 
 
-            if (Request.Form.Files["imageFile0"] != null) {
-                quiz.imageFile0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
+            if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count>0)
+            {
+                quiz.Image1 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
+                quiz.Image1Pos = Request.Form["ImagePos0"];
             }
-            else {
-                quiz.imageFile0 = null;
+            else
+            {
+                quiz.Image1 = null;
             }
 
             if (Request.Form.Files["imageFile1"] != null)
             {
-                quiz.imageFile1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
+                quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
             }
             else
             {
-                quiz.imageFile1 = null;
+                quiz.Image2 = null;
             }
 
             if (Request.Form.Files["imageFile2"] != null)
             {
-                quiz.imageFile2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
+                quiz.Image3 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
             }
             else
             {
-                quiz.imageFile2 = null;
+                quiz.Image3 = null;
             }
 
             if (Request.Form.Files["imageFile3"] != null)
             {
-                quiz.imageFile3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
+                quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
             }
             else
             {
-                quiz.imageFile3 = null;
+                quiz.Image4 = null;
             }
 
             if (Request.Form.Files["imageFile4"] != null)
             {
-                quiz.imageFile4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
+                quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
             }
             else
             {
-                quiz.imageFile4 = null;
+                quiz.Image5 = null;
             }
 
             if (Request.Form.Files["imageFile5"] != null)
             {
-                quiz.imageFile5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
+                quiz.Image6 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
             }
             else
             {
-                quiz.imageFile5 = null;
+                quiz.Image6 = null;
             }
 
             if (Request.Form.Files["imageFile6"] != null)
             {
-                quiz.imageFile6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
+                quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
             }
             else
             {
-                quiz.imageFile6 = null;
+                quiz.Image7 = null;
             }
 
             if (Request.Form.Files["imageFile7"] != null)
             {
-                quiz.imageFile7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
+                quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
             }
             else
             {
-                quiz.imageFile7 = null;
+                quiz.Image8 = null;
             }
 
 

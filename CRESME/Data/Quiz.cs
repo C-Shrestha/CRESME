@@ -12,7 +12,8 @@ namespace CRESME.Data
         [BindProperty]
         public string QuizName { get; set; } = "";
 
-
+        [Required]
+        [BindProperty]
         public int ColumnAmount { get; set; }
 
         [DataType(DataType.Date)]
@@ -34,12 +35,14 @@ namespace CRESME.Data
         public string? NIDAssignment { get; set; } = ""; // comma seperated NID
 
         [BindProperty]
+        public string? TermAssignment { get; set; } = "";
+
+        [BindProperty]
         public string? CourseAssignment { get; set; } = "";
         
         [BindProperty]
         public string? BlockAssignment { get; set; } = ""; // comma seperated course blocks
 
-        public int? NumImages { get; set; }
 
         [BindProperty]
         public string? PatientIntro { get; set; } = ""; //might be the same as QuizName, check with Melissa
@@ -75,35 +78,27 @@ namespace CRESME.Data
         public string? FeedBackC { get; set; } = "";
         public string? FeedBackD { get; set; } = "";
 
-        public string? imageFile0 { get; set; } = "";
-        public string? imageFile1 { get; set; } = "";
-        public string? imageFile2 { get; set; } = "";
-        public string? imageFile3 { get; set; } = "";
-        public string? imageFile4 { get; set; } = "";
-        public string? imageFile5 { get; set; } = "";
-        public string? imageFile6 { get; set; } = "";
-        public string? imageFile7 { get; set; } = "";
+        public string? Image1 { get; set; } = "";
+        public string? Image2 { get; set; } = "";
+        public string? Image3 { get; set; } = "";
+        public string? Image4 { get; set; } = "";
+        public string? Image5 { get; set; } = "";
+        public string? Image6 { get; set; } = "";
+        public string? Image7 { get; set; } = "";
+        public string? Image8 { get; set; } = "";
+        public string? Image9 { get; set; } = "";
+        public string? Image10 { get; set; } = "";
 
-
-        [BindProperty]
+        
         public string? Image1Pos { get; set; } = "";
-        [BindProperty]
         public string? Image2Pos { get; set; } = "";
-        [BindProperty]
         public string? Image3Pos { get; set; } = "";
-        [BindProperty]
         public string? Image4Pos { get; set; } = "";
-        [BindProperty]
         public string? Image5Pos { get; set; } = "";
-        [BindProperty]
         public string? Image6Pos { get; set; } = "";
-        [BindProperty]
         public string? Image7Pos { get; set; } = "";
-        [BindProperty]
         public string? Image8Pos { get; set; } = "";
-        [BindProperty]
         public string? Image9Pos { get; set; } = "";
-        [BindProperty]
         public string? Image10Pos { get; set; } = "";
     }
 }
