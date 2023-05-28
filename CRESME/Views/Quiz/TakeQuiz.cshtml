@@ -1,0 +1,27 @@
+﻿@model CRESME.Data.Quiz
+@{
+    ViewData["Title"] = "Quiz";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+
+<div class="container-fluid border sticky-top m-3 w-auto mw-50" style="height:670px;">
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <h4 class="text-center">
+        Introduction:
+        <div id="introduction">@Html.DisplayFor(model => model.PatientIntro)</div>
+    </h4>
+    <br /><br />
+    <h4 class="text-center">
+        Instructions:
+        <p id="instructions">
+            For each case presention detail the anticipated "classic" physical exam
+            findings and match the case and PE box to the corresponding lab findings.
+            Finally, enter the lead diagnosis for each case presentation and align
+            these in the column with the HPI and physical findings. When done, save
+            your slide to PDF or JPG and submit to the assignment in Webcourses.
+        </p>
+    </h4>
+</div>
