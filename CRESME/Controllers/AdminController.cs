@@ -249,7 +249,7 @@ namespace CRESME.Controllers
 
 
 
-        // GET: Tests/Create
+        // GET: Tests/Creates
         public IActionResult CreateUsers()
         {
             return View();
