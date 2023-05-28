@@ -30,12 +30,12 @@
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
 
                 <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="numColums" id="numColums1" value="4">
-                    <label class="form-check-label" for="numColums">4</label>
+                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4">
+                    <label class="form-check-label" for="NumColumns">4</label>
                 </div>
                 <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="numColums" id="numColums2" value="5">
-                    <label class="form-check-label" for="numColums">5</label>
+                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5">
+                    <label class="form-check-label" for="NumColumns">5</label>
                 </div>
                 <div class="w-100"></div>
 
@@ -148,6 +148,7 @@
         select.setAttribute("class", 'form-select col-1');
         select.setAttribute("aria-label", 'Default select example');
         select.setAttribute("id", 'ImagePos'+ i);
+        select.setAttribute("name", 'ImagePos' + i);
         select.style.width = "15%";
         select.style.height = "10%";
         select.style.textAlignLast = "center"
