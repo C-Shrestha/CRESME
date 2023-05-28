@@ -33,11 +33,25 @@
 
 
 
-<div class="text-center">
+@*<div class="text-center">
     <div class="container">
         <form method="post" asp-controller="Admin" asp-action="Import" enctype="multipart/form-data">
             <input type="file" name="file" />
             <button type="submit">Import from Excel</button>
+
+        </form>
+    </div>
+</div>*@
+
+<br/>
+<br/>
+<br/>
+
+<div class="text-center">
+    <div class="container">
+        <form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button type="submit"> New Import from Excel</button>
 
         </form>
     </div>
