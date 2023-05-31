@@ -1,5 +1,8 @@
+﻿@model IEnumerable<CRESME.Data.ApplicationUser>
 ﻿@{
     ViewData["Title"] = "Create Quiz";
+    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct();
+    IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct();
 }
 
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -30,12 +33,12 @@
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
 
                 <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="numColums" id="numColums1" value="4">
-                    <label class="form-check-label" for="numColums">4</label>
+                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4">
+                    <label class="form-check-label" for="NumColumns">4</label>
                 </div>
                 <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="numColums" id="numColums2" value="5">
-                    <label class="form-check-label" for="numColums">5</label>
+                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5">
+                    <label class="form-check-label" for="NumColumns">5</label>
                 </div>
                 <div class="w-100"></div>
 
@@ -48,34 +51,36 @@
                 </label>
                 <div class="w-100"></div>
 
-                <select class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%">
-                    <option selected>Term</option>
-                    <option value="1" name="term">1</option>
-                    <option value="2" name="term">2</option>
-                    <option value="3" name="term">3</option>
+                <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                    @foreach (var term in UniqueTerms)
+                    {
+                        <option value=@term selected>@term</option>
+                    }
                 </select>
                 <div class="col-1"></div>
 
-                <select class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;">
-                    <option selected>Block</option>
-                    <option value="1" name="Block1">1</option>
-                    <option value="2" name="Block2">2</option>
-                    <option value="3" name="Block3">3</option>
-                    <option value="4" name="Block1">4</option>
-                    <option value="5" name="Block2">5</option>
-                    <option value="6" name="Block3">6</option>
-                    <option value="7" name="Block1">7</option>
-                    <option value="8" name="Block2">8</option>
-                    <option value="9" name="Block3">9</option>
-                    <option value="10" name="Block1">10</option>
-                    <option value="11" name="Block2">11</option>
-                    <option value="12" name="Block3">12</option>
+                <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
+                    <option value="none" selected>N/A</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
                 </select>
                 <div class="col-1"></div>
 
-                <select class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%">
-                    <option selected>Courses</option>
-                    <option value="1" name="CHM-2050">CHM-2050</option>
+                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                    @foreach (var course in UniqueCourses)
+                    {
+                        <option value=@course selected>@course</option>
+                    }
                 </select>
                 <div class="w-100"></div>
 
@@ -148,6 +153,7 @@
         select.setAttribute("class", 'form-select col-1');
         select.setAttribute("aria-label", 'Default select example');
         select.setAttribute("id", 'ImagePos'+ i);
+        select.setAttribute("name", 'ImagePos' + i);
         select.style.width = "15%";
         select.style.height = "10%";
         select.style.textAlignLast = "center"

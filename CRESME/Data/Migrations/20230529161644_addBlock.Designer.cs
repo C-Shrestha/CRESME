@@ -4,6 +4,7 @@ using CRESME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230529161644_addBlock")]
+    partial class addBlock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,10 +109,10 @@ namespace CRESME.Data.Migrations
                     b.Property<string>("QuizName")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Block")
+                    b.Property<string>("BlockAssignment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Course")
+                    b.Property<string>("CourseAssignment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -274,7 +276,7 @@ namespace CRESME.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Term")
+                    b.Property<string>("TermAssignment")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QuizName");

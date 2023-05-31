@@ -11,11 +11,47 @@
 <hr />
 <br />
 
-<div class="text-center">
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        B12, Cardiac Arrest
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+@*<div class="text-center">
     <div class="container">
         <form method="post" asp-controller="Admin" asp-action="Import" enctype="multipart/form-data">
             <input type="file" name="file" />
             <button type="submit">Import from Excel</button>
+
+        </form>
+    </div>
+</div>*@
+
+<br/>
+<br/>
+<br/>
+
+<div class="text-center">
+    <div class="container">
+        <form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button type="submit"> New Import from Excel</button>
 
         </form>
     </div>
