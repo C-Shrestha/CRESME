@@ -1,5 +1,8 @@
-﻿@{
+﻿@model IEnumerable<CRESME.Data.Quiz>
+@{
     ViewData["Title"] = "Create Quiz";
+    IEnumerable<string> UniqueCourses = Model.Select(x => x.QuizName).Distinct();
+   
 }
 
 

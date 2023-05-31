@@ -29,8 +29,7 @@ namespace CRESME.Controllers
 
         public IActionResult DisplayQuizzes()
         {
-            var tupleModel = new Tuple<IEnumerable<Quiz>, IEnumerable<ApplicationUser>>(_context.Quiz.ToList(),_context.Users.ToList());
-            return View(tupleModel);
+            return View(_context.Quiz.ToList());
         }
 
         public IActionResult TakeQuiz() {
