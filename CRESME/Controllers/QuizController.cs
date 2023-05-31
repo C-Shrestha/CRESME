@@ -1,10 +1,9 @@
 ﻿using CRESME.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
-using Microsoft.AspNetCore.Hosting;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
+using NuGet.DependencyResolver;
+
 
 namespace CRESME.Controllers
 {
@@ -13,25 +12,32 @@ namespace CRESME.Controllers
         private readonly ApplicationDbContext _context;
         private IWebHostEnvironment _environment;
 
-        // Authorize makes the page availabe to only to specified Roles
-        [Authorize(Roles = "Admin, Instructor")]
-        public IActionResult CreateQuiz()
-        {
-            return View();
-        }
-
-        
-        public IActionResult TakeQuiz() {
-            Quiz quiz = _context.Quiz.Find("test");
-            return View(quiz);
-            
-        }
-
         public QuizController(ApplicationDbContext context, IWebHostEnvironment environment = null)
         {
             _context = context;
             _environment = environment;
         }
+
+        // Authorize makes the page availabe to only to specified Roles
+        [Authorize(Roles = "Admin, Instructor")]
+        public IActionResult CreateQuiz()
+        {
+            return View(_context.Users.ToList());
+        }
+
+     
+
+        public IActionResult DisplayQuizzes()
+        {
+            return View(_context.Quiz.ToList());
+        }
+
+        public IActionResult TakeQuiz() {
+            Quiz quiz = _context.Quiz.Find("test");
+            return View(quiz);            
+        }
+
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]  
