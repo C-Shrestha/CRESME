@@ -25,7 +25,9 @@ namespace CRESME.Controllers
             return View(_context.Users.ToList());
         }
 
-        public IActionResult StudentQuizzes()
+     
+
+        public IActionResult DisplayQuizzes()
         {
             var tupleModel = new Tuple<IEnumerable<Quiz>, IEnumerable<ApplicationUser>>(_context.Quiz.ToList(),_context.Users.ToList());
             return View(tupleModel);
@@ -33,8 +35,7 @@ namespace CRESME.Controllers
 
         public IActionResult TakeQuiz() {
             Quiz quiz = _context.Quiz.Find("test");
-            return View(quiz);
-            
+            return View(quiz);            
         }
 
         

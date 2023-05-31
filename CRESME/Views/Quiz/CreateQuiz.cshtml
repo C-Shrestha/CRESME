@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<CRESME.Data.ApplicationUser>
-@{
-    ViewData["Title"] = "Instructor Page";
+﻿@{
+    ViewData["Title"] = "Create Quiz";
     IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct();
     IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct();
 }
