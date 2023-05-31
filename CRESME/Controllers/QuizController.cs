@@ -18,6 +18,11 @@ namespace CRESME.Controllers
             return View();
         }
 
+        public IActionResult DisplayQuizzes()
+        {
+            return View();
+        }
+
 
         public QuizController(ApplicationDbContext context, IWebHostEnvironment environment = null)
         {
