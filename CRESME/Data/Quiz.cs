@@ -35,13 +35,13 @@ namespace CRESME.Data
         public string? NIDAssignment { get; set; } = ""; // comma seperated NID
 
         [BindProperty]
-        public string? TermAssignment { get; set; } = "";
+        public string? Term { get; set; } = "";
 
         [BindProperty]
-        public string? CourseAssignment { get; set; } = "";
+        public string? Course { get; set; } = "";
         
         [BindProperty]
-        public string? BlockAssignment { get; set; } = ""; // comma seperated course blocks
+        public string? Block { get; set; } = ""; // comma seperated course blocks
 
 
         [BindProperty]
