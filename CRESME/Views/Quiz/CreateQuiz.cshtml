@@ -54,7 +54,7 @@
                 <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
                     @foreach (var term in UniqueTerms)
                     {
-                        <option value=@term>@term</option>
+                        <option value=@term selected>@term</option>
                     }
                 </select>
                 <div class="col-1"></div>
@@ -76,10 +76,10 @@
                 </select>
                 <div class="col-1"></div>
 
-                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%" required>
+                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
                     @foreach (var course in UniqueCourses)
                     {
-                        <option value=@course>@course</option>
+                        <option value=@course selected>@course</option>
                     }
                 </select>
                 <div class="w-100"></div>

@@ -26,6 +26,7 @@ namespace CRESME.Data
                 PhoneNumberConfirmed = true
 
             };
+            //Delete these users after UI create users 
             var user1 = new ApplicationUser
             {
                 UserName = "user1@gmail.com",
@@ -71,6 +72,7 @@ namespace CRESME.Data
             await userManager.AddToRoleAsync(user2, Roles.Student.ToString());
             await userManager.CreateAsync(user3, "Password@123");
             await userManager.AddToRoleAsync(user3, Roles.Student.ToString());
+            //end of users to be deleted
             var userInDb = await userManager.FindByEmailAsync(user.Email);
             if (userInDb == null)
             {
