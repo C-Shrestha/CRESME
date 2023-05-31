@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<CRESME.Data.ApplicationUser>
 @{
     ViewData["Title"] = "Instructor Page";
+    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct();
+    IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct();
 }
 
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -50,9 +52,9 @@
                 <div class="w-100"></div>
 
                 <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    @foreach (var item in Model)
+                    @foreach (var term in UniqueTerms)
                     {
-                        <option value="@Html.DisplayFor(modelItem => item.Term)">@Html.DisplayFor(modelItem => item.Term)</option>
+                        <option value=@term>@term</option>
                     }
                 </select>
                 <div class="col-1"></div>
@@ -74,10 +76,10 @@
                 </select>
                 <div class="col-1"></div>
 
-                <select id="Course" name="Course" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%" required>
-                    @foreach (var item in Model)
+                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%" required>
+                    @foreach (var course in UniqueCourses)
                     {
-                        <option value="@Html.DisplayFor(modelItem => item.Course)">@Html.DisplayFor(modelItem => item.Course)</option>
+                        <option value=@course>@course</option>
                     }
                 </select>
                 <div class="w-100"></div>
