@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<CRESME.Data.ApplicationUser>
 ﻿@{
-    ViewData["Title"] = "Create Quiz";
-    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct();
-    IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct();
-}
 
+    ViewData["Title"] = "Create Quiz";
+    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x!=null);
+    IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
+}
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="d-flex align-items-center min-vh-100">
         <div class="container  border p-3 mb-5 bg-white rounded" style="width: 50%;">
