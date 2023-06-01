@@ -560,6 +560,53 @@ namespace CRESME.Controllers
 
 
 
+        // Export all Quizes for Admins
+        public IActionResult ExportAllQuiz()
+        {
+            dbQuiz dbop = new dbQuiz();
+            DataSet ds = dbop.Getrecord();
+            var stream = new MemoryStream();
+
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+
+
+                foreach (DataTable dataTable in ds.Tables)
+                {
+                    // Add a worksheet for each DataTable in the DataSet
+                    IXLWorksheet worksheet = workbook.Worksheets.Add(dataTable.TableName);
+
+                    // Write column headers
+                    for (int i = 0; i < dataTable.Columns.Count; i++)
+                    {
+                        worksheet.Cell(1, i + 1).Value = dataTable.Columns[i].ColumnName;
+                    }
+
+                    // Write data rows
+                    for (int row = 0; row < dataTable.Rows.Count; row++)
+                    {
+                        for (int col = 0; col < dataTable.Columns.Count; col++)
+                        {
+                            worksheet.Cell(row + 2, col + 1).Value = dataTable.Rows[row][col].ToString();
+                        }
+                    }
+                }
+
+
+                workbook.SaveAs(stream);
+            }
+
+            stream.Position = 0;
+            string excelname = $"List_of_Quizes.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+        }
+
+
+
+
+
+
+
     }// end Admin Controller
 
 }// CRESME.Controller
