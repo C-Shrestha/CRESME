@@ -439,7 +439,19 @@ namespace CRESME.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }
 
+        
 
+        // GET: List All Quizes for Admin account 
+        public async Task<IActionResult> ListAllQuizes()
+        {
+            return _context.Users != null ?
+
+                        /*View(await _userManager.Users.ToListAsync()) :*/
+
+                        View(await _context.Quiz.ToListAsync()) :
+
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
 
 
 
