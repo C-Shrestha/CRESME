@@ -248,7 +248,7 @@ namespace CRESME.Controllers
 
 
 
-            return View("CreateQuiz");
+            return View("CreateQuiz", _context.Users.ToList());
         }
 
         public string UploadImagetoFile(IFormFile ImageUpload) { //make this async
