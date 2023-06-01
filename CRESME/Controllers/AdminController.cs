@@ -400,6 +400,7 @@ namespace CRESME.Controllers
         }
 */
 
+       // Export List of Users for Admin
         public IActionResult ExportExcel()
         {
             db dbop = new db();
@@ -441,6 +442,11 @@ namespace CRESME.Controllers
         }
 
         
+
+        /*--------------------------All the functions below here are listed for Quizes----------------------------------*/
+
+
+
 
         // GET: List All Quizes for Admin account 
         public async Task<IActionResult> ListAllQuizes()
