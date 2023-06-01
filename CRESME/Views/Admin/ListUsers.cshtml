@@ -23,7 +23,7 @@
 
 <form asp-action="ExportExcel">
     <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-file-arrow-down"></i>
        New Export Excel
     </button>
 </form>
@@ -33,7 +33,7 @@
 
 <form asp-action="CreateUsers">
     <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-square-plus"></i>
        Create New
     </button>
 </form>
@@ -73,6 +73,19 @@
                         @Html.DisplayNameFor(model => model.Role)
                     </th>
 
+                    <th>
+                        @Html.DisplayNameFor(model => model.Block)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Course)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Term)
+                    </th>
+
+
 
                     @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
                     <th></th>
@@ -99,6 +112,20 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Role)
                         </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Block)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Term)
+                        </td>
+
+                        
 
 
                         <td>
