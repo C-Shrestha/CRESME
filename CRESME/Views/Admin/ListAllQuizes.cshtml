@@ -12,10 +12,10 @@
 <br />
 
 
-<form asp-action="DeleteAll" onclick="return confirm('Are you sure you want to DELETE ALL the users?')">
+<form asp-action="DeleteAllQuizes" onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')">
                                 <button type="submit" class="btn btn-md btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
-                                    Delete All Users
+                                    Delete All Quizes
                                 </button>
 </form>
 
@@ -31,15 +31,7 @@
         <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.UserName)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Role)
+                        @Html.DisplayNameFor(model => model.QuizName)
                     </th>
 
                     <th>
@@ -52,6 +44,18 @@
 
                     <th>
                         @Html.DisplayNameFor(model => model.Term)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateCreated)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
                     </th>
 
 
@@ -68,24 +72,17 @@
 
 
             <tbody>
+
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Role)
+                            @Html.DisplayFor(modelItem => item.QuizName)
                         </td>
 
                         <td>
                             @Html.DisplayFor(modelItem => item.Block)
                         </td>
-
                         <td>
                             @Html.DisplayFor(modelItem => item.Course)
                         </td>
@@ -94,11 +91,23 @@
                             @Html.DisplayFor(modelItem => item.Term)
                         </td>
 
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+
                         
 
 
                         <td>
-                            <form asp-action="EditUsers" asp-route-id="@item.Id" method="post">
+                        <form asp-asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizName="@item.QuizName">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-user-pen"></i>
                                     Edit
@@ -108,7 +117,7 @@
 
 
                         <td>
-                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
+                        <form asp-asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizName="@item.QuizName" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="fa-solid fa-trash-can"></i>
                                     Delete

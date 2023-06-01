@@ -2,6 +2,7 @@
 using CRESME.Constants;
 using CRESME.Data;
 using CRESME.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
@@ -453,6 +454,105 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
+        // GET: Wdit Quiz
+        public IActionResult EditQuiz(string QuizName)
+        {
+
+            return View(_context.Quiz.Find(QuizName));
+
+        }
+
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateQuiz(string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
+        {
+            
+
+            var quiz = await _context.Quiz.FindAsync(QuizName);
+            if (quiz != null)
+            {
+                quiz.QuizName = QuizName;
+                quiz.Block = Block;
+                quiz.Course = Course;
+                quiz.Term = Term;
+                quiz.DateCreated = DateCreated;
+                quiz.StartDate = StartDate;
+                quiz.EndDate = EndDate;
+
+
+
+                /*IdentityResult result = await _userManager.UpdateAsync(user);
+
+                IdentityResult result = await _context.Quiz.Update(quiz); */
+
+
+                 _context.SaveChanges();
+
+                return RedirectToAction("ListAllQuizes");
+
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+
+            return RedirectToAction("CreateAccounts");
+        }
+
+        //POST:Delete
+        [HttpPost]
+        public async Task<IActionResult> DeleteQuiz(string QuizName)
+        {
+            
+
+            var quiz =  _context.Quiz.Find(QuizName);
+
+
+            if (quiz != null)
+            {
+                _context.Remove(quiz);
+                _context.SaveChanges();
+
+                return RedirectToAction("ListAllQuizes");
+
+            }
+            
+
+            return RedirectToAction("CreateAccounts");
+        }
+
+
+        //POST:DeleteAll
+        [HttpPost]
+        public async Task<IActionResult> DeleteAllQuizes()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            var quizes = await _context.Quiz.ToListAsync();
+            if (quizes != null)
+            {
+
+                foreach (var item in quizes)
+                {
+                   
+                   _context.Remove(item);
+                    
+
+                }
+
+                _context.SaveChanges();
+
+
+            }
+
+            /* else
+             {
+                 ModelState.AddModelError("", "User Not Found");
+             }*/
+
+            return RedirectToAction("ListUsers");
+
+        }
 
 
 
