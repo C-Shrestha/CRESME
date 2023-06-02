@@ -175,7 +175,13 @@ namespace CRESME.Controllers
                             LockoutEnabled = true,
                             AccessFailedCount = 0,
                             Name = worksheet.Cell(row, 16).Value.ToString().Trim(),
-                            Role = worksheet.Cell(row, 17).Value.ToString().Trim()
+                            Role = worksheet.Cell(row, 17).Value.ToString().Trim(),
+                            Block = worksheet.Cell(row, 18).Value.ToString().Trim(),
+                            Course = worksheet.Cell(row, 19).Value.ToString().Trim(),
+                            Term = worksheet.Cell(row, 20).Value.ToString().Trim()
+
+
+
 
                         };
                         var result = await _userManager.CreateAsync(user, PasswordHash);
@@ -226,7 +232,7 @@ namespace CRESME.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(string Id, string Name, string UserName)
+        public async Task<IActionResult> Update(string Id, string Name, string UserName, string Block, string Course, string Term)
         {
             var user = await _userManager.FindByIdAsync(Id);
             if (user != null)
@@ -234,6 +240,9 @@ namespace CRESME.Controllers
                 user.UserName = UserName;
                 user.Email = UserName; 
                 user.Name = Name;
+                user.Block = Block;
+                user.Course = Course;
+                user.Term = Term;
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
@@ -259,7 +268,7 @@ namespace CRESME.Controllers
         // POST: Tests/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name)
+        public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name, string Block, string Course, string Term)
         {
 
   
@@ -286,6 +295,9 @@ namespace CRESME.Controllers
                 LockoutEnabled = true,
                 AccessFailedCount = 0,
                 Role = Role,
+                Block = Block,
+                Course = Course,
+                Term = Term
 
 
             };
