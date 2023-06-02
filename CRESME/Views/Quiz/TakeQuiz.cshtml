@@ -41,13 +41,51 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="container-fluid border m-3 w-auto mw-50" style="height:670px;">
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <div class="text-center">
+        @if (Model.Image0 != null && (Model.ImagePos0 == "1"))
+        {
+            <img src="@Model.Image0">
+        }
+        else if (Model.Image1 != null && (Model.ImagePos1 == "1"))
+        {
+            <img src="@Model.Image1">
+        }
+        else if (Model.Image2 != null && (Model.ImagePos2 == "1"))
+        {
+            <img src="@Model.Image2">
+        }
+        else if (Model.Image3 != null && (Model.ImagePos3 == "1"))
+        {
+            <img src="@Model.Image3">
+        }
+        else if (Model.Image4 != null && (Model.ImagePos4 == "1"))
+        {
+            <img src="@Model.Image4">
+        }
+        else if (Model.Image5 != null && (Model.ImagePos5 == "1"))
+        {
+            <img src="@Model.Image5">
+        }
+        else if (Model.Image6 != null && (Model.ImagePos6 == "1"))
+        {
+            <img src="@Model.Image6">
+        }
+        else if (Model.Image7 != null && (Model.ImagePos7 == "1"))
+        {
+            <img src="@Model.Image7">
+        }
+        else if (Model.Image8 != null && (Model.ImagePos8 == "1"))
+        {
+            <img src="@Model.Image8">
+        }
+        else if (Model.Image9 != null && (Model.ImagePos9 == "1"))
+        {
+            <img src="@Model.Image9">
+        }
+    </div>
     <h4 class="text-center">
         Introduction:
         <div id="introduction">@Html.DisplayFor(model => model.PatientIntro)</div>
-        
-        
-
     </h4>
     <br /><br />
     <h4 class="text-center">
@@ -251,175 +289,134 @@
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1" ondragend="sort('drop-zone1')">
                         <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1" ondragend="dragend(event);">
                             <div>
-                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                     expand
                                 </button>
                             </div><!-- Button trigger modal -->
-
-                            <p>
-                                PE (4)
-                                <br />
-                                T: 40.0; BP 138/85;
-                                <br />
-                                HR 99; RR 10
-                                <br />
-                                CV: normal S1, S2, systolic and diastolic scratchy sound over the precordium
-                                <br />
-                                lungs: normal
-                                PE (4)
-                                <br />
-                                T: 40.0; BP 138/85;
-                                <br />
-                                HR 99; RR 10
-                                <br />
-                                CV: normal S1, S2, systolic andb diastolic scratchy sound over the precordium
-                                <br />
-                                lungs: normal
-                                PE (4)
-                                <br />
-                                T: 40.0; BP 138/85;
-                                <br />
-                                HR 99; RR 10
-                                <br />
-                                CV: normal S1, S2, systolic and diastolic scratchy sound over the precordium
-                                <br />
-                                lungs: normal
-                            </p>
+                            <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                         </div>
                     </div>
-
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ondragend="dragend(event);">2</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
+                        </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ondragend="dragend(event);">3</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+                        </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ondragend="dragend(event);">4</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                        </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ondragend="dragend(event);">5</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                        </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ondragend="dragend(event);">6</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                        </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ondragend="dragend(event);">7</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                        </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ondragend="dragend(event);">8</div>
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                    expand
+                                </button>
+                            </div>
+                            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="row">
                     <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                        @if (Model.Image0 != null && (Model.ImagePos0 == "1"))
-                        {
-                            <img src=Model.image0>
-                        }
-                        else if (Model.Image1 != null && (Model.ImagePos1 == "1"))
-                        {
-                            <img src=Model.image1>
-                        }
-                        else if (Model.Image2 != null && (Model.ImagePos2 == "1"))
-                        {
-                            <img src=Model.image2>
-                        }
-                        else if (Model.Image3 != null && (Model.ImagePos3 == "1"))
-                        {
-                            <img src=Model.image3>
-                        }
-                        else if (Model.Image4 != null && (Model.ImagePos4 == "1"))
-                        {
-                            <img src=Model.image4>
-                        }
-                        else if (Model.Image5 != null && (Model.ImagePos5 == "1"))
-                        {
-                            <img src=Model.image5>
-                        }
-                        else if (Model.Image6 != null && (Model.ImagePos6 == "1"))
-                        {
-                            <img src=Model.image6>
-                        }
-                        else if (Model.Image7 != null && (Model.ImagePos7 == "1"))
-                        {
-                            <img src=Model.image7>
-                        }
-                        else if (Model.Image8 != null && (Model.ImagePos8 == "1"))
-                        {
-                            <img src=Model.image8>
-                        }
-                        else if (Model.Image9 != null && (Model.ImagePos9 == "1"))
-                        {
-                            <img src=Model.image9>
-                        }
+                        @if (column1 == 1){
+                            <span style="white-space: pre-line">@Model.HistoryA</span>}
+                        else if (column1 == 2){
+                            <span style="white-space: pre-line">@Model.HistoryB</span>}
+                        else if (column1 == 3){
+                            <span style="white-space: pre-line">@Model.HistoryC</span>}
+                        else if (column1 == 4){
+                            <span style="white-space: pre-line">@Model.HistoryD</span>}
+                        else if (column1 == 5){
+                            <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
                     <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                        @if (column2 == 1)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryA</span>
-                        }
-                        else if (column2 == 2)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryB</span>
-                        }
-                        else if (column2 == 3)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryC</span>
-                        }
-                        else if (column2 == 4)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryD</span>
-                        }
-                        else if (column2 == 5)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryE</span>
-                        }
+                        @if (column2 == 1){
+                            <span style="white-space: pre-line">@Model.HistoryA</span>}
+                        else if (column2 == 2){
+                            <span style="white-space: pre-line">@Model.HistoryB</span>}
+                        else if (column2 == 3){
+                            <span style="white-space: pre-line">@Model.HistoryC</span>}
+                        else if (column2 == 4){
+                            <span style="white-space: pre-line">@Model.HistoryD</span>}
+                        else if (column2 == 5){
+                            <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
                     <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                        @if (column3 == 1)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryA</span>
-                        }
-                        else if (column3 == 2)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryB</span>
-                        }
-                        else if (column3 == 3)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryC</span>
-                        }
-                        else if (column3 == 4)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryD</span>
-                        }
-                        else if (column3 == 5)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryE</span>
-                        }
+                        @if (column3 == 1){
+                            <span style="white-space: pre-line">@Model.HistoryA</span>}
+                        else if (column3 == 2){
+                            <span style="white-space: pre-line">@Model.HistoryB</span>}
+                        else if (column3 == 3){
+                            <span style="white-space: pre-line">@Model.HistoryC</span>}
+                        else if (column3 == 4){
+                            <span style="white-space: pre-line">@Model.HistoryD</span>}
+                        else if (column3 == 5){
+                            <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
                     <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                        @if (column4 == 1)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryA</span>
-                        }
-                        else if (column4 == 2)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryB</span>
-                        }
-                        else if (column4 == 3)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryC</span>
-                        }
-                        else if (column4 == 4)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryD</span>
-                        }
-                        else if (column4 == 5)
-                        {
-                            <span style="white-space: pre-line">@Model.HistoryE</span>
-                        }
+                        @if (column4 == 1){
+                            <span style="white-space: pre-line">@Model.HistoryA</span>}
+                        else if (column4 == 2){
+                            <span style="white-space: pre-line">@Model.HistoryB</span>}
+                        else if (column4 == 3){
+                            <span style="white-space: pre-line">@Model.HistoryC</span>}
+                        else if (column4 == 4){
+                            <span style="white-space: pre-line">@Model.HistoryD</span>}
+                        else if (column4 == 5){
+                            <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
                 </div>
                 <div class="row">
@@ -445,11 +442,11 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- PhysicalA -->
+<div class="modal fade" id="staticBackdropPhysicalA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @Model.PhysicalA
+            <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -457,5 +454,86 @@
     </div>
 </div>
 
+<!-- PhysicalB -->
+<div class="modal fade" id="staticBackdropPhysicalB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- PhysicalC -->
+<div class="modal fade" id="staticBackdropPhysicalC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- PhysicalD -->
+<div class="modal fade" id="staticBackdropPhysicalD" data-bs-backdrop="staticPhysicalD" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DiagnosticA -->
+<div class="modal fade" id="staticBackdropDiagnosticA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DiagnosticB -->
+<div class="modal fade" id="staticBackdropDiagnosticB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DiagnosticC -->
+<div class="modal fade" id="staticBackdropDiagnosticC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DiagnosticD -->
+<div class="modal fade" id="staticBackdropDiagnosticD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
