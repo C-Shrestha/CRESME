@@ -40,35 +40,13 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-
-
-
-<div class="container-fluid border sticky-top m-3 w-auto mw-50" style="height:670px;">
+<div class="container-fluid border m-3 w-auto mw-50" style="height:670px;">
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     <h4 class="text-center">
         Introduction:
-        <div id="introduction">@Html.DisplayFor(model => model.PatientIntro) @column1 @column2 @column3 @column4 @column5</div>
+        <div id="introduction">@Html.DisplayFor(model => model.PatientIntro)</div>
         
-        @if (column1==1)
-        {
-            <span style="white-space: pre-line">@Model.HistoryA</span>
-        }
-        else if (column1 == 2)
-        {
-            <span style="white-space: pre-line">@Model.HistoryB</span>
-        }
-        else if (column1 == 3)
-        {
-            <span style="white-space: pre-line">@Model.HistoryC</span>
-        }
-        else if (column1 == 4)
-        {
-            <span style="white-space: pre-line">@Model.HistoryD</span>
-        }
-        else if (column1 == 5)
-        {
-            <span style="white-space: pre-line">@Model.HistoryE</span>
-        }
+        
 
     </h4>
     <br /><br />
@@ -83,3 +61,401 @@
         </p>
     </h4>
 </div>
+
+
+
+<style>
+    .bable.draggable-word {
+        background-color: red;
+        padding: 0px;
+        border: 1px solid green;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-collapse: collapse;
+        border-spacing: 0;
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+        width: 100%;
+        height: 50px;
+    }
+
+    .drop-zone {
+        height: 190px;
+        border: 3px solid #224163;
+        background-color: #AABACC;
+        margin-top: 15px;
+        text-align: center;
+        overflow: auto;
+    }
+
+    [draggable=true] {
+        cursor: default;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .bable {
+        border-color: #600;
+        border-width: 0 0 1px 1px;
+        border-style: solid;
+    }
+
+    
+
+    .box {
+        border: 3px solid #765;
+        background-color: #ddd;
+        border-radius: .5em;
+        padding: 10px;
+        cursor: move;
+    }
+
+        .box.over {
+            border: 3px dotted #666;
+        }
+
+    .product {
+        height: 110px;
+        float: left;
+        border: 2px solid #666666;
+        background-color: white;
+        text-align: center;
+        cursor: move;
+        overflow: auto;
+    }
+
+    .bag {
+        height: 50px;
+        text-align: center;
+    }
+    /*
+    [class*="col"] {
+        padding: 1rem;
+        background-color: #224163;
+        border: 2px solid #fff;
+        color: #fff;
+        }*/
+</style>
+
+<script>
+    var user = "";
+    var multiples = false;
+    var data;
+
+    function dragStartHandler(event, id, zone1) {
+        event.dataTransfer.setData('Object', event.target.id);
+        user = id;
+        multiples = false;
+        data = event.dataTransfer.getData('Object');
+
+        //var zone1 = event.target;
+
+        //console.log(zone1);
+        //console.log(zone1.hasChildNodes());
+        //zone1 = zone1.parentNode;
+        //console.log(zone1)
+        //console.log(zone1.childElementCount);
+        //zone1 = event.dataTransfer.getData('Object');
+        //console.log(zone1)
+        //while (zone1.id.substring(0, 10) !== 'drop-zone5') {
+        //    zone1 = zone1.parentNode;
+        //}
+
+        //console.log("Checking if element has child nodes: " + data.hasChildNodes())
+        // multipleDrag(data,"false");
+
+    }
+    function dropHandler(event) {
+        preventDefaults(event);
+        if (!event.target) {
+            // alert('we');
+            event.target = event.srcElement;
+        }
+        var dropzone = event.target;
+        console.log("Drop")
+        console.log(data)
+        data = event.dataTransfer.getData('Object');
+        console.log(data)
+        while (dropzone.id.substring(0, 9) !== 'drop-zone') {
+            dropzone = dropzone.parentNode;
+        }
+        console.log(dropzone);
+        console.log(dropzone.hasChildNodes());
+        console.log(document.getElementById("drop-zone-yellow-box1"));
+        console.log(document.getElementById("drop-zone-yellow-box1").childElementCount);
+        console.log(dropzone.id.substring(10, 22))
+        console.log(data.substring(1, 12))
+        if (dropzone.childElementCount == false && (dropzone.id.substring(10, 22) == data.substring(1, 12) || dropzone.id.substring(9, 16) == data.substring(0, 7))) {
+            dropzone.appendChild(document.getElementById(data));
+            //console.log(dropzone)
+        }
+
+
+        //data = event.dataTransfer.getData('Object');
+        //event.target.appendChild(document.getElementById(data));
+        document.getElementById(data).selectedIndex = -1;
+        //alert(user);
+    }
+
+    function dragOverHandler(event) {
+        preventDefaults(event);
+    }
+
+    function preventDefaults(event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        }
+
+        try {
+            event.returnValue = false;
+        }
+        catch (exception) { }
+    }
+
+
+    function dragend(event) {
+        //    multipleDrag(data,"true");
+
+    }
+
+    function multipleDrag(data, state) {
+        document.getElementById(data).setAttribute("draggable", state);
+    }
+
+
+    function sort(uList) {
+        var listItem = document.getElementById(uList).getElementsByTagName('td');
+        var listLength = listItem.length;
+        var list = [];
+
+        for (var i = 0; i < listItem.length; i++) {
+            list[i] = listItem[i].id.substring(1, listItem[i].id.length);
+            list.sort(function (a, b) { return parseInt(a) > parseInt(b) });
+        }
+        for (var i = 0; i < listLength; i++) {
+            listItem[i].firstChild.nodeValue = list[i];
+        }
+    }
+</script>
+<div class="container-fluid border rounded">
+    <div class="container-fluid border rounded">
+        <div class="row bg-white">
+            <div class="col-4">
+                <div class="row">
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1" ondragend="sort('drop-zone1')">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1" ondragend="dragend(event);">
+                            <div>
+                                <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    expand
+                                </button>
+                            </div><!-- Button trigger modal -->
+
+                            <p>
+                                PE (4)
+                                <br />
+                                T: 40.0; BP 138/85;
+                                <br />
+                                HR 99; RR 10
+                                <br />
+                                CV: normal S1, S2, systolic and diastolic scratchy sound over the precordium
+                                <br />
+                                lungs: normal
+                                PE (4)
+                                <br />
+                                T: 40.0; BP 138/85;
+                                <br />
+                                HR 99; RR 10
+                                <br />
+                                CV: normal S1, S2, systolic andb diastolic scratchy sound over the precordium
+                                <br />
+                                lungs: normal
+                                PE (4)
+                                <br />
+                                T: 40.0; BP 138/85;
+                                <br />
+                                HR 99; RR 10
+                                <br />
+                                CV: normal S1, S2, systolic and diastolic scratchy sound over the precordium
+                                <br />
+                                lungs: normal
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ondragend="dragend(event);">2</div>
+                    </div>
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ondragend="dragend(event);">3</div>
+                    </div>
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ondragend="dragend(event);">4</div>
+                    </div>
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ondragend="dragend(event);">5</div>
+                    </div>
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ondragend="dragend(event);">6</div>
+                    </div>
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ondragend="dragend(event);">7</div>
+                    </div>
+                    <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4">
+                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ondragend="dragend(event);">8</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        @if (Model.Image0 != null && (Model.ImagePos0 == "1"))
+                        {
+                            <img src=Model.image0>
+                        }
+                        else if (Model.Image1 != null && (Model.ImagePos1 == "1"))
+                        {
+                            <img src=Model.image1>
+                        }
+                        else if (Model.Image2 != null && (Model.ImagePos2 == "1"))
+                        {
+                            <img src=Model.image2>
+                        }
+                        else if (Model.Image3 != null && (Model.ImagePos3 == "1"))
+                        {
+                            <img src=Model.image3>
+                        }
+                        else if (Model.Image4 != null && (Model.ImagePos4 == "1"))
+                        {
+                            <img src=Model.image4>
+                        }
+                        else if (Model.Image5 != null && (Model.ImagePos5 == "1"))
+                        {
+                            <img src=Model.image5>
+                        }
+                        else if (Model.Image6 != null && (Model.ImagePos6 == "1"))
+                        {
+                            <img src=Model.image6>
+                        }
+                        else if (Model.Image7 != null && (Model.ImagePos7 == "1"))
+                        {
+                            <img src=Model.image7>
+                        }
+                        else if (Model.Image8 != null && (Model.ImagePos8 == "1"))
+                        {
+                            <img src=Model.image8>
+                        }
+                        else if (Model.Image9 != null && (Model.ImagePos9 == "1"))
+                        {
+                            <img src=Model.image9>
+                        }
+                    </div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        @if (column2 == 1)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryA</span>
+                        }
+                        else if (column2 == 2)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryB</span>
+                        }
+                        else if (column2 == 3)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryC</span>
+                        }
+                        else if (column2 == 4)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryD</span>
+                        }
+                        else if (column2 == 5)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryE</span>
+                        }
+                    </div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        @if (column3 == 1)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryA</span>
+                        }
+                        else if (column3 == 2)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryB</span>
+                        }
+                        else if (column3 == 3)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryC</span>
+                        }
+                        else if (column3 == 4)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryD</span>
+                        }
+                        else if (column3 == 5)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryE</span>
+                        }
+                    </div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        @if (column4 == 1)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryA</span>
+                        }
+                        else if (column4 == 2)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryB</span>
+                        }
+                        else if (column4 == 3)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryC</span>
+                        }
+                        else if (column4 == 4)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryD</span>
+                        }
+                        else if (column4 == 5)
+                        {
+                            <span style="white-space: pre-line">@Model.HistoryE</span>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
+                </div>
+                <div class="row">
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
+                </div>
+                <div class="row">
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Model.PhysicalA
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
