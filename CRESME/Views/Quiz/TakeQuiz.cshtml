@@ -1,6 +1,42 @@
 ﻿@model CRESME.Data.Quiz
 @{
     ViewData["Title"] = "Quiz";
+
+    Random rand = new Random();
+    int column1 = 0;
+    int column2 = 0;
+    int column3 = 0;
+    int column4 = 0;
+    int column5 = 0;
+    bool Done = false;
+    int numLoops = 0;
+    while(!Done || numLoops>9999){  //assigns each columnx variable a unique random number from 1-4 or 1-5 depending on the column count
+        numLoops++;
+        if (column1 == 0)
+        {
+            column1 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else if (column2 == 0 || column2 == column1)
+        {
+            column2 = Model.NumColumns == 4 ? rand.Next(1,5) : rand.Next(1,6);
+        }
+        else if (column3 == 0 || (column3 == column2 || column3 == column1))
+        {
+            column3 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else if (column4 == 0 || (column4 == column3 || (column4 ==column2 || column4==column1)))
+        {
+            column4 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else if ((column5 == 0 || (column5 == column4 || (column5 == column3 || (column5 == column2 || column5 == column1)))) && Model.NumColumns == 5)
+        {
+            column5 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else
+        {
+            Done = true;    
+        }
+    }
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -11,7 +47,29 @@
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     <h4 class="text-center">
         Introduction:
-        <div id="introduction">@Html.DisplayFor(model => model.PatientIntro)</div>
+        <div id="introduction">@Html.DisplayFor(model => model.PatientIntro) @column1 @column2 @column3 @column4 @column5</div>
+        
+        @if (column1==1)
+        {
+            <span style="white-space: pre-line">@Model.HistoryA</span>
+        }
+        else if (column1 == 2)
+        {
+            <span style="white-space: pre-line">@Model.HistoryB</span>
+        }
+        else if (column1 == 3)
+        {
+            <span style="white-space: pre-line">@Model.HistoryC</span>
+        }
+        else if (column1 == 4)
+        {
+            <span style="white-space: pre-line">@Model.HistoryD</span>
+        }
+        else if (column1 == 5)
+        {
+            <span style="white-space: pre-line">@Model.HistoryE</span>
+        }
+
     </h4>
     <br /><br />
     <h4 class="text-center">
