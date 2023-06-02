@@ -1,0 +1,92 @@
+﻿@model CRESME.Data.Quiz
+
+@{
+    ViewData["Title"] = "Edit Quiz";
+}
+
+<h1>Edit</h1>
+
+<h4>Edit Quiz</h4>
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Admin" asp-action="UpdateQuiz" method="post" onsubmit="return confirm('Are you sure you want to EDIT this quiz data?');">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="QuizName" class="control-label"></label>
+                <input asp-for="QuizName" class="form-control" />
+                <span asp-validation-for="QuizName" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Block" class="control-label"></label>
+                <input asp-for="Block" class="form-control" />
+                <span asp-validation-for="Block" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Course" class="control-label"></label>
+                <input asp-for="Course" class="form-control" />
+                <span asp-validation-for="Course" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Term" class="control-label"></label>
+                <input asp-for="Term" class="form-control" />
+                <span asp-validation-for="Term" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="DateCreated" class="control-label"></label>
+                <input asp-for="DateCreated" class="form-control" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <br />
+
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+
+            <br />
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListUsers">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

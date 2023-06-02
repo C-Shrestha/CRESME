@@ -2,6 +2,7 @@
 using CRESME.Constants;
 using CRESME.Data;
 using CRESME.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
@@ -399,6 +400,7 @@ namespace CRESME.Controllers
         }
 */
 
+       // Export List of Users for Admin
         public IActionResult ExportExcel()
         {
             db dbop = new db();
@@ -441,6 +443,11 @@ namespace CRESME.Controllers
 
         
 
+        /*--------------------------All the functions below here are listed for Quizes----------------------------------*/
+
+
+
+
         // GET: List All Quizes for Admin account 
         public async Task<IActionResult> ListAllQuizes()
         {
@@ -453,6 +460,152 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
+        // GET: Wdit Quiz
+        public IActionResult EditQuiz(string QuizName)
+        {
+
+            return View(_context.Quiz.Find(QuizName));
+
+        }
+
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateQuiz(string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
+        {
+            
+
+            var quiz = await _context.Quiz.FindAsync(QuizName);
+            if (quiz != null)
+            {
+                quiz.QuizName = QuizName;
+                quiz.Block = Block;
+                quiz.Course = Course;
+                quiz.Term = Term;
+                quiz.DateCreated = DateCreated;
+                quiz.StartDate = StartDate;
+                quiz.EndDate = EndDate;
+
+
+
+                /*IdentityResult result = await _userManager.UpdateAsync(user);
+
+                IdentityResult result = await _context.Quiz.Update(quiz); */
+
+
+                 _context.SaveChanges();
+
+                return RedirectToAction("ListAllQuizes");
+
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+
+            return RedirectToAction("CreateAccounts");
+        }
+
+        //POST:Delete
+        [HttpPost]
+        public async Task<IActionResult> DeleteQuiz(string QuizName)
+        {
+            
+
+            var quiz =  _context.Quiz.Find(QuizName);
+
+
+            if (quiz != null)
+            {
+                _context.Remove(quiz);
+                _context.SaveChanges();
+
+                return RedirectToAction("ListAllQuizes");
+
+            }
+            
+
+            return RedirectToAction("CreateAccounts");
+        }
+
+
+        //POST:DeleteAll
+        [HttpPost]
+        public async Task<IActionResult> DeleteAllQuizes()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            var quizes = await _context.Quiz.ToListAsync();
+            if (quizes != null)
+            {
+
+                foreach (var item in quizes)
+                {
+                   
+                   _context.Remove(item);
+                    
+
+                }
+
+                _context.SaveChanges();
+
+
+            }
+
+            /* else
+             {
+                 ModelState.AddModelError("", "User Not Found");
+             }*/
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+
+
+
+
+
+        // Export all Quizes for Admins
+        public IActionResult ExportAllQuiz()
+        {
+            dbQuiz dbop = new dbQuiz();
+            DataSet ds = dbop.Getrecord();
+            var stream = new MemoryStream();
+
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+
+
+                foreach (DataTable dataTable in ds.Tables)
+                {
+                    // Add a worksheet for each DataTable in the DataSet
+                    IXLWorksheet worksheet = workbook.Worksheets.Add(dataTable.TableName);
+
+                    // Write column headers
+                    for (int i = 0; i < dataTable.Columns.Count; i++)
+                    {
+                        worksheet.Cell(1, i + 1).Value = dataTable.Columns[i].ColumnName;
+                    }
+
+                    // Write data rows
+                    for (int row = 0; row < dataTable.Rows.Count; row++)
+                    {
+                        for (int col = 0; col < dataTable.Columns.Count; col++)
+                        {
+                            worksheet.Cell(row + 2, col + 1).Value = dataTable.Rows[row][col].ToString();
+                        }
+                    }
+                }
+
+
+                workbook.SaveAs(stream);
+            }
+
+            stream.Position = 0;
+            string excelname = $"List_of_Quizes.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+        }
 
 
 
