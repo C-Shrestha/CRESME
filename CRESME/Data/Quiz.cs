@@ -7,8 +7,12 @@ namespace CRESME.Data
     [Table("Quiz")]
     public class Quiz
     {
-        [Required]
+        
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int QuizId { get; set; }
+
+        [Required]
         [BindProperty]
         public string QuizName { get; set; } = "";
 
