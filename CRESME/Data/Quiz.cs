@@ -14,7 +14,7 @@ namespace CRESME.Data
 
         [Required]
         [BindProperty]
-        public int NumColumns { get; set; }
+        public int NumColumns { get; set; } = 4;
 
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
@@ -27,9 +27,9 @@ namespace CRESME.Data
         [BindProperty]
         public DateTime EndDate { get; set; }
 
-        public string Published { get; set; } = "";
+        public string Published { get; set; } = "false";
 
-        public string FeedBackEnabled { get; set; } = "";
+        public string FeedBackEnabled { get; set; } = "false";
 
         [BindProperty]
         public string? NIDAssignment { get; set; } = ""; // comma seperated NID
