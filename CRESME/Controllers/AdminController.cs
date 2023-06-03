@@ -461,10 +461,10 @@ namespace CRESME.Controllers
         }
 
         // GET: Wdit Quiz
-        public IActionResult EditQuiz(string QuizName)
+        public IActionResult EditQuiz(int QuizId)
         {
 
-            return View(_context.Quiz.Find(QuizName));
+            return View(_context.Quiz.Find(QuizId));
 
         }
 
@@ -472,11 +472,11 @@ namespace CRESME.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateQuiz(string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
+        public async Task<IActionResult> UpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
         {
             
 
-            var quiz = await _context.Quiz.FindAsync(QuizName);
+            var quiz = await _context.Quiz.FindAsync(QuizId);
             if (quiz != null)
             {
                 quiz.QuizName = QuizName;
