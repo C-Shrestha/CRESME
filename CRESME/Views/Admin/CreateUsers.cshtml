@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" onsubmit="return confirm('Are you sure you want to CREATE a new user?');">
+        <form asp-controller="Admin" asp-action="Create" method="post" onsubmit="return confirm('Are you sure you want to CREATE a new user?');">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -31,6 +31,30 @@
             </div>
 
             <br />   
+
+            <div class="form-group">
+                <label asp-for="Block" class="control-label"></label>
+                <input asp-for="Block" class="form-control" />
+                <span asp-validation-for="Block" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="Course" class="control-label"></label>
+                <input asp-for="Course" class="form-control" />
+                <span asp-validation-for="Course" class="text-danger"></span>
+            </div>
+
+            <br /> 
+
+            <div class="form-group">
+                <label asp-for="Term" class="control-label"></label>
+                <input asp-for="Term" class="form-control" />
+                <span asp-validation-for="Term" class="text-danger"></span>
+            </div>
+
+            <br />
 
             <div class="form-group">
                 <label for="Password" class="control-label">Password</label>

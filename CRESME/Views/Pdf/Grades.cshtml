@@ -10,9 +10,9 @@
 <hr />
 
 
-<form asp-action="CreatePDF" asp-controller = "Pdf">
+<form asp-action="GeneratePDF" asp-controller="Pdf">
     <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-file-pdf"></i>
        Create PDF
     </button>
 </form>
@@ -21,12 +21,12 @@
 <br />
 
 
-<div>
+@*<div>
     <a asp-controller = "Pdf" asp-action="GeneratePDF">Generate Quiz PDF</a>
 </div>
 
 <br />
-<br />
+<br />*@
 
 @*<div class="row">
     <div class="col-md-4">

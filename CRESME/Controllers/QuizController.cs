@@ -25,7 +25,7 @@ namespace CRESME.Controllers
             return View(_context.Users.ToList());
         }
 
-     
+
 
         public IActionResult DisplayQuizzes()
         {
@@ -43,7 +43,7 @@ namespace CRESME.Controllers
             return View(quiz);            
         }
 
-        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]  
@@ -243,9 +243,6 @@ namespace CRESME.Controllers
             }
 
 
-
-
-
             if (ModelState.IsValid)
             {
                 _context.Add(quiz);
@@ -271,6 +268,11 @@ namespace CRESME.Controllers
             }
 
                 return "/uploadedImages/" + newImageName;
+        }
+
+        public ActionResult SubmitAttempt(Attempt attempt) {
+
+            return View("DisplayQuizzes");
         }
 
     }

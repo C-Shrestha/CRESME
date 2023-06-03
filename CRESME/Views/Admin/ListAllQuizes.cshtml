@@ -1,47 +1,41 @@
-﻿@model IEnumerable<CRESME.Data.ApplicationUser>
+﻿
+
+@model IEnumerable<CRESME.Data.Quiz>
 
 @{
-    ViewData["Title"] = "List Users";
+    ViewData["Title"] = "List All Quizes";
 }
 
-<h1>List all Users</h1>
+<h1>List all Quizes for Admin account</h1>
 
 <br />
 <br />
 
-
-<br />
-<br />
-
-<form asp-controller="Admin"  asp-action="ExportExcel">
+<form asp-controller="Admin" asp-action="ExportAllQuiz">
     <button type="submit" class="btn btn-md btn-primary">
         <i class="fa-solid fa-file-arrow-down"></i>
-       Export List of Users
+        Export List of Quizes
     </button>
 </form>
 
 <br />
 
 
-<form asp-controller="Admin"  asp-action="CreateUsers">
-    <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-square-plus"></i>
-       Create New
-    </button>
-</form>
-
-
-<br />
-
-
-
-<form asp-controller="Admin"  asp-action="DeleteAll" onclick="return confirm('Are you sure you want to DELETE ALL the users?')">
+<form asp-controller="Admin" asp-action="DeleteAllQuizes" onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')">
                                 <button type="submit" class="btn btn-md btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
-                                    Delete All Users
+                                    Delete All Quizes
                                 </button>
 </form>
 
+<br />
+
+<form asp-controller="Quiz" asp-action="CreateQuiz">
+    <button type="submit" class="btn btn-md btn-primary">
+        <i class="fa-solid fa-square-plus"></i>
+        Create New Quiz
+    </button>
+</form>
 <br />
 <br />
 <br />
@@ -54,15 +48,7 @@
         <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.UserName)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Role)
+                        @Html.DisplayNameFor(model => model.QuizName)
                     </th>
 
                     <th>
@@ -75,6 +61,18 @@
 
                     <th>
                         @Html.DisplayNameFor(model => model.Term)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateCreated)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
                     </th>
 
 
@@ -91,24 +89,17 @@
 
 
             <tbody>
+
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Role)
+                            @Html.DisplayFor(modelItem => item.QuizName)
                         </td>
 
                         <td>
                             @Html.DisplayFor(modelItem => item.Block)
                         </td>
-
                         <td>
                             @Html.DisplayFor(modelItem => item.Course)
                         </td>
@@ -117,11 +108,23 @@
                             @Html.DisplayFor(modelItem => item.Term)
                         </td>
 
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+
                         
 
 
                         <td>
-                            <form asp-controller="Admin"   asp-action="EditUsers" asp-route-id="@item.Id" method="post">
+                        <form asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizId="@item.QuizId">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-user-pen"></i>
                                     Edit
@@ -131,7 +134,7 @@
 
 
                         <td>
-                            <form asp-controller="Admin" asp-action="Delete" asp-route-id="@item.Id" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
+                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="fa-solid fa-trash-can"></i>
                                     Delete
@@ -150,7 +153,7 @@
 
     </div>
 
-@*</div>*@
+
 
 
 
