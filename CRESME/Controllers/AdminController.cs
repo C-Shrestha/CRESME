@@ -532,7 +532,6 @@ namespace CRESME.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteAllQuizes()
         {
-            var users = await _userManager.Users.ToListAsync();
 
             var quizes = await _context.Quiz.ToListAsync();
             if (quizes != null)
