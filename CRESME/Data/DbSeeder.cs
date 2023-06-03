@@ -1,5 +1,6 @@
 ﻿using CRESME.Constants;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection.Metadata;
 
 namespace CRESME.Data
 {
@@ -26,13 +27,7 @@ namespace CRESME.Data
                 PhoneNumberConfirmed = true
 
             };
-            //Delete these users after UI create users 
-
-           
             
-    
-
-            //end of users to be deleted
             var userInDb = await userManager.FindByEmailAsync(user.Email);
             if (userInDb == null)
             {
