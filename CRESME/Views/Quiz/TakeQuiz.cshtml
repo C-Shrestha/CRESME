@@ -109,7 +109,7 @@
         border: 1px solid green;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
-        -khtml-user-select: none;
+        -khtml-user-select: auto;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
@@ -154,15 +154,30 @@
         cursor: move;
     }
 
-        .box.over {
-            border: 3px dotted #666;
-        }
+    .box.over {
+        border: 3px dotted #666;
+    }
+
+    .background-blue {
+        background-color: #9dc3e6;
+    }
+
+    .background-yellow {
+        background-color: #ffe699;
+    }
+
+    .background-purple {
+        background-color: #d7bcea;
+    }
+
+    .background-green {
+        background-color: #a5e9aa;
+    }
 
     .product {
         height: 110px;
         float: left;
         border: 2px solid #666666;
-        background-color: white;
         text-align: center;
         cursor: move;
         overflow: auto;
@@ -287,7 +302,7 @@
             <div class="col-4">
                 <div class="row">
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1" ondragend="sort('drop-zone1')">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1" ondragend="dragend(event);">
+                        <div class="background-yellow product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                     expand
@@ -297,7 +312,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ondragend="dragend(event);">
+                        <div class="background-yellow product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                     expand
@@ -307,7 +322,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ondragend="dragend(event);">
+                        <div class="background-yellow  product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                     expand
@@ -317,7 +332,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ondragend="dragend(event);">
+                        <div class="background-yellow product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                     expand
@@ -327,7 +342,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ondragend="dragend(event);">
+                        <div class="background-purple product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                     expand
@@ -337,7 +352,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ondragend="dragend(event);">
+                        <div class="background-purple product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                     expand
@@ -347,7 +362,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ondragend="dragend(event);">
+                        <div class="background-purple product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                     expand
@@ -357,7 +372,7 @@
                         </div>
                     </div>
                     <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4">
-                        <div class="product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ondragend="dragend(event);">
+                        <div class="background-purple product col-12" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ondragend="dragend(event);">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                     expand
@@ -370,7 +385,7 @@
             </div>
             <div class="col">
                 <div class="row">
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                    <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                         @if (column1 == 1){
                             <span style="white-space: pre-line">@Model.HistoryA</span>}
                         else if (column1 == 2){
@@ -382,7 +397,7 @@
                         else if (column1 == 5){
                             <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                    <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                         @if (column2 == 1){
                             <span style="white-space: pre-line">@Model.HistoryA</span>}
                         else if (column2 == 2){
@@ -394,7 +409,7 @@
                         else if (column2 == 5){
                             <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                    <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                         @if (column3 == 1){
                             <span style="white-space: pre-line">@Model.HistoryA</span>}
                         else if (column3 == 2){
@@ -406,7 +421,7 @@
                         else if (column3 == 5){
                             <span style="white-space: pre-line">@Model.HistoryE</span>}
                     </div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                    <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                         @if (column4 == 1){
                             <span style="white-space: pre-line">@Model.HistoryA</span>}
                         else if (column4 == 2){
@@ -420,22 +435,22 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
+                    <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
+                    <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
+                    <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
+                    <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
                 </div>
                 <div class="row">
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
+                    <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
+                    <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
+                    <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
+                    <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
                 </div>
                 <div class="row">
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
-                    <div class="drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
+                    <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone"></div>
                 </div>
             </div>
         </div>
