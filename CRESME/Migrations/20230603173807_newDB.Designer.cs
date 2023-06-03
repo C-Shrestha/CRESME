@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230603160557_attemptstable3")]
-    partial class attemptstable3
+    [Migration("20230603173807_newDB")]
+    partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,6 +121,9 @@ namespace CRESME.Migrations
                     b.Property<string>("DiagnosticAnswerA")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DiagnosticAnswerB")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DiagnosticAnswerC")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,35 +151,38 @@ namespace CRESME.Migrations
                     b.Property<string>("FreeResponseE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage0Clicks")
+                    b.Property<int>("NumColumns")
                         .HasColumnType("int");
 
-                    b.Property<int?>("NumImage1Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage0Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage2Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage1Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage3Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage2Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage4Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage3Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage5Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage4Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage6Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage5Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage7Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage6Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage8Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage7Clicks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumImage9Clicks")
-                        .HasColumnType("int");
+                    b.Property<string>("NumImage8Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage9Clicks")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhysicalAnswerA")
                         .HasColumnType("nvarchar(max)");
@@ -197,6 +203,9 @@ namespace CRESME.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
@@ -208,9 +217,6 @@ namespace CRESME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Term")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("diagnosticAnswerB")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AttemptId");
