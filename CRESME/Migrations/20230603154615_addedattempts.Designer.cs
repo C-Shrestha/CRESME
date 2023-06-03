@@ -4,6 +4,7 @@ using CRESME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230603154615_addedattempts")]
+    partial class addedattempts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,120 +102,6 @@ namespace CRESME.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("CRESME.Data.Attempt", b =>
-                {
-                    b.Property<int>("AttemptId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttemptId"), 1L, 1);
-
-                    b.Property<string>("Block")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Course")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticAnswerA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticAnswerC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticAnswerD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiagnosticAnswerE")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FreeResponseA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FreeResponseB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FreeResponseC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FreeResponseD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FreeResponseE")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("NumImage0Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage1Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage2Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage3Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage4Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage5Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage6Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage7Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage8Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NumImage9Clicks")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhysicalAnswerA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalAnswerB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalAnswerC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalAnswerD")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalAnswerE")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("QuizName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StudentNID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Term")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("diagnosticAnswerB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AttemptId");
-
-                    b.ToTable("Attempts");
                 });
 
             modelBuilder.Entity("CRESME.Data.Quiz", b =>
