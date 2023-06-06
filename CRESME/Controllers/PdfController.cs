@@ -122,9 +122,6 @@ namespace CRESME.Controllers
 
 
 
-
-
-
             // Generates a PDF from an HTML page and displays a preview.
             var desktopView = new HtmlToPdf();
             desktopView.Options.WebPageWidth = 1920;
