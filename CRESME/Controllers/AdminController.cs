@@ -460,6 +460,7 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
+
         // GET: Wdit Quiz
         public IActionResult EditQuiz(int QuizId)
         {
@@ -605,6 +606,24 @@ namespace CRESME.Controllers
             string excelname = $"List_of_Quizes.xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }
+
+
+
+        // View to show the list of assigned quizes for logged in student 
+
+        
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            return _context.Users != null ?
+
+                        /*View(await _userManager.Users.ToListAsync()) :*/
+
+                        View(await _context.Quiz.ToListAsync()) :
+
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
+
+
 
 
 

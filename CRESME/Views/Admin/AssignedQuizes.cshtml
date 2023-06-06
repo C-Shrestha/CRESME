@@ -1,0 +1,107 @@
+﻿
+
+@model IEnumerable<CRESME.Data.Quiz>
+
+@{
+    ViewData["Title"] = "Assigned Quizes";
+}
+
+<h1>List all Quizes for Admin account</h1>
+
+<br />
+<br />
+
+    <div class="table-responsive">
+
+    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+
+
+        <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QuizName)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Course)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Block)
+                    </th>
+
+                    
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Term)
+                    </th>
+
+                    
+                    @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
+                    <th></th>
+                    <th></th>
+
+                    
+                </tr>
+            </thead>
+
+
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuizName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Block)
+                        </td>
+                        
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Term)
+                        </td>
+
+                        
+
+
+                        <td>
+                        <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@item.QuizId">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                    Start Quiz
+                                </button>
+                            </form>
+                        </td>
+
+
+                        <td>
+                        
+
+
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+
+
+@section scripts
+{
+    <script src="~/js/datatable_file.js"></script>
+}

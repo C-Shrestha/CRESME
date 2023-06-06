@@ -34,25 +34,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
 
-                            @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
-                            {
-                                @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="GetAll">Inventory</a>
-                                </li>*@
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz">Quiz</a>
-                                </li>
-
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="Grades">PDF</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="GetAll">PDF Print</a>
-                                </li>
-                            }
+                            
 
                             @*checks if roles of the user and only displays "Create Accounts for Admins"*@
 
@@ -76,9 +58,40 @@
 
                             }
 
+                            @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+                            {
+                                @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="GetAll">Inventory</a>
+                                </li>*@
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz">Quiz</a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="Grades">PDF</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="GetAll">PDF Print</a>
+                                </li>
+                            }
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Tests" asp-action="Index">Test</a>
                             </li>
+
+                            @if (User.IsInRole("Student"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AssignedQuizes">Assigned Quizs</a>
+                                </li>
+
+
+                            }
+
+                            
 
                             
 
