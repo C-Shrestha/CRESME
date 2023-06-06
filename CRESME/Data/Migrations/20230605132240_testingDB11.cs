@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CRESME.Migrations
+namespace CRESME.Data.Migrations
 {
-    public partial class newDB : Migration
+    public partial class testingDB11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
