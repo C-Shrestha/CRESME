@@ -34,8 +34,6 @@
                         @if (User.Identity.IsAuthenticated)
                         {
 
-                            
-
                             @*checks if roles of the user and only displays "Create Accounts for Admins"*@
 
                             @if (User.IsInRole("Admin"))
@@ -48,9 +46,9 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListUsers">Users</a>
                                 </li>
 
-                                @*<li class="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="DisplayQuizzes">Display Quizzes</a>
-                                </li>*@
+                                </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All Quizes</a>

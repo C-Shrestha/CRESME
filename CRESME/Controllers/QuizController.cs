@@ -61,11 +61,11 @@ namespace CRESME.Controllers
 
             if (Request.Form["Publish"] == "1")
             {
-                quiz.Published = "true";
+                quiz.Published = "Yes";
             }
             else
             {
-                quiz.Published = "false";
+                quiz.Published = "No";
             }
 
             quiz.DateCreated = DateTime.Now;

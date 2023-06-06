@@ -2,6 +2,7 @@
 
 @model IEnumerable<CRESME.Data.Quiz>
 
+
 @{
     ViewData["Title"] = "Assigned Quizes";
 }
@@ -34,6 +35,10 @@
 
                     <th>
                         @Html.DisplayNameFor(model => model.Term)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Published)
                     </th>
 
                     
@@ -70,21 +75,22 @@
                             @Html.DisplayFor(modelItem => item.Term)
                         </td>
 
-                        
-
-
                         <td>
-                        <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@item.QuizId">
-                                <button type="submit" class="btn btn-sm btn-primary">
-                                    <i class="fa-solid fa-user-pen"></i>
-                                    Start Quiz
-                                </button>
-                            </form>
+                            @Html.DisplayFor(modelItem => item.Published)
                         </td>
 
 
+
                         <td>
-                        
+                            <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@item.Course">
+                            @*<input type="hidden" asp-for="Course" value =  />*@
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        <i class="fa-solid fa-user-pen"></i>
+                                        Start Quiz
+                                    </button>
+                            </form>
+                        </td>
+
 
 
 

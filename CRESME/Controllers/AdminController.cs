@@ -611,22 +611,18 @@ namespace CRESME.Controllers
 
         // View to show the list of assigned quizes for logged in student 
 
-        
-        public async Task<IActionResult> AssignedQuizes()
+        public IActionResult AssignedQuizes(Quiz quiz1)
         {
-            return _context.Users != null ?
 
-                        /*View(await _userManager.Users.ToListAsync()) :*/
+            if (_context.Quiz != null)
+            {
+                Problem("Entity set 'ApplicationDbContext.Quiz' is null.");
+            }
 
-                        View(await _context.Quiz.ToListAsync()) :
+            return View(_context.Quiz.ToListAsync());
 
-                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+            
         }
-
-
-
-
-
 
 
 
