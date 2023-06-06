@@ -32,13 +32,13 @@ namespace CRESME.Controllers
             return View(_context.Quiz.ToList());
         }
 
-        public IActionResult TakeQuiz(string quizname) {
+        public IActionResult TakeQuiz(int quizname) {
             Quiz quiz;
             if (quizname != null) {
                 quiz = _context.Quiz.Find(quizname);
             }
             else {
-                quiz = new Quiz();         
+                quiz = new Quiz();
             }
             return View(quiz);            
         }
