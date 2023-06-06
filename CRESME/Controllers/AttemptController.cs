@@ -112,6 +112,10 @@ namespace CRESME.Controllers
                     {
                         attempt.Score += 1;
                     }
+                    else
+                    {
+                        attempt.Score -= 3;
+                    }
                     break;
                 }
             }
@@ -128,6 +132,10 @@ namespace CRESME.Controllers
                     if (attempt.DiagnosticAnswerB == DiagnosticAnswer2)
                     {
                         attempt.Score += 1;
+                    }
+                    else
+                    {
+                        attempt.Score -= 3;
                     }
                     break;
                 }
@@ -146,6 +154,10 @@ namespace CRESME.Controllers
                     {
                         attempt.Score += 1;
                     }
+                    else
+                    {
+                        attempt.Score -= 3;
+                    }
                     break;
                 }
             }
@@ -162,6 +174,10 @@ namespace CRESME.Controllers
                     if (attempt.DiagnosticAnswerD == DiagnosticAnswer4)
                     {
                         attempt.Score += 1;
+                    }
+                    else
+                    {
+                        attempt.Score -= 3;
                     }
                     break;
                 }
@@ -180,6 +196,9 @@ namespace CRESME.Controllers
                     {
                         attempt.Score += 1;
                     }
+                    else {
+                        attempt.Score -= 3;
+                    }
                     break;
                 }
             }
@@ -189,7 +208,7 @@ namespace CRESME.Controllers
                 _context.Add(attempt);
                 _context.SaveChanges();
             }
-            return View("DisplayQuizzes", _context.Quiz.ToList());
+            return View("TakeQuiz", ParentQuiz);
         }
 
 
