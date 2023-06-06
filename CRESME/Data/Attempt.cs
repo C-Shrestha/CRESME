@@ -19,7 +19,7 @@ namespace CRESME.Data
 
         [Required]
         [BindProperty]
-        public string? QuizName { get; set; } = "";
+        public int QuizID { get; set; }
 
         public int? Score { get; set; }
 
