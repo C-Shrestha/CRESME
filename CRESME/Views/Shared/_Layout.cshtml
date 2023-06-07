@@ -50,9 +50,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="DisplayQuizzes">Display Quizzes</a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All Quizes</a>
-                                </li>
+                                
 
                             }
 
@@ -74,16 +72,25 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="GetAll">PDF Print</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your Quizes</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All Quizes</a>
+                                </li>
+
                             }
 
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Tests" asp-action="Index">Test</a>
-                            </li>
+                            </li>*@
 
                             @if (User.IsInRole("Student"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AssignedQuizes">Assigned Quizs</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AssignedQuizes">Assigned Quizes</a>
                                 </li>
 
 

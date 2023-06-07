@@ -1,14 +1,11 @@
-﻿
-
-@*@model IEnumerable<CRESME.Data.Quiz>*@
-@using System.Data
+﻿@using System.Data
 @model DataSet
 
 @{
-    ViewData["Title"] = "Assigned Quizes";
+    ViewData["Title"] = "Instructor's Quizes";
 }
 
-<h1>List of Assigned Quizes</h1>
+<h1>List all quizes created by the instructor</h1>
 
 <br />
 <br />
@@ -20,7 +17,7 @@
 
         <thead>
                 <tr>
-
+                   
                     <th>
                         QuizName
                     </th>
@@ -32,6 +29,8 @@
                     <th>
                         Course
                     </th>
+
+                    
 
                     <th>
                         Term
@@ -54,7 +53,6 @@
 
             <tbody>
 
-                @*@foreach (var item in Model)*@
                 @foreach (DataRow row in Model.Tables[0].Rows)
                 {
                     <tr>
@@ -69,7 +67,7 @@
                         <td>
                         @row["Course"]
                         </td>
-                        
+
 
                         <td>
                         @row["Term"]
@@ -82,10 +80,10 @@
 
 
                         <td>
-                        <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@row["QuizId"]">                        
+                        <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@row["QuizId"]">  
                                     <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-play"></i>
-                                    Start Quiz
+                                        Start Quiz
                                     </button>
                             </form>
                         </td>

@@ -564,10 +564,6 @@ namespace CRESME.Controllers
 
 
 
-
-
-
-
         // Export all Quizes for Admins
         public IActionResult ExportAllQuiz()
         {
@@ -657,6 +653,31 @@ namespace CRESME.Controllers
 
 
         }
+
+        
+
+        public async Task<IActionResult> InstructorQuizesView()
+        {
+
+            if (_context.Quiz != null)
+            {
+                Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+            }
+
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            string query = "select * from Quiz where Course = '" + user.Course + "'";
+
+            db dbop = new db();
+            DataSet ds = dbop.GetData(query);
+            return View(ds);
+
+
+        }
+
+
 
 
 
