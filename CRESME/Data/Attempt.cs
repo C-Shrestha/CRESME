@@ -23,6 +23,7 @@ namespace CRESME.Data
 
         public int? Score { get; set; }
 
+        [BindProperty]
         public int NumColumns { get; set; }
 
         [DataType(DataType.Date)]

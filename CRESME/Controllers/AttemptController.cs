@@ -61,7 +61,7 @@ namespace CRESME.Controllers
                 {
                     //return student could not be found
                 }
-                else if(){ 
+                else if(CurrentStudent.Role == "Instructor"){ 
                     //redirect to download pdf without uploading attempt? ask Melissa
                 }
             }
@@ -70,6 +70,9 @@ namespace CRESME.Controllers
                 //return student nid null error
             }
             attempt.StudentName = CurrentStudent.Name;
+            attempt.Term = CurrentStudent.Term;
+            attempt.Block = CurrentStudent.Block;
+            attempt.Course = CurrentStudent.Course;
 
             if (attempt.QuizID != null)
             {
@@ -84,6 +87,7 @@ namespace CRESME.Controllers
                 //return id null error
             }
 
+            attempt.NumColumns = ParentQuiz.NumColumns;
 
             //  ASsIGNING KEYS
             //assigns correct database answers as keys for physical and diagnostic answers, and constructs the free response answer key 
