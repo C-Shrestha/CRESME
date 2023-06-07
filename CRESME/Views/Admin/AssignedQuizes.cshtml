@@ -1,7 +1,8 @@
 ﻿
 
-@model IEnumerable<CRESME.Data.Quiz>
-
+@*@model IEnumerable<CRESME.Data.Quiz>*@
+@using System.Data
+@model DataSet
 
 @{
     ViewData["Title"] = "Assigned Quizes";
@@ -19,7 +20,7 @@
 
         <thead>
                 <tr>
-                    <th>
+                    @*<th>
                         @Html.DisplayNameFor(model => model.QuizName)
                     </th>
 
@@ -31,20 +32,38 @@
                         @Html.DisplayNameFor(model => model.Block)
                     </th>
 
-                    
-
                     <th>
                         @Html.DisplayNameFor(model => model.Term)
                     </th>
 
                     <th>
                         @Html.DisplayNameFor(model => model.Published)
+                    </th>*@
+
+
+                    <th>
+                        QuizName
                     </th>
 
+                    <th>
+                        Course
+                    </th>
+
+                    <th>
+                        Block
+                    </th>
+
+                    <th>
+                        Term
+                    </th>
+
+                    <th>
+                        Published
+                    </th>
                     
                     @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
                     <th></th>
-                    <th></th>
+                    
 
                     
                 </tr>
@@ -55,40 +74,41 @@
 
             <tbody>
 
-                @foreach (var item in Model)
+                @*@foreach (var item in Model)*@
+                @foreach (DataRow row in Model.Tables[0].Rows)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.QuizName)
+                        @row["QuizName"]
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.Course)
+                        @row["Course"]
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.Block)
+                        @row["Block"]
                         </td>
                         
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.Term)
+                        @row["Term"]
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.Published)
+                        @row["Published"]
                         </td>
 
 
 
                         <td>
-                            <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@item.Course">
-                            @*<input type="hidden" asp-for="Course" value =  />*@
+                       @* <form asp-controller="Admin" asp-action="TakeQuiz" asp-route-QuizId="@row["QuizId"]">
+                            <input type="hidden" asp-for="Course" value =  />
                                     <button type="submit" class="btn btn-sm btn-primary">
                                         <i class="fa-solid fa-user-pen"></i>
                                         Start Quiz
                                     </button>
-                            </form>
+                            </form>*@
                         </td>
 
 

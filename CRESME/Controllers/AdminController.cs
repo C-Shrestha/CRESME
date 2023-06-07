@@ -8,10 +8,12 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Data;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace CRESME.Controllers
 {
@@ -609,19 +611,51 @@ namespace CRESME.Controllers
 
 
 
+        /*--------------------------All the functions below here are listed for Students to take Quiz----------------------------------*/
+
+
         // View to show the list of assigned quizes for logged in student 
 
-        public IActionResult AssignedQuizes(Quiz quiz1)
+        public async Task<IActionResult> AssignedQuizes()
         {
 
             if (_context.Quiz != null)
             {
-                Problem("Entity set 'ApplicationDbContext.Quiz' is null.");
+                Problem("Entity set 'ApplicationDbContext.Test'  is null.");
             }
 
-            return View(_context.Quiz.ToListAsync());
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            string query = "select * from Quiz where Course = '" + user.Course + "' and Block = '" + user.Block + "' and Term = '" + user.Term + "'";
+
+            db dbop = new db();
+            DataSet ds = dbop.GetData(query);
+            return View(ds);
+
+
+            /*var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            DataSet ds = new DataSet();
+            string constr = "Server=DELLLAPTOP\\SQLEXPRESS;Database=CRESME;Trusted_Connection=True;MultipleActiveResultSets=true";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string query = "select * from [dbo].[Quiz] where Block = 'B1'";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                    {
+                        sda.Fill(ds);
+                    }
+                }
+            }
+
+            return View(ds);*/
+
+
         }
 
 
