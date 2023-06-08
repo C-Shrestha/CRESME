@@ -514,12 +514,10 @@ namespace CRESME.Controllers
 
         //POST:Delete
         [HttpPost]
-        public async Task<IActionResult> DeleteQuiz(string QuizName)
+        public async Task<IActionResult> DeleteQuiz(int QuizId)
         {
             
-
-            var quiz =  _context.Quiz.Find(QuizName);
-
+            var quiz =  _context.Quiz.Find(QuizId);
 
             if (quiz != null)
             {
@@ -878,7 +876,30 @@ namespace CRESME.Controllers
 
         }
 
+        //POST:Details
+        [HttpPost]
+        public async Task<IActionResult> QuizDetails(Quiz quiz)
+        {
+            /*var name = quiz.QuizName;*/
+            /*var quiz = _context.Quiz.Find(q.QuizId);*/
 
+            var quizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where QuizName = {quiz.QuizName}")
+                        .ToList();
+
+            /*if (quizes != null)
+            {
+
+
+                return View(quizes.ToList());
+
+            }*/
+
+
+            return View(quizes.ToList());
+
+
+        }
 
 
 

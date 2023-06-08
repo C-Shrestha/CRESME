@@ -1,12 +1,12 @@
 ﻿
 
-@model IEnumerable<CRESME.Data.Quiz>
+@model IEnumerable<CRESME.Data.Attempt>
 
 @{
-    ViewData["Title"] = "List All Quizes";
+    ViewData["Title"] = "Quiz Details";
 }
 
-<h1>List all Quizes for Admin account</h1>
+<h1>Quiz Details Page</h1>
 
 <br />
 <br />
@@ -74,7 +74,7 @@
                         @Html.DisplayNameFor(model => model.Term)
                     </th>
 
-                    <th>
+                    @*<th>
                         @Html.DisplayNameFor(model => model.DateCreated)
                     </th>
 
@@ -88,17 +88,17 @@
 
                     <th>
                         @Html.DisplayNameFor(model => model.Published)
-                    </th>
+                    </th>*@
 
                     
 
 
 
                     @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
+                    @*<th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
-
+*@
                     
                 </tr>
             </thead>
@@ -126,7 +126,7 @@
                             @Html.DisplayFor(modelItem => item.Term)
                         </td>
 
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.DateCreated)
                         </td>
 
@@ -136,13 +136,13 @@
 
                         <td>
                             @Html.DisplayFor(modelItem => item.EndDate).
-                        </td>
+                        </td>*@
 
                         @*<td>
                             @Html.DisplayFor(modelItem => item.Published)
                         </td>*@
 
-                        <td>
+                        @*<td>
                         
                         @if (item.Published == "Yes")
                             {
@@ -152,9 +152,9 @@
                             {
                             <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
                             }
-                        </td>
+                        </td>*@
 
-                    <td>
+                    @*<td>
                         <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName">
                             <button type="submit" class="btn btn-sm btn-warning">
                                 <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
@@ -183,7 +183,7 @@
                                     Delete
                                 </button>
                             </form>
-                        </td>
+                        </td>*@
 
 
 
