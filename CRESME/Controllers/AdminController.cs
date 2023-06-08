@@ -135,6 +135,9 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
+
+        [HttpPost]
+        [Route("/Admin/ImportExcel")]
         public async Task<List<ApplicationUser>> ImportExcel(IFormFile file)
 
         {
@@ -235,7 +238,6 @@ namespace CRESME.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(string Id, string Name, string UserName, string Block, string Course, string Term)
         {
             var user = await _userManager.FindByIdAsync(Id);
@@ -271,7 +273,6 @@ namespace CRESME.Controllers
 
         // POST: Tests/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name, string Block, string Course, string Term)
         {
 
@@ -330,7 +331,6 @@ namespace CRESME.Controllers
 
 
         //POST:Delete
-        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -352,6 +352,7 @@ namespace CRESME.Controllers
 
         //POST:DeleteAll
         [HttpPost]
+        [Route("/Admin/DeleteAll")]
         public async Task<IActionResult> DeleteAll()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -381,29 +382,29 @@ namespace CRESME.Controllers
 
 
 
-    /*    //Export Excel Data REMOVE LATER
-        
+        /*    //Export Excel Data REMOVE LATER
 
-        public IActionResult ExportToExcel()
-        {
-            db dbop = new db();
-            DataSet ds = dbop.Getrecord(); 
-            var stream = new MemoryStream();
 
-            using (var package = new ExcelPackage(stream))
+            public IActionResult ExportToExcel()
             {
-                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
-                worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
-                package.Save(); 
+                db dbop = new db();
+                DataSet ds = dbop.Getrecord(); 
+                var stream = new MemoryStream();
+
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+                    worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
+                    package.Save(); 
+                }
+
+                stream.Position = 0;
+                string excelname = $"StudentGrades.xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname); 
             }
+    */
 
-            stream.Position = 0;
-            string excelname = $"StudentGrades.xlsx";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname); 
-        }
-*/
-
-       // Export List of Users for Admin
+        // Export List of Users for Admin
         /*public IActionResult ExportExcel()*/
         /*public async Task<IActionResult> ExportExcel()*/
 
@@ -447,14 +448,17 @@ namespace CRESME.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }*/
 
-        
+
 
         /*--------------------------All the functions below here are listed for Quizes----------------------------------*/
 
 
 
 
-        // GET: List All Quizes for Admin account 
+        // GET: List All Quizes for Admin account
+        
+        
+
         public async Task<IActionResult> ListAllQuizes()
         {
             return _context.Users != null ?
@@ -478,7 +482,7 @@ namespace CRESME.Controllers
         
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Route("/Admin/UpdateQuiz")]
         public async Task<IActionResult> UpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
         {
             
@@ -514,6 +518,7 @@ namespace CRESME.Controllers
 
         //POST:Delete
         [HttpPost]
+        [Route("/Admin/DeleteQuiz")]
         public async Task<IActionResult> DeleteQuiz(int QuizId)
         {
             
@@ -645,6 +650,10 @@ namespace CRESME.Controllers
         }
 
 
+
+
+        [HttpPost]
+        [Route("/Admin/ExportUsersToExcel")]
         public IActionResult ExportUsersToExcel()
         {
             // Create a new Excel workbook
