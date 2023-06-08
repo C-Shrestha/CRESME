@@ -62,7 +62,7 @@ namespace CRESME.Controllers
 
                 }
                 var model = _userManager.Users;
-                /*var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());*/
+                /*var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());*/ 
 
                 var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
                 { Model = model };
@@ -119,9 +119,6 @@ namespace CRESME.Controllers
             pdf.Append(tabletView.ConvertUrl("https://www.roundthecode.com/"));
             pdf.Append(desktopView.ConvertUrl("https://www.roundthecode.com/"));
              */
-
-
-
 
 
 
