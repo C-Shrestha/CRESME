@@ -30,7 +30,6 @@ namespace CRESME.Controllers
             return View(_context.Quiz.ToList());
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) //closedxml update
