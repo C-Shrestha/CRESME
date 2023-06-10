@@ -456,9 +456,6 @@ namespace CRESME.Controllers
 
 
         // GET: List All Quizes for Admin account
-        
-        
-
         public async Task<IActionResult> ListAllQuizes()
         {
             return _context.Users != null ?
@@ -886,12 +883,9 @@ namespace CRESME.Controllers
         }
 
         //POST:Details
-        [HttpPost]
         public async Task<IActionResult> QuizDetails(Quiz quiz)
         {
-            /*var name = quiz.QuizName;*/
-            /*var quiz = _context.Quiz.Find(q.QuizId);*/
-
+ 
             var quizes = _context.Attempt
                         .FromSqlInterpolated($"select * from Attempts where QuizName = {quiz.QuizName}")
                         .ToList();
@@ -1010,21 +1004,9 @@ namespace CRESME.Controllers
 
 
 
-/*
-        [HttpPost]
-        public IActionResult QuizDetailsToExcel(Attempt formData)
-        {
-            // Access the form data through the model parameter
-            string name = formData.QuizName;
 
 
-            
 
-            // Perform operations with the received data
-            // ...
-
-            return View();
-        }*/
 
 
 
