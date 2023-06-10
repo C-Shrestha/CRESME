@@ -21,7 +21,7 @@ namespace CRESME.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void SubmitAttempt(Attempt attempt) {
+        public IActionResult SubmitAttempt(Attempt attempt) {
             
             Quiz ParentQuiz = new Quiz();
             
@@ -43,10 +43,11 @@ namespace CRESME.Controllers
             List<string> DiagnosisAnswerKey4 = new List<string>();
             List<string> DiagnosisAnswerKey5 = new List<string>();
 
-            
 
+            attempt.QuizID =Int32.Parse(Request.Form["QuizStringID"]);
             if (attempt.QuizID != null)
             {
+                attempt.QuizID = Int32.Parse(Request.Form["QuizStringID"]);
                 ParentQuiz = _context.Quiz.Find(attempt.QuizID); //gets Quiz model data
                 if (ParentQuiz == null)
                 {
@@ -180,17 +181,17 @@ namespace CRESME.Controllers
             }
 
             //student info
-            var CurrentUserID = User.FindFirst(ClaimTypes.NameIdentifier);
-            var CurrentStudent = _context.Users.Find(CurrentUserID);
-            attempt.UserID = CurrentStudent.Id;
+            //var CurrentUserID = User.FindFirst(ClaimTypes.NameIdentifier);
+            //var CurrentStudent = _context.Users.Find(CurrentUserID.ToString());
+            //attempt.StudentID = CurrentStudent.Id;
           
 
-            if (ModelState.IsValid && ParentQuiz.FeedBackEnabled!="Yes")
-            {
+            //if (ModelState.IsValid && ParentQuiz.FeedBackEnabled!="Yes")
+            //{
                 _context.Add(attempt);
                 _context.SaveChanges();
-            }
-           //return View("_LoginPartial");
+            //}
+           return View("_LoginPartial");
         }
 
 
@@ -198,40 +199,40 @@ namespace CRESME.Controllers
         public void AssignColumnKeys(Quiz ParentQuiz, string columnID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey) {
             if (Request.Form[columnID] == 1)
             {
-                PhysicalAnswer = "A";
-                DiagnosticAnswer = "A";
+                PhysicalAnswer = "1";
+                DiagnosticAnswer = "1";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz                        
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces   
             }
             else if (Request.Form[columnID] == 2)
             {
-                PhysicalAnswer = "A";
-                DiagnosticAnswer = "A";
+                PhysicalAnswer = "2";
+                DiagnosticAnswer = "2";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == 3)
             {
-                PhysicalAnswer = "A";
-                DiagnosticAnswer = "A";
+                PhysicalAnswer = "3";
+                DiagnosticAnswer = "3";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == 4)
             {
-                PhysicalAnswer = "A";
-                DiagnosticAnswer = "A";
+                PhysicalAnswer = "4";
+                DiagnosticAnswer = "4";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == 5)
             {
-                PhysicalAnswer = "A";
-                DiagnosticAnswer = "A";
+                PhysicalAnswer = "5";
+                DiagnosticAnswer = "5";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 

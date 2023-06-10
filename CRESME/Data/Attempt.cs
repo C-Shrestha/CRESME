@@ -13,9 +13,9 @@ namespace CRESME.Data
         public int AttemptId { get; set; }
      
         [BindProperty]
-        public string QuizID { get; set; }
+        public int QuizID { get; set; }
 
-        public string? UserID { get; set; } 
+        public string? StudentID { get; set; } 
 
         public int? Score { get; set; }
       
