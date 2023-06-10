@@ -31,9 +31,16 @@
                     double total = 0.0;
                     double num = 0.0;
                     double average = 0.0;
+                    double maxScore  = 0.0;
+                    double minScore = 0.0;
+                    double medianValue = 0.0;
+
                     List<double> scoreList = new List<double>();
                     List<TimeSpan> durations = new List<TimeSpan>();
                     TimeSpan totalDuration = TimeSpan.Zero;
+                    TimeSpan averageDuration = TimeSpan.Zero;
+
+
 
                     foreach(var item in Model)
                     {
@@ -47,35 +54,55 @@
 
                     }
 
-                    average = total / num;
-
-                    // You can convert it back to an array if you would like to
-                    double[] scores = scoreList.ToArray();
-
-                    static double GetMedian(double[] scoreNumbers)
+                    if (!scoreList.Any())
                     {
-                        //Framework 2.0 version of this method. there is an easier way in F4
-                        if (scoreNumbers == null || scoreNumbers.Length == 0)
-                            throw new System.Exception("Median of empty array not defined.");
-
-                        //make sure the list is sorted, but use a new array
-                        double[] sortedPNumbers = (double[])scoreNumbers.Clone();
-                        Array.Sort(sortedPNumbers);
-
-                        //get the median
-                        int size = sortedPNumbers.Length;
-                        int mid = size / 2;
-                        double median = (size % 2 != 0) ? (double)sortedPNumbers[mid] : ((double)sortedPNumbers[mid] + (double)sortedPNumbers[mid - 1]) / 2;
-                        return median;
+                        throw new Exception("No quiz data. No Student has taken the quiz yet.");
                     }
 
-                    double medianValue = GetMedian(scores);
+                    if (scoreList.Any())
+                    {   
+
+                        average = total / num;
+
+                        // You can convert it back to an array if you would like to
+                        double[] scores = scoreList.ToArray();
+
+                        static double GetMedian(double[] scoreNumbers)
+                        {
+                            //Framework 2.0 version of this method. there is an easier way in F4
+                            if (scoreNumbers == null || scoreNumbers.Length == 0)
+                            {
+
+                                return 0;
+                            }
+                            //throw new System.Exception("Median of empty array not defined.");
+
+                            //make sure the list is sorted, but use a new array
+
+                            else
+                            {
+                                double[] sortedPNumbers = (double[])scoreNumbers.Clone();
+                                Array.Sort(sortedPNumbers);
+
+                                //get the median
+                                int size = sortedPNumbers.Length;
+                                int mid = size / 2;
+                                double median = (size % 2 != 0) ? (double)sortedPNumbers[mid] : ((double)sortedPNumbers[mid] + (double)sortedPNumbers[mid - 1]) / 2;
+                                return median;
+                            }
+
+                        }
+
+                         medianValue = GetMedian(scores);
 
 
-                    // Calculate the average duration
-                    TimeSpan averageDuration = TimeSpan.FromTicks(totalDuration.Ticks / durations.Count);
 
+                        // Calculate the average duration
+                        //TimeSpan averageDuration = TimeSpan.FromTicks(totalDuration.Ticks / durations.Count);
 
+                         averageDuration = (durations.Count > 0) ? TimeSpan.FromTicks(totalDuration.Ticks / durations.Count) : TimeSpan.Zero;
+
+                    }
 
 
                 }
@@ -90,8 +117,8 @@
                 </p>
 
                 <p>
-                    <b>Maximum Score:</b> @scoreList.Max()    <br />
-                    <b>Minimum Score:</b> @scoreList.Min()    <br />
+                    <b>Maximum Score:</b> @maxScore    <br />
+                    <b>Minimum Score:</b> @minScore    <br />
                 </p>
 
                 <p>
@@ -260,11 +287,11 @@
             <div class="card-body">
 
                 <br />
-                <form asp-controller="Admin" asp-action="ExportAllQuiz">
-                    <input type="hidden" asp-for-QuizName="hello" />
+                <form asp-controller="Admin" asp-action="ExportQuizFromDetails">
+                    <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
                     <button type="submit" class="btn btn-md btn-primary">
                         <i class="fa-solid fa-file-arrow-down"></i>
-                        Export List of Quizes
+                        Export Quiz
                     </button>
                 </form>
                 <br />

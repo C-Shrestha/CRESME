@@ -882,6 +882,8 @@ namespace CRESME.Controllers
 
         }
 
+
+
         //POST:Details
         public async Task<IActionResult> QuizDetails(Quiz quiz)
         {
@@ -997,6 +999,60 @@ namespace CRESME.Controllers
                 var content = stream.ToArray();
                 string filename = $"Quiz Details for {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",filename);
+
+            }
+
+        }
+
+
+        public IActionResult ExportQuizFromDetails(Attempt formData)
+        {
+            // Create a new Excel workbook
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+
+                var userList = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where QuizName = {formData.QuizName}")
+                        .ToList();
+
+                // Add a worksheet to the workbook
+                var worksheet = workbook.Worksheets.Add("Quizes");
+
+               
+               
+                
+                worksheet.Cell(1, 1).Value = userList[0].HistoryA;
+                worksheet.Cell(1, 2).Value = userList[0].HistoryB;
+                worksheet.Cell(1, 3).Value = userList[0].HistoryC;
+                worksheet.Cell(1, 4).Value = userList[0].HistoryD;
+                worksheet.Cell(1, 5).Value = userList[0].HistoryE;
+                worksheet.Cell(2, 1).Value = userList[0].PhysicalA;
+                worksheet.Cell(2, 2).Value = userList[0].PhysicalB;
+                worksheet.Cell(2, 3).Value = userList[0].PhysicalC;
+                worksheet.Cell(2, 4).Value = userList[0].PhysicalD;
+                worksheet.Cell(2, 5).Value = userList[0].PhysicalE;
+                worksheet.Cell(3, 1).Value = userList[0].DiagnosticA;
+                worksheet.Cell(3, 2).Value = userList[0].DiagnosticB;
+                worksheet.Cell(3, 3).Value = userList[0].DiagnosticC;
+                worksheet.Cell(3, 4).Value = userList[0].DiagnosticD;
+                worksheet.Cell(3, 5).Value = userList[0].DiagnosticE;
+                worksheet.Cell(4, 1).Value = userList[0].DiagnosisKeyWordsA;
+                worksheet.Cell(4, 2).Value = userList[0].DiagnosisKeyWordsB;
+                worksheet.Cell(4, 3).Value = userList[0].DiagnosisKeyWordsC;
+                worksheet.Cell(4, 4).Value = userList[0].DiagnosisKeyWordsD;
+                worksheet.Cell(4, 5).Value = userList[0].DiagnosisKeyWordsE;
+                worksheet.Cell(5, 1).Value = userList[0].FeedBackA;
+                worksheet.Cell(5, 2).Value = userList[0].FeedBackB;
+                worksheet.Cell(5, 3).Value = userList[0].FeedBackC;
+                worksheet.Cell(5, 4).Value = userList[0].FeedBackD;
+                worksheet.Cell(5, 5).Value = userList[0].FeedBackE;
+                    
+                   
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                string filename = $" Quiz: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
 
             }
 
