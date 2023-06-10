@@ -52,11 +52,11 @@ namespace CRESME.Controllers
             //checkboxes only send output if they are checked(default is "on"), otherwise null
             if (Request.Form["Feedback"] == "1")
             {
-                quiz.FeedBackEnabled = "true";
+                quiz.FeedBackEnabled = "Yes";
             }
             else
             {
-                quiz.FeedBackEnabled = "false";
+                quiz.FeedBackEnabled = "No";
             }
 
             if (Request.Form["Publish"] == "1")
