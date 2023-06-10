@@ -207,11 +207,40 @@
         multiples = false;
         data = event.dataTransfer.getData('Object');
 
-        //var zone1 = event.target;
 
-        //console.log(zone1);
+        var box = event.target;
+
+        console.log("Zone: " + box.id);
         //console.log(zone1.hasChildNodes());
-        //zone1 = zone1.parentNode;
+        zone = box.parentNode;
+        if (data.substring(1, 7) == "yellow") {
+            if (zone.id.substring(21, 22) != "") {
+                console.log("Zone: " + zone.id.substring(21, 22));
+                console.log(document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
+                document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value = 0
+                console.log(document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
+                console.log("TABLE")
+                console.log(document.getElementById("PhysicalAnswer+yellow-box1").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box2").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box3").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box4").value)
+            }
+        } else if (data.substring(1, 7) == "purple") {
+            if(zone.id.substring(21, 22) != "") {
+                console.log("Zone: " + zone.id.substring(21, 22));
+                console.log(document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
+                document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value = 0
+                console.log(document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
+                console.log("TABLE")
+                console.log(document.getElementById("DiagnostAnswer+purple-box1").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box2").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box3").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box4").value)
+            }
+        }
+        
+            
+        
         //console.log(zone1)
         //console.log(zone1.childElementCount);
         //zone1 = event.dataTransfer.getData('Object');
@@ -242,23 +271,34 @@
         console.log(dropzone.hasChildNodes());
         console.log(document.getElementById("drop-zone-yellow-box1"));
         console.log(document.getElementById("drop-zone-yellow-box1").childElementCount);
-        console.log(dropzone.id.substring(17, 20))
-        console.log(data.substring(8, 11))
+        console.log(dropzone.id[21])
+        console.log(data.substring(0, 11))
         if (dropzone.childElementCount == false && (dropzone.id.substring(17, 20) == data.substring(8, 11) || dropzone.id.substring(9, 16) == data.substring(0, 7))) {
             dropzone.appendChild(document.getElementById(data));
             console.log(document.getElementById(dropzone.id).getAttribute("name"));
-            console.log(data.substring(1,7));
-            if (data.substring(1, 7) == "yellow"){
-                console.log("PhysicalAnswer"+data)
-                console.log(document.getElementById("PhysicalAnswer" + data).value)
-                document.getElementById("PhysicalAnswer" + data).value = document.getElementById(dropzone.id).getAttribute("name")
-                console.log(document.getElementById("PhysicalAnswer" + data).value)
-            }
-            else if (data.substring(1, 7) == "purple"){
-                console.log("DiagnostAnswer"+data)
-                console.log(document.getElementById("DiagnostAnswer" + data).value)
-                document.getElementById("DiagnostAnswer" + data).value = document.getElementById(dropzone.id).getAttribute("name")
-                console.log(document.getElementById("DiagnostAnswer" + data).value)
+            console.log(dropzone);
+            if (data.substring(1, 7) == "yellow") {
+                //console.log("PhysicalAnswer"+data)
+                //console.log(document.getElementById(document.getElementById("PhysicalAnswer"+data.substring(0,11)+dropzone.id[21])))
+                if (dropzone.id.substring(21, 22) != "")
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21,22)).value = document.getElementById(data).getAttribute("name");
+                //console.log(document.getElementById(document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id[21]).value))
+                console.log("TABLE")
+                console.log(document.getElementById("PhysicalAnswer+yellow-box1").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box2").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box3").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box4").value)
+            } else if (data.substring(1, 7) == "purple") {
+                //console.log("DiagnostAnswer"+data)
+                //console.log(document.getElementById("DiagnostAnswer" + data).value)
+                if (dropzone.id.substring(21, 22) != "")
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22)).value = document.getElementById(data).getAttribute("name");
+                //console.log(document.getElementById("DiagnostAnswer" + data).value)
+                console.log("TABLE")
+                console.log(document.getElementById("DiagnostAnswer+purple-box1").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box2").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box3").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box4").value)
             }
             
             document.getElementById(dropzone.id).getAttribute("name")
@@ -328,7 +368,7 @@
                 <div class="col-4">
                     <div class="row">
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1" ondragend="sort('drop-zone1')">
-                            <div class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1";">
+                            <div name="1" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                         expand
@@ -338,7 +378,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2">
-                            <div class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ;">
+                            <div name="2" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                         expand
@@ -348,7 +388,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3">
-                            <div class="background-yellow  product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ;">
+                            <div name="3" class="background-yellow  product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                         expand
@@ -358,7 +398,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4">
-                            <div class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ;">
+                            <div name="4" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                         expand
@@ -368,7 +408,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1">
-                            <div class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ;">
+                            <div name="1" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                         expand
@@ -378,7 +418,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2">
-                            <div class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ;">
+                            <div name="2" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                         expand
@@ -388,7 +428,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3">
-                            <div class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ;">
+                            <div name="3" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                         expand
@@ -398,7 +438,7 @@
                             </div>
                         </div>
                         <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4">
-                            <div class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ;">
+                            <div name="4" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ;">
                                 <div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                         expand
@@ -466,10 +506,12 @@
                     <input type="hidden" id="PhysicalAnswer+yellow-box4" name="PhysicalAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box5" name="PhysicalAnswerE" value="0" runat="server" required>
                     <div class="row">
-                        <div name="A" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
-                        <div name="B" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
-                        <div name="C" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
-                        <div name="D" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
+
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
+
                     </div>
                     <input type="hidden" id="DiagnostAnswer+purple-box1" name="DiagnosticAnswerA" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box2" name="DiagnosticAnswerB" value="0" runat="server" required>
@@ -477,10 +519,12 @@
                     <input type="hidden" id="DiagnostAnswer+purple-box4" name="DiagnosticAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box5" name="DiagnosticAnswerE" value="0" runat="server" required>
                     <div class="row">
-                        <div name="A" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
-                        <div name="B" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
-                        <div name="C" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
-                        <div name="D" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
+
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
+
                     </div>
                     <div class="row">
                         <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
