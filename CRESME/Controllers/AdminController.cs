@@ -997,7 +997,7 @@ namespace CRESME.Controllers
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-                string filename = $"Quiz Details for {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
+                string filename = $"Quiz Data: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",filename);
 
             }
