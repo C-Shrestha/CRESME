@@ -59,6 +59,10 @@
         <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.QuizId)
+                    </th>
+
+                    <th>
                         @Html.DisplayNameFor(model => model.QuizName)
                     </th>
 
@@ -111,6 +115,11 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuizId)
+                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.QuizName)
                         </td>
@@ -155,7 +164,7 @@
                         </td>
 
                     <td>
-                        <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName">
+                        <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName" method="post">
                             <button type="submit" class="btn btn-sm btn-warning">
                                 <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
                                 Details
