@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NuGet.DependencyResolver;
-
+using System.Security.Claims;
 
 namespace CRESME.Controllers
 {
@@ -19,22 +19,11 @@ namespace CRESME.Controllers
             _environment = environment;
         }
 
-  
-        public IActionResult TakeQuiz(int quizid) {
-            Quiz quiz;
-            if (quizid != null) {
-                quiz = _context.Quiz.Find(quizid);
-            }
-            else {
-                quiz = new Quiz();         
-            }
-            return View(quiz);            
-        }
-
-        public ActionResult SubmitAttempt(Attempt attempt) {
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void SubmitAttempt(Attempt attempt) {
             
             Quiz ParentQuiz = new Quiz();
-            ApplicationUser CurrentStudent = new ApplicationUser();
             
             string PhysicalAnswer1 = "";
             string PhysicalAnswer2 = "";
@@ -54,55 +43,38 @@ namespace CRESME.Controllers
             List<string> DiagnosisAnswerKey4 = new List<string>();
             List<string> DiagnosisAnswerKey5 = new List<string>();
 
-            if (attempt.StudentNID != null)         
-            {
-                CurrentStudent = _context.Users.Find(attempt.StudentNID); //gets current student model data
-                if (CurrentStudent == null)
-                {
-                    //return student could not be found
-                }
-                else if(CurrentStudent.Role == "Instructor"){ 
-                    //redirect to download pdf without uploading attempt? ask Melissa
-                }
-            }
-            else
-            {
-                //return student nid null error
-            }
-            attempt.StudentName = CurrentStudent.Name;
-            attempt.Term = CurrentStudent.Term;
-            attempt.Block = CurrentStudent.Block;
-            attempt.Course = CurrentStudent.Course;
+            
 
             if (attempt.QuizID != null)
             {
                 ParentQuiz = _context.Quiz.Find(attempt.QuizID); //gets Quiz model data
                 if (ParentQuiz == null)
                 {
-                    //return quiz context null error
+                    ParentQuiz = new Quiz();
                 }
             }
             else
             {
-                //return id null error
+                //return quiz id null error
             }
-
-            attempt.NumColumns = ParentQuiz.NumColumns;
+            
+            
 
             //  ASsIGNING KEYS
             //assigns correct database answers as keys for physical and diagnostic answers, and constructs the free response answer key 
 
             //COLUMN ONE
-            AssignColumnKeys("column1", attempt.QuizID, PhysicalAnswer1, DiagnosticAnswer1, DiagnosisAnswerKey1);
+            AssignColumnKeys(ParentQuiz, "column1", PhysicalAnswer1, DiagnosticAnswer1, DiagnosisAnswerKey1);
             //COLUMN TWO
-            AssignColumnKeys("column2", attempt.QuizID, PhysicalAnswer2, DiagnosticAnswer2, DiagnosisAnswerKey2);
+            AssignColumnKeys(ParentQuiz, "column2", PhysicalAnswer2, DiagnosticAnswer2, DiagnosisAnswerKey2);
             //COLUMN THREE
-            AssignColumnKeys("column3", attempt.QuizID, PhysicalAnswer3, DiagnosticAnswer3, DiagnosisAnswerKey3);
+            AssignColumnKeys(ParentQuiz, "column3", PhysicalAnswer3, DiagnosticAnswer3, DiagnosisAnswerKey3);
             //COLUMN FOUR
-            AssignColumnKeys("column4", attempt.QuizID, PhysicalAnswer4, DiagnosticAnswer4, DiagnosisAnswerKey4);
+            AssignColumnKeys(ParentQuiz, "column4", PhysicalAnswer4, DiagnosticAnswer4, DiagnosisAnswerKey4);
             //COLUMN FIVE
-            AssignColumnKeys("column5", attempt.QuizID, PhysicalAnswer5, DiagnosticAnswer5, DiagnosisAnswerKey5);
-
+            if (ParentQuiz.NumColumns == 5) {
+                AssignColumnKeys(ParentQuiz, "column5", PhysicalAnswer5, DiagnosticAnswer5, DiagnosisAnswerKey5);
+            }
             //  SCORING 
             attempt.Score = 0;
             //COLUMN ONE
@@ -207,36 +179,62 @@ namespace CRESME.Controllers
                 }
             }
 
-            if (ModelState.IsValid)
+            //student info
+            var CurrentUserID = User.FindFirst(ClaimTypes.NameIdentifier);
+            var CurrentStudent = _context.Users.Find(CurrentUserID);
+            attempt.UserID = CurrentStudent.Id;
+          
+
+            if (ModelState.IsValid && ParentQuiz.FeedBackEnabled!="Yes")
             {
                 _context.Add(attempt);
                 _context.SaveChanges();
             }
-            return View("TakeQuiz", ParentQuiz);
+           //return View("_LoginPartial");
         }
 
 
 
-        public void AssignColumnKeys(string columnID, int QuizID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey) {
+        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey) {
             if (Request.Form[columnID] == 1)
             {
-                AssignKeysA(QuizID, PhysicalAnswer, DiagnosticAnswer, DiagnosisAnswerKey);
+                PhysicalAnswer = "A";
+                DiagnosticAnswer = "A";
+                DiagnosisAnswerKey = new List<string>(ParentQuiz                        
+                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces   
             }
             else if (Request.Form[columnID] == 2)
             {
-                AssignKeysB(QuizID, PhysicalAnswer, DiagnosticAnswer, DiagnosisAnswerKey);
+                PhysicalAnswer = "A";
+                DiagnosticAnswer = "A";
+                DiagnosisAnswerKey = new List<string>(ParentQuiz
+                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == 3)
             {
-                AssignKeysC(QuizID, PhysicalAnswer, DiagnosticAnswer, DiagnosisAnswerKey);
+                PhysicalAnswer = "A";
+                DiagnosticAnswer = "A";
+                DiagnosisAnswerKey = new List<string>(ParentQuiz
+                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == 4)
             {
-                AssignKeysD(QuizID, PhysicalAnswer, DiagnosticAnswer, DiagnosisAnswerKey);
+                PhysicalAnswer = "A";
+                DiagnosticAnswer = "A";
+                DiagnosisAnswerKey = new List<string>(ParentQuiz
+                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == 5)
             {
-                AssignKeysE(QuizID, PhysicalAnswer, DiagnosticAnswer, DiagnosisAnswerKey);
+                PhysicalAnswer = "A";
+                DiagnosticAnswer = "A";
+                DiagnosisAnswerKey = new List<string>(ParentQuiz
+                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else
             {
@@ -247,48 +245,7 @@ namespace CRESME.Controllers
 
 
 
-        public void AssignKeysA(int QuizID,string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey) { 
-            PhysicalAnswer = _context.Quiz.Find(QuizID).PhysicalA;
-            DiagnosticAnswer = _context.Quiz.Find(QuizID).DiagnosticA;
-            DiagnosisAnswerKey = new List<string>(_context.Quiz.Find(QuizID)       //finds Quiz
-                                    .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
-                                    .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces        
-        }
 
-        public void AssignKeysB(int QuizID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey)
-        {
-            PhysicalAnswer = _context.Quiz.Find(QuizID).PhysicalB;
-            DiagnosticAnswer = _context.Quiz.Find(QuizID).DiagnosticB;
-            DiagnosisAnswerKey = new List<string>(_context.Quiz.Find(QuizID)       //finds Quiz
-                                    .DiagnosisKeyWordsB.Split(',')                 //finds and splits free response key
-                                    .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces        
-        }
-
-        public void AssignKeysC(int QuizID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey)
-        {
-            PhysicalAnswer = _context.Quiz.Find(QuizID).PhysicalC;
-            DiagnosticAnswer = _context.Quiz.Find(QuizID).DiagnosticC;
-            DiagnosisAnswerKey = new List<string>(_context.Quiz.Find(QuizID)       //finds Quiz
-                                    .DiagnosisKeyWordsC.Split(',')                 //finds and splits free response key
-                                    .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces        
-        }
-
-        public void AssignKeysD(int QuizID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey)
-        {
-            PhysicalAnswer = _context.Quiz.Find(QuizID).PhysicalD;
-            DiagnosticAnswer = _context.Quiz.Find(QuizID).DiagnosticD;
-            DiagnosisAnswerKey = new List<string>(_context.Quiz.Find(QuizID)       //finds Quiz
-                                    .DiagnosisKeyWordsD.Split(',')                 //finds and splits free response key
-                                    .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces        
-        }
-
-        public void AssignKeysE(int QuizID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey)
-        {
-            PhysicalAnswer = _context.Quiz.Find(QuizID).PhysicalE;
-            DiagnosticAnswer = _context.Quiz.Find(QuizID).DiagnosticE;
-            DiagnosisAnswerKey = new List<string>(_context.Quiz.Find(QuizID)       //finds Quiz
-                                    .DiagnosisKeyWordsE.Split(',')                 //finds and splits free response key
-                                    .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces        
-        }
+        
     }
 }

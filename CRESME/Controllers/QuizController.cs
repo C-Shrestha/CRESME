@@ -25,9 +25,26 @@ namespace CRESME.Controllers
             return View(_context.Users.ToList());
         }
 
+        [Authorize(Roles = "Admin, Instructor, Student")]
         public IActionResult DisplayQuizzes()
         {
             return View(_context.Quiz.ToList());
+        }
+
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public IActionResult TakeQuiz(int QuizID = -1)
+        {
+           
+            Quiz quiz;
+            if (QuizID != -1)
+            {
+                quiz = _context.Quiz.Find(QuizID);
+            }
+            else
+            {
+                quiz = new Quiz();
+            }
+            return View(quiz);
         }
 
         [HttpPost]

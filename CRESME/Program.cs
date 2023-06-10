@@ -63,7 +63,7 @@ using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
 
-
+    /*
     //delete this attempts seeding section after takequiz view can sucessfully create attempts
     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
@@ -136,6 +136,7 @@ using (var scope = app.Services.CreateScope())
         });
     }
     context.SaveChanges();
+    */
     //end of attempts seeding section
     
 }
