@@ -1059,7 +1059,10 @@ namespace CRESME.Controllers
         }
 
 
-
+        public static int StudentCount()
+        {
+            return 0; 
+        }
 
 
 
