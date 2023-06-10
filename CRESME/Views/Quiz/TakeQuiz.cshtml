@@ -466,10 +466,10 @@
                     <input type="hidden" id="PhysicalAnswer+yellow-box4" name="PhysicalAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box5" name="PhysicalAnswerE" value="0" runat="server" required>
                     <div class="row">
-                        <div name="1" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
-                        <div name="2" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
-                        <div name="3" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
-                        <div name="4" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
+                        <div name="A" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
+                        <div name="B" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
+                        <div name="C" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
+                        <div name="D" class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
                     </div>
                     <input type="hidden" id="DiagnostAnswer+purple-box1" name="DiagnosticAnswerA" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box2" name="DiagnosticAnswerB" value="0" runat="server" required>
@@ -477,28 +477,23 @@
                     <input type="hidden" id="DiagnostAnswer+purple-box4" name="DiagnosticAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box5" name="DiagnosticAnswerE" value="0" runat="server" required>
                     <div class="row">
-                        <div name="1" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
-                        <div name="2" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
-                        <div name="3" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
-                        <div name="4" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
+                        <div name="A" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
+                        <div name="B" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
+                        <div name="C" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
+                        <div name="D" class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
                     </div>
-                    <input type="hidden" id="FreeResponseA" name="FreeResponseA" value="0" runat="server" required>
-                    <input type="hidden" id="FreeResponseB" name="FreeResponseB" value="0" runat="server" required>
-                    <input type="hidden" id="FreeResponseC" name="FreeResponseC" value="0" runat="server" required>
-                    <input type="hidden" id="FreeResponseD" name="FreeResponseD" value="0" runat="server" required>
-                    <input type="hidden" id="FreeResponseE" name="FreeResponseE" value="0" runat="server" required>
                     <div class="row">
                         <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseE" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                            <textarea class="form-control" name="FreeResponseA" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
                         </div>
                         <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseE" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                            <textarea class="form-control" name="FreeResponseB" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
                         </div>
                         <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseE" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                            <textarea class="form-control" name="FreeResponseC" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
                         </div>
                         <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseE" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                            <textarea class="form-control" name="FreeResponseD" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
                         </div>
                     </div>
                     <input type="hidden" id="NumImage0Clicks" name="NumImage0Clicks" value="0" runat="server" required>
@@ -511,6 +506,14 @@
                     <input type="hidden" id="NumImage7Clicks" name="NumImage7Clicks" value="0" runat="server" required>
                     <input type="hidden" id="NumImage8Clicks" name="NumImage8Clicks" value="0" runat="server" required>
                     <input type="hidden" id="NumImage9Clicks" name="NumImage9Clicks" value="0" runat="server" required>
+
+                    <input type="hidden" name="column1" value=@column1 runat="server" required>
+                    <input type="hidden" name="column2" value=@column2 runat="server" required>
+                    <input type="hidden" name="column3" value=@column3 runat="server" required>
+                    <input type="hidden" name="column4" value=@column4 runat="server" required>
+                    <input type="hidden" name="column5" value=@column5 runat="server" required>
+
+                    <input type="hidden" name="QuizID" value=@Model.QuizId>                   
                     <button type="button" class="btn btn-primary" onclick="myFunction()">Switch Colors</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
