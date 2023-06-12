@@ -22,9 +22,9 @@ namespace CRESME.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SubmitAttempt(Attempt attempt) {
-            
+
             Quiz ParentQuiz = new Quiz();
-            
+
             string PhysicalAnswer1 = "";
             string PhysicalAnswer2 = "";
             string PhysicalAnswer3 = "";
@@ -44,7 +44,7 @@ namespace CRESME.Controllers
             List<string> DiagnosisAnswerKey5 = new List<string>();
 
 
-            attempt.QuizID =Int32.Parse(Request.Form["QuizStringID"]);
+            attempt.QuizID = Int32.Parse(Request.Form["QuizStringID"]);
             if (attempt.QuizID != null)
             {
                 attempt.QuizID = Int32.Parse(Request.Form["QuizStringID"]);
@@ -58,132 +58,149 @@ namespace CRESME.Controllers
             {
                 //return quiz id null error
             }
-            
-            
+
+
 
             //  ASsIGNING KEYS
             //assigns correct database answers as keys for physical and diagnostic answers, and constructs the free response answer key 
 
             //COLUMN ONE
-            AssignColumnKeys(ParentQuiz, "column1", PhysicalAnswer1, DiagnosticAnswer1, DiagnosisAnswerKey1);
+            AssignColumnKeys(ParentQuiz, "column1", ref PhysicalAnswer1, ref DiagnosticAnswer1, ref DiagnosisAnswerKey1);
             //COLUMN TWO
-            AssignColumnKeys(ParentQuiz, "column2", PhysicalAnswer2, DiagnosticAnswer2, DiagnosisAnswerKey2);
+            AssignColumnKeys(ParentQuiz, "column2", ref PhysicalAnswer2, ref DiagnosticAnswer2, ref DiagnosisAnswerKey2);
             //COLUMN THREE
-            AssignColumnKeys(ParentQuiz, "column3", PhysicalAnswer3, DiagnosticAnswer3, DiagnosisAnswerKey3);
+            AssignColumnKeys(ParentQuiz, "column3", ref PhysicalAnswer3, ref DiagnosticAnswer3, ref DiagnosisAnswerKey3);
             //COLUMN FOUR
-            AssignColumnKeys(ParentQuiz, "column4", PhysicalAnswer4, DiagnosticAnswer4, DiagnosisAnswerKey4);
+            AssignColumnKeys(ParentQuiz, "column4", ref PhysicalAnswer4, ref DiagnosticAnswer4, ref DiagnosisAnswerKey4);
             //COLUMN FIVE
             if (ParentQuiz.NumColumns == 5) {
-                AssignColumnKeys(ParentQuiz, "column5", PhysicalAnswer5, DiagnosticAnswer5, DiagnosisAnswerKey5);
+                AssignColumnKeys(ParentQuiz, "column5", ref PhysicalAnswer5, ref DiagnosticAnswer5, ref DiagnosisAnswerKey5);
             }
             //  SCORING 
             attempt.Score = 0;
             //COLUMN ONE
-            foreach(string key in DiagnosisAnswerKey1){
-                if (attempt.FreeResponseA.Contains(key)) {
-                    attempt.Score += 3;
-                    if (attempt.PhysicalAnswerA == PhysicalAnswer1) {
-                        attempt.Score += 1;
-                    }
-                    if (attempt.DiagnosticAnswerA == DiagnosticAnswer1)
+            if (attempt.FreeResponseA != null)
+            {
+                foreach (string key in DiagnosisAnswerKey1)
+                {
+                    if (attempt.FreeResponseA.Contains(key))
                     {
-                        attempt.Score += 1;
+                        attempt.Score += 3;
+                        if (attempt.PhysicalAnswerA == PhysicalAnswer1)
+                        {
+                            attempt.Score += 1;
+                        }
+                        if (attempt.DiagnosticAnswerA == DiagnosticAnswer1)
+                        {
+                            attempt.Score += 1;
+                        }
+                        else
+                        {
+                            attempt.Score -= 3;
+                        }
+                        break;
                     }
-                    else
-                    {
-                        attempt.Score -= 3;
-                    }
-                    break;
                 }
             }
             //COLUMN TWO
-            foreach (string key in DiagnosisAnswerKey2)
+            if (attempt.FreeResponseB != null)
             {
-                if (attempt.FreeResponseB.Contains(key))
+                foreach (string key in DiagnosisAnswerKey2)
                 {
-                    attempt.Score += 3;
-                    if (attempt.PhysicalAnswerB == PhysicalAnswer2)
+                    if (attempt.FreeResponseB.Contains(key))
                     {
-                        attempt.Score += 1;
+                        attempt.Score += 3;
+                        if (attempt.PhysicalAnswerB == PhysicalAnswer2)
+                        {
+                            attempt.Score += 1;
+                        }
+                        if (attempt.DiagnosticAnswerB == DiagnosticAnswer2)
+                        {
+                            attempt.Score += 1;
+                        }
+                        else
+                        {
+                            attempt.Score -= 3;
+                        }
+                        break;
                     }
-                    if (attempt.DiagnosticAnswerB == DiagnosticAnswer2)
-                    {
-                        attempt.Score += 1;
-                    }
-                    else
-                    {
-                        attempt.Score -= 3;
-                    }
-                    break;
                 }
             }
             //COLUMN THREE
-            foreach (string key in DiagnosisAnswerKey3)
+            if (attempt.FreeResponseC != null)
             {
-                if (attempt.FreeResponseC.Contains(key))
+                foreach (string key in DiagnosisAnswerKey3)
                 {
-                    attempt.Score += 3;
-                    if (attempt.PhysicalAnswerC == PhysicalAnswer3)
+                    if (attempt.FreeResponseC.Contains(key))
                     {
-                        attempt.Score += 1;
+                        attempt.Score += 3;
+                        if (attempt.PhysicalAnswerC == PhysicalAnswer3)
+                        {
+                            attempt.Score += 1;
+                        }
+                        if (attempt.DiagnosticAnswerC == DiagnosticAnswer3)
+                        {
+                            attempt.Score += 1;
+                        }
+                        else
+                        {
+                            attempt.Score -= 3;
+                        }
+                        break;
                     }
-                    if (attempt.DiagnosticAnswerC == DiagnosticAnswer3)
-                    {
-                        attempt.Score += 1;
-                    }
-                    else
-                    {
-                        attempt.Score -= 3;
-                    }
-                    break;
                 }
             }
             //COLUMN FOUR
-            foreach (string key in DiagnosisAnswerKey4)
+            if (attempt.FreeResponseD != null)
             {
-                if (attempt.FreeResponseD.Contains(key))
+                foreach (string key in DiagnosisAnswerKey4)
                 {
-                    attempt.Score += 3;
-                    if (attempt.PhysicalAnswerD == PhysicalAnswer4)
+                    if (attempt.FreeResponseD.Contains(key))
                     {
-                        attempt.Score += 1;
+                        attempt.Score += 3;
+                        if (attempt.PhysicalAnswerD == PhysicalAnswer4)
+                        {
+                            attempt.Score += 1;
+                        }
+                        if (attempt.DiagnosticAnswerD == DiagnosticAnswer4)
+                        {
+                            attempt.Score += 1;
+                        }
+                        else
+                        {
+                            attempt.Score -= 3;
+                        }
+                        break;
                     }
-                    if (attempt.DiagnosticAnswerD == DiagnosticAnswer4)
-                    {
-                        attempt.Score += 1;
-                    }
-                    else
-                    {
-                        attempt.Score -= 3;
-                    }
-                    break;
                 }
             }
             //COLUMN FIVE
-            foreach (string key in DiagnosisAnswerKey5)
+            if (attempt.FreeResponseE != null)
             {
-                if (attempt.FreeResponseE.Contains(key))
+                foreach (string key in DiagnosisAnswerKey5)
                 {
-                    attempt.Score += 3;
-                    if (attempt.PhysicalAnswerE == PhysicalAnswer5)
+                    if (attempt.FreeResponseE.Contains(key))
                     {
-                        attempt.Score += 1;
+                        attempt.Score += 3;
+                        if (attempt.PhysicalAnswerE == PhysicalAnswer5)
+                        {
+                            attempt.Score += 1;
+                        }
+                        if (attempt.DiagnosticAnswerE == DiagnosticAnswer5)
+                        {
+                            attempt.Score += 1;
+                        }
+                        else
+                        {
+                            attempt.Score -= 3;
+                        }
+                        break;
                     }
-                    if (attempt.DiagnosticAnswerE == DiagnosticAnswer5)
-                    {
-                        attempt.Score += 1;
-                    }
-                    else {
-                        attempt.Score -= 3;
-                    }
-                    break;
                 }
             }
-
             //student info
-            //var CurrentUserID = User.FindFirst(ClaimTypes.NameIdentifier);
-            //var CurrentStudent = _context.Users.Find(CurrentUserID.ToString());
-            //attempt.StudentID = CurrentStudent.Id;
+            var CurrentStudent = _context.Users.SingleOrDefault( user => user.UserName == User.Identity.Name);
+            attempt.StudentID = CurrentStudent.Id;
           
 
             //if (ModelState.IsValid && ParentQuiz.FeedBackEnabled!="Yes")
@@ -196,8 +213,9 @@ namespace CRESME.Controllers
 
 
 
-        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, string PhysicalAnswer, string DiagnosticAnswer, List<string> DiagnosisAnswerKey) {
-            if (Request.Form[columnID] == 1)
+        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, ref string PhysicalAnswer, ref string DiagnosticAnswer, ref List<string> DiagnosisAnswerKey) {
+            
+            if (Request.Form[columnID] == "1")
             {
                 PhysicalAnswer = "1";
                 DiagnosticAnswer = "1";
@@ -205,41 +223,41 @@ namespace CRESME.Controllers
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces   
             }
-            else if (Request.Form[columnID] == 2)
+            else if (Request.Form[columnID] == "2")
             {
                 PhysicalAnswer = "2";
                 DiagnosticAnswer = "2";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
-                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .DiagnosisKeyWordsB.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
-            else if (Request.Form[columnID] == 3)
+            else if (Request.Form[columnID] == "3")
             {
                 PhysicalAnswer = "3";
                 DiagnosticAnswer = "3";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
-                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .DiagnosisKeyWordsC.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
-            else if (Request.Form[columnID] == 4)
+            else if (Request.Form[columnID] == "4")
             {
                 PhysicalAnswer = "4";
                 DiagnosticAnswer = "4";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
-                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .DiagnosisKeyWordsD.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
-            else if (Request.Form[columnID] == 5)
+            else if (Request.Form[columnID] == "5")
             {
                 PhysicalAnswer = "5";
                 DiagnosticAnswer = "5";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
-                                        .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
+                                        .DiagnosisKeyWordsE.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else
             {
-                //return answer column could not be read
+                PhysicalAnswer = "error";
             }
         }
 
