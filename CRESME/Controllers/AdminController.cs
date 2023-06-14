@@ -903,7 +903,6 @@ namespace CRESME.Controllers
             // Create a new Excel workbook
             using (XLWorkbook workbook = new XLWorkbook())
             {
-
                 var userList = _context.Attempt
                         .FromSqlInterpolated($"select * from Attempts where QuizName = {formData.QuizName}")
                         .ToList();
