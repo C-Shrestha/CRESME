@@ -2,7 +2,7 @@
 ﻿@{
 
     ViewData["Title"] = "Create Quiz";
-    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x!=null);
+    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null);
     IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
 }
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -45,6 +45,10 @@
                 <button type="button" id="imageButton" class="col-4 btn btn-link" onclick="addImage()">+Image</button>
                 <div class="w-100"></div>
 
+
+                <div class="col-4 text-center" style="font-weight: bold;">Upload Excel File</div>
+                <div class="w-100"></div>
+
                 <input type="file" name="ExcelFileUpload" id="excelButton" accept=".xlsx" style="display: none;" required />
                 <label class="col-4 row justify-content-center border" id="excelLabel" for="excelButton" style="border-color: black !important;">
                     <i class="col-md-auto fa-sharp fa-solid fa-upload"></i>
@@ -52,6 +56,7 @@
                 <div class="w-100"></div>
 
                 <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                    <option value="none" selected>Term</option>
                     @foreach (var term in UniqueTerms)
                     {
                         <option value=@term selected>@term</option>
@@ -60,7 +65,7 @@
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="none" selected>N/A</option>
+                    <option value="none" selected>Block</option>
                     <option value="B1">1</option>
                     <option value="B2">2</option>
                     <option value="B3">3</option>
@@ -77,6 +82,7 @@
                 <div class="col-1"></div>
 
                 <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                    <option value="none" selected>Courses</option>
                     @foreach (var course in UniqueCourses)
                     {
                         <option value=@course selected>@course</option>
@@ -126,10 +132,62 @@
 
     var i = 0;
 
+    function deleteButton(k) {
+        var deleteButton = document.getElementById(k);
+        var inputButton = document.getElementById('imageFile' + k);
+        var inputLabel = document.getElementById('imageLabel' + k);
+        var list = document.getElementById('ImagePos' + k);
+        var vrDiv = document.getElementById('vrDiv' + k);
+        var hrDiv1 = document.getElementById('hrDiv1' + k);
+        var hrDiv2 = document.getElementById('hrDiv2' + k);
+        var checkMark = document.getElementById('imgCheckMark' + k);
+        var imageName = document.getElementById('imageName' + k);
+        var break1 = document.getElementById('newBreak1' + k);
+        var break2 = document.getElementById('newBreak2' + k);
+
+        deleteButton.remove();
+        inputButton.remove();
+        inputLabel.remove();
+        list.remove();
+        vrDiv.remove();
+        hrDiv1.remove();
+        hrDiv2.remove();
+
+        if (checkMark != null) {
+
+            checkMark.remove();
+            imageName.remove();
+            break1.remove();
+            break2.remove();
+
+        }
+
+
+        i--;
+    }
+
     function addImage() {
+
+        var deleteButton = document.createElement("button");
+        deleteButton.setAttribute("class", 'custom_btn col-2');
+        deleteButton.setAttribute("onclick", 'deleteButton(this.id)');
+        deleteButton.setAttribute("id", '' + i);
+        deleteButton.innerHTML = "Delete";
+
 
         var newDiv = document.createElement("div");
         newDiv.setAttribute("class", 'w-100');
+        newDiv.setAttribute("id", 'vrDiv' + i);
+
+
+        var hrDiv1 = document.createElement("div");
+        hrDiv1.setAttribute("class", 'col-1');
+        hrDiv1.setAttribute("id", 'hrDiv1' + i);
+
+        var hrDiv2 = document.createElement("div");
+        hrDiv2.setAttribute("class", 'col-1');
+        hrDiv2.setAttribute("id", 'hrDiv2' + i);
+
 
         var imageButton = document.getElementById("imageButton");
 
@@ -138,21 +196,20 @@
         newfile.setAttribute("name", 'imageFile' + i);
         newfile.setAttribute("id", 'imageFile' + i);
         newfile.setAttribute("accept", '.jpg, .jpeg');
-        newfile.setAttribute("onchange", 'checkForImage()');
+        newfile.setAttribute("onchange", 'checkForImage(this.id)');
         newfile.style.display = "none";
 
 
-        imageButton.after(newfile);
-
-        var hrDiv = document.createElement("div");
-        hrDiv.setAttribute("class", 'col-1');
-
-        newfile.after(hrDiv);
+        imageButton.after(newDiv);
+        newDiv.after(deleteButton);
+        deleteButton.after(hrDiv1);
+        hrDiv1.after(newfile);
+        newfile.after(hrDiv2);
 
         var select = document.createElement("select");
         select.setAttribute("class", 'form-select col-1');
         select.setAttribute("aria-label", 'Default select example');
-        select.setAttribute("id", 'ImagePos'+ i);
+        select.setAttribute("id", 'ImagePos' + i);
         select.setAttribute("name", 'ImagePos' + i);
         select.style.width = "15%";
         select.style.height = "10%";
@@ -165,8 +222,8 @@
             select[key].setAttribute("value", element);
             select[key].setAttribute("name", 'Image' + key + 'Pos');
         });
-        
-        hrDiv.after(select);
+
+        hrDiv2.after(select);
         imageButton.after(newDiv);
 
 
@@ -176,7 +233,7 @@
         newlabel.setAttribute("id", 'imageLabel' + i);
         newlabel.style.setProperty("border-color", "black", "important");
 
-        var newi = document.createElement("i");
+        newi = document.createElement("i");
         newi.setAttribute("class", "col-md-auto fa-solid fa-image");
         newlabel.appendChild(newi);
 
@@ -188,44 +245,48 @@
 
     }
 
-    function checkForImage() {
+    function checkForImage(id) {
 
 
-        for (var j = 0; j < i; j++) {
-            var imageButton = document.getElementById('imageFile' + j);
+        var imageButton = document.getElementById(id);
 
-            if (imageButton.value != "") {
+        if (imageButton.value != "") {
 
-                var checkForI = document.getElementById("imgCheckMark" + j);
+            var char = id.slice(-1);
+            var j = parseInt(char);
 
-                if (checkForI == null) {
+            var checkForI = document.getElementById("imgCheckMark" + j);
 
-                    var newi = document.createElement("i");
-                    newi.setAttribute("class", "col-1 fa-solid fa-check");
-                    newi.setAttribute("id", "imgCheckMark" + j);
+            if (checkForI == null) {
 
-                    var newBreak = document.createElement("div");
-                    newBreak.setAttribute("class", 'w-100');
+                var newi = document.createElement("i");
+                newi.setAttribute("class", "col-1 fa-solid fa-check");
+                newi.setAttribute("id", "imgCheckMark" + j);
 
-                    document.getElementById("ImagePos" + j).after(newi);
-                    newi.after(newBreak);
+                var newBreak = document.createElement("div");
+                newBreak.setAttribute("class", 'w-100');
+                newBreak.setAttribute("id", 'newBreak1' + j);
 
-                    var newdiv = document.createElement("div");
-                    newdiv.setAttribute("class", "col-2");
-                    newdiv.style.fontWeight = "bold";
-                    newdiv.innerHTML = "Image" + (j+1);
+                document.getElementById("ImagePos" + j).after(newi);
+                newi.after(newBreak);
 
-
-                    newBreak.after(newdiv);
-
-                    var newBreak1 = document.createElement("div");
-                    newBreak.setAttribute("class", 'w-100');
-
-                    newdiv.after(newBreak1)
-                }
+                var newdiv = document.createElement("div");
+                newdiv.setAttribute("class", "col-2");
+                newdiv.setAttribute("id", 'imageName' + j);
+                newdiv.style.fontWeight = "bold";
+                newdiv.innerHTML = imageButton.value.split("\\").pop();
 
 
+                newBreak.after(newdiv);
+
+                var newBreak1 = document.createElement("div");
+                newBreak1.setAttribute("class", 'w-100');
+                newBreak1.setAttribute("id", 'newBreak2' + j);
+
+                newdiv.after(newBreak1)
             }
+
+
         }
     }
 
