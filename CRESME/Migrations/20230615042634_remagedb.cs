@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class newDB : Migration
+    public partial class remagedb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,16 +59,16 @@ namespace CRESME.Migrations
                 {
                     AttemptId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentNID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuizID = table.Column<int>(type: "int", nullable: true),
+                    PatientIntro = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StudentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuizName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: true),
-                    NumColumns = table.Column<int>(type: "int", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Term = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Course = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Block = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Score = table.Column<int>(type: "int", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PhysicalAnswerA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAnswerB = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAnswerC = table.Column<string>(type: "nvarchar(max)", nullable: true),

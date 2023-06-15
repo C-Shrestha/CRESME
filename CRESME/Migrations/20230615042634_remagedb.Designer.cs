@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230610230526_flatteningattempts2")]
-    partial class flatteningattempts2
+    [Migration("20230615042634_remagedb")]
+    partial class remagedb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,6 +112,12 @@ namespace CRESME.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttemptId"), 1L, 1);
 
+                    b.Property<string>("Block")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Course")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DiagnosticAnswerA")
                         .HasColumnType("nvarchar(max)");
 
@@ -175,6 +181,9 @@ namespace CRESME.Migrations
                     b.Property<string>("NumImage9Clicks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PatientIntro")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhysicalAnswerA")
                         .HasColumnType("nvarchar(max)");
 
@@ -190,7 +199,7 @@ namespace CRESME.Migrations
                     b.Property<string>("PhysicalAnswerE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QuizID")
+                    b.Property<int?>("QuizID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Score")
@@ -200,7 +209,12 @@ namespace CRESME.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StudentID")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Term")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AttemptId");
