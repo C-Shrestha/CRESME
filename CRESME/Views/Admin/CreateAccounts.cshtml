@@ -1,49 +1,98 @@
-﻿@{
+@{
     ViewData["Title"] = "Create Accounts";
 }
 
+
+<!-- Modal -->
+
+<form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
+    <div class="container border rounded" style="width: 50%; background-color:#f8f9fa;">
+        <div class="row gy-2 mb-3 justify-content-center">
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        B12, Cardiac Arrest
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="container p-2 border col-12" style="border-style: solid !important; background-color: #f8f4f4; border-color: #fcfcfc !important;">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center" style="">Create User Accounts</div>
+                        </div>
+                </div>
+
+                <div class="col-12 text-center" style="font-weight: bold;">Upload an Excel file to create user accounts</div>
+                <div class="w-100"></div>
+
+                <div class="col-12 text-center" style="font-weight: lighter;">*All NID's must be unique*</div>
+                <div class="w-100"></div>
+
+                <input  type="file" name="file" id="file" accept=".xlsx" style="display: none;" required />
+                <label class="col-4 row justify-content-center border" id="excelLabel" for="file" style="border-color: black !important;">
+                        <i class="col-md-auto fa-sharp fa-solid fa-upload"></i>
+                </label>
+
+                <div class="w-100"></div>
+
+
+                <button class="col-4 btn btn-primary" type="submit">
+                    <i class="fa-solid fa-user"></i> Create User Accounts
+                </button>
+        </div>
+    </div>                                
+</form>
+
 <style>
-    .containerNew {
-        margin-top: 175px;
+
+
+    .container {
+        border-color: #F1C400 !important;
+
     }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+    .upload-btn {
+        border-color: #F1C400 !important;
+        background: transparent;
+    }
+
+    .input-field {
+        border-color: black;
+
+    }
+
+    label {
+        background-color: white;
+        padding: 0.5rem;
+        border-color: #F1C400 !important;
+        cursor: pointer;
+    }
+
 </style>
 
-<div class="containerNew">
+@*<div class="text-center">
+    <div class="container">
+        <form method="post" asp-controller="Admin" asp-action="Import" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <button type="submit">Import from Excel</button>
 
-
-    <div class="card text-center md-3 border-warning mx-auto my-auto w-50 bg-light">
-        <br />
-        <div class="card-header">
-            Create New Accounts
-        </div>
-        <div class="card-body">
-
-            <h5 class="card-title">Upload an excel file to create new accounts.</h5>
-            <p class="card-text">*All NID's must be unique*</p>
-
-            <form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
-                <input type="file" name="file" />
-                <button type="submit" class="btn btn-md btn-primary">
-                    <i class="fa-solid fa-file-import"></i>
-                    Create Accounts
-                </button>
-
-            </form>
-
-
-        </div>
-
+        </form>
     </div>
-
 </div>
-
-    
-
-<br />
-<br />
-<br />
-
-
-
-
-
+   *@

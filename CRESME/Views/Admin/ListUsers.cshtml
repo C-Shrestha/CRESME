@@ -45,8 +45,8 @@
 
 
 
-<form asp-controller="Admin"  asp-action="DeleteAll" onclick="return confirm('Are you sure you want to DELETE ALL the users?')">
-                                <button type="submit" class="btn btn-md btn-danger">
+<form asp-controller="Admin"  asp-action="DeleteAll" >
+    <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
                                     Delete All Users
                                 </button>
