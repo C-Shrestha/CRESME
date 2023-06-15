@@ -35,6 +35,7 @@
                     double minScore = 0.0;
                     double medianValue = 0.0;
 
+
                     List<double> scoreList = new List<double>();
                     List<TimeSpan> durations = new List<TimeSpan>();
                     TimeSpan totalDuration = TimeSpan.Zero;
@@ -93,20 +94,28 @@
 
                         }
 
-                         medianValue = GetMedian(scores);
+                        medianValue = GetMedian(scores);
 
 
 
                         // Calculate the average duration
                         //TimeSpan averageDuration = TimeSpan.FromTicks(totalDuration.Ticks / durations.Count);
 
-                         averageDuration = (durations.Count > 0) ? TimeSpan.FromTicks(totalDuration.Ticks / durations.Count) : TimeSpan.Zero;
+                        averageDuration = (durations.Count > 0) ? TimeSpan.FromTicks(totalDuration.Ticks / durations.Count) : TimeSpan.Zero;
+
+                        //total number of students eligible to take the quiz
+
+
 
                     }
 
 
                 }
 
+                 @*   @{
+                        ((AdminController)this.ViewContext.Controller).StudentCount;
+                }
+*@
                 <p>
                     <b>Student Count:</b> @num<br />
                 </p>

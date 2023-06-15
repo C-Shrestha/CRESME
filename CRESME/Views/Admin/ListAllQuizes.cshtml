@@ -96,6 +96,10 @@
                         @Html.DisplayNameFor(model => model.Published)
                     </th>
 
+                    <th>
+                        Feedback
+                    </th>
+
                     
 
 
@@ -104,6 +108,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    
 
                     
                 </tr>
@@ -164,6 +169,18 @@
                             <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
                             }
                         </td>
+
+                    <td>
+
+                        @if (item.FeedBackEnabled == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
 
                     <td>
                         <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName" method="post">

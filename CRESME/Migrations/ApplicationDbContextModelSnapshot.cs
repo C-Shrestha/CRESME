@@ -4,18 +4,16 @@ using CRESME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CRESME.Data.Migrations
+namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230602155146_takeQuizNew")]
-    partial class takeQuizNew
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,10 +102,140 @@ namespace CRESME.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("CRESME.Data.Attempt", b =>
+                {
+                    b.Property<int>("AttemptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttemptId"), 1L, 1);
+
+                    b.Property<string>("Block")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Course")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticAnswerA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticAnswerB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticAnswerC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticAnswerD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiagnosticAnswerE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FreeResponseA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FreeResponseB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FreeResponseC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FreeResponseD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FreeResponseE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumColumns")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumImage0Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage1Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage2Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage3Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage4Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage5Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage6Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage7Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage8Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumImage9Clicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientIntro")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalAnswerA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalAnswerB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalAnswerC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalAnswerD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhysicalAnswerE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuizID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("QuizName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentNID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Term")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AttemptId");
+
+                    b.ToTable("Attempts");
+                });
+
             modelBuilder.Entity("CRESME.Data.Quiz", b =>
                 {
-                    b.Property<string>("QuizName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("QuizId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"), 1L, 1);
 
                     b.Property<string>("Block")
                         .HasColumnType("nvarchar(max)");
@@ -273,13 +401,17 @@ namespace CRESME.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("QuizName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Term")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("QuizName");
+                    b.HasKey("QuizId");
 
                     b.ToTable("Quiz");
                 });

@@ -142,6 +142,63 @@ namespace CRESME.Controllers
 
         }
 
+    
+        public IActionResult TestAttempt()
+        {
+            return View(_context.Attempt.FirstOrDefault());
+
+        }
+
+
+        /*[Route("quiz")]*/
+        public async Task<IActionResult> GenerateAttemptPDF( Attempt attempt)
+        {
+
+            using (var stringWriter = new StringWriter())
+            {
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, "TestAttempt", false);
+                if (viewResult == null)
+                {
+                    throw new ArgumentException("View Cannot be Found");
+
+                }
+                var model = attempt;
+                /*var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());*/
+
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                { Model = model };
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    viewDictionary,
+                    TempData,
+                    stringWriter,
+                    new HtmlHelperOptions()
+                    );
+
+                await viewResult.View.RenderAsync(viewContext);
+
+
+                var htmlToPdf = new HtmlToPdf(1000, 1414);
+                htmlToPdf.Options.DrawBackground = true;
+
+
+                var pdf = htmlToPdf.ConvertHtmlString(stringWriter.ToString());
+
+                var pdfBytes = pdf.Save();
+
+
+
+                return File(pdfBytes, "application/pdf");
+
+
+            }
+        }
+
+
+
+
 
 
 

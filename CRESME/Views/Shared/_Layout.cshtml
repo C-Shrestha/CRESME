@@ -14,7 +14,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div style="width: 100%; height: 25px; background-color: #000;"></div>
+        <div style="width: 100%; height: 5px; background-color: #f1c400;"></div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CRESME</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -101,6 +103,9 @@
 
                             }
 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="TestAttempt">AttemptPDF</a>
+                            </li>
                             
 
                             
@@ -115,6 +120,7 @@
                 </div>
             </div>
         </nav>
+        <div style="width: 100%; height: 5px; background-color: #f1c400;"></div>
     </header>
     <div class="container-fluid">
         <main role="main" class="pb-3">
@@ -122,10 +128,13 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
+        <div style="width: 100%; height: 5px; background-color: #fcf4cf;"></div>
         <div class="container">
-            &copy; 2023 - CRESME - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            2023 CRESME &copy; UCF
         </div>
+        <div style="width: 100%; height: 5px; background-color: #f1c400;"></div>
+        <div style="width: 100%; height: 25px; background-color: #000;"></div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/DataTable/jquery.datatables.js"></script>

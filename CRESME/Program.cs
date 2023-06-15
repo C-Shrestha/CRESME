@@ -82,7 +82,12 @@ using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
 
+
     
+
+ 
+//var context = scope.ServiceProvider.GetService<ApplicationDbContext>();   
+
 }
 
 

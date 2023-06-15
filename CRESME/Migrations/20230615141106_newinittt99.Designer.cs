@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CRESME.Data.Migrations
+namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230605132240_testingDB11")]
-    partial class testingDB11
+    [Migration("20230615141106_newinittt99")]
+    partial class newinittt99
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,7 +151,7 @@ namespace CRESME.Data.Migrations
                     b.Property<string>("FreeResponseE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumColumns")
+                    b.Property<int?>("NumColumns")
                         .HasColumnType("int");
 
                     b.Property<string>("NumImage0Clicks")
@@ -184,6 +184,9 @@ namespace CRESME.Data.Migrations
                     b.Property<string>("NumImage9Clicks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PatientIntro")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhysicalAnswerA")
                         .HasColumnType("nvarchar(max)");
 
@@ -199,8 +202,10 @@ namespace CRESME.Data.Migrations
                     b.Property<string>("PhysicalAnswerE")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("QuizID")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuizName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Score")
@@ -209,8 +214,10 @@ namespace CRESME.Data.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StudentNID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentName")

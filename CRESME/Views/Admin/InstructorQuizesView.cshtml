@@ -56,6 +56,10 @@
                     @Html.DisplayNameFor(model => model.Published)
                 </th>
 
+                <th>
+                    Feedback
+                </th>
+
 
 
                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
@@ -102,7 +106,27 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.Published)
+
+                        @if (item.Published == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
+
+                    <td>
+
+                        @if (item.FeedBackEnabled == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
                     </td>
 
 

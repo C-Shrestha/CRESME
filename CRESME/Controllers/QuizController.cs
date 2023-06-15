@@ -25,25 +25,27 @@ namespace CRESME.Controllers
             return View(_context.Users.ToList());
         }
 
-
-
+        [Authorize(Roles = "Admin, Instructor, Student")]
         public IActionResult DisplayQuizzes()
         {
             return View(_context.Quiz.ToList());
         }
 
-        public IActionResult TakeQuiz(string quizname) {
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public IActionResult TakeQuiz(int QuizID = -1)
+        {
+           
             Quiz quiz;
-            if (quizname != null) {
-                quiz = _context.Quiz.Find(quizname);
+            if (QuizID != -1)
+            {
+                quiz = _context.Quiz.Find(QuizID);
             }
-            else {
-                quiz = new Quiz();         
+            else
+            {
+                quiz = new Quiz();
             }
-            return View(quiz);            
+            return View(quiz);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]  
@@ -52,11 +54,11 @@ namespace CRESME.Controllers
             //checkboxes only send output if they are checked(default is "on"), otherwise null
             if (Request.Form["Feedback"] == "1")
             {
-                quiz.FeedBackEnabled = "true";
+                quiz.FeedBackEnabled = "Yes";
             }
             else
             {
-                quiz.FeedBackEnabled = "false";
+                quiz.FeedBackEnabled = "No";
             }
 
             if (Request.Form["Publish"] == "1")
