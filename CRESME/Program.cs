@@ -2,6 +2,7 @@ using CRESME.Data;
 using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection.Metadata;
 
@@ -27,9 +28,19 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.AddControllersWithViews();
 
+
+// added for SwaggerHub
+
+// Searches for and generates endpoints in Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CRESME API", Version = "v1" });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+/*// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -39,7 +50,11 @@ else
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-}
+}*/
+
+app.UseDeveloperExceptionPage();
+app.UseMigrationsEndPoint();
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -57,6 +72,10 @@ pattern: "{controller=Home}/{action=Index}/{id?}");
 //pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.MapRazorPages();
+
+// Displays the API endpoints at /swagger/index.html
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 using (var scope = app.Services.CreateScope())

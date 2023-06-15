@@ -32,13 +32,28 @@ namespace CRESME.Models
         /*This fucntion retrives the student grades and data from the database and exports it as an excel file.*/
         public DataSet Getrecord()
         {
-            string studentData = "select * from [CRESME].[dbo].[AspNetUsers]"; 
+            /*string studentData = "select * from [CRESME].[dbo].[AspNetUsers]";*/
+            string studentData = "select * from [dbo].[AspNetUsers]";
             SqlCommand com = new SqlCommand(studentData, con);
             /*com.CommandType = CommandType.StoredProcedure;*/
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();
             da.Fill(ds);
             return ds; 
+
+
+        }
+
+        public DataSet GetData(string query)
+        {
+            /*string studentData = "select * from [CRESME].[dbo].[AspNetUsers]";*/
+            string studentData = query;
+            SqlCommand com = new SqlCommand(studentData, con);
+            /*com.CommandType = CommandType.StoredProcedure;*/
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            return ds;
 
 
         }

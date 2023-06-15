@@ -2,57 +2,45 @@
     ViewData["Title"] = "Create Accounts";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .containerNew {
+        margin-top: 175px;
+    }
+</style>
+
+<div class="containerNew">
 
 
-<h2>Please select an EXCEL file to create accounts.</h2>
+    <div class="card text-center md-3 border-warning mx-auto my-auto w-50 bg-light">
+        <br />
+        <div class="card-header">
+            Create New Accounts
+        </div>
+        <div class="card-body">
 
-<br />
-<hr />
-<br />
+            <h5 class="card-title">Upload an excel file to create new accounts.</h5>
+            <p class="card-text">*All NID's must be unique*</p>
+            <form asp-controller="Admin" asp-action="ImportExcel" method="post">
+                <input type="file" name="file" />
+                <button type="submit" class="btn btn-md btn-primary">
+                    <i class="fa-solid fa-file-import"></i>
+                    Create Accounts
+                </button>
+            </form>
+            <br />
+        </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        B12, Cardiac Arrest
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        
-      </div>
     </div>
-  </div>
+
 </div>
 
+    
+
+<br />
+<br />
+<br />
 
 
-@*<div class="text-center">
-    <div class="container">
-        <form method="post" asp-controller="Admin" asp-action="Import" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <button type="submit">Import from Excel</button>
 
-        </form>
-    </div>
-</div>*@
 
-<br/>
-<br/>
-<br/>
 
-<div class="text-center">
-    <div class="container">
-        <form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <button type="submit"> New Import from Excel</button>
-
-        </form>
-    </div>
-</div>

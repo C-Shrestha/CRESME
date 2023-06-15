@@ -21,6 +21,17 @@
 <br />
 
 
+<form asp-controller="Admin" asp-action="ExportQuizesToExcel">
+    <button type="submit" class="btn btn-md btn-primary">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        Neww Export Quizes to Excel
+    </button>
+</form>
+
+<br />
+
+
+
 <form asp-controller="Admin" asp-action="DeleteAllQuizes" onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')">
                                 <button type="submit" class="btn btn-md btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
@@ -47,6 +58,10 @@
 
         <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QuizId)
+                    </th>
+
                     <th>
                         @Html.DisplayNameFor(model => model.QuizName)
                     </th>
@@ -75,11 +90,23 @@
                         @Html.DisplayNameFor(model => model.EndDate)
                     </th>
 
+                    <th>
+                        @Html.DisplayNameFor(model => model.Published)
+                    </th>
+
+                    <th>
+                        Feedback
+                    </th>
+
+                    
+
 
 
                     @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
                     <th></th>
                     <th></th>
+                    <th></th>
+                    
 
                     
                 </tr>
@@ -93,6 +120,11 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuizId)
+                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.QuizName)
                         </td>
@@ -117,10 +149,47 @@
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.EndDate)
+                            @Html.DisplayFor(modelItem => item.EndDate).
                         </td>
 
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Published)
+                        </td>*@
+
+                        <td>
                         
+                        @if (item.Published == "Yes")
+                            {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            }
+                            else
+                            {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                            }
+                        </td>
+
+                    <td>
+
+                        @if (item.FeedBackEnabled == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
+
+                    <td>
+                        <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName" method="post">
+                            <button type="submit" class="btn btn-sm btn-warning">
+                                <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
+                                Details
+                            </button>
+                        </form>
+                    </td>
+
+                    
 
 
                         <td>
@@ -134,7 +203,7 @@
 
 
                         <td>
-                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
+                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this quiz?')">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="fa-solid fa-trash-can"></i>
                                     Delete
