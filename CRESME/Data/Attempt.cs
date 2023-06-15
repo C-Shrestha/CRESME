@@ -15,10 +15,14 @@ namespace CRESME.Data
         [BindProperty]
         public int? QuizID { get; set; }
 
-        public string? QuizName;
+        public string? QuizName { get; set; }
+
+        public int? NumColumns { get; set; }
 
         public string? PatientIntro { get; set; }
 
+        public string? StudentNID { get; set; }
+        
         public string? StudentID { get; set; } 
 
         public string? StudentName { get; set; }
