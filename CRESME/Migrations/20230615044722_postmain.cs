@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CRESME.Data.Migrations
+namespace CRESME.Migrations
 {
-    public partial class testingDB11 : Migration
+    public partial class postmain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,16 +59,19 @@ namespace CRESME.Data.Migrations
                 {
                     AttemptId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentNID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuizID = table.Column<int>(type: "int", nullable: true),
+                    QuizName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumColumns = table.Column<int>(type: "int", nullable: true),
+                    PatientIntro = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentNID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StudentID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StudentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuizName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: true),
-                    NumColumns = table.Column<int>(type: "int", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Term = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Course = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Block = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Score = table.Column<int>(type: "int", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PhysicalAnswerA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAnswerB = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAnswerC = table.Column<string>(type: "nvarchar(max)", nullable: true),

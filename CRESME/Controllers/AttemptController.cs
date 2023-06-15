@@ -57,6 +57,7 @@ namespace CRESME.Controllers
                 }
                 attempt.QuizName = ParentQuiz.QuizName;
                 attempt.PatientIntro = ParentQuiz.PatientIntro;
+                attempt.NumColumns = ParentQuiz.NumColumns;
             }
             else
             {
@@ -195,7 +196,8 @@ namespace CRESME.Controllers
             //student info
             var CurrentStudent = _context.Users.SingleOrDefault( user => user.UserName == User.Identity.Name);
             attempt.StudentID = CurrentStudent.Id;
-            attempt.StudentName = CurrentStudent.UserName;
+            attempt.StudentNID = CurrentStudent.UserName;
+            attempt.StudentName = CurrentStudent.Name;
             attempt.Course = CurrentStudent.Course;
             attempt.Block = CurrentStudent.Block;
             attempt.Term = CurrentStudent.Term;
