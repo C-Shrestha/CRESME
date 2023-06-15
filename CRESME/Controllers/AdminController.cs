@@ -922,6 +922,10 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 9).Value = "Term";
                 worksheet.Cell(1, 10).Value = "Course";
                 worksheet.Cell(1, 11).Value = "Block";
+
+                
+
+
                 worksheet.Cell(1, 12).Value = "PhysicalAnswerA";
                 worksheet.Cell(1, 13).Value = "PhysicalAnswerB";
                 worksheet.Cell(1, 14).Value = "PhysicalAnswerC";
@@ -948,6 +952,19 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 35).Value = "NumImage8Clicks";
                 worksheet.Cell(1, 36).Value = "NumImage9Clicks";
 
+                worksheet.Cell(1, 36).Value = "QuizID";
+                worksheet.Cell(1, 36).Value = "PatientIntro";
+                worksheet.Cell(1, 36).Value = "StudentID";
+
+
+
+                /*quizid
+                    patientintro
+                    studentid
+
+                
+                 */
+
 
 
                 // Set the row values
@@ -964,6 +981,10 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 9).Value = userList[i].Term;
                     worksheet.Cell(i + 2, 10).Value = userList[i].Course;
                     worksheet.Cell(i + 2, 11).Value = userList[i].Block;
+
+
+
+
                     worksheet.Cell(i + 2, 12).Value = userList[i].PhysicalAnswerA;
                     worksheet.Cell(i + 2, 13).Value = userList[i].PhysicalAnswerB;
                     worksheet.Cell(i + 2, 14).Value = userList[i].PhysicalAnswerC;
@@ -974,11 +995,13 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 19).Value = userList[i].DiagnosticAnswerC;
                     worksheet.Cell(i + 2, 20).Value = userList[i].DiagnosticAnswerD;
                     worksheet.Cell(i + 2, 21).Value = userList[i].DiagnosticAnswerE;
+
                     worksheet.Cell(i + 2, 22).Value = userList[i].FreeResponseA;
                     worksheet.Cell(i + 2, 23).Value = userList[i].FreeResponseB;
                     worksheet.Cell(i + 2, 24).Value = userList[i].FreeResponseC;
                     worksheet.Cell(i + 2, 25).Value = userList[i].FreeResponseD;
                     worksheet.Cell(i + 2, 26).Value = userList[i].FreeResponseE;
+
                     worksheet.Cell(i + 2, 27).Value = userList[i].NumImage0Clicks;
                     worksheet.Cell(i + 2, 28).Value = userList[i].NumImage1Clicks;
                     worksheet.Cell(i + 2, 29).Value = userList[i].NumImage2Clicks;
@@ -989,6 +1012,12 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 34).Value = userList[i].NumImage7Clicks;
                     worksheet.Cell(i + 2, 35).Value = userList[i].NumImage8Clicks;
                     worksheet.Cell(i + 2, 36).Value = userList[i].NumImage9Clicks;
+
+
+
+                    worksheet.Cell(i + 2, 36).Value = userList[i].QuizID;
+                    worksheet.Cell(i + 2, 36).Value = userList[i].PatientIntro;
+                    worksheet.Cell(i + 2, 36).Value = userList[i].StudentID;
 
 
                 }

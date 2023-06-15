@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class postmain : Migration
+    public partial class newinittt99 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

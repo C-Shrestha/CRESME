@@ -20,14 +20,17 @@
 
             <h5 class="card-title">Upload an excel file to create new accounts.</h5>
             <p class="card-text">*All NID's must be unique*</p>
-            <form asp-controller="Admin" asp-action="ImportExcel" method="post">
+
+            <form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
                 <input type="file" name="file" />
                 <button type="submit" class="btn btn-md btn-primary">
                     <i class="fa-solid fa-file-import"></i>
                     Create Accounts
                 </button>
+
             </form>
-            <br />
+
+
         </div>
 
     </div>
