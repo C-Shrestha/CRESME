@@ -25,25 +25,27 @@ namespace CRESME.Controllers
             return View(_context.Users.ToList());
         }
 
-
-
+        [Authorize(Roles = "Admin, Instructor, Student")]
         public IActionResult DisplayQuizzes()
         {
             return View(_context.Quiz.ToList());
         }
 
-        public IActionResult TakeQuiz(string quizname) {
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public IActionResult TakeQuiz(int QuizID = -1)
+        {
+           
             Quiz quiz;
-            if (quizname != null) {
-                quiz = _context.Quiz.Find(quizname);
+            if (QuizID != -1)
+            {
+                quiz = _context.Quiz.Find(QuizID);
             }
-            else {
-                quiz = new Quiz();         
+            else
+            {
+                quiz = new Quiz();
             }
-            return View(quiz);            
+            return View(quiz);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]  

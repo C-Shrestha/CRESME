@@ -82,81 +82,8 @@ using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
 
-
-    //delete this attempts seeding section after takequiz view can sucessfully create attempts
-    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-
-    context.Database.EnsureCreated();
-
-    var testattempt1 = context.Attempt.FirstOrDefault(b => b.StudentNID == "ab000111");
-    if (testattempt1 == null)
-    {
-        context.Attempt.Add(new Attempt
-        {
-            StudentNID = "ab000111",
-            StudentName = "Jason Mendez",
-            QuizName = "DisplayTest",
-            Term = "2022-23",
-            Course = "Practice of Medicive",
-            Block = "B2",
-            StartTime = DateTime.Now,
-            EndTime = DateTime.Now,
-            Score = 4,
-            NumColumns = 5,
-            PhysicalAnswerA = "B",
-            PhysicalAnswerB = "C",
-            PhysicalAnswerC = "D",
-            PhysicalAnswerD = "A",
-            PhysicalAnswerE = "E",
-            DiagnosticAnswerA = "A",
-            DiagnosticAnswerB = "B",
-            DiagnosticAnswerC = "C",
-            DiagnosticAnswerD = "E",
-            DiagnosticAnswerE = "D",
-            FreeResponseA = "Heart Arrest",
-            FreeResponseB = "Lung Arrest",
-            FreeResponseC = "Brain Arrest",
-            FreeResponseD = "Leg Arrest",
-            FreeResponseE = "Arm Arrest",
-            NumImage0Clicks = "B2 Image clicked 3 times",
-            NumImage3Clicks = "C1 Image clicked 0 times"
-        });
-    }
-
-    var testattempt2 = context.Attempt.FirstOrDefault(b => b.StudentNID == "cd222333");
-    if (testattempt2 == null)
-    {
-        context.Attempt.Add(new Attempt
-        {
-            StudentNID = "cd222333",
-            StudentName = "Michael John",
-            QuizName = "DisplayTest",
-            Term = "2023-24",
-            Course = "Pediatrics",
-            Block = "B4",
-            StartTime = DateTime.Now,
-            EndTime = DateTime.Now,
-            Score = 10,
-            NumColumns = 4,
-            PhysicalAnswerA = "A",
-            PhysicalAnswerB = "B",
-            PhysicalAnswerC = "C",
-            PhysicalAnswerD = "D",
-            DiagnosticAnswerA = "B",
-            DiagnosticAnswerB = "A",
-            DiagnosticAnswerC = "C",
-            DiagnosticAnswerD = "D",
-            FreeResponseA = "Heart Arrest",
-            FreeResponseB = "Lung Arrest",
-            FreeResponseC = "Brain Arrest",
-            FreeResponseD = "Leg Arrest",
-            NumImage0Clicks = "B2 Image clicked 5 times",
-            NumImage3Clicks = "C1 Image clicked 10 times"
-        });
-    }
-    context.SaveChanges();
-    //end of attempts seeding section
-    
+ 
+    //var context = scope.ServiceProvider.GetService<ApplicationDbContext>();   
 }
 
 
