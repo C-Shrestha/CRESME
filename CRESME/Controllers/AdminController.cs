@@ -567,7 +567,7 @@ namespace CRESME.Controllers
 
         }
 
-
+/*
 
         // Export all Quizes for Admins
         public IActionResult ExportAllQuiz()
@@ -610,7 +610,7 @@ namespace CRESME.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
         }
 
-
+*/
 
         /*--------------------------All the functions below here are listed for Students to take Quiz----------------------------------*/
 
@@ -883,8 +883,6 @@ namespace CRESME.Controllers
 
         }
 
-
-
         //POST:Details
         public async Task<IActionResult> QuizDetails(Quiz quiz)
         {
@@ -952,9 +950,9 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 35).Value = "NumImage8Clicks";
                 worksheet.Cell(1, 36).Value = "NumImage9Clicks";
 
-                worksheet.Cell(1, 36).Value = "QuizID";
-                worksheet.Cell(1, 36).Value = "PatientIntro";
-                worksheet.Cell(1, 36).Value = "StudentID";
+                worksheet.Cell(1, 37).Value = "QuizID";
+                worksheet.Cell(1, 38).Value = "PatientIntro";
+                worksheet.Cell(1, 39).Value = "StudentID";
 
 
 
@@ -1015,9 +1013,9 @@ namespace CRESME.Controllers
 
 
 
-                    worksheet.Cell(i + 2, 36).Value = userList[i].QuizID;
-                    worksheet.Cell(i + 2, 36).Value = userList[i].PatientIntro;
-                    worksheet.Cell(i + 2, 36).Value = userList[i].StudentID;
+                    worksheet.Cell(i + 2, 37).Value = userList[i].QuizID;
+                    worksheet.Cell(i + 2, 38).Value = userList[i].PatientIntro;
+                    worksheet.Cell(i + 2, 39).Value = userList[i].StudentID;
 
 
                 }
@@ -1091,6 +1089,8 @@ namespace CRESME.Controllers
         {
             return 0; 
         }
+
+
 
 
 

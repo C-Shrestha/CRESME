@@ -1,10 +1,8 @@
 ﻿@model CRESME.Data.Attempt
 
 @{
-    ViewData["Title"] = "Testing Attempt PDF";
+    ViewData["Title"] = "Attempt PDF";
 }
-
-<h1> Attempts PDF</h1>
 
 
 <hr />
@@ -61,18 +59,378 @@
 
 
 
-This is the Student's' Name: @Model.StudentName 
-<br />
-This is the Student's' QuizName: @Model.QuizName
-<br />
-@*This is the Student's' Course: @Model.Course <br />
-This is the Student's' Term: @Model.Term
-<br />
-This is the Student's' Block: @Model.Block <br />*@
-This is the Student's' Start Time: @Model.StartTime
-<br />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quiz Report</title>
+    <style type="text/css">
 
-              
+
+        * {
+            padding: 0;
+            text-indent: 0;
+            margin-top: 10pt;
+            margin-left: 10pt
+        }
+
+        h1 {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 20pt;
+        }
+
+        h2 {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16pt;
+        }
+
+        .s1 {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 16pt;
+        }
+
+        .p,
+        p {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 16pt;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="
+        padding-top: 3pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        @Model.QuizName
+    </h1>
+
+
+
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Directions:
+        <span class="s1">
+            Select Save as/to PDF from the Print dialog box to save your report to
+            your computer. Return to the CResME window and click the Submit Lesson
+            button to open the assignment in Webcourses. Upload the saved report PDF
+            to the assignment in Webcourses.
+        </span>
+    </h2>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Date: <span class="s1">  @DateTime.Now  </span>
+    </h2>
+
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Start Time: <span class="s1">  @Model.StartTime </span>
+        &nbsp;
+        &nbsp;
+        End Time:
+        <span class="s1">  @Model.EndTime  </span>
+    </h2>
+
+    <br />
+    @*<p style="text-indent: 0pt; text-align: left"><br /></p>*@
+    @*<h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Student&#39;s Name:
+    </h2>*@
+    @*<p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        @Model.StudentName
+    </p>*@
+
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Student Name: <span class="s1">  @Model.StudentName  </span>
+    </h2>
+
+
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        CASE 1
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        CC:
+        <span class="s1">60 yo female found to have abnormal liver function tests.</span>
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Data
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+        Data (A) = 3 Data (B) = 2 Data (C) = 4 Data (D) = 1
+    </p>
+    <h2 style="
+        padding-top: 3pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Diagnosis
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Scenario 1: Choledocholithiasis Scenario 2: Hepatitis A Scenario 3:
+        Gilbert&#39;s Syndrome
+    </p>
+    <p style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Scenario 4: Non-alcoholic Fatty Liver Disease (NAFLD)
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: justify">
+        CASE 2
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        CC:
+        <span class="s1">40 yo female presenting with fatigue and abnormal labs.</span>
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Data
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+        Data (E) = 1 Data (F) = 4 Data (G) = 3 Data (H) = 2
+    </p>
+    <h2 style="
+        padding-top: 3pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Diagnosis
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Scenario 1: Iron deficiency anemia
+    </p>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Scenario 2: Aplastic Anemia (from methimazole) Scenario 3: Pernicious
+        Anemia (low B12)
+    </p>
+    <p style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Scenario 4: Sickle Cell Disease causing anemia and vaso-occlusive pain
+    </p>
+    <h2 style="
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 15pt;
+        text-align: left;
+      ">
+        CASE 3
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        CC:
+        <span class="s1">
+            55 yo male presenting with chest pain (discomfort) and abnormal
+            ECG.
+        </span>
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Data
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Data (J) = 2 Data (K) = 3 Data (L) = 1 Data (M) = 4
+    </p>
+    <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Images Viewed
+        <span class="p">
+            Image (J): 4 time(s) Image (K): 2 time(s) Image (L): 3 time(s) Image
+            (M): 3 time(s)
+        </span>
+    </h2>
+    <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Diagnosis
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Scenario 1: STEMI
+    </p>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Scenario 2: hyperkalemia (diet + underlying CKD + meds) Scenario 3: A-fib
+    </p>
+    <p style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+        Scenario 4: Pericarditis
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+        CASE 4
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        CC: <span class="s1">40 yo male presenting with an abnormal CXR</span>
+    </h2>
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Data
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+        Data (P) = 4 Data (Q) = 1 Data (R) = 2 Data (S) = 3
+    </p>
+    <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Images Viewed
+        <span class="p">
+            Image (P): 2 time(s) Image (Q): 7 time(s) Image (R): 4 time(s) Image
+            (S): 7 time(s)
+        </span>
+    </h2>
+    <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Diagnosis
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+        Scenario 1: Pulmonary Embolism Scenario 2: Pneumothorax (PTX) Scenario 3:
+        Pneumonia with atelectasis Scenario 4: ulcer (PUD - perforated)
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+        Lab Values Viewed
+    </h2>
+    <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        Labs: 1 time(s)
+    </p>
+</body>
+</html>
 
 
 

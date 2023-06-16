@@ -48,10 +48,13 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListUsers">Users</a>
                                 </li>
 
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="DisplayQuizzes">Display Quizzes</a>
-                                </li>
+                                </li>*@
 
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/swagger/index.html">SwaggerHub</a>
+                                </li>
                                 
 
                             }
@@ -63,7 +66,7 @@
                                 </li>*@
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz">Quiz</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz"> Create Quiz</a>
                                 </li>
 
 
@@ -75,23 +78,32 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="GetAll">PDF Print</a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your Quizes</a>
-                                </li>
+                                
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All Quizes</a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="TestAttempt">AttemptPDF</a>
+                                </li>
+
                             }
 
-                            <li class="nav-item">
+                            @if (User.IsInRole("Instructor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your Quizes</a>
+                                </li>
+                                
+                            }
+
+
+                            @*<li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Tests" asp-action="Index">Test</a>
                             </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/swagger/index.html">SwaggerHub</a>
-                            </li>
+*@
+                            
 
 
                             @if (User.IsInRole("Student"))
@@ -103,9 +115,7 @@
 
                             }
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="TestAttempt">AttemptPDF</a>
-                            </li>
+                            
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="TakeQuiz">Take Quiz</a>

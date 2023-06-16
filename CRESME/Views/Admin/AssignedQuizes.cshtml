@@ -7,14 +7,16 @@
 <h1>Student View</h1>
 
 
-<form asp-controller="Quiz" asp-action="CreateQuiz">
+@*<form asp-controller="Quiz" asp-action="CreateQuiz">
     <button type="submit" class="btn btn-md btn-primary">
         <i class="fa-solid fa-square-plus"></i>
         Create New Quiz
     </button>
 </form>
 <br />
-<br />
+<br />*@
+
+
 <br />
 
 <div class="table-responsive">
@@ -60,7 +62,7 @@
 
                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
                 <th></th>
-                <th></th>
+                
 
 
             </tr>
@@ -106,23 +108,11 @@
                     </td>
 
 
-
-
                     <td>
-                        <form asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizId="@item.QuizId">
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                <i class="fa-solid fa-user-pen"></i>
-                                Edit
-                            </button>
-                        </form>
-                    </td>
-
-
-                    <td>
-                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fa-solid fa-trash-can"></i>
-                                Delete
+                        <form asp-controller="Quiz" asp-action="TakeQuiz" asp-route-QuizId="@item.QuizId">
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-circle-play"></i>
+                                Start
                             </button>
                         </form>
                     </td>
