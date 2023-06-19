@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Data;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 
 namespace CRESME.Controllers
@@ -1089,6 +1090,142 @@ namespace CRESME.Controllers
         {
             return 0; 
         }
+
+
+        //return view with a Term input box that will delete all students with specified Term
+        public IActionResult DeleteByTermStudentsView()
+        {
+            
+            return View();
+
+        }
+
+        // deletes all students with the specified Term
+        [HttpPost]
+        public  IActionResult DeleteByTermStudents(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Student");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+        //return view with a Term input box that will delete all instructors with specified Term
+        public IActionResult DeleteByTermInstructorView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all instructors with the specified Term
+        [HttpPost]
+        public IActionResult DeleteByTermInstructors(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+
+
+
+        //return view with a Block input box that will delete all students with specified BLock
+        public IActionResult DeleteByBlockStudentsView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all students with the specified Block
+        [HttpPost]
+        public IActionResult DeleteByBlockStudents(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Student");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+        //return view with a Block input box that will delete all instructors with specified Block
+        public IActionResult DeleteByBlockInstructorView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all instructors with the specified Block
+        [HttpPost]
+        public IActionResult DeleteByBlockInstructors(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+        //POST:Delete all attempts
+        [HttpPost]
+        public async Task<IActionResult> DeleteAllAttempts()
+        {
+
+            var attempts = await _context.Attempt.ToListAsync();
+            if (attempts != null)
+            {
+
+                foreach (var item in attempts)
+                {
+
+                    _context.Remove(item);
+
+
+                }
+
+                _context.SaveChanges();
+
+
+            }
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteEntireDatabase()
+        {
+            // delete all quizes
+            await DeleteAllQuizes();
+
+            //delete all attempts
+            await DeleteAllAttempts();
+
+            //delete all users
+            await DeleteAll();
+
+            //remove all images from the database
+
+            return RedirectToAction("ListUsers"); 
+        }
+
+
 
 
 

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<CRESME.Data.Quiz>
 @{
-    ViewData["Title"] = "Create Quiz";
+    ViewData["Title"] = "Create CRESME";
     IEnumerable<string> UniqueCourses = Model.Select(x => x.QuizName).Distinct();
    
 }
@@ -16,7 +16,7 @@
         <div class="w-100"></div>
 
         <button class="btn btn-outline-dark .custom_btn col-6" style="background-color: #F1C400 !important; border-color:#F1C400 !important">
-            Quiz 1
+            CRESME 1
         </button>
         <i class="fa-solid fa-check col-1"></i>
         <i class="col-1 fas fa-edit"></i>
@@ -25,7 +25,7 @@
         <div class="w-100"></div>
 
         <button class="btn btn-outline-dark .custom_btn col-6" style="background-color: #F1C400 !important; border-color:#F1C400 !important">
-            Quiz 2
+            CRESME 2
         </button>
         <i class="fa-solid fa-check col-1"></i>
         <i class="col-1 fas fa-edit"></i>
