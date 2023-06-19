@@ -39,6 +39,7 @@ namespace CRESME.Controllers
             if (QuizID != -1)
             {
                 quiz = _context.Quiz.Find(QuizID);
+                throw new Exception("Unable to find correct Quiz ID");
             }
             else
             {
@@ -72,7 +73,7 @@ namespace CRESME.Controllers
 
             quiz.DateCreated = DateTime.Now;
          
-
+            //Reading Excel File upload for quiz info
             if (Request.Form.Files["ExcelFileUpload"] != null)
             {
                 try
@@ -103,12 +104,12 @@ namespace CRESME.Controllers
                             quiz.DiagnosisKeyWordsB = worksheet.Cell(4, 2).Value.ToString().Trim();
                             quiz.DiagnosisKeyWordsC = worksheet.Cell(4, 3).Value.ToString().Trim();
                             quiz.DiagnosisKeyWordsD = worksheet.Cell(4, 4).Value.ToString().Trim();
-
-                            quiz.FeedBackA = worksheet.Cell(5, 1).Value.ToString().Trim();
-                            quiz.FeedBackB = worksheet.Cell(5, 2).Value.ToString().Trim();
-                            quiz.FeedBackC = worksheet.Cell(5, 3).Value.ToString().Trim();
-                            quiz.FeedBackD = worksheet.Cell(5, 4).Value.ToString().Trim();
-
+                            if (quiz.FeedBackEnabled == "Yes") {
+                                quiz.FeedBackA = worksheet.Cell(5, 1).Value.ToString().Trim();
+                                quiz.FeedBackB = worksheet.Cell(5, 2).Value.ToString().Trim();
+                                quiz.FeedBackC = worksheet.Cell(5, 3).Value.ToString().Trim();
+                                quiz.FeedBackD = worksheet.Cell(5, 4).Value.ToString().Trim();
+                            }
                             if (quiz.NumColumns == 5)
                             {
                                 quiz.HistoryE = worksheet.Cell(1, 5).Value.ToString().Trim();
@@ -117,21 +118,19 @@ namespace CRESME.Controllers
                                 quiz.DiagnosisKeyWordsE = worksheet.Cell(4, 5).Value.ToString().Trim();
                                 quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
                             }
-                            else {
-                                quiz.HistoryE = null;
-                                quiz.PhysicalE = null;
-                                quiz.DiagnosticE = null;
-                                quiz.DiagnosisKeyWordsE = null;
-                                quiz.FeedBackE = null;
-                            }
                         }
                     }
                 }
                 catch (Exception error)
                 {
-                    //this should redirect to an error page
+                    throw new Exception("Could not read Excel File.");
                 }
             }
+
+            if (Request.Form.Files["Legend"] != null) {
+                quiz.Legend = UploadImagetoFile(Request.Form.Files["Legend"]);
+            }
+            
 
             //checks for image upload and image position input, only saves image if both are present
             if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count>0)
@@ -249,27 +248,35 @@ namespace CRESME.Controllers
             {
                 _context.Add(quiz);
                 _context.SaveChanges();
+                ViewBag.Result = "Successfully created CRESME.";
             }
-
-
+            else {
+                ViewBag.Result = "Failed to create CRESME.";
+            }
 
             return View("CreateQuiz", _context.Users.ToList());
         }
 
-        public string UploadImagetoFile(IFormFile ImageUpload) { //make this async
-            string RootPath = this._environment.WebRootPath;
-            string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-            string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
-            string newImageName = ImageName + ImageGuidExtension;
-            
-            System.IO.Directory.CreateDirectory(RootPath + "/uploadedImages/"); //will create uploadedImages folder if doesnt exist, doesnt do anything if folder exists
-            string savepath = Path.Combine(RootPath + "/uploadedImages/", newImageName);
-            using (var filestream = new FileStream(savepath, FileMode.Create))
+        public string UploadImagetoFile(IFormFile ImageUpload) {
+            try
             {
-                ImageUpload.CopyTo(filestream);
-            }
+                string RootPath = this._environment.WebRootPath;
+                string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
+                string newImageName = ImageName + ImageGuidExtension;
+
+                System.IO.Directory.CreateDirectory(RootPath + "/uploadedImages/"); //will create uploadedImages folder if doesnt exist, doesnt do anything if folder exists
+                string savepath = Path.Combine(RootPath + "/uploadedImages/", newImageName);
+                using (var filestream = new FileStream(savepath, FileMode.Create))
+                {
+                    ImageUpload.CopyTo(filestream);
+                }
 
                 return "/uploadedImages/" + newImageName;
+            }
+            catch (Exception error) {
+                throw new Exception("could not upload image successfully");
+            }
         }
 
         public ActionResult SubmitAttempt(Attempt attempt) {

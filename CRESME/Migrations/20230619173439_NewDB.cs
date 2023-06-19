@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace CRESME.Data.Migrations
+namespace CRESME.Migrations
 {
-    public partial class george : Migration
+    public partial class NewDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
