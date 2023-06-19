@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CRESME.Data.ApplicationUser>
 ﻿@{
 
-    ViewData["Title"] = "Create Quiz";
+    ViewData["Title"] = "Create CRESME";
     IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null);
     IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
 }
@@ -11,7 +11,7 @@
             <div class="row gx-5 justify-content-center gy-2">
 
                 <div class="w-100"></div>
-                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter Quiz Name" required>
+                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter CRESME Name" required>
                 <div class="w-100"></div>
 
                 <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Patient Intro" required>
@@ -90,7 +90,7 @@
                 </select>
                 <div class="w-100"></div>
 
-                <button type="submit" class="custom_btn col-5">Create Quiz</button>
+                <button type="submit" class="custom_btn col-5">Create CRESME</button>
                 <div class="w-100"></div>
             </div>
         </div>

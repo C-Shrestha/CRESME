@@ -50,6 +50,61 @@
 </form>
 
 <br />
+
+<form asp-controller="Admin" asp-action="DeleteByTermStudentsView">
+    <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                    Delete by Term (Students)
+                                </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteByTermInstructorView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Term (Instructors)
+    </button>
+</form>
+
+<br />
+
+
+<form asp-controller="Admin" asp-action="DeleteByBlockStudentsView">
+    <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                    Delete by Block(Students)
+                                </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteByBlockInstructorView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Block(Instructors)
+    </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteAll">
+    <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by block
+    </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteEntireDatabase">
+    <button onclick="return confirm('Are you sure you want to delete the ENTIRE DATABASE?')" type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete entire database
+    </button>
+</form>
+
+<br />
 <br />
 <br />
 

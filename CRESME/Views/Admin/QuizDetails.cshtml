@@ -3,10 +3,10 @@
 @model IEnumerable<CRESME.Data.Attempt>
 
 @{
-    ViewData["Title"] = "Quiz Details";
+    ViewData["Title"] = "CRESME Details";
 }
 
-<h1>Quiz Details Page</h1>
+<h1>CRESME Details Page</h1>
 
 <br />
 <br />
@@ -18,7 +18,7 @@
         <div class="card-header" id="headingOne">
             <h5 class="mb-0">
                 <button class="btn btn-outline-success" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Quiz Statistics
+                    CRESME Statistics
                 </button>
             </h5>
         </div>
@@ -148,7 +148,7 @@
         <div class="card-header" id="studentData">
             <h5 class="mb-0">
                 <button class="btn btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseStudentData" aria-expanded="false" aria-controls="collapseStudentData">
-                    Quiz Data
+                    CRESME Data
                 </button>
             </h5>
         </div>
@@ -259,7 +259,7 @@
         <div class="card-header" id="headingTwo">
             <h5 class="mb-0">
                 <button class="btn btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Download Quiz Data
+                    Download CRESME Data
                 </button>
             </h5>
         </div>
@@ -272,7 +272,7 @@
                     <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName"/>
                     <button type="submit" class="btn btn-md btn-primary">
                         <i class="fa-solid fa-file-arrow-down"></i>
-                        Export Quiz Data
+                        Export CRESME Data
                     </button>
                 </form>
                 <br />
@@ -287,7 +287,7 @@
         <div class="card-header" id="headingThree">
             <h5 class="mb-0">
                 <button class="btn btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Download Quiz
+                    Download CRESME
                 </button>
             </h5>
         </div>
@@ -300,7 +300,7 @@
                     <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
                     <button type="submit" class="btn btn-md btn-primary">
                         <i class="fa-solid fa-file-arrow-down"></i>
-                        Export Quiz
+                        Export CRESME
                     </button>
                 </form>
                 <br />
