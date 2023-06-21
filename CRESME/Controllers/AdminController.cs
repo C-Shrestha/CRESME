@@ -219,7 +219,9 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-           return RedirectToAction("ListUsers");
+            TempData["AlertMessage"] = "Users created sucessfully!";
+
+            return RedirectToAction("ListUsers");
 
             
 
@@ -254,9 +256,11 @@ namespace CRESME.Controllers
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User updated sucessfully!";
                     return RedirectToAction("ListUsers");
 
-
+                }
             }
             else
                 ModelState.AddModelError("", "User Not Found");
@@ -340,7 +344,11 @@ namespace CRESME.Controllers
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User deleted sucessfully!";
                     return RedirectToAction("ListUsers");
+                }
+                    
 
 
             }
@@ -378,8 +386,8 @@ namespace CRESME.Controllers
                  ModelState.AddModelError("", "User Not Found");
              }*/
 
-            
 
+            TempData["AlertMessage"] = "All users deleted sucessfully!";
             return RedirectToAction("ListUsers");
 
         }
@@ -507,7 +515,7 @@ namespace CRESME.Controllers
 
 
                  _context.SaveChanges();
-
+                TempData["AlertMessage"] = "CRESME updated sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -529,7 +537,7 @@ namespace CRESME.Controllers
             {
                 _context.Remove(quiz);
                 _context.SaveChanges();
-
+                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -555,7 +563,7 @@ namespace CRESME.Controllers
                     
 
                 }
-
+                TempData["AlertMessage"] = "All CRESME deleted sucessfully!";
                 _context.SaveChanges();
 
 
@@ -618,7 +626,7 @@ namespace CRESME.Controllers
         /*--------------------------All the functions below here are listed for Students to take Quiz----------------------------------*/
 
 
-        // View to show the list of assigned quizes for logged in student 
+        /*// View to show the list of assigned quizes for logged in student 
 
         public async Task<IActionResult> AssignedQuizess()
         {
@@ -632,7 +640,7 @@ namespace CRESME.Controllers
 
             return View(quizes);
 
-        }
+        }*/
 
 
         public async Task<IActionResult> InstructorQuizesView()
@@ -727,7 +735,7 @@ namespace CRESME.Controllers
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-
+                
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Users.xlsx");
             }
         }
@@ -1111,6 +1119,8 @@ namespace CRESME.Controllers
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
 
+            TempData["AlertMessage"] = "Student in the term deleted!";
+
             return RedirectToAction("ListUsers");
 
         }
@@ -1131,6 +1141,7 @@ namespace CRESME.Controllers
             var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
 
             return RedirectToAction("ListUsers");
 
@@ -1157,6 +1168,8 @@ namespace CRESME.Controllers
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
 
+            TempData["AlertMessage"] = "Student in the block deleted!";
+
             return RedirectToAction("ListUsers");
 
         }
@@ -1177,7 +1190,7 @@ namespace CRESME.Controllers
             var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
-
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
             return RedirectToAction("ListUsers");
 
         }
@@ -1195,7 +1208,6 @@ namespace CRESME.Controllers
                 {
 
                     _context.Remove(item);
-
 
                 }
 
@@ -1224,6 +1236,9 @@ namespace CRESME.Controllers
 
             //remove all images from the database
 
+
+            TempData["AlertMessage"] = "Entire database has been deleted!";
+
             return RedirectToAction("ListUsers"); 
         }
 
@@ -1246,7 +1261,7 @@ namespace CRESME.Controllers
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
-
+            TempData["AlertMessage"] = "Student in the course deleted!";
             return RedirectToAction("ListUsers");
 
         }
@@ -1267,7 +1282,7 @@ namespace CRESME.Controllers
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
-
+            TempData["AlertMessage"] = "Instructor in the course deleted!";
             return RedirectToAction("ListUsers");
 
         }
