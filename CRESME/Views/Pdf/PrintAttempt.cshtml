@@ -1,59 +1,8 @@
 ﻿@model CRESME.Data.Attempt
 
 @{
-    ViewData["Title"] = "Attempt PDF";
+    ViewData["Title"] = "Print PDF";
 }
-
-
-<hr />
-
-
-<form asp-action="GenerateAttemptPDF" asp-controller="Pdf">
-
-    <input type="hidden" name="AttemptId" value="@Model.AttemptId " />
-    <input type="hidden" name="StudentNID" value="@Model.StudentNID " />
-    <input type="hidden" name="StudentName" value="@Model.StudentName " />
-    <input type="hidden" name ="QuizName" value="@Model.QuizName "/>
-    <input type="hidden" name="Score" value="@Model.Score " />
-    <input type="hidden" name="NumColumns" value="@Model.NumColumns " />
-    <input type="hidden" name="StartTime" value="@Model.StartTime " />
-    <input type="hidden" name="EndTime" value="@Model.EndTime " />
-    <input type="hidden" name="Term" value="@Model.Term " />
-    <input type="hidden" name="Course" value="@Model.Course " />
-    <input type="hidden" name="Block" value="@Model.Block " />
-    <input type="hidden" name="PhysicalAnswerA" value="@Model.PhysicalAnswerA " />
-    <input type="hidden" name="PhysicalAnswerB" value="@Model.PhysicalAnswerB " />
-    <input type="hidden" name="PhysicalAnswerC" value="@Model.PhysicalAnswerC " />
-    <input type="hidden" name="PhysicalAnswerD" value="@Model.PhysicalAnswerD " />
-    <input type="hidden" name="PhysicalAnswerE" value="@Model.PhysicalAnswerE " />
-    <input type="hidden" name="DiagnosticAnswerA" value="@Model.DiagnosticAnswerA " />
-    <input type="hidden" name="DiagnosticAnswerB" value="@Model.DiagnosticAnswerB " />
-    <input type="hidden" name="DiagnosticAnswerC" value="@Model.DiagnosticAnswerC " />
-    <input type="hidden" name="DiagnosticAnswerD" value="@Model.DiagnosticAnswerD " />
-    <input type="hidden" name="DiagnosticAnswerE" value="@Model.DiagnosticAnswerE " />
-    <input type="hidden" name="FreeResponseA" value="@Model.FreeResponseA " />
-    <input type="hidden" name="FreeResponseB" value="@Model.FreeResponseB " />
-    <input type="hidden" name="FreeResponseC" value="@Model.FreeResponseC " />
-    <input type="hidden" name="FreeResponseD" value="@Model.FreeResponseD " />
-    <input type="hidden" name="FreeResponseE" value="@Model.FreeResponseE " />
-    <input type="hidden" name="NumImage0Clicks" value="@Model.NumImage0Clicks " />
-    <input type="hidden" name="NumImage1Clicks" value="@Model.NumImage1Clicks " />
-    <input type="hidden" name="NumImage2Clicks" value="@Model.NumImage2Clicks " />
-    <input type="hidden" name="NumImage3Clicks" value="@Model.NumImage3Clicks " />
-    <input type="hidden" name="NumImage4Clicks" value="@Model.NumImage4Clicks " />
-    <input type="hidden" name="NumImage5Clicks" value="@Model.NumImage5Clicks " />
-    <input type="hidden" name="NumImage6Clicks" value="@Model.NumImage6Clicks " />
-    <input type="hidden" name="NumImage7Clicks" value="@Model.NumImage7Clicks " />
-    <input type="hidden" name="NumImage8Clicks" value="@Model.NumImage8Clicks " />
-    <input type="hidden" name="NumImage9Clicks" value="@Model.NumImage9Clicks " />
-
-    <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-file-pdf"></i>
-       Create PDF
-    </button>
-</form>
-
-<br />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -61,7 +10,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>CRESME Report</title>
     <style type="text/css">
-
 
         * {
             padding: 0;

@@ -140,7 +140,7 @@ namespace CRESME.Controllers
 
         [HttpPost]
         [Route("/Admin/ImportExcel")]
-        public async Task<List<ApplicationUser>> ImportExcel(IFormFile file)
+        public async Task<IActionResult> ImportExcel(IFormFile file)
 
         {
             var list = new List<ApplicationUser>();
@@ -219,9 +219,9 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-            RedirectToAction("ListUsers");
+           return RedirectToAction("ListUsers");
 
-            return list;
+            
 
 
         } // importToExcel
@@ -326,7 +326,7 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-
+            TempData["AlertMessage"] = "User created sucessfully!";
 
             return RedirectToAction("ListUsers");
         }
@@ -377,6 +377,8 @@ namespace CRESME.Controllers
              {
                  ModelState.AddModelError("", "User Not Found");
              }*/
+
+            
 
             return RedirectToAction("ListUsers");
 
@@ -618,7 +620,7 @@ namespace CRESME.Controllers
 
         // View to show the list of assigned quizes for logged in student 
 
-        public async Task<IActionResult> AssignedQuizes()
+        public async Task<IActionResult> AssignedQuizess()
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -1228,14 +1230,181 @@ namespace CRESME.Controllers
 
 
 
+        //return view with a Block input box that will delete all students with specified BLock
+        public IActionResult DeleteByCourseStudentsView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all students with the specified Block
+        [HttpPost]
+        public IActionResult DeleteByCourseStudents(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+        //return view with a Block input box that will delete all instructors with specified Block
+        public IActionResult DeleteByCourseInstructorView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all instructors with the specified Block
+        [HttpPost]
+        public IActionResult DeleteByCourseInstructors(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<Quiz> quizes = new List<Quiz>(); 
+
+            // list of quizes assinged to the user
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+
+            if ( assignedQuizes.Count() == 0 ) {
+                return View(quizes); 
+            }
+            else
+            {
+                if ( TakenQuizes.Count() == 0)
+                {
+                    return View(assignedQuizes); 
+                }
+
+                else
+                {
+                    foreach (var quiz1 in assignedQuizes)
+                    {
+                        foreach(var quiz2 in TakenQuizes)
+                        {
+                            if (quiz1.QuizId != quiz2.QuizID)
+                            {
+                                quizes.Add(quiz1);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        
+                    }
+
+                    //getting only distinct objects in list 
+                    quizes = quizes.Distinct().ToList();
+
+                    if(quizes.Count() == 0)
+                    {
+                        return View(new List<Quiz>());
+                    }
+                    else
+                    {
+                        return View(quizes);
+                    }
+
+                    
+                }
+            } 
+
+        }
 
 
 
+        public async Task<IActionResult> PastQuizes()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<Attempt> attempts = new List<Attempt>();
+
+            // list of quizes assinged to the user
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
 
 
+            if (assignedQuizes.Count() == 0)
+            {
+                return View(attempts);
+            }
+            else
+            {
+                if (TakenQuizes.Count() == 0)
+                {
+                    return View(attempts);
+                }
+
+                else
+                {
+                    foreach (var item1 in assignedQuizes)
+                    {
+                        foreach (var item2 in TakenQuizes)
+                        {
+                            if (item1.QuizId == item2.QuizID)
+                            {
+                                attempts.Add(item2);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                    }
+
+                    //getting only distinct objects in list 
+                    attempts = attempts.Distinct().ToList();
+
+                    if (attempts.Count() == 0)
+                    {
+                        return View(new List<Attempt>());
+                    }
+                    else
+                    {
+                        return View(attempts);
+                    }
 
 
+                }
+            }
 
+        }
 
 
 

@@ -151,12 +151,12 @@ namespace CRESME.Controllers
 
 
         /*[Route("quiz")]*/
-        public async Task<IActionResult> GenerateAttemptPDF( Attempt attempt)
+        public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
         {
 
             using (var stringWriter = new StringWriter())
             {
-                var viewResult = _compositeViewEngine.FindView(ControllerContext, "TestAttempt", false);
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, "PrintAttempt", false);
                 if (viewResult == null)
                 {
                     throw new ArgumentException("View Cannot be Found");
@@ -188,9 +188,9 @@ namespace CRESME.Controllers
 
                 var pdfBytes = pdf.Save();
 
+                string filename = $"Quiz Attempt {DateTime.Now:MM/dd/yyy}.pdf";
 
-
-                return File(pdfBytes, "application/pdf");
+                return File(pdfBytes, "application/pdf", filename);
 
 
             }
