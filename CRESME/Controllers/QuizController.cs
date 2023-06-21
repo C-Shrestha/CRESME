@@ -252,7 +252,7 @@ namespace CRESME.Controllers
             }
 
 
-
+            TempData["AlertMessage"] = "CRESME created sucessfully!";
             return View("CreateQuiz", _context.Users.ToList());
         }
 

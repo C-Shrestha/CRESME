@@ -7,17 +7,17 @@
 <h1>List all Users</h1>
 
 
-<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-  <div class="toast" style="position: absolute; top: 0; right: 0;">
-    <div class="toast-body">
-            @TempData["AlertMessage"]
+@if (TempData["AlertMessage"] != null)
+{
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-body">
+                @(TempData["AlertMessage"])
+            </div>
+         </div>
     </div>
-  </div>
-</div>
-
-<div class="alert alert-success">
-    @TempData["AlertMessage"]
-</div>
+    
+}
 
 <form asp-controller="Admin"  asp-action="CreateUsers">
     <button type="submit" class="btn btn-md btn-primary">
@@ -232,4 +232,12 @@
 @section scripts
 {
     <script src="~/js/datatable_file.js"></script>
+
+    <script>
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+    </script>
 }

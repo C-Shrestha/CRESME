@@ -9,11 +9,7 @@
 <h4>Create New User</h4>
 <hr />
 
-<div class="toast">
-    <div class="toast-body">
-        Successfully created user
-    </div>
-</div>
+
 
 
 <div class="row">
@@ -104,12 +100,6 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <script>
-        $(document).ready(function () {
-            $("#buyNow").click(function () {
-                $('.toast').toast('show');
-            });
-            
-        });
-    </script>
+    
+
 }
