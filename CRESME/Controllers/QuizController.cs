@@ -249,10 +249,10 @@ namespace CRESME.Controllers
             {
                 _context.Add(quiz);
                 _context.SaveChanges();
-                ViewBag.Result = "Successfully created CRESME.";
+                //ViewBag.Result = "Successfully created CRESME.";
             }
             else {
-                ViewBag.Result = "Failed to create CRESME.";
+                throw new Exception("Failed to create CRESME.");
             }
 
             return View("CreateQuiz", _context.Users.ToList());
