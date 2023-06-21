@@ -7,6 +7,19 @@
 
 <br />
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-body">
+                @(TempData["AlertMessage"])
+            </div>
+         </div>
+    </div>
+    
+}
+
+
 <div class="container-fluid">
 
     <div class="row justify-content-start">
@@ -128,17 +141,6 @@
 
         <br />*@
 
-@if (TempData["AlertMessage"] != null)
-{
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
-            <div class="toast-body">
-                @(TempData["AlertMessage"])
-            </div>
-         </div>
-    </div>
-    
-}
 
     </div>
 </div>
