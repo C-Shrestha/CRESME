@@ -8,6 +8,7 @@
 <br />
 <br />
 
+
 @if (TempData["AlertMessage"] != null)
 {
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
@@ -20,8 +21,12 @@
 
 }
 
-<div class="container">
-    <div class="row">
+<div class="container-fluid">
+    <div class="row justify-content-start">
+
+
+
+
 
     @*<form class="col-2"  asp-controller="Admin" asp-action="ExportAllQuiz">
         <button type="submit" class="btn btn-md btn-primary">
@@ -30,38 +35,40 @@
         </button>
     </form>*@
 
-
-
-
-    <form class ="col-2" asp-controller="Admin" asp-action="ExportQuizesToExcel">
-        <button type="submit" class="btn btn-md btn-primary">
-            <i class="fa-solid fa-file-arrow-down"></i>
-            Neww Export Quizes to Excel
-        </button>
-    </form>
-
-
-
-
-
-    <form class ="col-2" asp-controller="Admin" asp-action="DeleteAllQuizes" onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')">
-                                    <button type="submit" class="btn btn-md btn-danger">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                        Delete All Quizes
-                                    </button>
-    </form>
-
-
-    
-    
-    <form asp-controller="Quiz" asp-action="CreateQuiz">
-        <button type="submit" class="btn btn-md btn-primary">
-            <i class="fa-solid fa-square-plus"></i>
-                Create New CRESME
-        </button>
-    </form>
-
+        <div class="dropdown col-6">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Choose Action
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <form class="dropdown-item" asp-controller="Quiz" asp-action="CreateQuiz">
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa-solid fa-square-plus"></i>
+                            Create New CRESME
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="ExportQuizesToExcel">
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            New Export Quizes to Excel
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAllQuizes">
+                        <button onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')" type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete All Quizes
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+       
     </div>
+
 </div>
 
 <br />

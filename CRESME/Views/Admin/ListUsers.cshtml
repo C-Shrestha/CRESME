@@ -4,8 +4,8 @@
     ViewData["Title"] = "List Users";
 }
 
-<h1>List all Users</h1>
 
+<br />
 
 @if (TempData["AlertMessage"] != null)
 {
@@ -19,29 +19,138 @@
     
 }
 
-<form asp-controller="Admin"  asp-action="CreateUsers">
-    <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-square-plus"></i>
-       Create New
-    </button>
-</form>
 
+<div class="container-fluid">
+
+    <div class="row justify-content-start">
+
+
+
+        <div class="dropdown col-6">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Choose Action
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="CreateUsers">
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa-solid fa-square-plus"></i>
+                            Create New
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="ExportUsersToExcel">
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa-solid fa-square-plus"></i>
+                            Export users to Excel
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAll">
+                        <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete All Users
+                        </button>
+                    </form>
+                </li>
+                <li>
+
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByTermStudentsView">
+                        <button type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete by Term (Students)
+                        </button>
+                    </form>
+
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByTermInstructorView">
+                        <button type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete by Term (Instructors)
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByBlockStudentsView">
+                        <button type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete by Block(Students)
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByBlockInstructorView">
+                        <button type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete by Block(Instructors)
+                        </button>
+                    </form>
+
+                </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAll">
+                        <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete by block
+                        </button>
+                    </form>
+                </li>
+                <li>
+
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteEntireDatabase">
+                        <button onclick="return confirm('Are you sure you want to delete the ENTIRE DATABASE?')" type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete entire database
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        
+
+
+
+       
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+        @*
+        <form asp-controller="Admin"  asp-action="ExportExcel">
+        <button type="submit" class="btn btn-md btn-primary">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        Export List of Users
+        </button>
+        </form>
+
+        <br />*@
+
+
+    </div>
+</div>
 
 <br />
 
-<form asp-controller="Admin" asp-action="ExportUsersToExcel">
-    <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-square-plus"></i>
-       Export users to Excel
-    </button>
-</form>
-
-
-<br />
 
 
 
-<form asp-controller="Admin"  asp-action="DeleteAll" >
+@*{<form asp-controller="Admin"  asp-action="DeleteAll" >
     <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
                                     Delete All Users
@@ -115,11 +224,9 @@
         <i class="fa-solid fa-trash-can"></i>
         Delete entire database
     </button>
-</form>
+</form>}*@
 
-<br />
-<br />
-<br />
+
 
     <div class="table-responsive">
 
@@ -227,6 +334,25 @@
 
 @*</div>*@
 
+<style>
+
+    #dataTableData {
+        color: black;
+        border-style: solid;
+        border-color: #F1C400;
+    }
+
+    td {
+        color: black;
+        font-weight: bold;
+    }
+
+    th {
+        color: black;
+        font-weight: bold;
+    }
+
+</style>
 
 
 @section scripts
