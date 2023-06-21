@@ -21,6 +21,7 @@
     <input type="hidden" name="Term" value="@Model.Term " />
     <input type="hidden" name="Course" value="@Model.Course " />
     <input type="hidden" name="Block" value="@Model.Block " />
+    <input type="hidden" name="PatientIntro" value="@Model.PatientIntro " />
     <input type="hidden" name="PhysicalAnswerA" value="@Model.PhysicalAnswerA " />
     <input type="hidden" name="PhysicalAnswerB" value="@Model.PhysicalAnswerB " />
     <input type="hidden" name="PhysicalAnswerC" value="@Model.PhysicalAnswerC " />
@@ -165,10 +166,10 @@
     </h2>
 
 
-    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    @*<p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
         CASE 1
-    </h2>
+    </h2>*@
     <h2 style="
         padding-top: 7pt;
         padding-left: 6pt;
@@ -189,6 +190,7 @@
         PE
     </h2>
 
+   
     <p style="
         padding-top: 4pt;
         padding-left: 6pt;
@@ -204,6 +206,14 @@
         <br />
         PE (D) = @Model.PhysicalAnswerD
         <br />
+        @if (Model.NumColumns == 5)
+        {
+            string htmlContent = "PE (E) = ";
+
+            @Html.Raw(htmlContent) @Model.PhysicalAnswerE
+
+        }
+
     </p>
 
 
@@ -232,15 +242,14 @@
         <br />
         Data (D) = @Model.DiagnosticAnswerD
         <br />
+        @if (Model.NumColumns == 5)
+        {
+            string htmlContent = "Data (E) = ";
+
+            @Html.Raw(htmlContent) @Model.DiagnosticAnswerE
+
+        }
     </p>
-
-
-    
-
-
-
-
-
 
 
 
@@ -267,6 +276,13 @@
         <br />
         Scenario 4: @Model.FreeResponseD
         <br />
+        @if (Model.NumColumns == 5)
+        {
+            string htmlContent = "Scenario 5: ";
+
+            @Html.Raw(htmlContent) @Model.FreeResponseE
+
+        }
     </p>
     
 

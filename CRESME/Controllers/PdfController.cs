@@ -190,7 +190,7 @@ namespace CRESME.Controllers
 
                 var pdfBytes = pdf.Save();
 
-                string filename = $"Quiz Attempt {DateTime.Now:MM/dd/yyy}.pdf";
+                string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
 
                 return File(pdfBytes, "application/pdf", filename);
 

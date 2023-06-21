@@ -26,7 +26,6 @@
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
             <div class="card-body">
 
-
                 @{
                     double total = 0.0;
                     double num = 0.0;
@@ -42,26 +41,29 @@
                     TimeSpan averageDuration = TimeSpan.Zero;
 
 
+                    // if (!scoreList.Any())
+                    //{
+                    //throw new Exception("No quiz data. No Student has taken the quiz yet.");
+                    // }
 
-                    foreach(var item in Model)
+                    if ((Model.Count() == 1) && (Model.FirstOrDefault().AttemptId == 0))
                     {
-                        total += (double)item.Score;
-                        num++;
-                        scoreList.Add((double)item.Score);
-                        TimeSpan x = (item.EndTime - item.StartTime); 
-                        durations.Add(x);
-                        totalDuration += x;
-
-
+                        ;
                     }
-
-                    if (!scoreList.Any())
+                    else
                     {
-                        throw new Exception("No quiz data. No Student has taken the quiz yet.");
-                    }
 
-                    if (scoreList.Any())
-                    {   
+                        foreach (var item in Model)
+                        {
+                            total += (double)item.Score;
+                            num++;
+                            scoreList.Add((double)item.Score);
+                            TimeSpan x = (item.EndTime - item.StartTime);
+                            durations.Add(x);
+                            totalDuration += x;
+
+
+                        }
 
                         average = total / num;
 
@@ -108,6 +110,7 @@
 
 
                     }
+                    
 
 
                 }
@@ -115,7 +118,10 @@
                  @*   @{
                         ((AdminController)this.ViewContext.Controller).StudentCount;
                 }
-*@
+                *@
+
+
+
                 <p>
                     <b>Student Count:</b> @num<br />
                 </p>
