@@ -84,7 +84,11 @@ namespace CRESME.Data
         public string? NumImage6Clicks { get; set; }
         public string? NumImage7Clicks { get; set; }
         public string? NumImage8Clicks { get; set; }
-        public string? NumImage9Clicks { get; set; } 
+        public string? NumImage9Clicks { get; set; }
+        
+        public string? NumLegendClicks { get; set; }
+
+        public string? NumLabValueClicks { get; set; }
 
 
     }

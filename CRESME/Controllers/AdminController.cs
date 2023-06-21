@@ -27,13 +27,15 @@ namespace CRESME.Controllers
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _environment;
 
 
-        public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment environment, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
-
+            _environment = environment;
+            _signInManager = signInManager;
         }
 
 
@@ -368,8 +370,104 @@ namespace CRESME.Controllers
             
             var quiz =  _context.Quiz.Find(QuizId);
 
+
             if (quiz != null)
             {
+                //deletes images 0 - 9 for each quiz if they are not null
+                string path;
+                FileInfo imagefile;
+                if (quiz.Image0 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image1 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image2 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image3 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image4 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image5 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image6 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image7 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image8 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image9 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                
+
                 _context.Remove(quiz);
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "CRESME deleted sucessfully!";
@@ -996,6 +1094,12 @@ namespace CRESME.Controllers
             await DeleteAll();
 
             //remove all images from the database
+            string RootPath = this._environment.WebRootPath;
+            string dirpath = RootPath + "/uploadedImages/";
+            System.IO.DirectoryInfo dir = new DirectoryInfo(dirpath);
+            foreach (FileInfo file in dir.GetFiles()) { 
+                file.Delete();
+            }            
 
 
             TempData["AlertMessage"] = "Entire database has been deleted!";

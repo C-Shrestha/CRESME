@@ -61,7 +61,7 @@ namespace CRESME.Controllers
             }
             else
             {
-                //return quiz id null error
+                throw new Exception("Quiz ID is null in attempt submission");
             }
 
 
