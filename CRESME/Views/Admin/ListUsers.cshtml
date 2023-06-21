@@ -6,19 +6,18 @@
 
 <h1>List all Users</h1>
 
-<br />
-<br />
 
-@*
-<form asp-controller="Admin"  asp-action="ExportExcel">
-    <button type="submit" class="btn btn-md btn-primary">
-        <i class="fa-solid fa-file-arrow-down"></i>
-       Export List of Users
-    </button>
-</form>
+<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+  <div class="toast" style="position: absolute; top: 0; right: 0;">
+    <div class="toast-body">
+            @TempData["AlertMessage"]
+    </div>
+  </div>
+</div>
 
-<br />*@
-
+<div class="alert alert-success">
+    @TempData["AlertMessage"]
+</div>
 
 <form asp-controller="Admin"  asp-action="CreateUsers">
     <button type="submit" class="btn btn-md btn-primary">
@@ -88,14 +87,28 @@
 
 <br />
 
-<form asp-controller="Admin" asp-action="DeleteAll">
-    <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
+
+
+<form asp-controller="Admin" asp-action="DeleteByCourseStudentsView">
+    <button type="submit" class="btn btn-md btn-danger">
         <i class="fa-solid fa-trash-can"></i>
-        Delete by block
+        Delete by Course (Students)
     </button>
 </form>
 
 <br />
+
+<form asp-controller="Admin" asp-action="DeleteByCourseInstructorView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Course (Instructors)
+    </button>
+</form>
+
+<br />
+
+
+
 
 <form asp-controller="Admin" asp-action="DeleteEntireDatabase">
     <button onclick="return confirm('Are you sure you want to delete the ENTIRE DATABASE?')" type="submit" class="btn btn-md btn-danger">

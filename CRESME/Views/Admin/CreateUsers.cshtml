@@ -9,6 +9,12 @@
 <h4>Create New User</h4>
 <hr />
 
+<div class="toast">
+    <div class="toast-body">
+        Successfully created user
+    </div>
+</div>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -81,7 +87,7 @@
 
 
             <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
+                <input type="submit" value="Submit" class="btn btn-primary" id="buyNow" />
             </div>
             <br />
 
@@ -97,4 +103,13 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        $(document).ready(function () {
+            $("#buyNow").click(function () {
+                $('.toast').toast('show');
+            });
+            
+        });
+    </script>
 }
