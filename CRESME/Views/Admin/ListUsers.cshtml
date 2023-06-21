@@ -128,12 +128,101 @@
 
         <br />*@
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-body">
+                @(TempData["AlertMessage"])
+            </div>
+         </div>
+    </div>
+    
+}
 
     </div>
 </div>
 
 <br />
 
+
+
+
+@*{<form asp-controller="Admin"  asp-action="DeleteAll" >
+    <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                    Delete All Users
+                                </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteByTermStudentsView">
+    <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                    Delete by Term (Students)
+                                </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteByTermInstructorView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Term (Instructors)
+    </button>
+</form>
+
+<br />
+
+
+<form asp-controller="Admin" asp-action="DeleteByBlockStudentsView">
+    <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                    Delete by Block(Students)
+                                </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteByBlockInstructorView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Block(Instructors)
+    </button>
+</form>
+
+<br />
+
+
+
+<form asp-controller="Admin" asp-action="DeleteByCourseStudentsView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Course (Students)
+    </button>
+</form>
+
+<br />
+
+<form asp-controller="Admin" asp-action="DeleteByCourseInstructorView">
+    <button type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete by Course (Instructors)
+    </button>
+</form>
+
+<br />
+
+
+
+
+<form asp-controller="Admin" asp-action="DeleteEntireDatabase">
+    <button onclick="return confirm('Are you sure you want to delete the ENTIRE DATABASE?')" type="submit" class="btn btn-md btn-danger">
+        <i class="fa-solid fa-trash-can"></i>
+        Delete entire database
+    </button>
+</form>}*@
 
 
 
@@ -267,4 +356,12 @@
 @section scripts
 {
     <script src="~/js/datatable_file.js"></script>
+
+    <script>
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+    </script>
 }

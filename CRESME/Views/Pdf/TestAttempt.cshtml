@@ -54,9 +54,6 @@
 </form>
 
 <br />
-<br />
-
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -179,8 +176,38 @@
         text-align: left;
       ">
         CC:
-        <span class="s1">60 yo female found to have abnormal liver function tests.</span>
+        <span class="s1"> @Model.PatientIntro </span>
     </h2>
+
+
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        PE
+    </h2>
+
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+        PE (A) = @Model.PhysicalAnswerA
+        <br />
+        PE (B) = @Model.PhysicalAnswerB 
+        <br />
+        PE (C) = @Model.PhysicalAnswerC 
+        <br />
+        PE (D) = @Model.PhysicalAnswerD
+        <br />
+    </p>
+
+
+
     <h2 style="
         padding-top: 7pt;
         padding-left: 6pt;
@@ -189,6 +216,7 @@
       ">
         Data
     </h2>
+
     <p style="
         padding-top: 4pt;
         padding-left: 6pt;
@@ -196,8 +224,26 @@
         line-height: 130%;
         text-align: justify;
       ">
-        Data (A) = 3 Data (B) = 2 Data (C) = 4 Data (D) = 1
+        Data (A) = @Model.DiagnosticAnswerA
+        <br />
+        Data (B) = @Model.DiagnosticAnswerB 
+        <br />
+        Data (C) = @Model.DiagnosticAnswerC 
+        <br />
+        Data (D) = @Model.DiagnosticAnswerD
+        <br />
     </p>
+
+
+    
+
+
+
+
+
+
+
+
     <h2 style="
         padding-top: 3pt;
         padding-left: 6pt;
@@ -213,13 +259,20 @@
         line-height: 130%;
         text-align: left;
       ">
-        Scenario 1: Choledocholithiasis Scenario 2: Hepatitis A Scenario 3:
-        Gilbert&#39;s Syndrome
+        Scenario 1: @Model.FreeResponseA
+        <br />
+        Scenario 2: @Model.FreeResponseB
+        <br />
+        Scenario 3: @Model.FreeResponseC
+        <br />
+        Scenario 4: @Model.FreeResponseD
+        <br />
     </p>
-    <p style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        Scenario 4: Non-alcoholic Fatty Liver Disease (NAFLD)
-    </p>
-    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    
+
+
+
+    @*<p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: justify">
         CASE 2
     </h2>
@@ -415,7 +468,9 @@
       ">
         Scenario 1: Pulmonary Embolism Scenario 2: Pneumothorax (PTX) Scenario 3:
         Pneumonia with atelectasis Scenario 4: ulcer (PUD - perforated)
-    </p>
+    </p>*@
+
+
     <p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
         Lab Values Viewed

@@ -6,6 +6,22 @@
     IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
 }
 
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-body">
+                @(TempData["AlertMessage"])
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="d-flex align-items-center min-vh-100">
         <div class="container border bg-white rounded" style="width: 50%;">
@@ -430,4 +446,12 @@
     }
 
 
+
+</script>
+<script>
+
+    window.onload = function () {
+        // your code here
+        $('.toast').toast('show');
+    };
 </script>

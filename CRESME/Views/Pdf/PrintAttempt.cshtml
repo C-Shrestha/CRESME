@@ -1,5 +1,8 @@
-﻿
+﻿@model CRESME.Data.Attempt
 
+@{
+    ViewData["Title"] = "Print PDF";
+}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -7,7 +10,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>CRESME Report</title>
     <style type="text/css">
-
 
         * {
             padding: 0;
@@ -62,8 +64,11 @@
         text-indent: 0pt;
         text-align: left;
       ">
-        2021-22 MDC8939 Intersession II
+        @Model.QuizName
     </h1>
+
+
+
     <p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
         Directions:
@@ -75,26 +80,39 @@
         </span>
     </h2>
     <p style="text-indent: 0pt; text-align: left"><br /></p>
+
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        Date: <span class="s1">Monday, May 30, 2022</span>
+        Date: <span class="s1">  @DateTime.Now  </span>
     </h2>
+
     <p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        Start Time: <span class="s1">22:11 </span>End Time:
-        <span class="s1">22:58</span>
+        Start Time: <span class="s1">  @Model.StartTime </span>
+        &nbsp;
+        &nbsp;
+        End Time:
+        <span class="s1">  @Model.EndTime  </span>
     </h2>
-    <p style="text-indent: 0pt; text-align: left"><br /></p>
-    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+
+    <br />
+    @*<p style="text-indent: 0pt; text-align: left"><br /></p>*@
+    @*<h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
         Student&#39;s Name:
-    </h2>
-    <p style="
+    </h2>*@
+    @*<p style="
         padding-top: 4pt;
         padding-left: 6pt;
         text-indent: 0pt;
         text-align: left;
       ">
-        First Name Last Name
-    </p>
+        @Model.StudentName
+    </p>*@
+
+    <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Student Name: <span class="s1">  @Model.StudentName  </span>
+    </h2>
+
+
     <p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
         CASE 1
@@ -106,8 +124,38 @@
         text-align: left;
       ">
         CC:
-        <span class="s1">60 yo female found to have abnormal liver function tests.</span>
+        <span class="s1"> @Model.PatientIntro </span>
     </h2>
+
+
+    <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+        PE
+    </h2>
+
+    <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+        PE (A) = @Model.PhysicalAnswerA
+        <br />
+        PE (B) = @Model.PhysicalAnswerB 
+        <br />
+        PE (C) = @Model.PhysicalAnswerC 
+        <br />
+        PE (D) = @Model.PhysicalAnswerD
+        <br />
+    </p>
+
+
+
     <h2 style="
         padding-top: 7pt;
         padding-left: 6pt;
@@ -116,6 +164,7 @@
       ">
         Data
     </h2>
+
     <p style="
         padding-top: 4pt;
         padding-left: 6pt;
@@ -123,8 +172,26 @@
         line-height: 130%;
         text-align: justify;
       ">
-        Data (A) = 3 Data (B) = 2 Data (C) = 4 Data (D) = 1
+        Data (A) = @Model.DiagnosticAnswerA
+        <br />
+        Data (B) = @Model.DiagnosticAnswerB 
+        <br />
+        Data (C) = @Model.DiagnosticAnswerC 
+        <br />
+        Data (D) = @Model.DiagnosticAnswerD
+        <br />
     </p>
+
+
+    
+
+
+
+
+
+
+
+
     <h2 style="
         padding-top: 3pt;
         padding-left: 6pt;
@@ -140,13 +207,20 @@
         line-height: 130%;
         text-align: left;
       ">
-        Scenario 1: Choledocholithiasis Scenario 2: Hepatitis A Scenario 3:
-        Gilbert&#39;s Syndrome
+        Scenario 1: @Model.FreeResponseA
+        <br />
+        Scenario 2: @Model.FreeResponseB
+        <br />
+        Scenario 3: @Model.FreeResponseC
+        <br />
+        Scenario 4: @Model.FreeResponseD
+        <br />
     </p>
-    <p style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        Scenario 4: Non-alcoholic Fatty Liver Disease (NAFLD)
-    </p>
-    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    
+
+
+
+    @*<p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: justify">
         CASE 2
     </h2>
@@ -342,7 +416,9 @@
       ">
         Scenario 1: Pulmonary Embolism Scenario 2: Pneumothorax (PTX) Scenario 3:
         Pneumonia with atelectasis Scenario 4: ulcer (PUD - perforated)
-    </p>
+    </p>*@
+
+
     <p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
         Lab Values Viewed
@@ -357,3 +433,15 @@
     </p>
 </body>
 </html>
+
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/datatable_file.js"></script>
+}

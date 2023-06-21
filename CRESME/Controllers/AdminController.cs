@@ -140,7 +140,7 @@ namespace CRESME.Controllers
 
         [HttpPost]
         [Route("/Admin/ImportExcel")]
-        public async Task<List<ApplicationUser>> ImportExcel(IFormFile file)
+        public async Task<IActionResult> ImportExcel(IFormFile file)
 
         {
             var list = new List<ApplicationUser>();
@@ -219,9 +219,11 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-            RedirectToAction("ListUsers");
+            TempData["AlertMessage"] = "Users created sucessfully!";
 
-            return list;
+            return RedirectToAction("ListUsers");
+
+            
 
 
         } // importToExcel
@@ -254,9 +256,11 @@ namespace CRESME.Controllers
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User updated sucessfully!";
                     return RedirectToAction("ListUsers");
 
-
+                }
             }
             else
                 ModelState.AddModelError("", "User Not Found");
@@ -326,7 +330,7 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-
+            TempData["AlertMessage"] = "User created sucessfully!";
 
             return RedirectToAction("ListUsers");
         }
@@ -340,7 +344,11 @@ namespace CRESME.Controllers
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User deleted sucessfully!";
                     return RedirectToAction("ListUsers");
+                }
+                    
 
 
             }
@@ -378,6 +386,8 @@ namespace CRESME.Controllers
                  ModelState.AddModelError("", "User Not Found");
              }*/
 
+
+            TempData["AlertMessage"] = "All users deleted sucessfully!";
             return RedirectToAction("ListUsers");
 
         }
@@ -505,7 +515,7 @@ namespace CRESME.Controllers
 
 
                  _context.SaveChanges();
-
+                TempData["AlertMessage"] = "CRESME updated sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -527,7 +537,7 @@ namespace CRESME.Controllers
             {
                 _context.Remove(quiz);
                 _context.SaveChanges();
-
+                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -553,7 +563,7 @@ namespace CRESME.Controllers
                     
 
                 }
-
+                TempData["AlertMessage"] = "All CRESME deleted sucessfully!";
                 _context.SaveChanges();
 
 
@@ -616,9 +626,9 @@ namespace CRESME.Controllers
         /*--------------------------All the functions below here are listed for Students to take Quiz----------------------------------*/
 
 
-        // View to show the list of assigned quizes for logged in student 
+        /*// View to show the list of assigned quizes for logged in student 
 
-        public async Task<IActionResult> AssignedQuizes()
+        public async Task<IActionResult> AssignedQuizess()
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -630,7 +640,7 @@ namespace CRESME.Controllers
 
             return View(quizes);
 
-        }
+        }*/
 
 
         public async Task<IActionResult> InstructorQuizesView()
@@ -725,7 +735,7 @@ namespace CRESME.Controllers
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-
+                
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Users.xlsx");
             }
         }
@@ -1109,6 +1119,8 @@ namespace CRESME.Controllers
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
 
+            TempData["AlertMessage"] = "Student in the term deleted!";
+
             return RedirectToAction("ListUsers");
 
         }
@@ -1129,6 +1141,7 @@ namespace CRESME.Controllers
             var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
 
             return RedirectToAction("ListUsers");
 
@@ -1155,6 +1168,8 @@ namespace CRESME.Controllers
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
 
+            TempData["AlertMessage"] = "Student in the block deleted!";
+
             return RedirectToAction("ListUsers");
 
         }
@@ -1175,7 +1190,7 @@ namespace CRESME.Controllers
             var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
-
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
             return RedirectToAction("ListUsers");
 
         }
@@ -1193,7 +1208,6 @@ namespace CRESME.Controllers
                 {
 
                     _context.Remove(item);
-
 
                 }
 
@@ -1222,20 +1236,190 @@ namespace CRESME.Controllers
 
             //remove all images from the database
 
+
+            TempData["AlertMessage"] = "Entire database has been deleted!";
+
             return RedirectToAction("ListUsers"); 
         }
 
 
 
 
+        //return view with a Block input box that will delete all students with specified BLock
+        public IActionResult DeleteByCourseStudentsView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all students with the specified Block
+        [HttpPost]
+        public IActionResult DeleteByCourseStudents(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+            TempData["AlertMessage"] = "Student in the course deleted!";
+            return RedirectToAction("ListUsers");
+
+        }
+
+        //return view with a Block input box that will delete all instructors with specified Block
+        public IActionResult DeleteByCourseInstructorView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all instructors with the specified Block
+        [HttpPost]
+        public IActionResult DeleteByCourseInstructors(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the course deleted!";
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<Quiz> quizes = new List<Quiz>(); 
+
+            // list of quizes assinged to the user
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+
+            if ( assignedQuizes.Count() == 0 ) {
+                return View(quizes); 
+            }
+            else
+            {
+                if ( TakenQuizes.Count() == 0)
+                {
+                    return View(assignedQuizes); 
+                }
+
+                else
+                {
+                    foreach (var quiz1 in assignedQuizes)
+                    {
+                        foreach(var quiz2 in TakenQuizes)
+                        {
+                            if (quiz1.QuizId != quiz2.QuizID)
+                            {
+                                quizes.Add(quiz1);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        
+                    }
+
+                    //getting only distinct objects in list 
+                    quizes = quizes.Distinct().ToList();
+
+                    if(quizes.Count() == 0)
+                    {
+                        return View(new List<Quiz>());
+                    }
+                    else
+                    {
+                        return View(quizes);
+                    }
+
+                    
+                }
+            } 
+
+        }
 
 
 
+        public async Task<IActionResult> PastQuizes()
+        {
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<Attempt> attempts = new List<Attempt>();
+
+            // list of quizes assinged to the user
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
 
 
+            if (assignedQuizes.Count() == 0)
+            {
+                return View(attempts);
+            }
+            else
+            {
+                if (TakenQuizes.Count() == 0)
+                {
+                    return View(attempts);
+                }
+
+                else
+                {
+                    foreach (var item1 in assignedQuizes)
+                    {
+                        foreach (var item2 in TakenQuizes)
+                        {
+                            if (item1.QuizId == item2.QuizID)
+                            {
+                                attempts.Add(item2);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                    }
+
+                    //getting only distinct objects in list 
+                    attempts = attempts.Distinct().ToList();
+
+                    if (attempts.Count() == 0)
+                    {
+                        return View(new List<Attempt>());
+                    }
+                    else
+                    {
+                        return View(attempts);
+                    }
 
 
+                }
+            }
 
+        }
 
 
 
