@@ -137,6 +137,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
                 quiz.ImagePos0 = Request.Form["ImagePos0"];
+
             }
             else
             {
