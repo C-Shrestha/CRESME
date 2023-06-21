@@ -23,15 +23,6 @@ namespace CRESME.Controllers
     {
 
 
-        // Authorize makes the page availabe to only to specified Roles
-        [Authorize(Roles = "Admin, Instructor")]
-        public IActionResult CreateAccounts()
-        {
-            return View();
-        }
-
-
-
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -54,82 +45,16 @@ namespace CRESME.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-        /*        //remove later
-                public async Task<List<ApplicationUser>> Import(IFormFile file)
-                {
-                    var list = new List<ApplicationUser>();
-                    using (var stream = new MemoryStream())
-                    {
-                        await file.CopyToAsync(stream);
-                        using (var package = new ExcelPackage(stream))
-                        {
-                            ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                            var rowcount = worksheet.Dimension.Rows;
+        // Authorize makes the page availabe to only to specified Roles
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateAccounts()
+        {
+            return View();
+        }
 
 
-
-                            for (int row = 2; row <= rowcount; row++)
-                            {
-                                var PasswordHash = worksheet.Cells[row, 7].Value.ToString();
-
-                                var assignRole = worksheet.Cells[row, 17].Value.ToString().Trim();
-
-
-                                var user = new ApplicationUser
-                                {
-
-                                    UserName = worksheet.Cells[row, 2].Value.ToString().Trim(),
-                                    NormalizedUserName = worksheet.Cells[row, 3].Value.ToString().Trim(),
-                                    Email = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                    NormalizedEmail = worksheet.Cells[row, 5].Value.ToString().Trim(),
-                                    EmailConfirmed = true,
-                                    PhoneNumber = worksheet.Cells[row, 10].Value.ToString().Trim(),
-                                    PhoneNumberConfirmed = false,
-                                    TwoFactorEnabled = false,
-                                    LockoutEnd = null,
-                                    LockoutEnabled = true,
-                                    AccessFailedCount = 0,
-                                    Name = worksheet.Cells[row, 16].Value.ToString().Trim(),
-                                    Role = worksheet.Cells[row, 17].Value.ToString().Trim()
-
-                                };
-                                var result = await _userManager.CreateAsync(user, PasswordHash);
-
-                                // assign roles
-                                if (assignRole == "Instructor")
-                                {
-                                    await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
-                                }
-
-                                if (assignRole == "Student")
-                                {
-                                    await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
-                                }
-
-
-
-                            }
-
-
-                        }
-                    }
-
-                    _context.Users.AddRange(list);
-
-
-                    _context.SaveChanges();
-
-
-
-                    return list;
-
-                } // import
-
-        */
-
-
-        // GET: Users
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ListUsers()
         {
             return _context.Users != null ?
@@ -140,8 +65,10 @@ namespace CRESME.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("/Admin/ImportExcel")]
-        public async Task<List<ApplicationUser>> ImportExcel(IFormFile file)
+        /*Takes in a properly formated Excel file and create a users (both instructors and studnets)*/
+        public async Task<IActionResult> ImportExcel(IFormFile file)
 
         {
             var list = new List<ApplicationUser>();
@@ -149,12 +76,7 @@ namespace CRESME.Controllers
             {
                 
                 await file.CopyToAsync(stream);
-
-                /*if (stream.Length <= 0)
-                {
-                    return list;
-                }
-*/
+              
                 using (XLWorkbook workbook = new XLWorkbook(stream))
                 
                 {                    
@@ -164,12 +86,11 @@ namespace CRESME.Controllers
 
                     for (int row = 2; row <= rowCount; row++)
                     {
+                        //storing variables for password and for assigning roles later
                         var PasswordHash = worksheet.Cell(row, 7).Value.ToString();
-                        
-
                         var assignRole = worksheet.Cell(row, 17).Value.ToString().Trim();
 
-
+                        //creating a new user object
                         var user = new ApplicationUser
                         {
 
@@ -190,13 +111,12 @@ namespace CRESME.Controllers
                             Course = worksheet.Cell(row, 19).Value.ToString().Trim(),
                             Term = worksheet.Cell(row, 20).Value.ToString().Trim()
 
-
-
-
                         };
+
+                        //creating a new user
                         var result = await _userManager.CreateAsync(user, PasswordHash);
 
-                        // assign roles
+                        //assigning roles to the user
                         if (assignRole == "Instructor")
                         {
                             await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
@@ -217,22 +137,18 @@ namespace CRESME.Controllers
 
             _context.Users.AddRange(list);
 
-
             _context.SaveChanges();
 
-            RedirectToAction("ListUsers");
+            TempData["AlertMessage"] = "Users created sucessfully!";
 
-            return list;
-
+            return RedirectToAction("ListUsers");
 
         } // importToExcel
 
 
 
-        /*public async Task<IActionResult> EditUsers([Bind("Id, UserName,NormalizedUserName, Email,NormalizedEmail, EmailConfirmed,PasswordHash, SecurityStamp, ConcurrencyStamp PhoneNumber,PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd,LockoutEnabled, AccessFailedCount,Name, Role")] ApplicationUser test)*/
-
-
-        // GET: Tests/Create
+        /*Returns the view for Editing a user*/
+        [Authorize(Roles = "Admin")]
         public IActionResult EditUsers(String id)
         {
             //return View();
@@ -240,10 +156,15 @@ namespace CRESME.Controllers
 
         }
 
+        /*Located in the EditUsers.cshtml.This function will edit the user's data*/
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Update(string Id, string Name, string UserName, string Block, string Course, string Term)
         {
+            //find the user to be updated
             var user = await _userManager.FindByIdAsync(Id);
+
+            // update the user data
             if (user != null)
             {
                 user.UserName = UserName;
@@ -253,11 +174,14 @@ namespace CRESME.Controllers
                 user.Course = Course;
                 user.Term = Term;
 
+                // check if the update was sucessful
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User updated sucessfully!";
                     return RedirectToAction("ListUsers");
 
-
+                }
             }
             else
                 ModelState.AddModelError("", "User Not Found");
@@ -267,15 +191,17 @@ namespace CRESME.Controllers
 
 
 
-        // GET: Tests/Creates
+        /*Located in ListUsers.cshtml.Returns the view for creating a new user*/
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateUsers()
         {
             return View();
         }
 
 
-        // POST: Tests/Create
+        /*Located in CreateUsers.cshtml. This fucntion creates a new user.*/
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name, string Block, string Course, string Term)
         {
 
@@ -285,13 +211,12 @@ namespace CRESME.Controllers
                 return RedirectToAction("ListUsers");
             }
 
-
+            // create a new user object
             ApplicationUser user = new ApplicationUser
             {
 
                 UserName = UserName,
                 Name = Name,
-
                 NormalizedUserName = UserName.ToUpper(),
                 Email = UserName,
                 NormalizedEmail = UserName.ToUpper(),
@@ -311,7 +236,7 @@ namespace CRESME.Controllers
             };
 
 
-            /*IdentityResult result =*/
+            //create user in the database
             await _userManager.CreateAsync(user, PasswordHash);
 
             // assign roles
@@ -327,13 +252,14 @@ namespace CRESME.Controllers
 
             _context.SaveChanges();
 
-
+            TempData["AlertMessage"] = "User created sucessfully!";
 
             return RedirectToAction("ListUsers");
         }
 
 
-        //POST:Delete
+        /*Located in ListUsers.cshtml. Deletes a user based on the passsed ID*/
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -341,8 +267,10 @@ namespace CRESME.Controllers
             {
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User deleted sucessfully!";
                     return RedirectToAction("ListUsers");
-
+                }
 
             }
             else
@@ -353,8 +281,9 @@ namespace CRESME.Controllers
             return RedirectToAction("CreateAccounts");
         }
 
-        //POST:DeleteAll
+        /*Located in ListUsers.cshtml. Deletes all Users in the database except for the Admin.*/
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("/Admin/DeleteAll")]
         public async Task<IActionResult> DeleteAll()
         {
@@ -373,105 +302,25 @@ namespace CRESME.Controllers
 
 
             }
-
-            /* else
-             {
-                 ModelState.AddModelError("", "User Not Found");
-             }*/
-
+            TempData["AlertMessage"] = "All users deleted sucessfully!";
             return RedirectToAction("ListUsers");
 
         }
 
 
-
-        /*    //Export Excel Data REMOVE LATER
-
-
-            public IActionResult ExportToExcel()
-            {
-                db dbop = new db();
-                DataSet ds = dbop.Getrecord(); 
-                var stream = new MemoryStream();
-
-                using (var package = new ExcelPackage(stream))
-                {
-                    var worksheet = package.Workbook.Worksheets.Add("Sheet1");
-                    worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
-                    package.Save(); 
-                }
-
-                stream.Position = 0;
-                string excelname = $"StudentGrades.xlsx";
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname); 
-            }
-    */
-
-        // Export List of Users for Admin
-        /*public IActionResult ExportExcel()*/
-        /*public async Task<IActionResult> ExportExcel()*/
-
-        /*public IActionResult ExportExcel()
-        {
-            db dbop = new db();
-            DataSet ds = dbop.Getrecord();
-            var stream = new MemoryStream();
-
-            using (XLWorkbook workbook = new XLWorkbook())
-            {
-                
-
-                foreach (DataTable dataTable in ds.Tables)
-                {
-                    // Add a worksheet for each DataTable in the DataSet
-                    IXLWorksheet worksheet = workbook.Worksheets.Add(dataTable.TableName);
-
-                    // Write column headers
-                    for (int i = 0; i < dataTable.Columns.Count; i++)
-                    {
-                        worksheet.Cell(1, i + 1).Value = dataTable.Columns[i].ColumnName;
-                    }
-
-                    // Write data rows
-                    for (int row = 0; row < dataTable.Rows.Count; row++)
-                    {
-                        for (int col = 0; col < dataTable.Columns.Count; col++)
-                        {
-                            worksheet.Cell(row + 2, col + 1).Value = dataTable.Rows[row][col].ToString();
-                        }
-                    }
-                }
-
-                
-                workbook.SaveAs(stream);
-            }
-
-            stream.Position = 0;
-            string excelname = $"ListofUsers.xlsx";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
-        }*/
-
-
-
-        /*--------------------------All the functions below here are listed for Quizes----------------------------------*/
-
-
-
-
-        // GET: List All Quizes for Admin account
+        /*Returns all the quizes in the database.*/
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> ListAllQuizes()
         {
             return _context.Users != null ?
-
-                        /*View(await _userManager.Users.ToListAsync()) :*/
 
                         View(await _context.Quiz.ToListAsync()) :
 
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
-
-        // GET: Wdit Quiz
+        /*Located in ListAllQuizes.cshtml.Rerurns a view to edit a CRESME.*/
+        [Authorize(Roles = "Admin, Instructor")]
         public IActionResult EditQuiz(int QuizId)
         {
 
@@ -480,14 +329,17 @@ namespace CRESME.Controllers
         }
 
         
-
+        /*Located in EditQuiz.cshtml. Updates a CRESME*/
         [HttpPost]
         [Route("/Admin/UpdateQuiz")]
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> UpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
         {
             
-
+            // find the quiz to be updated
             var quiz = await _context.Quiz.FindAsync(QuizId);
+
+            //update based on the new values
             if (quiz != null)
             {
                 quiz.QuizName = QuizName;
@@ -498,15 +350,8 @@ namespace CRESME.Controllers
                 quiz.StartDate = StartDate;
                 quiz.EndDate = EndDate;
 
-
-
-                /*IdentityResult result = await _userManager.UpdateAsync(user);
-
-                IdentityResult result = await _context.Quiz.Update(quiz); */
-
-
                  _context.SaveChanges();
-
+                TempData["AlertMessage"] = "CRESME updated sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -516,9 +361,10 @@ namespace CRESME.Controllers
             return RedirectToAction("CreateAccounts");
         }
 
-        //POST:Delete
+        /*Located in ListAllQuizes.cshtml. Delete a CRESME*/
         [HttpPost]
         [Route("/Admin/DeleteQuiz")]
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> DeleteQuiz(int QuizId)
         {
             
@@ -624,7 +470,7 @@ namespace CRESME.Controllers
 
                 _context.Remove(quiz);
                 _context.SaveChanges();
-
+                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -634,102 +480,29 @@ namespace CRESME.Controllers
         }
 
 
-        //POST:DeleteAll
+        /*Located in ListAllQuizes.cshtml.Delete all quizes.*/
         [HttpPost]
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> DeleteAllQuizes()
         {
-
             var quizes = await _context.Quiz.ToListAsync();
             if (quizes != null)
             {
-
                 foreach (var item in quizes)
                 {
-                   
                    _context.Remove(item);
-                    
-
                 }
-
+                TempData["AlertMessage"] = "All CRESME deleted sucessfully!";
                 _context.SaveChanges();
 
-
             }
-
-            /* else
-             {
-                 ModelState.AddModelError("", "User Not Found");
-             }*/
 
             return RedirectToAction("ListUsers");
 
         }
 
-/*
-
-        // Export all Quizes for Admins
-        public IActionResult ExportAllQuiz()
-        {
-            dbQuiz dbop = new dbQuiz();
-            DataSet ds = dbop.Getrecord();
-            var stream = new MemoryStream();
-
-            using (XLWorkbook workbook = new XLWorkbook())
-            {
-
-
-                foreach (DataTable dataTable in ds.Tables)
-                {
-                    // Add a worksheet for each DataTable in the DataSet
-                    IXLWorksheet worksheet = workbook.Worksheets.Add(dataTable.TableName);
-
-                    // Write column headers
-                    for (int i = 0; i < dataTable.Columns.Count; i++)
-                    {
-                        worksheet.Cell(1, i + 1).Value = dataTable.Columns[i].ColumnName;
-                    }
-
-                    // Write data rows
-                    for (int row = 0; row < dataTable.Rows.Count; row++)
-                    {
-                        for (int col = 0; col < dataTable.Columns.Count; col++)
-                        {
-                            worksheet.Cell(row + 2, col + 1).Value = dataTable.Rows[row][col].ToString();
-                        }
-                    }
-                }
-
-
-                workbook.SaveAs(stream);
-            }
-
-            stream.Position = 0;
-            string excelname = $"List_of_Quizes.xlsx";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
-        }
-
-*/
-
-        /*--------------------------All the functions below here are listed for Students to take Quiz----------------------------------*/
-
-
-        // View to show the list of assigned quizes for logged in student 
-
-        public async Task<IActionResult> AssignedQuizes()
-        {
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var user = await _userManager.FindByIdAsync(currentUserId);
-
-            var quizes = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
-                        .ToList();
-
-            return View(quizes);
-
-        }
-
-
+        /*Located at "Your CRESMES" tab. Returns a list of CRESMES created by the current instructor. */
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> InstructorQuizesView()
         {
 
@@ -745,17 +518,16 @@ namespace CRESME.Controllers
 
         }
 
-
-
-
+        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
         [HttpPost]
         [Route("/Admin/ExportUsersToExcel")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ExportUsersToExcel()
         {
             // Create a new Excel workbook
             using (XLWorkbook workbook = new XLWorkbook())
             {
-
+                //get a list of all users in database
                 var userList = _context.Users
                         .FromSqlInterpolated($"select * from AspNetUsers")
                         .ToList();
@@ -784,10 +556,6 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 18).Value = "Block";
                 worksheet.Cell(1, 19).Value = "Course";
                 worksheet.Cell(1, 20).Value = "Term";
-                
-
-
-
 
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
@@ -816,19 +584,16 @@ namespace CRESME.Controllers
 
                 }
 
-                /*// Save the workbook to the provided file path
-                workbook.SaveAs(filePath);*/
-
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-
+                
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Users.xlsx");
             }
         }
 
-
-
+        /*Located in ListAllQuizes.cshtml. Exports list of quizes and their metadata.*/
+        [Authorize(Roles = "Admin, Instructor")]
         public IActionResult ExportQuizesToExcel()
         {
             // Create a new Excel workbook
@@ -968,9 +733,6 @@ namespace CRESME.Controllers
 
                 }
 
-                /*// Save the workbook to the provided file path
-                workbook.SaveAs(filePath);*/
-
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
@@ -982,6 +744,10 @@ namespace CRESME.Controllers
         }
 
         //POST:Details
+        //Returns a list of attempts for a particular quiz.
+        //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
+        //QuizName is required for Excel Generation in Quiz Details page. 
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> QuizDetails(Quiz quiz)
         {
  
@@ -989,12 +755,23 @@ namespace CRESME.Controllers
                         .FromSqlInterpolated($"select * from Attempts where QuizName = {quiz.QuizName}")
                         .ToList();
 
-            return View(quizes.ToList());
+            //if no studnet has taken the quiz yet, return a list of Attempts with QuizName for QuizDetails page
+            if (quizes.Count() == 0)
+            {
+                List<Attempt> temp = new List<Attempt>();
+                Attempt attempt = new Attempt();
+                attempt.QuizName = quiz.QuizName;
+                temp.Add(attempt);
+                return View(temp);
+            }
 
+            return View(quizes.ToList());
 
         }
 
+        /*Located in QuizDetails.csthml. Export CRESME data about the particular CRESME being viewed currently. Includes students attempts metadata about the CRESME*/
         [HttpPost]
+        [Authorize(Roles = "Admin, Instructor")]
         public IActionResult QuizDetailsToExcel(Attempt formData)
         {
             // Create a new Excel workbook
@@ -1051,16 +828,6 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 37).Value = "QuizID";
                 worksheet.Cell(1, 38).Value = "PatientIntro";
                 worksheet.Cell(1, 39).Value = "StudentID";
-
-
-
-                /*quizid
-                    patientintro
-                    studentid
-
-                
-                 */
-
 
 
                 // Set the row values
@@ -1121,7 +888,7 @@ namespace CRESME.Controllers
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-                string filename = $"Quiz Data: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
+                string filename = $"Quiz Metadata: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",filename);
 
             }
@@ -1129,6 +896,8 @@ namespace CRESME.Controllers
         }
 
 
+        /*Located in QuizDetails.cshtml page. Exports the currently viewed CRESME. The excel file is formatted and can be used to create another CRESME*/
+        [Authorize(Roles = "Admin, Instructor")]
         public IActionResult ExportQuizFromDetails(Attempt formData)
         {
             // Create a new Excel workbook
@@ -1182,7 +951,7 @@ namespace CRESME.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin, Instructor")]
         public static int StudentCount()
         {
             return 0; 
@@ -1190,6 +959,7 @@ namespace CRESME.Controllers
 
 
         //return view with a Term input box that will delete all students with specified Term
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermStudentsView()
         {
             
@@ -1199,6 +969,7 @@ namespace CRESME.Controllers
 
         // deletes all students with the specified Term
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public  IActionResult DeleteByTermStudents(ApplicationUser user)
         {
 
@@ -1206,11 +977,14 @@ namespace CRESME.Controllers
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
 
+            TempData["AlertMessage"] = "Student in the term deleted!";
+
             return RedirectToAction("ListUsers");
 
         }
 
         //return view with a Term input box that will delete all instructors with specified Term
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermInstructorView()
         {
 
@@ -1220,22 +994,21 @@ namespace CRESME.Controllers
 
         // deletes all instructors with the specified Term
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermInstructors(ApplicationUser user)
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
 
             return RedirectToAction("ListUsers");
 
         }
 
-
-
-
-
         //return view with a Block input box that will delete all students with specified BLock
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByBlockStudentsView()
         {
 
@@ -1245,6 +1018,7 @@ namespace CRESME.Controllers
 
         // deletes all students with the specified Block
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByBlockStudents(ApplicationUser user)
         {
 
@@ -1252,11 +1026,14 @@ namespace CRESME.Controllers
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
 
+            TempData["AlertMessage"] = "Student in the block deleted!";
+
             return RedirectToAction("ListUsers");
 
         }
 
         //return view with a Block input box that will delete all instructors with specified Block
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByBlockInstructorView()
         {
 
@@ -1266,13 +1043,14 @@ namespace CRESME.Controllers
 
         // deletes all instructors with the specified Block
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteByBlockInstructors(ApplicationUser user)
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
-
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
             return RedirectToAction("ListUsers");
 
         }
@@ -1291,7 +1069,6 @@ namespace CRESME.Controllers
 
                     _context.Remove(item);
 
-
                 }
 
                 _context.SaveChanges();
@@ -1303,9 +1080,8 @@ namespace CRESME.Controllers
         }
 
 
-
-
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEntireDatabase()
         {
             // delete all quizes
@@ -1325,20 +1101,200 @@ namespace CRESME.Controllers
                 file.Delete();
             }            
 
+
+            TempData["AlertMessage"] = "Entire database has been deleted!";
+
             return RedirectToAction("ListUsers"); 
         }
 
 
+        //return view with a Block input box that will delete all students with specified BLock
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteByCourseStudentsView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all students with the specified Block
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult DeleteByCourseStudents(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+            TempData["AlertMessage"] = "Student in the course deleted!";
+            return RedirectToAction("ListUsers");
+
+        }
+
+        //return view with a Block input box that will delete all instructors with specified Block
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteByCourseInstructorView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all instructors with the specified Block
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult DeleteByCourseInstructors(ApplicationUser user)
+        {
+
+            var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
+            _context.Users.RemoveRange(rowsToDelete);
+            _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the course deleted!";
+            return RedirectToAction("ListUsers");
+
+        }
+
+        /*Located in AssignedQuizes.cshtml. Returns a list of quizes assigned to a particular student.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<Quiz> quizes = new List<Quiz>(); 
+
+            // list of quizes assinged to the user
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            // check if the studnet has any assigned quizes, if not return empty object
+            if ( assignedQuizes.Count() == 0 ) {
+                return View(quizes); 
+            }
+            else
+            {
+                // check if the student already done any quizes, if not return all the quizes assinged to the student
+                if ( TakenQuizes.Count() == 0)
+                {
+                    return View(assignedQuizes); 
+                }
+
+                else
+                {
+                    // loop and find the quizes done by the student. Then return the quizes yet to be completed. 
+                    foreach (var quiz1 in assignedQuizes)
+                    {
+                        foreach(var quiz2 in TakenQuizes)
+                        {
+                            if (quiz1.QuizId != quiz2.QuizID)
+                            {
+                                quizes.Add(quiz1);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        
+                    }
+
+                    //getting only distinct objects in list 
+                    quizes = quizes.Distinct().ToList();
+
+                    //if no quizes, return empty object, else retun quizes assinged, but not completed.
+                    if(quizes.Count() == 0)
+                    {
+                        return View(new List<Quiz>());
+                    }
+                    else
+                    {
+                        return View(quizes);
+                    }
+
+                    
+                }
+            } 
+
+        }
 
 
+        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PastQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            List<Attempt> attempts = new List<Attempt>();
+
+            // list of quizes assinged to the user
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            // check if the studnet has any assigned quizes, if not return empty object
+            if (assignedQuizes.Count() == 0)
+            {
+                return View(attempts);
+            }
+            else
+            {
+                // check if the student already done any quizes, if not return all the quizes assinged to the student
+                if (TakenQuizes.Count() == 0)
+                {
+                    return View(attempts);
+                }
+
+                else
+                {
+                    // loop and find the quizes done by the student. Then return the quizes already completed by the student. 
+                    foreach (var item1 in assignedQuizes)
+                    {
+                        foreach (var item2 in TakenQuizes)
+                        {
+                            if (item1.QuizId == item2.QuizID)
+                            {
+                                attempts.Add(item2);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+
+                    }
+
+                    //getting only distinct objects in list 
+                    attempts = attempts.Distinct().ToList();
+
+                    //if no quizes, return empty object, else retun quizes already completed
+                    if (attempts.Count() == 0)
+                    {
+                        return View(new List<Attempt>());
+                    }
+                    else
+                    {
+                        return View(attempts);
+                    }
 
 
+                }
+            }
 
-
-
-
-
-
+        }
 
 
 

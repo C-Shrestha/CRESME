@@ -1,0 +1,43 @@
+﻿@model CRESME.Data.ApplicationUser
+
+@{
+    ViewData["Title"] = "Delete by Course(Students)";
+}
+
+<h1>Delete by Course</h1>
+
+
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Admin" asp-action="DeleteByCourseStudents" method="post" onsubmit="return confirm('Are you sure you want to delete all students in this Course?');">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label>Student's Course</label>
+                <input asp-for="Course" class="form-control" />
+                <span asp-validation-for="Course" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+
+            <br />
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListUsers">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

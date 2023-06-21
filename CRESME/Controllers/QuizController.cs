@@ -255,6 +255,9 @@ namespace CRESME.Controllers
                 throw new Exception("Failed to create CRESME.");
             }
 
+
+            TempData["AlertMessage"] = "CRESME created sucessfully!";
+
             return View("CreateQuiz", _context.Users.ToList());
         }
 

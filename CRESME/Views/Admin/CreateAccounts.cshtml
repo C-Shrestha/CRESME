@@ -30,7 +30,7 @@
 
                 <div class="container p-2 border col-12" style="border-style: solid !important; background-color: #f8f4f4; border-color: #fcfcfc !important;">
                     <div class="row justify-content-center">
-                        <div class="col-12 text-center" style="">Create User Accounts</div>
+                        <div class="col-12 text-center">Create User Accounts</div>
                         </div>
                 </div>
 
@@ -89,6 +89,55 @@
     }
 
 </style>
+
+<script>
+
+        var fileButton = document.getElementById("file");
+
+        fileButton.onchange = function () {
+
+        var checkForI = document.getElementById("excelCheckMark");
+
+        if ((fileButton.value) != "" && (checkForI == null)) {
+
+            var newi = document.createElement("i");
+            newi.setAttribute("class", "col-2 fa-solid fa-check");
+            newi.setAttribute("id", "excelCheckMark");
+
+            var newBreak = document.createElement("div");
+            newBreak.setAttribute("class", 'w-100');
+
+            var div = document.createElement("div");
+            div.setAttribute("class", 'col-1');
+
+            document.getElementById("excelLabel").after(div);
+            div.after(newi);
+            newi.after(newBreak);
+
+            var newdiv = document.createElement("div");
+            newdiv.setAttribute("class", "col-6 text-center");
+            newdiv.setAttribute("id", "excelFileName");
+            newdiv.style.fontWeight = "bold";
+            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+            newBreak.after(newdiv);
+
+            var newBreak1 = document.createElement("div");
+            newBreak1.setAttribute("class", 'w-100');
+
+            newdiv.after(newBreak1);
+
+        }
+        else if (checkForI != null) 
+        {
+
+            var newdiv = document.getElementById("excelFileName");
+            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+        }
+}
+
+</script>
 
 @*<div class="text-center">
     <div class="container">
