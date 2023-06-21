@@ -895,12 +895,25 @@ namespace CRESME.Controllers
         }
 
         //POST:Details
+        //Returns a list of attempts for a particular quiz.
+        //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
+        //QuizName is required for Excel Generation in Quiz Details page. 
         public async Task<IActionResult> QuizDetails(Quiz quiz)
         {
  
             var quizes = _context.Attempt
                         .FromSqlInterpolated($"select * from Attempts where QuizName = {quiz.QuizName}")
                         .ToList();
+
+            //if no studnet has taken the quiz yet, return a list of Attempts with QuizName for QuizDetails page
+            if (quizes.Count() == 0)
+            {
+                List<Attempt> temp = new List<Attempt>();
+                Attempt attempt = new Attempt();
+                attempt.QuizName = quiz.QuizName;
+                temp.Add(attempt);
+                return View(temp);
+            }
 
             return View(quizes.ToList());
 
