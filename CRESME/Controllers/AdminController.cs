@@ -917,7 +917,6 @@ namespace CRESME.Controllers
 
             return View(quizes.ToList());
 
-
         }
 
         [HttpPost]

@@ -1,8 +1,9 @@
 ﻿@model CRESME.Data.Attempt
 
 @{
-    ViewData["Title"] = "Print PDF";
+    ViewData["Title"] = "Attempt PDF";
 }
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -10,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>CRESME Report</title>
     <style type="text/css">
+
 
         * {
             padding: 0;
@@ -97,15 +99,15 @@
     <br />
     @*<p style="text-indent: 0pt; text-align: left"><br /></p>*@
     @*<h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        Student&#39;s Name:
+    Student&#39;s Name:
     </h2>*@
     @*<p style="
-        padding-top: 4pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        @Model.StudentName
+    padding-top: 4pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    @Model.StudentName
     </p>*@
 
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
@@ -113,10 +115,10 @@
     </h2>
 
 
-    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    @*<p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        CASE 1
-    </h2>
+    CASE 1
+    </h2>*@
     <h2 style="
         padding-top: 7pt;
         padding-left: 6pt;
@@ -137,6 +139,7 @@
         PE
     </h2>
 
+
     <p style="
         padding-top: 4pt;
         padding-left: 6pt;
@@ -146,12 +149,20 @@
       ">
         PE (A) = @Model.PhysicalAnswerA
         <br />
-        PE (B) = @Model.PhysicalAnswerB 
+        PE (B) = @Model.PhysicalAnswerB
         <br />
-        PE (C) = @Model.PhysicalAnswerC 
+        PE (C) = @Model.PhysicalAnswerC
         <br />
         PE (D) = @Model.PhysicalAnswerD
         <br />
+        @if (Model.NumColumns == 5)
+        {
+            string htmlContent = "PE (E) = ";
+
+            @Html.Raw(htmlContent) @Model.PhysicalAnswerE
+
+        }
+
     </p>
 
 
@@ -174,21 +185,20 @@
       ">
         Data (A) = @Model.DiagnosticAnswerA
         <br />
-        Data (B) = @Model.DiagnosticAnswerB 
+        Data (B) = @Model.DiagnosticAnswerB
         <br />
-        Data (C) = @Model.DiagnosticAnswerC 
+        Data (C) = @Model.DiagnosticAnswerC
         <br />
         Data (D) = @Model.DiagnosticAnswerD
         <br />
+        @if (Model.NumColumns == 5)
+        {
+            string htmlContent = "Data (E) = ";
+
+            @Html.Raw(htmlContent) @Model.DiagnosticAnswerE
+
+        }
     </p>
-
-
-    
-
-
-
-
-
 
 
 
@@ -215,207 +225,214 @@
         <br />
         Scenario 4: @Model.FreeResponseD
         <br />
+        @if (Model.NumColumns == 5)
+        {
+            string htmlContent = "Scenario 5: ";
+
+            @Html.Raw(htmlContent) @Model.FreeResponseE
+
+        }
     </p>
-    
+
 
 
 
     @*<p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: justify">
-        CASE 2
+    CASE 2
     </h2>
     <h2 style="
-        padding-top: 7pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        CC:
-        <span class="s1">40 yo female presenting with fatigue and abnormal labs.</span>
+    padding-top: 7pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    CC:
+    <span class="s1">40 yo female presenting with fatigue and abnormal labs.</span>
     </h2>
     <h2 style="
-        padding-top: 7pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Data
+    padding-top: 7pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Data
     </h2>
     <p style="
-        padding-top: 4pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: justify;
-      ">
-        Data (E) = 1 Data (F) = 4 Data (G) = 3 Data (H) = 2
+    padding-top: 4pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: justify;
+    ">
+    Data (E) = 1 Data (F) = 4 Data (G) = 3 Data (H) = 2
     </p>
     <h2 style="
-        padding-top: 3pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Diagnosis
+    padding-top: 3pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Diagnosis
     </h2>
     <p style="
-        padding-top: 4pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Scenario 1: Iron deficiency anemia
+    padding-top: 4pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Scenario 1: Iron deficiency anemia
     </p>
     <p style="
-        padding-top: 4pt;
-        padding-left: 6pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: left;
-      ">
-        Scenario 2: Aplastic Anemia (from methimazole) Scenario 3: Pernicious
-        Anemia (low B12)
+    padding-top: 4pt;
+    padding-left: 6pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: left;
+    ">
+    Scenario 2: Aplastic Anemia (from methimazole) Scenario 3: Pernicious
+    Anemia (low B12)
     </p>
     <p style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-        Scenario 4: Sickle Cell Disease causing anemia and vaso-occlusive pain
+    Scenario 4: Sickle Cell Disease causing anemia and vaso-occlusive pain
     </p>
     <h2 style="
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 15pt;
-        text-align: left;
-      ">
-        CASE 3
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 15pt;
+    text-align: left;
+    ">
+    CASE 3
     </h2>
     <h2 style="
-        padding-top: 7pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        CC:
-        <span class="s1">
-            55 yo male presenting with chest pain (discomfort) and abnormal
-            ECG.
-        </span>
+    padding-top: 7pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    CC:
+    <span class="s1">
+    55 yo male presenting with chest pain (discomfort) and abnormal
+    ECG.
+    </span>
     </h2>
     <h2 style="
-        padding-top: 7pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Data
+    padding-top: 7pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Data
     </h2>
     <p style="
-        padding-top: 4pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: left;
-      ">
-        Data (J) = 2 Data (K) = 3 Data (L) = 1 Data (M) = 4
+    padding-top: 4pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: left;
+    ">
+    Data (J) = 2 Data (K) = 3 Data (L) = 1 Data (M) = 4
     </p>
     <h2 style="
-        padding-top: 3pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: left;
-      ">
-        Images Viewed
-        <span class="p">
-            Image (J): 4 time(s) Image (K): 2 time(s) Image (L): 3 time(s) Image
-            (M): 3 time(s)
-        </span>
+    padding-top: 3pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: left;
+    ">
+    Images Viewed
+    <span class="p">
+    Image (J): 4 time(s) Image (K): 2 time(s) Image (L): 3 time(s) Image
+    (M): 3 time(s)
+    </span>
     </h2>
     <h2 style="
-        padding-top: 3pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Diagnosis
+    padding-top: 3pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Diagnosis
     </h2>
     <p style="
-        padding-top: 4pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Scenario 1: STEMI
+    padding-top: 4pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Scenario 1: STEMI
     </p>
     <p style="
-        padding-top: 4pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: left;
-      ">
-        Scenario 2: hyperkalemia (diet + underlying CKD + meds) Scenario 3: A-fib
+    padding-top: 4pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: left;
+    ">
+    Scenario 2: hyperkalemia (diet + underlying CKD + meds) Scenario 3: A-fib
     </p>
     <p style="padding-left: 5pt; text-indent: 0pt; text-align: left">
-        Scenario 4: Pericarditis
+    Scenario 4: Pericarditis
     </p>
     <p style="text-indent: 0pt; text-align: left"><br /></p>
     <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
-        CASE 4
+    CASE 4
     </h2>
     <h2 style="
-        padding-top: 7pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        CC: <span class="s1">40 yo male presenting with an abnormal CXR</span>
+    padding-top: 7pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    CC: <span class="s1">40 yo male presenting with an abnormal CXR</span>
     </h2>
     <h2 style="
-        padding-top: 7pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Data
+    padding-top: 7pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Data
     </h2>
     <p style="
-        padding-top: 4pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: justify;
-      ">
-        Data (P) = 4 Data (Q) = 1 Data (R) = 2 Data (S) = 3
+    padding-top: 4pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: justify;
+    ">
+    Data (P) = 4 Data (Q) = 1 Data (R) = 2 Data (S) = 3
     </p>
     <h2 style="
-        padding-top: 3pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: left;
-      ">
-        Images Viewed
-        <span class="p">
-            Image (P): 2 time(s) Image (Q): 7 time(s) Image (R): 4 time(s) Image
-            (S): 7 time(s)
-        </span>
+    padding-top: 3pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: left;
+    ">
+    Images Viewed
+    <span class="p">
+    Image (P): 2 time(s) Image (Q): 7 time(s) Image (R): 4 time(s) Image
+    (S): 7 time(s)
+    </span>
     </h2>
     <h2 style="
-        padding-top: 3pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        text-align: left;
-      ">
-        Diagnosis
+    padding-top: 3pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    text-align: left;
+    ">
+    Diagnosis
     </h2>
     <p style="
-        padding-top: 4pt;
-        padding-left: 5pt;
-        text-indent: 0pt;
-        line-height: 130%;
-        text-align: left;
-      ">
-        Scenario 1: Pulmonary Embolism Scenario 2: Pneumothorax (PTX) Scenario 3:
-        Pneumonia with atelectasis Scenario 4: ulcer (PUD - perforated)
+    padding-top: 4pt;
+    padding-left: 5pt;
+    text-indent: 0pt;
+    line-height: 130%;
+    text-align: left;
+    ">
+    Scenario 1: Pulmonary Embolism Scenario 2: Pneumothorax (PTX) Scenario 3:
+    Pneumonia with atelectasis Scenario 4: ulcer (PUD - perforated)
     </p>*@
 
 
@@ -441,7 +458,9 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script src="~/js/datatable_file.js"></script>
 }
