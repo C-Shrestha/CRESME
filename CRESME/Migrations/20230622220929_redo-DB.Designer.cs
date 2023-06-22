@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230615141106_newinittt99")]
-    partial class newinittt99
+    [Migration("20230622220929_redo-DB")]
+    partial class redoDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,6 +184,12 @@ namespace CRESME.Migrations
                     b.Property<string>("NumImage9Clicks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NumLabValueClicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumLegendClicks")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PatientIntro")
                         .HasColumnType("nvarchar(max)");
 
@@ -318,31 +324,61 @@ namespace CRESME.Migrations
                     b.Property<string>("Image0")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image0Alt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image1Alt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image2Alt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3Alt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image4")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image4Alt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image5Alt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image6")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image6Alt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image7")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image7Alt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image8")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image8Alt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image9")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image9Alt")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagePos0")
@@ -373,6 +409,9 @@ namespace CRESME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagePos9")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Legend")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIDAssignment")

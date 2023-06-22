@@ -182,6 +182,12 @@ namespace CRESME.Migrations
                     b.Property<string>("NumImage9Clicks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NumLabValueClicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumLegendClicks")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PatientIntro")
                         .HasColumnType("nvarchar(max)");
 
