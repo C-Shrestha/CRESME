@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml;
 using System.Data;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
@@ -22,8 +21,7 @@ namespace CRESME.Controllers
     public class AdminController : Controller
     {
 
-
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;

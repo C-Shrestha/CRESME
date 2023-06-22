@@ -13,7 +13,7 @@ namespace CRESME.Data
         // this will create a new table called Quiz in the DB
         public DbSet<Quiz> Quiz { get; set; }
 
-        public DbSet<Test> Test { get; set; }
+       
 
         public DbSet<Attempt> Attempt { get; set; }
     }
