@@ -371,9 +371,18 @@ namespace CRESME.Controllers
 
             if (quiz != null)
             {
-                //deletes images 0 - 9 for each quiz if they are not null
+                //deletes images 0 - 9 and legend image for each quiz if they are not null
                 string path;
                 FileInfo imagefile;
+                if (quiz.Legend != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
                 if (quiz.Image0 != null)
                 {
                     path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
@@ -488,7 +497,7 @@ namespace CRESME.Controllers
             {
                 foreach (var item in quizes)
                 {
-                   _context.Remove(item);
+                    DeleteQuiz(item.QuizId);
                 }
                 TempData["AlertMessage"] = "All CRESME deleted sucessfully!";
                 _context.SaveChanges();
