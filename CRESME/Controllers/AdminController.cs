@@ -499,7 +499,7 @@ namespace CRESME.Controllers
             {
                 foreach (var item in quizes)
                 {
-                   _context.Remove(item);
+                    DeleteQuiz(item.QuizId);
                 }
                 TempData["AlertMessage"] = "All CRESME deleted sucessfully!";
                 _context.SaveChanges();
