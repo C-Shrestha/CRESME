@@ -21,7 +21,6 @@ namespace CRESME.Controllers
     public class AdminController : Controller
     {
 
-
         //private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
