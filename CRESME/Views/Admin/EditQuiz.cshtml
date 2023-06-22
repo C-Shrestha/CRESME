@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label>CRESME</label>
-                <input asp-for="QuizName" class="form-control" />
+                <input asp-for="QuizName" class="form-control" required autocomplete="off"/>
                 <span asp-validation-for="QuizName" class="text-danger"></span>
             </div>
 
@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <label asp-for="Block" class="control-label"></label>
-                <input asp-for="Block" class="form-control" />
+                <input asp-for="Block" class="form-control" required autocomplete="off" />
                 <span asp-validation-for="Block" class="text-danger"></span>
             </div>
 
@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <label asp-for="Course" class="control-label"></label>
-                <input asp-for="Course" class="form-control" />
+                <input asp-for="Course" class="form-control" required autocomplete="off"/>
                 <span asp-validation-for="Course" class="text-danger"></span>
             </div>
 
@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label asp-for="Term" class="control-label"></label>
-                <input asp-for="Term" class="form-control" />
+                <input asp-for="Term" class="form-control" required autocomplete="off"/>
                 <span asp-validation-for="Term" class="text-danger"></span>
             </div>
 
@@ -50,7 +50,7 @@
 
             <div class="form-group">
                 <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
+                <input asp-for="DateCreated" class="form-control"  />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
             </div>
 
@@ -58,7 +58,7 @@
 
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                <input asp-for="StartDate" class="form-control"  />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
 
@@ -66,7 +66,7 @@
 
             <div class="form-group">
                 <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
+                <input asp-for="EndDate" class="form-control"  />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
 
