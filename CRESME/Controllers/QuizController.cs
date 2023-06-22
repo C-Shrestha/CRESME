@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ClosedXML.Excel;
 using NuGet.DependencyResolver;
-
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRESME.Controllers
 {
@@ -39,10 +40,12 @@ namespace CRESME.Controllers
             if (QuizID != -1)
             {
                 quiz = _context.Quiz.Find(QuizID);
-                throw new Exception("Unable to find correct Quiz ID");
+                
             }
             else
             {
+                // no quiz with that id found
+                //throw new Exception("Unable to find correct Quiz ID");
                 quiz = new Quiz();
             }
             return View(quiz);
@@ -287,6 +290,12 @@ namespace CRESME.Controllers
 
             return View("DisplayQuizzes");
         }
+
+
+
+
+        
+
 
     }
 }

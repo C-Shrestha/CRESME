@@ -142,22 +142,29 @@ namespace CRESME.Controllers
 
         }*/
 
-        
 
 
 
-
+        /*Returns a view with a PDF template format that will be submitted to webcourses.*/
+        [Authorize(Roles = "Admin, Instructor")]
         public IActionResult TestAttempt()
         {
             return View(_context.Attempt.FirstOrDefault());
 
         }
-     
+
+
+
+        /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
+         * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
+         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
         {
 
             using (var stringWriter = new StringWriter())
             {
+                // finds the view, PrintAttempt.cshtml, that will be used to generate PDF. 
                 var viewResult = _compositeViewEngine.FindView(ControllerContext, "PrintAttempt", false);
                 if (viewResult == null)
                 {
@@ -165,8 +172,8 @@ namespace CRESME.Controllers
 
                 }
                 var model = attempt;
-                /*var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());*/
-
+                
+                // Dictionary is created with the Attempt model data added to the view
                 var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
                 { Model = model };
 
@@ -181,10 +188,9 @@ namespace CRESME.Controllers
 
                 await viewResult.View.RenderAsync(viewContext);
 
-
+                // convert PDF to HTML
                 var htmlToPdf = new HtmlToPdf(1000, 1414);
                 htmlToPdf.Options.DrawBackground = true;
-
 
                 var pdf = htmlToPdf.ConvertHtmlString(stringWriter.ToString());
 
@@ -192,6 +198,7 @@ namespace CRESME.Controllers
 
                 string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
 
+                // return PDF for as download file
                 return File(pdfBytes, "application/pdf", filename);
 
 

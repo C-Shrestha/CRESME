@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class newinittt99 : Migration
+    public partial class newmigration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,7 +96,9 @@ namespace CRESME.Migrations
                     NumImage6Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumImage7Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumImage8Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumImage9Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NumImage9Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumLegendClicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumLabValueClicks = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,6 +123,7 @@ namespace CRESME.Migrations
                     Course = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Block = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PatientIntro = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Legend = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryB = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryC = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -165,23 +168,21 @@ namespace CRESME.Migrations
                     ImagePos6 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImagePos7 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImagePos8 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImagePos9 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ImagePos9 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image0Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image1Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image2Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image3Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image4Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image5Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image6Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image7Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image8Alt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image9Alt = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quiz", x => x.QuizId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Test",
-                columns: table => new
-                {
-                    Course = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NID = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Test", x => x.Course);
                 });
 
             migrationBuilder.CreateTable(
@@ -352,9 +353,6 @@ namespace CRESME.Migrations
 
             migrationBuilder.DropTable(
                 name: "Quiz");
-
-            migrationBuilder.DropTable(
-                name: "Test");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

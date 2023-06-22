@@ -182,6 +182,12 @@ namespace CRESME.Migrations
                     b.Property<string>("NumImage9Clicks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NumLabValueClicks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumLegendClicks")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PatientIntro")
                         .HasColumnType("nvarchar(max)");
 
@@ -447,19 +453,6 @@ namespace CRESME.Migrations
                     b.HasKey("QuizId");
 
                     b.ToTable("Quiz");
-                });
-
-            modelBuilder.Entity("CRESME.Data.Test", b =>
-                {
-                    b.Property<string>("Course")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("NID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Course");
-
-                    b.ToTable("Test");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
