@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230622153323_newmigration1")]
+    [Migration("20230622172101_newmigration1")]
     partial class newmigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
