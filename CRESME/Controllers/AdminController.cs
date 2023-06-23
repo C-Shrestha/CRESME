@@ -61,11 +61,11 @@ namespace CRESME.Controllers
         }
 
 
-
+/*
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("/Admin/ImportExcel")]
-        /*Takes in a properly formated Excel file and create a users (both instructors and studnets)*/
+        *//*Takes in a properly formated Excel file and create a users (both instructors and studnets)*//*
         public async Task<IActionResult> ImportExcel(IFormFile file)
 
         {
@@ -108,6 +108,94 @@ namespace CRESME.Controllers
                             Block = worksheet.Cell(row, 18).Value.ToString().Trim(),
                             Course = worksheet.Cell(row, 19).Value.ToString().Trim(),
                             Term = worksheet.Cell(row, 20).Value.ToString().Trim()
+
+                        };
+
+                        //creating a new user
+                        var result = await _userManager.CreateAsync(user, PasswordHash);
+
+                        //assigning roles to the user
+                        if (assignRole == "Instructor")
+                        {
+                            await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                        }
+
+                        if (assignRole == "Student")
+                        {
+                            await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                        }
+
+
+
+                    }
+
+
+                }
+            }
+
+            _context.Users.AddRange(list);
+
+            _context.SaveChanges();
+
+            TempData["AlertMessage"] = "Users created sucessfully!";
+
+            return RedirectToAction("ListUsers");
+
+        } // importToExcel
+
+*/
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("/Admin/ImportExcel")]
+        /*Takes in a properly formated Excel file and create a users (both instructors and studnets).
+         Since we used Identity, we opted to keep the UserName Column.
+         So, NID(excel upload) == Username (Database) == Email(Database). They are same value.
+         */
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+
+        {
+            var list = new List<ApplicationUser>();
+            using (var stream = new MemoryStream())
+            {
+
+                await file.CopyToAsync(stream);
+
+                using (XLWorkbook workbook = new XLWorkbook(stream))
+
+                {
+                    IXLWorksheet worksheet = workbook.Worksheets.First();
+
+                    int rowCount = worksheet.RowsUsed().Count();
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        //storing variables for password and for assigning roles later
+                        var PasswordHash = worksheet.Cell(row, 3).Value.ToString();
+                        var assignRole = worksheet.Cell(row, 4).Value.ToString().Trim();
+                        var nid = worksheet.Cell(row, 1).Value.ToString().Trim();
+
+
+                        //creating a new user object
+                        //columns created by Identity and not used in this app are labeled "false" or null or empty
+                        var user = new ApplicationUser
+                        {
+
+                            UserName = nid,
+                            NormalizedUserName = nid,
+                            Email = nid,
+                            NormalizedEmail = nid,
+                            EmailConfirmed = true,
+                            PhoneNumber = "",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            LockoutEnd = null,
+                            LockoutEnabled = true,
+                            AccessFailedCount = 0,
+                            Name = worksheet.Cell(row, 2).Value.ToString().Trim(),
+                            Role = assignRole,
+                            Block = worksheet.Cell(row, 5).Value.ToString().Trim(),
+                            Course = worksheet.Cell(row, 6).Value.ToString().Trim(),
+                            Term = worksheet.Cell(row, 7).Value.ToString().Trim()
 
                         };
 
@@ -197,7 +285,10 @@ namespace CRESME.Controllers
         }
 
 
-        /*Located in CreateUsers.cshtml. This fucntion creates a new user.*/
+        /*Located in CreateUsers.cshtml. This fucntion creates a new user.
+         Since we used Identity, we opted to keep the UserName Column.
+         So, NID(excel upload) == Username (Database) == Email(Database). They are same value.
+         */
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(string PasswordHash, string Role, string UserName, string Name, string Block, string Course, string Term)
@@ -530,7 +621,7 @@ namespace CRESME.Controllers
 
             // list of CRESMES created by instructor themselves
             var quizes2 = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where InstructorID = {user.Id}")
+                        .FromSqlInterpolated($"select * from Quiz where InstructorID = {user.UserName}")
                         .ToList();
 
             // adding the two CRESMES together. Final list contains CRESMES created by both Admin and Instructor themselves. 
@@ -541,7 +632,16 @@ namespace CRESME.Controllers
 
         }
 
-        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
+
+
+
+
+
+
+
+
+
+        /*Located in ListAllUsers.cshtml. Returns all the users in database. *//*
         [HttpPost]
         [Route("/Admin/ExportUsersToExcel")]
         [Authorize(Roles = "Admin")]
@@ -613,7 +713,61 @@ namespace CRESME.Controllers
                 
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Users.xlsx");
             }
+        }*/
+
+        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
+        [HttpPost]
+        [Route("/Admin/ExportUsersToExcel")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult ExportUsersToExcel()
+        {
+            // Create a new Excel workbook
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+                //get a list of all users in database
+                var userList = _context.Users
+                        .FromSqlInterpolated($"select * from AspNetUsers")
+                        .ToList();
+
+                // Add a worksheet to the workbook
+                var worksheet = workbook.Worksheets.Add("Users");
+
+                // Set the column headers
+                
+                worksheet.Cell(1, 1).Value = "NID";     
+                worksheet.Cell(1, 2).Value = "Name";
+                worksheet.Cell(1, 3).Value = "PasswordHash";
+                worksheet.Cell(1, 4).Value = "Role";
+                worksheet.Cell(1, 5).Value = "Block";
+                worksheet.Cell(1, 6).Value = "Course";
+                worksheet.Cell(1, 7).Value = "Term";
+
+                // Set the row values
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    //NID == UserName == Email. They are all same. We are using UserName to retrive NID. 
+                    worksheet.Cell(i + 2, 1).Value = userList[i].UserName;       
+                    worksheet.Cell(i + 2, 2).Value = userList[i].Name;
+
+                    //PasswordHash left empty for security purposes. 
+                    worksheet.Cell(i + 2, 3).Value = "";
+                    worksheet.Cell(i + 2, 4).Value = userList[i].Role;
+                    worksheet.Cell(i + 2, 5).Value = userList[i].Block;
+                    worksheet.Cell(i + 2, 6).Value = userList[i].Course;
+                    worksheet.Cell(i + 2, 7).Value = userList[i].Term;
+
+
+                }
+
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Users.xlsx");
+            }
         }
+
+
 
         /*Located in ListAllQuizes.cshtml. Exports list of quizes and their metadata.
          This does not export InstructorID column for security purpose. 
@@ -691,7 +845,8 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 56).Value = "ImagePos7";
                 worksheet.Cell(1, 57).Value = "ImagePos8";
                 worksheet.Cell(1, 58).Value = "ImagePos9";
-                
+                worksheet.Cell(1, 59).Value = "InstructorID";
+
 
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
@@ -754,7 +909,9 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 56).Value = userList[i].ImagePos7;
                     worksheet.Cell(i + 2, 57).Value = userList[i].ImagePos8;
                     worksheet.Cell(i + 2, 58).Value = userList[i].ImagePos9;
+                    worksheet.Cell(i + 2, 59).Value = userList[i].InstructorID;
                     
+
 
                 }
 
