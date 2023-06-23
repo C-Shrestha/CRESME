@@ -60,6 +60,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" href="/swagger/index.html">SwaggerHub</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All CRESMES</a>
+                                </li>
                                 
 
                             }
@@ -85,9 +89,7 @@
 
                                 
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All CRESMES</a>
-                                </li>
+                                
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="TestAttempt">AttemptPDF</a>
@@ -98,7 +100,7 @@
                             @if (User.IsInRole("Instructor"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your Quizes</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your CRESMES</a>
                                 </li>
                                 
                             }

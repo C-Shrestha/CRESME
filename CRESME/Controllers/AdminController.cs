@@ -508,7 +508,11 @@ namespace CRESME.Controllers
 
         }
 
-        /*Located at "Your CRESMES" tab. Returns a list of CRESMES created by the current instructor. */
+
+        /*Located at "Your CRESMES" tab. Returns a list of CRESMES created by the current instructor or created for to the instructor by the Admin. 
+         In Database, an instuctor can have only one course. But in reality instuctor might teach many courses.
+         So, this fucntion checks CRESMES created by Admin for instuctor and also CRESMES created by instructors themselves.
+         */
         [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> InstructorQuizesView()
         {
@@ -517,11 +521,23 @@ namespace CRESME.Controllers
 
             var user = await _userManager.FindByIdAsync(currentUserId);
 
-            var quizes = _context.Quiz
+            // list of CRESMES created by the Admin + Instructor by CRESME name
+            //Here, some CRESMES might be created by Admin so will have Admin's InstructorID in Quiz. To find all CRESMES,
+            //we need to check for CRESMES created by instructors themselves also in second query on the bottom
+            var quizes1 = _context.Quiz
                         .FromSqlInterpolated($"select * from Quiz where Course = {user.Course}")
                         .ToList();
 
-            return View(quizes);
+            // list of CRESMES created by instructor themselves
+            var quizes2 = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where InstructorID = {user.Id}")
+                        .ToList();
+
+            // adding the two CRESMES together. Final list contains CRESMES created by both Admin and Instructor themselves. 
+            quizes1.AddRange(quizes2);
+
+
+            return View(quizes1.Distinct());
 
         }
 
@@ -599,7 +615,9 @@ namespace CRESME.Controllers
             }
         }
 
-        /*Located in ListAllQuizes.cshtml. Exports list of quizes and their metadata.*/
+        /*Located in ListAllQuizes.cshtml. Exports list of quizes and their metadata.
+         This does not export InstructorID column for security purpose. 
+         */
         [Authorize(Roles = "Admin, Instructor")]
         public IActionResult ExportQuizesToExcel()
         {
@@ -753,7 +771,7 @@ namespace CRESME.Controllers
         //POST:Details
         //Returns a list of attempts for a particular quiz.
         //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
-        //QuizName is required for Excel Generation in Quiz Details page. 
+        //QuizName is required for Excel Generation in Quiz Details page. So, we create a new attempt object with that quiz name and return it.  
         [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> QuizDetails(Quiz quiz)
         {
