@@ -10,7 +10,7 @@
 @if (TempData["AlertMessage"] != null)
 {
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+        <div class="toast bg-success" style="position: absolute; top: 0; right: 0; background-color:white;" data-delay="2000">
             <div class="toast-body">
                 @(TempData["AlertMessage"])
             </div>
@@ -19,7 +19,17 @@
 
 }
 
+@if (TempData["AlertMessageFail"] != null)
+{
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+        <div class="toast bg-danger" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="toast-body">
+                @(TempData["AlertMessageFail"])
+            </div>
+        </div>
+    </div>
 
+}
 
 
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
