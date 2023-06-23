@@ -55,6 +55,10 @@ namespace CRESME.Controllers
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) //closedxml update
         {
+
+            var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
+            quiz.InstructorID = CurrentInstructor.Id;
+
             //checkboxes only send output if they are checked(default is "on"), otherwise null
             if (Request.Form["Feedback"] == "1")
             {

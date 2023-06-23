@@ -12,6 +12,8 @@ namespace CRESME.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuizId { get; set; }
 
+        public string InstructorID { get; set; } = "";
+
         [Required]
         [BindProperty]
         public string QuizName { get; set; } = "";
