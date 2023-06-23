@@ -4,104 +4,97 @@
     ViewData["Title"] = "Create User";
 }
 
-<h1>CREATE</h1>
-
-<h4>Create New User</h4>
-<hr />
 
 
 
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Admin" asp-action="Create" method="post" onsubmit="return confirm('Are you sure you want to CREATE a new user?');">
+<form asp-controller="Admin" asp-action="Create" method="post" onsubmit="return confirm('Are you sure you want to CREATE a new user?');">
+    <div class="d-flex align-items-center min-vh-100">
+        <div class="container border bg-white rounded" style="width: 50%;">
+            <div class="row gx-5 justify-content-center gy-2">
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label for="UserName" class="control-label">NID</label>
-                <input asp-for="UserName" class="form-control" required autocomplete="off"/>
+                <div class="w-100"></div>
+                <h4 class="col-6 text-center" style="font-weight: bold;">Create User Form</h4>
+
+                <div class="w-100"></div>
+                <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
+
+                <div class="w-100"></div>
+                <input asp-for="UserName" class="col-4 input-field" placeholder="NID" required autocomplete="off" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
 
-            <br />
-
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" required autocomplete="off" />
+                <div class="w-100"></div>
+                <input asp-for="Name" class="col-4 input-field" placeholder="Name" required autocomplete="off" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
 
-            <br />   
 
-            <div class="form-group">
-                <label asp-for="Block" class="control-label"></label>
-                <input asp-for="Block" class="form-control" required autocomplete="off" />
+                <div class="w-100"></div>
+                <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" />
                 <span asp-validation-for="Block" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="Course" class="control-label"></label>
-                <input asp-for="Course" class="form-control" required autocomplete="off" />
+                <div class="w-100"></div>
+                <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" />
                 <span asp-validation-for="Course" class="text-danger"></span>
-            </div>
 
-            <br /> 
-
-            <div class="form-group">
-                <label asp-for="Term" class="control-label"></label>
-                <input asp-for="Term" class="form-control" required autocomplete="off" />
+                <div class="w-100"></div>
+                <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" />
                 <span asp-validation-for="Term" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label for="Password" class="control-label">Password</label>               
-                <input type="password" asp-for="PasswordHash" class="form-control" id="PasswordHash" name="PasswordHash" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{8,}$" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-
+                <div class="w-100"></div>
+                <input type="password" asp-for="PasswordHash" class="col-4 input-field" placeholder="Password" id="PasswordHash" name="PasswordHash" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@@$!%*?&])[A-Za-z\d@@$!%*?&]{8,}$" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
+             
+
+                <div id="message" class="col-6 password_container container border bg-white">
+                    <div class="row gx-5 justify-content-center gy-2">
+                        <div class="text-center col-10">Password must contain the following:</div>
+                        <div class="w-100"></div>
+                        <div id="letter" class="invalid text-center col-10">One <b>lowercase</b> letter</div>
+                        <div class="w-100"></div>
+                        <div id="capital" class="invalid text-center col-10">One <b>capital (uppercase)</b> letter</div>
+                        <div class="w-100"></div>
+                        <div id="number" class="invalid text-center col-10">One <b>number</b></div>
+                        <div class="w-100"></div>
+                        <div id="length" class="invalid text-center col-10">Minimum <b>8 characters</b></div>
+                        <div class="w-100"></div>
+                        <div id="special" class="invalid text-center col-10">One <b>special character(@@$!%*?&)</b></div>
+                        <div class="w-100"></div>
+                    </div>
+                </div>
+                <div class="w-100"></div>
+
+                <div class="col-4 text-center" style="font-weight: bold;">Role:</div>
+
+                <div class="form-check form-check-inline col-3">
+                    <input class="form-check-input" type="radio" asp-for="Role" value="Student" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Student
+                    </label>
+                </div>
+                <div class="form-check form-check-inline col-3">
+                    <input class="form-check-input" type="radio" asp-for="Role" value="Instructor">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Instructor
+                    </label>
+                </div>
+                <div class="w-100"></div>
+
+                   
+
+
+                <input type="submit" value="Submit" class="btn custom_btn col-5" id="buyNow" />
+                <div class="w-100"></div>
+
+
             </div>
-
-            <br />
-
-            <div id="message">
-                <h3>Password must contain the following:</h3>
-                <p id="letter" class="invalid">One <b>lowercase</b> letter</p>
-                <p id="capital" class="invalid">One <b>capital (uppercase)</b> letter</p>
-                <p id="number" class="invalid">One <b>number</b></p>
-                <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-                <p id="special" class="invalid">One <b>special character(@@$!%*?&)</b></p>
-            </div>
-
-            <br />
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" asp-for="Role" value="Student" checked>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Student
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" asp-for="Role" value="Instructor">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Instructor
-                </label>
-            </div>
-
-            <br />
-
-
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" id="buyNow" />
-            </div>
-            <br />
-
-        </form>
+        </div>
     </div>
-</div>
+</form>
+
 
 <div>
     <a asp-action="ListUsers">Back to List</a>
@@ -135,17 +128,14 @@
     /* The message box is shown when the user clicks on the password field */
     #message {
       display:none;
-      background: #f1f1f1;
+      background-color: white;
+      border-color: #F1C400 ;
       color: #000;
       position: relative;
       padding: 20px;
       margin-top: 10px;
     }
 
-    #message p {
-      padding: 10px 35px;
-      font-size: 18px;
-    }
 
     /* Add a green text color and a checkmark when the requirements are right */
     .valid {
@@ -154,7 +144,6 @@
 
     .valid:before {
       position: relative;
-      left: -35px;
       content: "✔";
     }
 
@@ -165,10 +154,30 @@
 
     .invalid:before {
       position: relative;
-      left: -35px;
       content: "✖";
 
     } 
+
+    .password_container{
+        border-color: black !important;
+    }
+
+    .container:not(.password_container) {
+        border-color: #F1C400 !important;
+        border-radius: 20px !important;
+    }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+
+    .input-field {
+        border-color: #F1C400;
+    }
+
+
 
 
 </style>

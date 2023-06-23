@@ -57,7 +57,9 @@ namespace CRESME.Controllers
         {
 
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
-            quiz.InstructorID = CurrentInstructor.Id;
+
+            // NID == UserName == Email in Database.
+            quiz.InstructorID = CurrentInstructor.UserName;
 
             //checkboxes only send output if they are checked(default is "on"), otherwise null
             if (Request.Form["Feedback"] == "1")
