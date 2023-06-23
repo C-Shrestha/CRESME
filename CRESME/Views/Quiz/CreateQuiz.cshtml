@@ -9,15 +9,16 @@
 
 @if (TempData["AlertMessage"] != null)
 {
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
-            <div class="toast-body">
+    <div class = "alert" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
+        <div class="alert toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
+            <div class="alert toast-body">
                 @(TempData["AlertMessage"])
             </div>
         </div>
     </div>
 
 }
+
 
 
 
@@ -41,9 +42,9 @@
                 <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Patient Intro" required>
                 <div class="w-100"></div>
 
-                <input type="datetime-local" class="col-5" id="startDate" name="StartDate" runat="server" required>
-                <div class="col-1">-</div>
-                <input type="datetime-local" class="col-5" id="endDate" name="EndDate" runat="server" required>
+                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required>
+                <div class="col-1 text-center">-</div>
+                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required>
                 <div class="w-100"></div>
 
                 <div class="col-2" style="font-weight: bold;">Publish</div>
@@ -66,7 +67,13 @@
                 </div>
                 <div class="w-100"></div>
 
+                <div class="col-10" style="height: 2px; background-color: black"></div>
+                <div class="w-100"></div>
+
                 <button type="button" id="imageButton" class="col-4 btn btn-link" onclick="addImage()">+Image to Table Cell</button>
+                <div class="w-100"></div>
+
+                <div class="col-10" style="height: 2px; background-color: black"></div>
                 <div class="w-100"></div>
 
                 <div class="col-4 text-center" style="font-weight: bold;">Upload Legend Image</div>
@@ -88,9 +95,12 @@
                 </label>
                 <div class="w-100"></div>
 
+                <div class="col-4 text-center" style="font-weight: bold;">Term</div>
+                <div class="col-4 text-center" style="font-weight: bold;">Block</div>
+                <div class="col-4 text-center" style="font-weight: bold;">Courses</div>
+
                 <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    <option value="none" selected>Term</option>
-                    <option value="none">N\A</option>
+                    <option value="none " selected>N\A</option>
                     @foreach (var term in UniqueTerms)
                     {
                         <option value=@term>@term</option>
@@ -99,8 +109,7 @@
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="none" selected>Block</option>
-                    <option value="none">N\A</option>
+                    <option value="none " selected>N\A</option>
                     <option value="B1">1</option>
                     <option value="B2">2</option>
                     <option value="B3">3</option>
@@ -117,8 +126,7 @@
                 <div class="col-1"></div>
 
                 <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    <option value="none" selected>Courses</option>
-                    <option value="none">N\A</option>
+                    <option value="none" selected>N\A</option>
                     @foreach (var course in UniqueCourses)
                     {
                         <option value=@course>@course</option>
@@ -126,7 +134,7 @@
                 </select>
                 <div class="w-100"></div>
 
-                <button type="submit" class="btn custom_btn col-5">Create CRESME</button>
+                <button onclick="validate(); deleteAlert();" type="submit" class="btn custom_btn col-5">Create CRESME</button>
                 <div class="w-100"></div>
 
             </div>
@@ -137,6 +145,7 @@
 
 
 <style>
+
     .container {
         border-color: #F1C400 !important;
         border-radius: 20px !important;
@@ -153,7 +162,7 @@
     }
 
     .input-field {
-        border-color: black;
+        border-color: #F1C400;
     }
 
     label {
@@ -170,9 +179,86 @@
 <script>
 
     var i = 0;
+    var fileButton = document.getElementById("excelButton");
+    var legendButton = document.getElementById("Legend");
 
 
 
+
+    function deleteAlert() {
+        const toastAlert = document.getElementsByClassName('alert');
+        if (toastAlert.length) {
+            setTimeout(() => {
+                toastAlert[0].remove();
+                toastAlert[1].remove();
+                toastAlert[2].remove();
+            }, 3000);
+        }
+
+    }
+
+    
+    function validate(){
+
+        if(legendButton.value == "")
+        {
+            
+            var div1 = document.createElement("div");
+            div1.setAttribute("aria-live", 'polite');
+            div1.setAttribute("aria-atomic", 'true');
+            div1.setAttribute("class", 'alert');
+            div1.style.position = "relative";
+            div1.style.minHeight = "0px";
+
+            var div2 = document.createElement("div");
+            div2.setAttribute("class", 'toast bg-success');
+            div2.style.position = "absolute";
+            div2.style.display = "initial";
+            div2.style.top = "0";
+            div2.style.right = "0";
+            div2.setAttribute("data-delay", '2000');
+
+            var div3 = document.createElement("div");
+            div3.style.display = "block";
+            div3.setAttribute("class", 'toast-body');
+            div3.innerHTML = "Please Upload Legend Image!";
+
+            var form = document.getElementById("Form1");
+
+            form.before(div1);
+            div1.appendChild(div2);
+            div2.appendChild(div3);
+        }
+        else if (fileButton.value == "") {
+
+            var div1 = document.createElement("div");
+            div1.setAttribute("aria-live", 'polite');
+            div1.setAttribute("aria-atomic", 'true');
+            div1.setAttribute("class", 'alert');
+            div1.style.position = "relative";
+            div1.style.minHeight = "0px";
+
+            var div2 = document.createElement("div");
+            div2.setAttribute("class", 'toast bg-success');
+            div2.style.position = "absolute";
+            div2.style.display = "initial";
+            div2.style.top = "0";
+            div2.style.right = "0";
+            div2.setAttribute("data-delay", '2000');
+
+            var div3 = document.createElement("div");
+            div3.style.display = "block";
+            div3.setAttribute("class", 'toast-body');
+            div3.innerHTML = "Please Upload Excel File!";
+
+            var form = document.getElementById("Form1");
+
+            form.before(div1);
+            div1.appendChild(div2);
+            div2.appendChild(div3);
+
+        }
+    }
     function deleteButton(k) {
         var deleteButton = document.getElementById(k);
         var inputButton = document.getElementById('imageFile' + k);
@@ -358,8 +444,6 @@
         }
     }
 
-    var fileButton = document.getElementById("excelButton");
-    var legendButton = document.getElementById("Legend");
 
 
     legendButton.onchange = function () {

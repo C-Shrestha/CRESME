@@ -4,57 +4,77 @@
     ViewData["Title"] = "Edit User";
 }
 
-<h1>Edit</h1>
-
-<h4>Edit Users</h4>
-<hr />
 
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Admin" asp-action="Update" method="post" onsubmit="return confirm('Are you sure you want to EDIT this user data?');">
+ <form asp-controller="Admin" asp-action="Update" method="post" onsubmit="return confirm('Are you sure you want to EDIT this user data?');">
+    <div class="d-flex align-items-center min-vh-100">
+        <div class="container border bg-white rounded" style="width: 50%;">
+            <div class="row gx-5 justify-content-center gy-2">
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" required autocomplete="off" />
+                <div class="w-100"></div>
+                <h4 class="col-6 text-center" style="font-weight: bold;">Edit User Form</h4>
+
+                <div class="w-100"></div>
+                <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
+
+                <div class="w-100"></div>
+                <input asp-for="UserName" class="col-4 input-field" placeholder="NID" required autocomplete="off" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" required autocomplete="off" />
+                <div class="w-100"></div>
+                <input asp-for="Name" class="col-4 input-field" placeholder="Name" required autocomplete="off" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Block" class="control-label"></label>
-                <input asp-for="Block" class="form-control" required autocomplete="off" />
+
+                <div class="w-100"></div>
+                <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" />
                 <span asp-validation-for="Block" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Course" class="control-label"></label>
-                <input asp-for="Course" class="form-control" required autocomplete="off" />
+
+                <div class="w-100"></div>
+                <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" />
                 <span asp-validation-for="Course" class="text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <label asp-for="Term" class="control-label"></label>
-                <input asp-for="Term" class="form-control" required autocomplete="off" />
+
+                <div class="w-100"></div>
+                <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" />
                 <span asp-validation-for="Term" class="text-danger"></span>
+
+                <div class="w-100"></div>
+                <input type="hidden" asp-for="Id" />
+
+
+                <input type="submit" value="Submit" class="btn custom_btn col-5"  />
+                <div class="w-100"></div>
+
             </div>
-
-            <input type="hidden" asp-for="Id" />
-
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-
-        </form>
+        </div>
     </div>
-</div>
+</form>
+
+
+
+<style>
+
+    .container {
+        border-color: #F1C400 !important;
+        border-radius: 20px !important;
+    }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+    .input-field {
+        border-color: #F1C400;
+    }
+
+
+</style>
+
 
 <div>
     <a asp-action="ListUsers">Back to List</a>
