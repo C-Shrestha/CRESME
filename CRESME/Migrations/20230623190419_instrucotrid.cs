@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class newmigration1 : Migration
+    public partial class instrucotrid : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -111,6 +111,7 @@ namespace CRESME.Migrations
                 {
                     QuizId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    InstructorID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuizName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumColumns = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),

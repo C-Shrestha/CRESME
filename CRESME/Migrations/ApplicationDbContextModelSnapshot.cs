@@ -409,6 +409,10 @@ namespace CRESME.Migrations
                     b.Property<string>("ImagePos9")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InstructorID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Legend")
                         .HasColumnType("nvarchar(max)");
 

@@ -42,9 +42,6 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<object data="/images/USMLE_Lab_Reference_Values.pdf" type="application/pdf" width="100%" height="500px">
-
-
 <div class="container-fluid border m-3 w-auto mw-50" style="height:670px;">
     <div class="text-center">
         @if (Model.Image0 != null && (Model.ImagePos0 == "1"))
@@ -562,7 +559,7 @@
                     <input type="hidden" name="column4" value=@column4 runat="server" required>
                     <input type="hidden" name="column5" value=@column5 runat="server" required>
 
-                    <input type="hidden" name="StartTime" value=@StartDate>
+                    <input type="hidden" name="StartTime" value="@StartDate">
                     
                     <input type="hidden" name="QuizStringID" value=@Model.QuizId>                   
                     <button type="button" class="btn btn-primary" onclick="myFunction()">Switch Colors</button>
