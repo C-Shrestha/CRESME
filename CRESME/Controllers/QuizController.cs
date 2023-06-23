@@ -81,7 +81,13 @@ namespace CRESME.Controllers
             }
 
             quiz.DateCreated = DateTime.Now;
-         
+            if (quiz.EndDate < quiz.StartDate)
+            {
+                TempData["AlertMessageFail"] = "Start time cannot be after End time.";
+
+                return View("CreateQuiz", _context.Users.ToList());
+            }
+
             //Reading Excel File upload for quiz info
             if (Request.Form.Files["ExcelFileUpload"] != null)
             {
@@ -258,6 +264,7 @@ namespace CRESME.Controllers
             {
                 _context.Add(quiz);
                 _context.SaveChanges();
+                TempData["AlertMessage"] = "CRESME created sucessfully!";
                 //ViewBag.Result = "Successfully created CRESME.";
             }
             else {
@@ -265,7 +272,6 @@ namespace CRESME.Controllers
             }
 
 
-            TempData["AlertMessage"] = "CRESME created sucessfully!";
 
             return View("CreateQuiz", _context.Users.ToList());
         }

@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NuGet.DependencyResolver;
 using System.Security.Claims;
+using System.Globalization;
 
 namespace CRESME.Controllers
 {
@@ -42,8 +43,8 @@ namespace CRESME.Controllers
             List<string> DiagnosisAnswerKey3 = new List<string>();
             List<string> DiagnosisAnswerKey4 = new List<string>();
             List<string> DiagnosisAnswerKey5 = new List<string>();
+            
 
-            attempt.StartTime = DateTime.Parse(Request.Form["StartTime"]);
             attempt.EndTime = DateTime.Now;
             
             attempt.QuizID = Int32.Parse(Request.Form["QuizStringID"]);
