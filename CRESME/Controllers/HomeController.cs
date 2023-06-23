@@ -15,8 +15,8 @@ namespace CRESME.Controllers
 
         public IActionResult Index()
         {
-            //return View();
-            return RedirectToPage("/Account/Login", new { area = "Identity" });
+
+            return View();
         }
 
         /*public IActionResult Privacy()
