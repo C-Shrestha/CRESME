@@ -15,6 +15,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
+using System.Security.Policy;
 
 namespace CRESME.Controllers
 {
@@ -1336,7 +1337,14 @@ namespace CRESME.Controllers
 
         }
 
-        /*Located in AssignedQuizes.cshtml. Returns a list of quizes assigned to a particular student.*/
+
+
+
+
+
+        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
+         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
+         */
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> AssignedQuizes()
         {
@@ -1344,36 +1352,52 @@ namespace CRESME.Controllers
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
 
-            List<Quiz> quizes = new List<Quiz>(); 
+            List<Quiz> quizes = new List<Quiz>();
+            List<Quiz> temp = new List<Quiz>();
 
-            // list of quizes assinged to the user
+            // list of CRESMES assinged to the user that are NOT practice CRESMES
             var assignedQuizes = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term} and FeedBackEnabled = {"No"}")
                         .ToList();
 
-            // list of quizes already taken by the user
+            // list of ATTEMPTS already taken by the user. This is a list of Attempt object, not Quiz object 
             var TakenQuizes = _context.Attempt
                         .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
                         .ToList();
 
-            // check if the studnet has any assigned quizes, if not return empty object
+
+
+
+
+            // check if the studnet has no assigned CRESMES, return empty object
             if ( assignedQuizes.Count() == 0 ) {
                 return View(quizes); 
             }
             else
             {
-                // check if the student already done any quizes, if not return all the quizes assinged to the student
+                // check if the student already done any CRESMES, if not return all the CRESMES assinged to the student
                 if ( TakenQuizes.Count() == 0)
                 {
-                    return View(assignedQuizes); 
+                    // check if quiz has Published = "Yes", show to students.
+                    foreach (var quiz in assignedQuizes)
+                    {
+                        if (quiz.Published == "Yes")
+                        {
+                            temp.Add(quiz); 
+                        }
+
+                    }
+                    
+                    return View(temp.Distinct()); 
                 }
 
                 else
                 {
-                    // loop and find the quizes done by the student. Then return the quizes yet to be completed. 
+                    // loop and find the CRESMES done by the student by comparing CRESMES and attempts.
+                    // Then return the CRESMES yet to be completed. 
                     foreach (var quiz1 in assignedQuizes)
                     {
-                        foreach(var quiz2 in TakenQuizes)
+                        foreach (var quiz2 in TakenQuizes)
                         {
                             if (quiz1.QuizId != quiz2.QuizID)
                             {
@@ -1384,20 +1408,32 @@ namespace CRESME.Controllers
                                 continue;
                             }
                         }
-                        
+
                     }
 
                     //getting only distinct objects in list 
                     quizes = quizes.Distinct().ToList();
 
-                    //if no quizes, return empty object, else retun quizes assinged, but not completed.
-                    if(quizes.Count() == 0)
+
+
+                    //if no CRESMES, return empty object, else retun CRESMES assinged, but not completed.
+                    if (quizes.Count() == 0)
                     {
                         return View(new List<Quiz>());
                     }
                     else
                     {
-                        return View(quizes);
+                        // check if CRESME has Published = "Yes", show to students.
+                        foreach (var quiz in quizes)
+                        {
+                            if (quiz.Published == "Yes")
+                            {
+                                temp.Add(quiz);
+                            }
+
+                        }
+                        
+                        return View(temp.Distinct());
                     }
 
                     
@@ -1407,11 +1443,33 @@ namespace CRESME.Controllers
         }
 
 
+
+        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PracticeQuizes()
+        {
+          
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            // list of practice CRESME assinged to the student
+            var feedbackQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
+                        .ToList();
+
+            return View(feedbackQuizes);
+
+
+
+        }
+
+
         /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*/
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> PastQuizes()
         {
-            //get the current studnets object
+            /*//get the current studnets object
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
 
@@ -1476,6 +1534,22 @@ namespace CRESME.Controllers
                 }
             }
 
+
+            */
+
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            return View(TakenQuizes); 
+
+
+
         }
 
 
@@ -1484,7 +1558,7 @@ namespace CRESME.Controllers
          Function is same as ListAllQuizs Function.
          Difference is in the View Page, the Quizees are only viewable, not editable. 
          */
-        [Authorize(Roles = "Admin, Instructor")]
+            [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> AllCresmeInstructors()
         {
             return _context.Users != null ?

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<CRESME.Data.Quiz>
 
 @{
-    ViewData["Title"] = "Student View";
+    ViewData["Title"] = "Practice CRESME";
 }
 
 
 <br />
 
-<h1>Assigned CRESME</h1>
+<h1>Practice CRESME</h1>
 
 
 <br />
@@ -45,6 +45,13 @@
                 <th>
                     @Html.DisplayNameFor(model => model.EndDate)
                 </th>
+
+               
+
+                <th>
+                    Practice
+                </th>
+
 
 
                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
@@ -89,8 +96,19 @@
                         @Html.DisplayFor(modelItem => item.EndDate)
                     </td>
 
-                   
-                   
+                    
+
+                    <td>
+
+                        @if (item.FeedBackEnabled == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
 
 
                     <td>
