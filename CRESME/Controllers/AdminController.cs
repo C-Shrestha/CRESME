@@ -398,7 +398,7 @@ namespace CRESME.Controllers
 
 
         /*Returns all the quizes in the database.*/
-        [Authorize(Roles = "Admin, Instructor")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ListAllQuizes()
         {
             return _context.Users != null ?
@@ -1477,6 +1477,221 @@ namespace CRESME.Controllers
             }
 
         }
+
+
+        /*Located in nav-link "ALL CRESMES"
+         * Returns all the quizes in the database.
+         Function is same as ListAllQuizs Function.
+         Difference is in the View Page, the Quizees are only viewable, not editable. 
+         */
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> AllCresmeInstructors()
+        {
+            return _context.Users != null ?
+
+                        View(await _context.Quiz.ToListAsync()) :
+
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
+
+
+        //POST:Details
+        //Located in InstructorQuizView Page. 
+        //Returns a list of attempts for a particular quiz.
+        //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
+        //QuizName is required for Excel Generation in Quiz Details page. So, we create a new attempt object with that quiz name and return it.  
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> InstructorQuizDetails(Quiz quiz)
+        {
+
+            var quizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where QuizName = {quiz.QuizName}")
+                        .ToList();
+
+            //if no studnet has taken the quiz yet, return a list of Attempts with QuizName for QuizDetails page
+            if (quizes.Count() == 0)
+            {
+                List<Attempt> temp = new List<Attempt>();
+                Attempt attempt = new Attempt();
+                attempt.QuizName = quiz.QuizName;
+                temp.Add(attempt);
+                return View(temp);
+            }
+
+            return View(quizes.ToList());
+
+        }
+
+
+
+        /*Located in ListAllQuizes.cshtml.Rerurns a view to edit a CRESME.*/
+        [Authorize(Roles = "Admin, Instructor")]
+        public IActionResult InstructorEditQuiz(int QuizId)
+        {
+
+            return View(_context.Quiz.Find(QuizId));
+
+        }
+
+        /*Located in EditQuiz.cshtml. Updates a CRESME*/
+        [HttpPost]    
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
+        {
+
+            // find the quiz to be updated
+            var quiz = await _context.Quiz.FindAsync(QuizId);
+
+            //update based on the new values
+            if (quiz != null)
+            {
+                quiz.QuizName = QuizName;
+                quiz.Block = Block;
+                quiz.Course = Course;
+                quiz.Term = Term;
+                quiz.DateCreated = DateCreated;
+                quiz.StartDate = StartDate;
+                quiz.EndDate = EndDate;
+
+                _context.SaveChanges();
+                TempData["AlertMessage"] = "CRESME updated sucessfully!";
+                return RedirectToAction("InstructorQuizesView");
+
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+
+            return RedirectToAction("InstructorQuizesView");
+        }
+
+
+
+        /*Located in InstructorQuizView.cshtml. Delete a CRESME*/
+        [HttpPost]
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> InstructorDeleteQuiz(int QuizId)
+        {
+
+            var quiz = _context.Quiz.Find(QuizId);
+
+
+            if (quiz != null)
+            {
+                //deletes images 0 - 9 and legend image for each quiz if they are not null
+                string path;
+                FileInfo imagefile;
+                if (quiz.Legend != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image0 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image1 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image2 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image3 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image4 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image5 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image6 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image7 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image8 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image9 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+
+
+                _context.Remove(quiz);
+                _context.SaveChanges();
+                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
+                return RedirectToAction("InstructorQuizesView");
+
+            }
+
+
+            return RedirectToAction("InstructorQuizesView");
+        }
+
 
 
 
