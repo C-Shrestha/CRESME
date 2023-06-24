@@ -188,11 +188,26 @@ namespace CRESME.Controllers
                     }
                 }
             }
-
+            
             //  UNSHUFFLING COLUMNS
-            //WIP
+            string[] OriginalAttemptAnswers = { attempt.PhysicalAnswerA, attempt.PhysicalAnswerB, attempt.PhysicalAnswerC, attempt.PhysicalAnswerD, attempt.PhysicalAnswerE,
+                                                attempt.DiagnosticAnswerA, attempt.DiagnosticAnswerB, attempt.DiagnosticAnswerC, attempt.DiagnosticAnswerD, attempt.DiagnosticAnswerE,
+                                                attempt.FreeResponseA, attempt.FreeResponseB, attempt.FreeResponseC, attempt.FreeResponseD, attempt.FreeResponseE};
+            //COLUMN ONE
+            (attempt.PhysicalAnswerA, attempt.DiagnosticAnswerA, attempt.FreeResponseA) = UnshuffleColumn("1", OriginalAttemptAnswers);
+            //COLUMN TWO
+            (attempt.PhysicalAnswerB, attempt.DiagnosticAnswerB, attempt.FreeResponseB) = UnshuffleColumn("2", OriginalAttemptAnswers);
+            //COLUMN THREE
+            (attempt.PhysicalAnswerC, attempt.DiagnosticAnswerC, attempt.FreeResponseC) = UnshuffleColumn("3", OriginalAttemptAnswers);
+            //COLUMN FOUR
+            (attempt.PhysicalAnswerD, attempt.DiagnosticAnswerD, attempt.FreeResponseD) = UnshuffleColumn("4", OriginalAttemptAnswers);
+            //COLUMN FIVE
+            if (ParentQuiz.NumColumns == 5)
+            {
+                (attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.FreeResponseE) = UnshuffleColumn("5", OriginalAttemptAnswers);
+            }
 
-
+            
 
             //student info
             var CurrentStudent = _context.Users.SingleOrDefault( user => user.UserName == User.Identity.Name);
@@ -212,8 +227,8 @@ namespace CRESME.Controllers
 
 
 
-        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, ref string PhysicalAnswer, ref string DiagnosticAnswer, ref List<string> DiagnosisAnswerKey) {
-            
+        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, ref string PhysicalAnswer, ref string DiagnosticAnswer, ref List<string> DiagnosisAnswerKey)
+        {     
             if (Request.Form[columnID] == "1")
             {
                 PhysicalAnswer = "1";
@@ -260,10 +275,36 @@ namespace CRESME.Controllers
             }
         }
 
+        (string, string, string) UnshuffleColumn(string ColumnID, string[] attemptAnswers) {
+            if (Request.Form["Column1"] == ColumnID)
+            {
+                return (attemptAnswers[0], attemptAnswers[5], attemptAnswers[10]);
+            }
+            else if (Request.Form["Column2"] == ColumnID)
+            {
+                return (attemptAnswers[1], attemptAnswers[6], attemptAnswers[11]);
+            }
+            else if (Request.Form["Column3"] == ColumnID)
+            {
+                return (attemptAnswers[2], attemptAnswers[7], attemptAnswers[12]);
+            }
+            else if (Request.Form["Column4"] == ColumnID)
+            {
+                return (attemptAnswers[3], attemptAnswers[8], attemptAnswers[13]);
+            }
+            else if (Request.Form["Column5"] == ColumnID)
+            {
+                return (attemptAnswers[4], attemptAnswers[9], attemptAnswers[14]);
+            }
+            else {
+                throw new Exception("Unshuffling column error");
+                return ("column error","column error","column error");
+            }
+        }
 
 
 
 
-        
+
     }
 }
