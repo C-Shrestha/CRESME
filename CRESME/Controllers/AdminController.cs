@@ -1626,7 +1626,7 @@ namespace CRESME.Controllers
         /*Located in EditQuiz.cshtml. Updates a CRESME*/
         [HttpPost]    
         [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
+        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate, string PatientIntro, string Published, string FeedBackEnabled)
         {
 
             // find the quiz to be updated
@@ -1642,6 +1642,28 @@ namespace CRESME.Controllers
                 quiz.DateCreated = DateCreated;
                 quiz.StartDate = StartDate;
                 quiz.EndDate = EndDate;
+                quiz.PatientIntro = PatientIntro;
+
+                //checkboxes is checked and changed to correct format for database entry
+                if (FeedBackEnabled == "1")
+                {
+                    quiz.FeedBackEnabled = "Yes";
+                }
+                else
+                {
+                    quiz.FeedBackEnabled = "No";
+                }
+
+                if (Published == "1")
+                {
+                    quiz.Published = "Yes";
+                }
+                else
+                {
+                    quiz.Published = "No";
+                }
+
+
 
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "CRESME updated sucessfully!";
