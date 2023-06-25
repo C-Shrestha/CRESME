@@ -73,7 +73,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz"> Create CRESME</a>
                                 </li>
-
+                                
 
                                 @*<li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="Grades">PDF</a>
@@ -98,6 +98,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your CRESMES</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllCresmeInstructors">All CRESMES</a>
+                                </li>
                                 
                             }
 
@@ -106,11 +110,14 @@
                             @if (User.IsInRole("Student"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AssignedQuizes">Assigned Quizes</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AssignedQuizes">Assigned CRESMES</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="PastQuizes">Past Quizes</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="PastQuizes">Past CRESMES</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="PracticeQuizes">Practice CRESMES</a>
                                 </li>
 
 

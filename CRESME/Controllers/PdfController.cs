@@ -158,7 +158,7 @@ namespace CRESME.Controllers
         /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
          * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
          * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
-        [Authorize(Roles = "Admin, Instructor")]
+        [Authorize(Roles = "Admin, Instructor, Student")]
         public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
         {
 
