@@ -1631,6 +1631,9 @@ namespace CRESME.Controllers
 
             // find the quiz to be updated
             var quiz = await _context.Quiz.FindAsync(QuizId);
+            //find current user
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
 
             //update based on the new values
             if (quiz != null)
@@ -1667,13 +1670,32 @@ namespace CRESME.Controllers
 
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "CRESME updated sucessfully!";
-                return RedirectToAction("InstructorQuizesView");
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
+                else
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
+                
 
             }
             else
-                ModelState.AddModelError("", "User Not Found");
+            {
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
+                else
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
 
-            return RedirectToAction("InstructorQuizesView");
+            }
+                
+
+            
         }
 
 
