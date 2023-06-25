@@ -1352,6 +1352,23 @@ namespace CRESME.Controllers
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
 
+            //var NID = user.NID
+
+            // find all users with this NID 
+            /*
+             
+             user1 B1 C1
+            user2 B2 C2
+             
+            data1 = select * from Quiz where B1 C1 term
+            data2 = select * from Quiz where B2 C2 term
+            
+            var finalList = data1.AddRange(data2);
+
+             */
+
+
+
             List<Quiz> quizes = new List<Quiz>();
             List<Quiz> temp = new List<Quiz>();
 
@@ -1453,7 +1470,7 @@ namespace CRESME.Controllers
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
 
-            // list of practice CRESME assinged to the student
+            // list of practice CRESME assinged to the student that are published and feedback is enabled.
             var feedbackQuizes = _context.Quiz
                         .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
                         .ToList();
