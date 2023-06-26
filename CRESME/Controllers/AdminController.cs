@@ -2,6 +2,9 @@
 using CRESME.Constants;
 using CRESME.Data;
 using CRESME.Models;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 /*using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Packaging;
@@ -13,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Net;
 /*using System.Reflection.Metadata.Ecma335;*/
 using System.Security.Claims;
 /*using System.Security.Policy;*/
@@ -347,13 +351,33 @@ namespace CRESME.Controllers
         }
 
 
-        /*Located in ListUsers.cshtml. Deletes a user based on the passsed ID*/
+        /*Deletes a user based on the passsed ID*/
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
+            // find the user object in Database
             var user = await _userManager.FindByIdAsync(id);
+            
+
             if (user != null)
             {
+                if (user.Role == "Instructor")
+                {
+                    //find users NID == Username
+                    var nid = user.UserName;
+
+                    // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                    var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                    foreach (var row in matchingRows)
+                    {
+                        row.InstructorID = "";
+                    }
+
+                    _context.SaveChanges();
+
+
+                }
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
@@ -369,6 +393,8 @@ namespace CRESME.Controllers
 
             return RedirectToAction("CreateAccounts");
         }
+
+
 
         /*Located in ListUsers.cshtml. Deletes all Users in the database except for the Admin.*/
         [HttpPost]
@@ -1179,8 +1205,31 @@ namespace CRESME.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermInstructors(ApplicationUser user)
         {
-
+            
             var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
+
+
+            var term = user.Term;
+            var matchingUsers = _context.Users.Where(user => user.Term == term);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+                
+            }
+            
+            //remove users
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
@@ -1230,6 +1279,30 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
+
+            var block = user.Block;
+            var matchingUsers = _context.Users.Where(user => user.Block == block);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+
+            }
+
+
+
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
@@ -1306,6 +1379,7 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Student in the course deleted!";
@@ -1329,6 +1403,27 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
+
+            var course = user.Course;
+            var matchingUsers = _context.Users.Where(user => user.Course == course);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+
+            }
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the course deleted!";
