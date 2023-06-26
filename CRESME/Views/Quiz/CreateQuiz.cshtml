@@ -6,7 +6,7 @@
     IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
 }
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
-    <div class="d-flex align-items-center min-vh-100">
+    <div class="d-flex align-items-center">
         <div class="container  border p-3 mb-5 bg-white rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
