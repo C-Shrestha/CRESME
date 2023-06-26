@@ -1,5 +1,8 @@
 ﻿using CRESME.Data;
 using CRESME.Models;
+using iText.Html2pdf;
+using iText.Html2pdf.Attach.Impl.Tags;
+using iText.Kernel.Pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -158,7 +161,7 @@ namespace CRESME.Controllers
         /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
          * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
          * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
-        [Authorize(Roles = "Admin, Instructor, Student")]
+        /*[Authorize(Roles = "Admin, Instructor, Student")]
         public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
         {
 
@@ -203,7 +206,111 @@ namespace CRESME.Controllers
 
 
             }
+        }*/
+
+
+        /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
+         * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
+         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
+
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public  async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
+        {
+
+            using (var stringWriter = new StringWriter())
+            {
+                // finds the view, PrintAttempt.cshtml, that will be used to generate PDF. 
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, "PrintAttempt", false);
+                if (viewResult == null)
+                {
+                    throw new ArgumentException("View Cannot be Found");
+
+                }
+                var model = attempt;
+
+                // Dictionary is created with the Attempt model data added to the view
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                { Model = model };
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    viewDictionary,
+                    TempData,
+                    stringWriter,
+                    new HtmlHelperOptions()
+                    );
+
+                await viewResult.View.RenderAsync(viewContext);
+
+                
+                /*// convert PDF to HTML
+                var htmlToPdf = new HtmlToPdf(1000, 1414);
+                htmlToPdf.Options.DrawBackground = true;
+
+                var pdf = htmlToPdf.ConvertHtmlString(stringWriter.ToString());*/
+
+                FileStream pdfStream =  null;
+                string html = stringWriter.ToString();
+                ConverterProperties converterProperties = new ConverterProperties();
+
+                HtmlConverter.ConvertToPdf(html, pdfStream, converterProperties);
+
+
+                var pdfBytes = ConvertStreamToBytes(pdfStream);
+
+                string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
+
+                // return PDF for as download file
+                return File(pdfBytes, "application/pdf", filename);
+
+
+            }
+
+           
+
+
+
+
+
         }
+
+        public byte[] ConvertStreamToBytes(FileStream stream)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
+
+
+
+
+        /*public static void converter()
+        {
+            using (FileStream htmlSource = File.Open("input.html"))
+            using (FileStream pdfDest = File.Open("output.pdf", FileMode.Create))
+            {
+                ConverterProperties converterProperties = new ConverterProperties();
+                HtmlConverter.ConvertToPdf(htmlSource, pdfDest, converterProperties);
+            }
+        }*/
+
+        public void ConvertHtmlToPdf(string htmlContent, string outputPath)
+        {
+            using (FileStream outputStream = new FileStream(outputPath, FileMode.Create))
+            {
+                HtmlConverter.ConvertToPdf(htmlContent, outputStream);
+            }
+        }
+
+        
+
+
+
+
+
 
 
 
