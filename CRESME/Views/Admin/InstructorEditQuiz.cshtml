@@ -18,30 +18,37 @@
                 <div class="w-100"></div>
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
-
+                <div class="col-6 text-center" style="font-weight: bold;">Name</div>
+            
                 <div class="w-100"></div>
                 <input asp-for="QuizName" class="col-4 input-field" placeholder="CRESME Name" required autocomplete="off" />
                 <span asp-validation-for="QuizName" class="text-danger"></span>
 
 
+                <div class="col-6 text-center" style="font-weight: bold;">Patient Introduction</div>
+                <div class="w-100"></div>
+                <input asp-for="PatientIntro" class="col-4 input-field" placeholder="Patient Introduction" required autocomplete="off" />
+                <span asp-validation-for="PatientIntro" class="text-danger"></span>
 
+
+                <div class="col-6 text-center" style="font-weight: bold;">Block</div>
                 <div class="w-100"></div>
                 <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" />
                 <span asp-validation-for="Block" class="text-danger"></span>
 
 
-
+                <div class="col-6 text-center" style="font-weight: bold;">Course</div>
                 <div class="w-100"></div>
                 <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" />
                 <span asp-validation-for="Course" class="text-danger"></span>
 
-
+                <div class="col-6 text-center" style="font-weight: bold;">Term</div>
                 <div class="w-100"></div>
                 <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" />
                 <span asp-validation-for="Term" class="text-danger"></span>
 
 
-                <div class="col-6 text-center" style="font-weight: bold;">Date Created:</div>
+                <div class="col-6 text-center" style="font-weight: bold;">Date Created</div>
                 <div class="w-100"></div>
 
                 <div class="w-100"></div>
@@ -50,7 +57,7 @@
 
 
                 <div class="w-100"></div>
-                <div class="col-6 text-center" style="font-weight: bold;">Start Date:</div>
+                <div class="col-6 text-center" style="font-weight: bold;">Start Date</div>
                 
 
                 <div class="w-100"></div>
@@ -59,12 +66,44 @@
 
 
                 <div class="w-100"></div>
-                <div class="col-6 text-center" style="font-weight: bold;">End Date:</div>
+                <div class="col-6 text-center" style="font-weight: bold;">End Date</div>
 
                 <div class="w-100"></div>
                 <input asp-for="EndDate" type="datetime-local"  class="col-5 input-field" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
 
+
+
+                @if (Model.Published == "Yes")
+                {
+                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <input class="col-1" type="checkbox" id="Published" name="Published" value="1" checked>
+                    <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <input class="col-1" type="checkbox" id="Published" name="Published" value="1">
+                    <div class="w-100"></div>
+                }
+
+
+                @if (Model.FeedBackEnabled == "Yes")
+                {
+                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1" checked>
+                    <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1">
+                    <div class="w-100"></div>
+                }
+
+
+
+                <br />
 
                 <input type="hidden" asp-for="QuizId" />
 

@@ -70,12 +70,12 @@
 
                         average = total / num;
 
-                        // You can convert it back to an array if you would like to
+                        
                         double[] scores = scoreList.ToArray();
 
                         static double GetMedian(double[] scoreNumbers)
                         {
-                            //Framework 2.0 version of this method. there is an easier way in F4
+                            
                             if (scoreNumbers == null || scoreNumbers.Length == 0)
                             {
 
@@ -140,8 +140,9 @@
                 </p>
 
                 <p>
-                    <b>Mean Time (minutes):</b>  @averageDuration.TotalMinutes   minute(s)  <br />
-                    <b>Mean Time (hours):</b>    @averageDuration.TotalHours     hour(s)    <br />
+                    
+                    <b>Mean Time (minutes):</b>  @Math.Round(@averageDuration.TotalMinutes, 2)  minute(s)  <br />
+                    <b>Mean Time (hours):</b>     @Math.Round(@averageDuration.TotalHours , 2)   hour(s)    <br />
                 </p>
                 
                 

@@ -3,19 +3,23 @@ using CRESME.Constants;
 using CRESME.Data;
 using CRESME.Models;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+/*using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Spreadsheet;*/
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+/*using Microsoft.Data.SqlClient;*/
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
+using System.Net;
+/*using System.Reflection.Metadata.Ecma335;*/
 using System.Security.Claims;
-using System.Security.Policy;
+/*using System.Security.Policy;*/
 
 namespace CRESME.Controllers
 {
@@ -171,7 +175,7 @@ namespace CRESME.Controllers
                     for (int row = 2; row <= rowCount; row++)
                     {
                         //storing variables for password and for assigning roles later
-                        var PasswordHash = worksheet.Cell(row, 3).Value.ToString();
+                        var PasswordHash = worksheet.Cell(row, 3).Value.ToString().Trim();
                         var assignRole = worksheet.Cell(row, 4).Value.ToString().Trim();
                         var nid = worksheet.Cell(row, 1).Value.ToString().Trim();
 
@@ -254,12 +258,12 @@ namespace CRESME.Controllers
             // update the user data
             if (user != null)
             {
-                user.UserName = UserName;
-                user.Email = UserName; 
-                user.Name = Name;
-                user.Block = Block;
-                user.Course = Course;
-                user.Term = Term;
+                user.UserName = UserName.Trim();
+                user.Email = UserName.Trim(); 
+                user.Name = Name.Trim();
+                user.Block = Block.Trim();
+                user.Course = Course.Trim();
+                user.Term = Term.Trim();
 
                 // check if the update was sucessful
                 IdentityResult result = await _userManager.UpdateAsync(user);
@@ -305,11 +309,11 @@ namespace CRESME.Controllers
             ApplicationUser user = new ApplicationUser
             {
 
-                UserName = UserName,
-                Name = Name,
-                NormalizedUserName = UserName.ToUpper(),
-                Email = UserName,
-                NormalizedEmail = UserName.ToUpper(),
+                UserName = UserName.Trim(),
+                Name = Name.Trim(),
+                NormalizedUserName = UserName.ToUpper().Trim(),
+                Email = UserName.Trim(),
+                NormalizedEmail = UserName.ToUpper().Trim(),
                 EmailConfirmed = true,
                 PhoneNumber = null,
                 PhoneNumberConfirmed = false,
@@ -317,10 +321,10 @@ namespace CRESME.Controllers
                 LockoutEnd = null,
                 LockoutEnabled = true,
                 AccessFailedCount = 0,
-                Role = Role,
-                Block = Block,
-                Course = Course,
-                Term = Term
+                Role = Role.Trim(),
+                Block = Block.Trim(),
+                Course = Course.Trim(),
+                Term = Term.Trim()
 
             };
 
@@ -347,13 +351,33 @@ namespace CRESME.Controllers
         }
 
 
-        /*Located in ListUsers.cshtml. Deletes a user based on the passsed ID*/
+        /*Deletes a user based on the passsed ID*/
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
+            // find the user object in Database
             var user = await _userManager.FindByIdAsync(id);
+            
+
             if (user != null)
             {
+                if (user.Role == "Instructor")
+                {
+                    //find users NID == Username
+                    var nid = user.UserName;
+
+                    // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                    var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                    foreach (var row in matchingRows)
+                    {
+                        row.InstructorID = "";
+                    }
+
+                    _context.SaveChanges();
+
+
+                }
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
@@ -369,6 +393,8 @@ namespace CRESME.Controllers
 
             return RedirectToAction("CreateAccounts");
         }
+
+
 
         /*Located in ListUsers.cshtml. Deletes all Users in the database except for the Admin.*/
         [HttpPost]
@@ -419,7 +445,7 @@ namespace CRESME.Controllers
 
         
         /*Located in EditQuiz.cshtml. Updates a CRESME*/
-        [HttpPost]
+        /*[HttpPost]
         [Route("/Admin/UpdateQuiz")]
         [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> UpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
@@ -448,7 +474,7 @@ namespace CRESME.Controllers
                 ModelState.AddModelError("", "User Not Found");
 
             return RedirectToAction("CreateAccounts");
-        }
+        }*/
 
         /*Located in ListAllQuizes.cshtml. Delete a CRESME*/
         [HttpPost]
@@ -746,15 +772,15 @@ namespace CRESME.Controllers
                 for (int i = 0; i < userList.Count; i++)
                 {
                     //NID == UserName == Email. They are all same. We are using UserName to retrive NID. 
-                    worksheet.Cell(i + 2, 1).Value = userList[i].UserName;       
-                    worksheet.Cell(i + 2, 2).Value = userList[i].Name;
+                    worksheet.Cell(i + 2, 1).Value = userList[i].UserName.Trim();       
+                    worksheet.Cell(i + 2, 2).Value = userList[i].Name.Trim();
 
                     //PasswordHash left empty for security purposes. 
                     worksheet.Cell(i + 2, 3).Value = "";
-                    worksheet.Cell(i + 2, 4).Value = userList[i].Role;
-                    worksheet.Cell(i + 2, 5).Value = userList[i].Block;
-                    worksheet.Cell(i + 2, 6).Value = userList[i].Course;
-                    worksheet.Cell(i + 2, 7).Value = userList[i].Term;
+                    worksheet.Cell(i + 2, 4).Value = userList[i].Role.Trim();
+                    worksheet.Cell(i + 2, 5).Value = userList[i].Block.Trim();
+                    worksheet.Cell(i + 2, 6).Value = userList[i].Course.Trim();
+                    worksheet.Cell(i + 2, 7).Value = userList[i].Term.Trim();
 
 
                 }
@@ -852,43 +878,43 @@ namespace CRESME.Controllers
                 for (int i = 0; i < userList.Count; i++)
                 {
                     worksheet.Cell(i + 2, 1).Value = userList[i].QuizId;
-                    worksheet.Cell(i + 2, 2).Value = userList[i].QuizName;
+                    worksheet.Cell(i + 2, 2).Value = userList[i].QuizName.Trim();
                     worksheet.Cell(i + 2, 3).Value = userList[i].NumColumns;
                     worksheet.Cell(i + 2, 4).Value = userList[i].DateCreated;
                     worksheet.Cell(i + 2, 5).Value = userList[i].StartDate;
                     worksheet.Cell(i + 2, 6).Value = userList[i].EndDate;
-                    worksheet.Cell(i + 2, 7).Value = userList[i].Published;
-                    worksheet.Cell(i + 2, 8).Value = userList[i].FeedBackEnabled;
-                    worksheet.Cell(i + 2, 9).Value = userList[i].NIDAssignment;
-                    worksheet.Cell(i + 2, 10).Value = userList[i].Term;
-                    worksheet.Cell(i + 2, 11).Value = userList[i].Course;
-                    worksheet.Cell(i + 2, 12).Value = userList[i].Block;
-                    worksheet.Cell(i + 2, 13).Value = userList[i].PatientIntro;
-                    worksheet.Cell(i + 2, 14).Value = userList[i].HistoryA;
-                    worksheet.Cell(i + 2, 15).Value = userList[i].HistoryB;
-                    worksheet.Cell(i + 2, 16).Value = userList[i].HistoryC;
-                    worksheet.Cell(i + 2, 17).Value = userList[i].HistoryD;
-                    worksheet.Cell(i + 2, 18).Value = userList[i].HistoryE;
-                    worksheet.Cell(i + 2, 19).Value = userList[i].PhysicalA;
-                    worksheet.Cell(i + 2, 20).Value = userList[i].PhysicalB;
-                    worksheet.Cell(i + 2, 21).Value = userList[i].PhysicalC;
-                    worksheet.Cell(i + 2, 22).Value = userList[i].PhysicalD;
-                    worksheet.Cell(i + 2, 23).Value = userList[i].PhysicalE;
-                    worksheet.Cell(i + 2, 24).Value = userList[i].DiagnosticA;
-                    worksheet.Cell(i + 2, 25).Value = userList[i].DiagnosticB;
-                    worksheet.Cell(i + 2, 26).Value = userList[i].DiagnosticC;
-                    worksheet.Cell(i + 2, 27).Value = userList[i].DiagnosticD;
-                    worksheet.Cell(i + 2, 28).Value = userList[i].DiagnosticE;
-                    worksheet.Cell(i + 2, 29).Value = userList[i].DiagnosisKeyWordsA;
-                    worksheet.Cell(i + 2, 30).Value = userList[i].DiagnosisKeyWordsB;
-                    worksheet.Cell(i + 2, 31).Value = userList[i].DiagnosisKeyWordsC;
-                    worksheet.Cell(i + 2, 32).Value = userList[i].DiagnosisKeyWordsD;
-                    worksheet.Cell(i + 2, 33).Value = userList[i].DiagnosisKeyWordsE;
-                    worksheet.Cell(i + 2, 34).Value = userList[i].FeedBackA;
-                    worksheet.Cell(i + 2, 35).Value = userList[i].FeedBackB;
-                    worksheet.Cell(i + 2, 36).Value = userList[i].FeedBackC;
-                    worksheet.Cell(i + 2, 37).Value = userList[i].FeedBackD;
-                    worksheet.Cell(i + 2, 38).Value = userList[i].FeedBackE;
+                    worksheet.Cell(i + 2, 7).Value = userList[i].Published.Trim();
+                    worksheet.Cell(i + 2, 8).Value = userList[i].FeedBackEnabled.Trim();
+                    worksheet.Cell(i + 2, 9).Value = userList[i].NIDAssignment.Trim();
+                    worksheet.Cell(i + 2, 10).Value = userList[i].Term.Trim();
+                    worksheet.Cell(i + 2, 11).Value = userList[i].Course.Trim();
+                    worksheet.Cell(i + 2, 12).Value = userList[i].Block.Trim();
+                    worksheet.Cell(i + 2, 13).Value = userList[i].PatientIntro.Trim();
+                    worksheet.Cell(i + 2, 14).Value = userList[i].HistoryA.Trim();
+                    worksheet.Cell(i + 2, 15).Value = userList[i].HistoryB.Trim();
+                    worksheet.Cell(i + 2, 16).Value = userList[i].HistoryC.Trim();
+                    worksheet.Cell(i + 2, 17).Value = userList[i].HistoryD.Trim();
+                    worksheet.Cell(i + 2, 18).Value = userList[i].HistoryE.Trim();
+                    worksheet.Cell(i + 2, 19).Value = userList[i].PhysicalA.Trim();
+                    worksheet.Cell(i + 2, 20).Value = userList[i].PhysicalB.Trim();
+                    worksheet.Cell(i + 2, 21).Value = userList[i].PhysicalC.Trim();
+                    worksheet.Cell(i + 2, 22).Value = userList[i].PhysicalD.Trim();
+                    worksheet.Cell(i + 2, 23).Value = userList[i].PhysicalE.Trim();
+                    worksheet.Cell(i + 2, 24).Value = userList[i].DiagnosticA.Trim();
+                    worksheet.Cell(i + 2, 25).Value = userList[i].DiagnosticB.Trim();
+                    worksheet.Cell(i + 2, 26).Value = userList[i].DiagnosticC.Trim();
+                    worksheet.Cell(i + 2, 27).Value = userList[i].DiagnosticD.Trim();
+                    worksheet.Cell(i + 2, 28).Value = userList[i].DiagnosticE.Trim();
+                    worksheet.Cell(i + 2, 29).Value = userList[i].DiagnosisKeyWordsA.Trim();
+                    worksheet.Cell(i + 2, 30).Value = userList[i].DiagnosisKeyWordsB.Trim();
+                    worksheet.Cell(i + 2, 31).Value = userList[i].DiagnosisKeyWordsC.Trim();
+                    worksheet.Cell(i + 2, 32).Value = userList[i].DiagnosisKeyWordsD.Trim();
+                    worksheet.Cell(i + 2, 33).Value = userList[i].DiagnosisKeyWordsE.Trim();
+                    worksheet.Cell(i + 2, 34).Value = userList[i].FeedBackA.Trim();
+                    worksheet.Cell(i + 2, 35).Value = userList[i].FeedBackB.Trim();
+                    worksheet.Cell(i + 2, 36).Value = userList[i].FeedBackC.Trim();
+                    worksheet.Cell(i + 2, 37).Value = userList[i].FeedBackD.Trim();
+                    worksheet.Cell(i + 2, 38).Value = userList[i].FeedBackE.Trim();
                     worksheet.Cell(i + 2, 39).Value = userList[i].Image0;
                     worksheet.Cell(i + 2, 40).Value = userList[i].Image1;
                     worksheet.Cell(i + 2, 41).Value = userList[i].Image2;
@@ -1009,60 +1035,60 @@ namespace CRESME.Controllers
 
                 worksheet.Cell(1, 37).Value = "QuizID";
                 worksheet.Cell(1, 38).Value = "PatientIntro";
-                worksheet.Cell(1, 39).Value = "StudentID";
+                
 
 
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
                 {
                     worksheet.Cell(i + 2, 1).Value = userList[i].AttemptId;
-                    worksheet.Cell(i + 2, 2).Value = userList[i].StudentNID;
-                    worksheet.Cell(i + 2, 3).Value = userList[i].StudentName;
-                    worksheet.Cell(i + 2, 4).Value = userList[i].QuizName;
+                    worksheet.Cell(i + 2, 2).Value = userList[i].StudentNID.Trim();
+                    worksheet.Cell(i + 2, 3).Value = userList[i].StudentName.Trim();
+                    worksheet.Cell(i + 2, 4).Value = userList[i].QuizName.Trim();
                     worksheet.Cell(i + 2, 5).Value = userList[i].Score;
                     worksheet.Cell(i + 2, 6).Value = userList[i].NumColumns;
                     worksheet.Cell(i + 2, 7).Value = userList[i].StartTime;
                     worksheet.Cell(i + 2, 8).Value = userList[i].EndTime;
-                    worksheet.Cell(i + 2, 9).Value = userList[i].Term;
-                    worksheet.Cell(i + 2, 10).Value = userList[i].Course;
-                    worksheet.Cell(i + 2, 11).Value = userList[i].Block;
+                    worksheet.Cell(i + 2, 9).Value = userList[i].Term.Trim();
+                    worksheet.Cell(i + 2, 10).Value = userList[i].Course.Trim();
+                    worksheet.Cell(i + 2, 11).Value = userList[i].Block.Trim();
 
 
 
 
-                    worksheet.Cell(i + 2, 12).Value = userList[i].PhysicalAnswerA;
-                    worksheet.Cell(i + 2, 13).Value = userList[i].PhysicalAnswerB;
-                    worksheet.Cell(i + 2, 14).Value = userList[i].PhysicalAnswerC;
-                    worksheet.Cell(i + 2, 15).Value = userList[i].PhysicalAnswerD;
-                    worksheet.Cell(i + 2, 16).Value = userList[i].PhysicalAnswerE;
-                    worksheet.Cell(i + 2, 17).Value = userList[i].DiagnosticAnswerA;
-                    worksheet.Cell(i + 2, 18).Value = userList[i].DiagnosticAnswerB;
-                    worksheet.Cell(i + 2, 19).Value = userList[i].DiagnosticAnswerC;
-                    worksheet.Cell(i + 2, 20).Value = userList[i].DiagnosticAnswerD;
-                    worksheet.Cell(i + 2, 21).Value = userList[i].DiagnosticAnswerE;
+                    worksheet.Cell(i + 2, 12).Value = userList[i].PhysicalAnswerA.Trim();
+                    worksheet.Cell(i + 2, 13).Value = userList[i].PhysicalAnswerB.Trim();
+                    worksheet.Cell(i + 2, 14).Value = userList[i].PhysicalAnswerC.Trim();
+                    worksheet.Cell(i + 2, 15).Value = userList[i].PhysicalAnswerD.Trim();
+                    worksheet.Cell(i + 2, 16).Value = userList[i].PhysicalAnswerE.Trim();
+                    worksheet.Cell(i + 2, 17).Value = userList[i].DiagnosticAnswerA.Trim();
+                    worksheet.Cell(i + 2, 18).Value = userList[i].DiagnosticAnswerB.Trim();
+                    worksheet.Cell(i + 2, 19).Value = userList[i].DiagnosticAnswerC.Trim();
+                    worksheet.Cell(i + 2, 20).Value = userList[i].DiagnosticAnswerD.Trim();
+                    worksheet.Cell(i + 2, 21).Value = userList[i].DiagnosticAnswerE.Trim();
 
-                    worksheet.Cell(i + 2, 22).Value = userList[i].FreeResponseA;
-                    worksheet.Cell(i + 2, 23).Value = userList[i].FreeResponseB;
-                    worksheet.Cell(i + 2, 24).Value = userList[i].FreeResponseC;
-                    worksheet.Cell(i + 2, 25).Value = userList[i].FreeResponseD;
-                    worksheet.Cell(i + 2, 26).Value = userList[i].FreeResponseE;
+                    worksheet.Cell(i + 2, 22).Value = userList[i].FreeResponseA.Trim();
+                    worksheet.Cell(i + 2, 23).Value = userList[i].FreeResponseB.Trim();
+                    worksheet.Cell(i + 2, 24).Value = userList[i].FreeResponseC.Trim();
+                    worksheet.Cell(i + 2, 25).Value = userList[i].FreeResponseD.Trim();
+                    worksheet.Cell(i + 2, 26).Value = userList[i].FreeResponseE.Trim();
 
-                    worksheet.Cell(i + 2, 27).Value = userList[i].NumImage0Clicks;
-                    worksheet.Cell(i + 2, 28).Value = userList[i].NumImage1Clicks;
-                    worksheet.Cell(i + 2, 29).Value = userList[i].NumImage2Clicks;
-                    worksheet.Cell(i + 2, 30).Value = userList[i].NumImage3Clicks;
-                    worksheet.Cell(i + 2, 31).Value = userList[i].NumImage4Clicks;
-                    worksheet.Cell(i + 2, 32).Value = userList[i].NumImage5Clicks;
-                    worksheet.Cell(i + 2, 33).Value = userList[i].NumImage6Clicks;
-                    worksheet.Cell(i + 2, 34).Value = userList[i].NumImage7Clicks;
-                    worksheet.Cell(i + 2, 35).Value = userList[i].NumImage8Clicks;
-                    worksheet.Cell(i + 2, 36).Value = userList[i].NumImage9Clicks;
+                    worksheet.Cell(i + 2, 27).Value = userList[i].NumImage0Clicks.Trim();
+                    worksheet.Cell(i + 2, 28).Value = userList[i].NumImage1Clicks.Trim();
+                    worksheet.Cell(i + 2, 29).Value = userList[i].NumImage2Clicks.Trim();
+                    worksheet.Cell(i + 2, 30).Value = userList[i].NumImage3Clicks.Trim();
+                    worksheet.Cell(i + 2, 31).Value = userList[i].NumImage4Clicks.Trim();
+                    worksheet.Cell(i + 2, 32).Value = userList[i].NumImage5Clicks.Trim();
+                    worksheet.Cell(i + 2, 33).Value = userList[i].NumImage6Clicks.Trim();
+                    worksheet.Cell(i + 2, 34).Value = userList[i].NumImage7Clicks.Trim();
+                    worksheet.Cell(i + 2, 35).Value = userList[i].NumImage8Clicks.Trim();
+                    worksheet.Cell(i + 2, 36).Value = userList[i].NumImage9Clicks.Trim();
 
 
 
                     worksheet.Cell(i + 2, 37).Value = userList[i].QuizID;
-                    worksheet.Cell(i + 2, 38).Value = userList[i].PatientIntro;
-                    worksheet.Cell(i + 2, 39).Value = userList[i].StudentID;
+                    worksheet.Cell(i + 2, 38).Value = userList[i].PatientIntro.Trim();
+                    
 
 
                 }
@@ -1096,31 +1122,31 @@ namespace CRESME.Controllers
                
                
                 
-                worksheet.Cell(1, 1).Value = userList[0].HistoryA;
-                worksheet.Cell(1, 2).Value = userList[0].HistoryB;
-                worksheet.Cell(1, 3).Value = userList[0].HistoryC;
-                worksheet.Cell(1, 4).Value = userList[0].HistoryD;
-                worksheet.Cell(1, 5).Value = userList[0].HistoryE;
-                worksheet.Cell(2, 1).Value = userList[0].PhysicalA;
-                worksheet.Cell(2, 2).Value = userList[0].PhysicalB;
-                worksheet.Cell(2, 3).Value = userList[0].PhysicalC;
-                worksheet.Cell(2, 4).Value = userList[0].PhysicalD;
-                worksheet.Cell(2, 5).Value = userList[0].PhysicalE;
-                worksheet.Cell(3, 1).Value = userList[0].DiagnosticA;
-                worksheet.Cell(3, 2).Value = userList[0].DiagnosticB;
-                worksheet.Cell(3, 3).Value = userList[0].DiagnosticC;
-                worksheet.Cell(3, 4).Value = userList[0].DiagnosticD;
-                worksheet.Cell(3, 5).Value = userList[0].DiagnosticE;
-                worksheet.Cell(4, 1).Value = userList[0].DiagnosisKeyWordsA;
-                worksheet.Cell(4, 2).Value = userList[0].DiagnosisKeyWordsB;
-                worksheet.Cell(4, 3).Value = userList[0].DiagnosisKeyWordsC;
-                worksheet.Cell(4, 4).Value = userList[0].DiagnosisKeyWordsD;
-                worksheet.Cell(4, 5).Value = userList[0].DiagnosisKeyWordsE;
-                worksheet.Cell(5, 1).Value = userList[0].FeedBackA;
-                worksheet.Cell(5, 2).Value = userList[0].FeedBackB;
-                worksheet.Cell(5, 3).Value = userList[0].FeedBackC;
-                worksheet.Cell(5, 4).Value = userList[0].FeedBackD;
-                worksheet.Cell(5, 5).Value = userList[0].FeedBackE;
+                worksheet.Cell(1, 1).Value = userList[0].HistoryA.Trim();
+                worksheet.Cell(1, 2).Value = userList[0].HistoryB.Trim();
+                worksheet.Cell(1, 3).Value = userList[0].HistoryC.Trim();
+                worksheet.Cell(1, 4).Value = userList[0].HistoryD.Trim();
+                worksheet.Cell(1, 5).Value = userList[0].HistoryE.Trim();
+                worksheet.Cell(2, 1).Value = userList[0].PhysicalA.Trim();
+                worksheet.Cell(2, 2).Value = userList[0].PhysicalB.Trim();
+                worksheet.Cell(2, 3).Value = userList[0].PhysicalC.Trim();
+                worksheet.Cell(2, 4).Value = userList[0].PhysicalD.Trim();
+                worksheet.Cell(2, 5).Value = userList[0].PhysicalE.Trim();
+                worksheet.Cell(3, 1).Value = userList[0].DiagnosticA.Trim();
+                worksheet.Cell(3, 2).Value = userList[0].DiagnosticB.Trim();
+                worksheet.Cell(3, 3).Value = userList[0].DiagnosticC.Trim();
+                worksheet.Cell(3, 4).Value = userList[0].DiagnosticD.Trim();
+                worksheet.Cell(3, 5).Value = userList[0].DiagnosticE.Trim();
+                worksheet.Cell(4, 1).Value = userList[0].DiagnosisKeyWordsA.Trim();
+                worksheet.Cell(4, 2).Value = userList[0].DiagnosisKeyWordsB.Trim();
+                worksheet.Cell(4, 3).Value = userList[0].DiagnosisKeyWordsC.Trim();
+                worksheet.Cell(4, 4).Value = userList[0].DiagnosisKeyWordsD.Trim();
+                worksheet.Cell(4, 5).Value = userList[0].DiagnosisKeyWordsE.Trim();
+                worksheet.Cell(5, 1).Value = userList[0].FeedBackA.Trim();
+                worksheet.Cell(5, 2).Value = userList[0].FeedBackB.Trim();
+                worksheet.Cell(5, 3).Value = userList[0].FeedBackC.Trim();
+                worksheet.Cell(5, 4).Value = userList[0].FeedBackD.Trim();
+                worksheet.Cell(5, 5).Value = userList[0].FeedBackE.Trim();
                     
                    
                 using var stream = new MemoryStream();
@@ -1179,8 +1205,31 @@ namespace CRESME.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermInstructors(ApplicationUser user)
         {
-
+            
             var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
+
+
+            var term = user.Term;
+            var matchingUsers = _context.Users.Where(user => user.Term == term);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+                
+            }
+            
+            //remove users
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
@@ -1230,6 +1279,30 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
+
+            var block = user.Block;
+            var matchingUsers = _context.Users.Where(user => user.Block == block);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+
+            }
+
+
+
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
@@ -1306,6 +1379,7 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Student in the course deleted!";
@@ -1329,6 +1403,27 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
+
+            var course = user.Course;
+            var matchingUsers = _context.Users.Where(user => user.Course == course);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+
+            }
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the course deleted!";
@@ -1344,7 +1439,7 @@ namespace CRESME.Controllers
         /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
          CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
          */
-        [Authorize(Roles = "Admin, Instructor,Student")]
+        /*[Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> AssignedQuizes()
         {
             //get the current studnets object
@@ -1354,7 +1449,7 @@ namespace CRESME.Controllers
             //var NID = user.NID
 
             // find all users with this NID 
-            /*
+            *//*
              
              user1 B1 C1
             user2 B2 C2
@@ -1364,7 +1459,7 @@ namespace CRESME.Controllers
             
             var finalList = data1.AddRange(data2);
 
-             */
+             *//*
 
 
 
@@ -1457,6 +1552,103 @@ namespace CRESME.Controllers
             } 
 
         }
+
+
+
+*/
+
+        /*compares two list, one of Quiz and one of Attempts. 
+         * comapres and returns a list of quizes that have not been attempted yet by the students.*/
+        public static List<Quiz> CompareLists(List<Quiz> list1, List<Attempt> list2)
+        {
+            // Retrieve the IDs from list2
+            var idsList2 = list2.Select(obj => obj.QuizID);
+
+            // Filter the objects in list1 based on the IDs not present in list2
+            var result = list1.Where(obj => !idsList2.Contains(obj.QuizId)).ToList();
+
+            return result;
+        }
+
+
+
+
+        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
+         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
+         */
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            List<Quiz> quizes = new List<Quiz>();
+
+            // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var takenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            // if no quizes have been assingend to the student yet, return an empty list of quizes 
+            if(assignedQuizes.Count() == 0)
+            {
+                return View(quizes); 
+            }
+            else
+            {
+                // if no quizes have been taken yet by the student, return the list with all quizes assigned to the student
+                if(takenQuizes.Count()  == 0)
+                {
+                    return View(assignedQuizes);
+                }
+                else
+                {
+                    // some quizes have been assigned and some quizes have been taken already by the studnet. 
+                    // look and find the quizes yet to be taken. 
+
+                    // Compare the lists
+                    List<Quiz> result = CompareLists(assignedQuizes, takenQuizes);
+
+                    // if result is empty, return an empty list of quizes
+                    if (result.Count() == 0) 
+                    {
+                        return View(new List<Quiz>());
+                    }
+                    else
+                    {
+                        return View(result.Distinct()); 
+                    }
+                }
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1626,32 +1818,81 @@ namespace CRESME.Controllers
         /*Located in EditQuiz.cshtml. Updates a CRESME*/
         [HttpPost]    
         [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
+        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate, string PatientIntro, string Published, string FeedBackEnabled, string InstructorID)
         {
 
             // find the quiz to be updated
             var quiz = await _context.Quiz.FindAsync(QuizId);
+            //find current user
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
 
             //update based on the new values
             if (quiz != null)
             {
-                quiz.QuizName = QuizName;
-                quiz.Block = Block;
-                quiz.Course = Course;
-                quiz.Term = Term;
+                quiz.QuizName = QuizName.Trim();
+                quiz.Block = Block.Trim();
+                quiz.Course = Course.Trim();
+                quiz.Term = Term.Trim();
                 quiz.DateCreated = DateCreated;
                 quiz.StartDate = StartDate;
                 quiz.EndDate = EndDate;
+                quiz.PatientIntro = PatientIntro.Trim();
+                if (InstructorID != null)
+                {
+                    quiz.InstructorID = InstructorID.Trim();
+                }
+                
+
+                //checkboxes is checked and changed to correct format for database entry
+                if (FeedBackEnabled == "1")
+                {
+                    quiz.FeedBackEnabled = "Yes";
+                }
+                else
+                {
+                    quiz.FeedBackEnabled = "No";
+                }
+
+                if (Published == "1")
+                {
+                    quiz.Published = "Yes";
+                }
+                else
+                {
+                    quiz.Published = "No";
+                }
+
+
 
                 _context.SaveChanges();
                 TempData["AlertMessage"] = "CRESME updated sucessfully!";
-                return RedirectToAction("InstructorQuizesView");
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("ListAllQuizes");
+                }
+                else
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
+                
 
             }
             else
-                ModelState.AddModelError("", "User Not Found");
+            {
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("ListAllQuizes");
+                }
+                else
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
 
-            return RedirectToAction("InstructorQuizesView");
+            }
+                
+
+            
         }
 
 

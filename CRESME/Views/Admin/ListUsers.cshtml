@@ -77,7 +77,7 @@
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByBlockStudentsView">
                         <button type="submit" class="btn btn-md btn-danger">
                             <i class="fa-solid fa-trash-can"></i>
-                            Delete by Block(Students)
+                            Delete by Block (Students)
                         </button>
                     </form>
                 </li>
@@ -85,19 +85,33 @@
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByBlockInstructorView">
                         <button type="submit" class="btn btn-md btn-danger">
                             <i class="fa-solid fa-trash-can"></i>
-                            Delete by Block(Instructors)
+                            Delete by Block (Instructors)
                         </button>
                     </form>
 
                 </li>
+
+
                 <li>
-                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAll">
-                        <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByCourseStudentsView">
+                        <button type="submit" class="btn btn-md btn-danger">
                             <i class="fa-solid fa-trash-can"></i>
-                            Delete by block
+                            Delete by Course (Students)
                         </button>
                     </form>
                 </li>
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByCourseInstructorView">
+                        <button type="submit" class="btn btn-md btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Delete by Course (Instructors)
+                        </button>
+                    </form>
+
+                </li>
+
+
+                
                 <li>
 
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteEntireDatabase">
