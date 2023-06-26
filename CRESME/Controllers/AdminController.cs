@@ -1344,7 +1344,7 @@ namespace CRESME.Controllers
         /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
          CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
          */
-        [Authorize(Roles = "Admin, Instructor,Student")]
+        /*[Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> AssignedQuizes()
         {
             //get the current studnets object
@@ -1354,7 +1354,7 @@ namespace CRESME.Controllers
             //var NID = user.NID
 
             // find all users with this NID 
-            /*
+            *//*
              
              user1 B1 C1
             user2 B2 C2
@@ -1364,7 +1364,7 @@ namespace CRESME.Controllers
             
             var finalList = data1.AddRange(data2);
 
-             */
+             *//*
 
 
 
@@ -1457,6 +1457,103 @@ namespace CRESME.Controllers
             } 
 
         }
+
+
+
+*/
+
+        /*compares two list, one of Quiz and one of Attempts. 
+         * comapres and returns a list of quizes that have not been attempted yet by the students.*/
+        public static List<Quiz> CompareLists(List<Quiz> list1, List<Attempt> list2)
+        {
+            // Retrieve the IDs from list2
+            var idsList2 = list2.Select(obj => obj.QuizID);
+
+            // Filter the objects in list1 based on the IDs not present in list2
+            var result = list1.Where(obj => !idsList2.Contains(obj.QuizId)).ToList();
+
+            return result;
+        }
+
+
+
+
+        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
+         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
+         */
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            List<Quiz> quizes = new List<Quiz>();
+
+            // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
+            var assignedQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
+                        .ToList();
+
+            // list of quizes already taken by the user
+            var takenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            // if no quizes have been assingend to the student yet, return an empty list of quizes 
+            if(assignedQuizes.Count() == 0)
+            {
+                return View(quizes); 
+            }
+            else
+            {
+                // if no quizes have been taken yet by the student, return the list with all quizes assigned to the student
+                if(takenQuizes.Count()  == 0)
+                {
+                    return View(assignedQuizes);
+                }
+                else
+                {
+                    // some quizes have been assigned and some quizes have been taken already by the studnet. 
+                    // look and find the quizes yet to be taken. 
+
+                    // Compare the lists
+                    List<Quiz> result = CompareLists(assignedQuizes, takenQuizes);
+
+                    // if result is empty, return an empty list of quizes
+                    if (result.Count() == 0) 
+                    {
+                        return View(new List<Quiz>());
+                    }
+                    else
+                    {
+                        return View(result.Distinct()); 
+                    }
+                }
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1672,7 +1769,7 @@ namespace CRESME.Controllers
                 TempData["AlertMessage"] = "CRESME updated sucessfully!";
                 if (user.Role == "Admin")
                 {
-                    return RedirectToAction("InstructorQuizesView");
+                    return RedirectToAction("ListAllQuizes");
                 }
                 else
                 {
@@ -1685,7 +1782,7 @@ namespace CRESME.Controllers
             {
                 if (user.Role == "Admin")
                 {
-                    return RedirectToAction("InstructorQuizesView");
+                    return RedirectToAction("ListAllQuizes");
                 }
                 else
                 {
