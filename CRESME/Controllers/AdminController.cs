@@ -15,6 +15,9 @@ using System.Data;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
+using System.IO;
+using System.IO.Compression;
+using System.Drawing;
 
 namespace CRESME.Controllers
 {
@@ -1077,6 +1080,166 @@ namespace CRESME.Controllers
 
         }
 
+        //located in QuizDetails.cshtml page. exports images for a quiz including legend
+        public IActionResult ExportQuizImages(string quizname) {
+            
+            Quiz quiz = _context.Quiz.SingleOrDefault(q => q.QuizName == quizname);
+            string RootPath = this._environment.WebRootPath;
+
+            var zipName = $"{quiz.QuizName}-images.zip";
+            using (MemoryStream ms = new MemoryStream())
+            {
+                //required: using System.IO.Compression;  
+                using (var zip = new ZipArchive(ms, ZipArchiveMode.Create, true))
+                {
+                    ZipArchiveEntry entry;
+                    FileStream fileStream;
+                    Stream entryStream;
+                    FileInfo fileInfo;
+                    string path;
+
+                    if (quiz.Legend != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Legend));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+
+
+                    if (quiz.Image0 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image0));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image1 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image1));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image2 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image2));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image3 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image3));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image4 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image4));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image5 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image5));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image6 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image6));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image7 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image7));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image8 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image8));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+                    if (quiz.Image9 != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
+                        fileInfo = new FileInfo(path);
+                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image9));
+
+                        using (fileStream = fileInfo.OpenRead())
+                        using (entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    }
+
+
+
+
+                }
+                return File(ms.ToArray(), "application/zip", zipName);
+            }
+        }
 
         /*Located in QuizDetails.cshtml page. Exports the currently viewed CRESME. The excel file is formatted and can be used to create another CRESME*/
         [Authorize(Roles = "Admin, Instructor")]
@@ -1275,14 +1438,15 @@ namespace CRESME.Controllers
             //delete all users
             await DeleteAll();
 
-            //remove all images from the database
+            //remove all images from the database, redundant as DeleteAllQuizes call DeleteQuiz, which removes images for each quiz
+            
             string RootPath = this._environment.WebRootPath;
             string dirpath = RootPath + "/uploadedImages/";
             System.IO.DirectoryInfo dir = new DirectoryInfo(dirpath);
             foreach (FileInfo file in dir.GetFiles()) { 
                 file.Delete();
             }            
-
+           
 
             TempData["AlertMessage"] = "Entire database has been deleted!";
 

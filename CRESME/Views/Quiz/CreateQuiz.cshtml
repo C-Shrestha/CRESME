@@ -10,7 +10,7 @@
 @if (TempData["AlertMessage"] != null)
 {
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0; background-color:white;" data-delay="2000">
+        <div class="toast bg-success" style="position: absolute; top: 0; right: 0; color:white;" data-delay="2000">
             <div class="toast-body">
                 @(TempData["AlertMessage"])
             </div>
@@ -37,6 +37,9 @@
     <div class="d-flex align-items-center min-vh-100">
         <div class="container border bg-white rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
+
+             
+
 
                 <div class="w-100"></div>
                 <h4 class="col-6 text-center" style="font-weight: bold;">Create CRESME Form</h4>
@@ -89,7 +92,7 @@
                 <div class="col-4 text-center" style="font-weight: bold;">Upload Legend Image</div>
                 <div class="w-100"></div>
 
-                <input type="file" name="Legend" id="Legend" accept=".jpg, .jpeg" style="display: none;" required />
+                <input type="file" name="Legend" id="Legend" accept="image/*" style="display: none;" required />
                 <label class="col-4 row justify-content-center border" id="legendLabel" for="Legend" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-flag"></i>
                 </label>
@@ -338,7 +341,7 @@
         newfile.setAttribute("type", 'file');
         newfile.setAttribute("name", 'imageFile' + i);
         newfile.setAttribute("id", 'imageFile' + i);
-        newfile.setAttribute("accept", '.jpg, .jpeg');
+        newfile.setAttribute("accept", 'image/*');
         newfile.setAttribute("onchange", 'checkForImage(this.id)');
         newfile.style.display = "none";
 

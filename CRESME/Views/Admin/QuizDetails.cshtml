@@ -282,6 +282,7 @@
                     </button>
                 </form>
                 <br />
+                
 
             </div>
         </div>
@@ -310,7 +311,14 @@
                     </button>
                 </form>
                 <br />
+                <form asp-controller="Admin" asp-action="ExportQuizImages">
 
+                    <input type="hidden" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
+                    <button type="submit" class="btn btn-md btn-primary">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Download Images
+                    </button>
+                </form>
             </div>
         </div>
 
