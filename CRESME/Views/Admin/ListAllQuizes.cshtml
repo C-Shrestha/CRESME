@@ -6,7 +6,7 @@
 
 
 <br />
-<br />
+
 
 
 @if (TempData["AlertMessage"] != null)
@@ -75,48 +75,48 @@
 
     <div class="table-responsive">
 
-    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary  table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
                 <tr>
-                    <th>
+                    <th scope="col" class="table-dark">
                     CRESME ID
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                     CRESME
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Block)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Course)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Term)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.DateCreated)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.StartDate)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.EndDate)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Published)
                     </th>
 
-                    <th>
+                    <th scope="col" class="table-dark">
                         Feedback
                     </th>
 
@@ -125,9 +125,9 @@
 
 
                     @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th scope="col" class="table-dark">
+                    <th scope="col" class="table-dark">
+                    <th scope="col" class="table-dark">
                     
 
                     
@@ -143,34 +143,34 @@
                 {
                     <tr>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.QuizId)
                         </td>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.QuizName)
                         </td>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.Block)
                         </td>
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.Course)
                         </td>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.Term)
                         </td>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.DateCreated)
                         </td>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.StartDate)
                         </td>
 
-                        <td>
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.EndDate).
                         </td>
 
@@ -178,7 +178,7 @@
                             @Html.DisplayFor(modelItem => item.Published)
                         </td>*@
 
-                        <td>
+                        <td class="table-secondary">
                         
                         @if (item.Published == "Yes")
                             {
@@ -190,7 +190,7 @@
                             }
                         </td>
 
-                    <td>
+                    <td class="table-secondary">
 
                         @if (item.FeedBackEnabled == "Yes")
                         {
@@ -202,7 +202,7 @@
                         }
                     </td>
 
-                    <td>
+                    <td class="table-secondary">
                         <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName" method="post">
                             <button type="submit" class="btn btn-sm btn-warning">
                                 <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
@@ -211,10 +211,10 @@
                         </form>
                     </td>
 
-                    
 
 
-                        <td>
+
+                    <td class="table-secondary">
                         <form asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizId="@item.QuizId">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-user-pen"></i>
@@ -224,7 +224,7 @@
                         </td>
 
 
-                        <td>
+                    <td class="table-secondary">
                         <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this quiz?')">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="fa-solid fa-trash-can"></i>
@@ -245,28 +245,16 @@
     </div>
 
 
+
+
 <style>
 
-    #dataTableData {
-        color: black;
-        border-style: solid;
-        border-color: #F1C400;
-
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
     }
-
-    td {
-        color: black;
-        font-weight: bold;
-    }
-
-    th {
-        color: black;
-        font-weight: bold;
-    }
-
-  
 
 </style>
+
 
 
 @section scripts

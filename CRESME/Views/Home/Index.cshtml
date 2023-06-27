@@ -5,18 +5,29 @@
 
 @*<p class="text-center"> Index page for Home.</p>
 <p class="text-center"> Also a general "Welcome to CRESME" with a logo from Login page</p>*@
+
+
+
 @if (TempData["AlertMessage"] != null)
 {
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
-            <div class="toast-body">
-                @(TempData["AlertMessage"])
-            </div>
+
+
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute; float: right;" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="...">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success">
+            @TempData["AlertMessage"]
         </div>
     </div>
 
+
 }
 
+<br />
+<br />
 
 <div class="d-flex align-items-center">
     <div class="container  border p-3 mb-5 mt-5 bg-white rounded" style="width: 50%;">
@@ -82,6 +93,8 @@
         border-color: #F1C400;
     }
 
+
+
 </style>
 
 
@@ -96,6 +109,11 @@
         window.onload = function () {
             // your code here
             $('.toast').toast('show');
+
+            var reloading = sessionStorage.getItem("reloading");
+
+            if (reloading) 
+                sessionStorage.removeItem("reloading");
         };
     </script>
 }
