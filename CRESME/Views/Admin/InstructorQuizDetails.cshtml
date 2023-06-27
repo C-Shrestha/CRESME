@@ -9,20 +9,36 @@
 
 <br />
 
-<h1 class="text-center">CRESME Details: @Model.FirstOrDefault().QuizName </h1>
 
-<br />
-<br />
 
+
+
+
+<style>
+
+
+    .custom_btn {
+        border-color: #F1C400 !important;
+        color: #F1C400;
+        font-weight: bold;
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
+    }
+</style>
 
 <div id="accordion">
     
+    <div class="card-header bg-dark text-center" id="headingOne" style="color: #F1C400;">
+        <h1 class="text-center">@Model.FirstOrDefault().QuizName Details </h1>
+    </div>
 
     <div class="card">
 
-        <div class="card-header" id="headingThree">
+        <div class="card-header bg-light text-center" id="headingThree">
             <h5 class="mb-0">
-                <button class="btn btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <button class="btn custom_btn  btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                     Download CRESME
                 </button>
             </h5>

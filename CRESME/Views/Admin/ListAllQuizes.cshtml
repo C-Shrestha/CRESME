@@ -11,15 +11,19 @@
 
 @if (TempData["AlertMessage"] != null)
 {
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
-            <div class="toast-body">
-                @(TempData["AlertMessage"])
-            </div>
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success">
+            @TempData["AlertMessage"]
         </div>
     </div>
 
 }
+
 
 <div class="container-fluid">
     <div class="row justify-content-start">
@@ -75,7 +79,7 @@
 
     <div class="table-responsive">
 
-    <table class="table table-bordered table-secondary  table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
@@ -120,7 +124,7 @@
                         Feedback
                     </th>
 
-                    <th>
+                <th scope="col" class="table-dark">
                         Assigned
                     </th>
 
@@ -205,7 +209,6 @@
                     </td>
 
 
-                    <td class="table-secondary">
 
                     <td class="table-secondary">
 
