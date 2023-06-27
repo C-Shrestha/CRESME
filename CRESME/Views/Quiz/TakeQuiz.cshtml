@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "CRESME";
 
-    DateTime StartDate = DateTime.Now;
+    //DateTime StartDate = DateTime.Now;
 
     Random rand = new Random();
     int column1 = 0;
@@ -444,7 +444,7 @@
         if (clicks != "") {
             alert("Amount of clicks are: " + clicks);
         } else {
-            setCookie("NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value, 3);
+            setCookie("@User.Identity.Name" + "NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value, 3);
             console.log("Setting Cookie: " + clicks)
         }
     }
@@ -470,7 +470,7 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
-        document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value = getCookie("NumImage0ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value = getCookie("@User.Identity.Name" + "NumImage0ClicksQuizID-" + "@Model.QuizId")
         document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value = getCookie("NumImage1ClicksQuizID-" + "@Model.QuizId")
         document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value = getCookie("NumImage2ClicksQuizID-" + "@Model.QuizId")
         document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value = getCookie("NumImage3ClicksQuizID-" + "@Model.QuizId")
@@ -480,6 +480,8 @@
         document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value = getCookie("NumImage7ClicksQuizID-" + "@Model.QuizId")
         document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value = getCookie("NumImage8ClicksQuizID-" + "@Model.QuizId")
         document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value = getCookie("NumImage9ClicksQuizID-" + "@Model.QuizId")
+
+
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
@@ -501,8 +503,8 @@
                 $("#image-modal" + "@Model.ImagePos0").modal('show');
                 document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value) + 1;
                 console.log(document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value)
-                setCookie("NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView1").value, 3);
-                checkCookie("NumImage0ClicksQuizID-" + "@Model.QuizId");
+                setCookie("@User.Identity.Name" + "NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView1").value, 3);
+                checkCookie("@User.Identity.Name" + "NumImage0ClicksQuizID-" + "@Model.QuizId");
             })
 
             const node0 = document.createTextNode("image");
@@ -856,8 +858,7 @@
                                     <div id="PhysicalBox2-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                         expand
-                                    </button>*@
-                                    <a type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB"> expand </a>
+                                    </button>
                                 </div>
                                 <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                             </div>
@@ -1342,10 +1343,16 @@
                     <input type="hidden" name="column3" value=@column3 runat="server" required>
                     <input type="hidden" name="column4" value=@column4 runat="server" required>
                     <input type="hidden" name="column5" value=@column5 runat="server" required>
-                    <input type="hidden" name="StartTime" value="@StartDate">
+                    <!-- </><input type="hidden" name="StartTime" value=0> -->
                     <input type="hidden" name="QuizStringID" value=@Model.QuizId>                   
                     <button type="button" class="btn btn-primary" onclick="myFunction()">Switch Colors</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    
+                    @if (Model.FeedBackEnabled == "No") {
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    }
+                    else{
+                        <button type="button" class="btn btn-primary" onlclick="">Reveal Answers</button>
+                    }
                 </div>
             </div>
         </form>
@@ -1542,3 +1549,5 @@
     <img class="modal-content" id="imageE" oncontextmenu="return false;">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
+
+

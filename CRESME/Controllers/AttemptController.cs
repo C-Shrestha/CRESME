@@ -43,10 +43,10 @@ namespace CRESME.Controllers
             List<string> DiagnosisAnswerKey3 = new List<string>();
             List<string> DiagnosisAnswerKey4 = new List<string>();
             List<string> DiagnosisAnswerKey5 = new List<string>();
-            
+
 
             attempt.EndTime = DateTime.Now;
-            
+
             attempt.QuizID = Int32.Parse(Request.Form["QuizStringID"]);
             if (attempt.QuizID != null)
             {
@@ -120,7 +120,7 @@ namespace CRESME.Controllers
                         {
                             attempt.Score += 1;
                         }
-                        
+
                         break;
                     }
                 }
@@ -141,7 +141,7 @@ namespace CRESME.Controllers
                         {
                             attempt.Score += 1;
                         }
-                        
+
                         break;
                     }
                 }
@@ -162,7 +162,7 @@ namespace CRESME.Controllers
                         {
                             attempt.Score += 1;
                         }
-                        
+
                         break;
                     }
                 }
@@ -183,12 +183,12 @@ namespace CRESME.Controllers
                         {
                             attempt.Score += 1;
                         }
-                        
+
                         break;
                     }
                 }
             }
-            
+
             //  UNSHUFFLING COLUMNS
             string[] OriginalAttemptAnswers = { attempt.PhysicalAnswerA, attempt.PhysicalAnswerB, attempt.PhysicalAnswerC, attempt.PhysicalAnswerD, attempt.PhysicalAnswerE,
                                                 attempt.DiagnosticAnswerA, attempt.DiagnosticAnswerB, attempt.DiagnosticAnswerC, attempt.DiagnosticAnswerD, attempt.DiagnosticAnswerE,
@@ -207,7 +207,13 @@ namespace CRESME.Controllers
                 (attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.FreeResponseE) = UnshuffleColumn("5", OriginalAttemptAnswers);
             }
 
-            
+
+            //CRESME meta data
+            if (ParentQuiz.Image0 != null) {
+                attempt.NumImage0Clicks = "number of clicks for image 0" + "("+ ParentQuiz.ImagePos0 +")" + " is " + attempt.NumImage0Clicks;
+            }
+
+
 
             //student info
             var CurrentStudent = _context.Users.SingleOrDefault( user => user.UserName == User.Identity.Name);
