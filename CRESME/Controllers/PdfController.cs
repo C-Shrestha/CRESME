@@ -243,21 +243,15 @@ namespace CRESME.Controllers
 
                 await viewResult.View.RenderAsync(viewContext);
 
+
                 
-                /*// convert PDF to HTML
-                var htmlToPdf = new HtmlToPdf(1000, 1414);
-                htmlToPdf.Options.DrawBackground = true;
+                byte[] pdfBytes = null;
+                using (MemoryStream outputStream = new MemoryStream())
+                {
+                    HtmlConverter.ConvertToPdf(stringWriter.ToString(), outputStream);
+                    pdfBytes = outputStream.ToArray();
+                }
 
-                var pdf = htmlToPdf.ConvertHtmlString(stringWriter.ToString());*/
-
-                FileStream pdfStream =  null;
-                string html = stringWriter.ToString();
-                ConverterProperties converterProperties = new ConverterProperties();
-
-                HtmlConverter.ConvertToPdf(html, pdfStream, converterProperties);
-
-
-                var pdfBytes = ConvertStreamToBytes(pdfStream);
 
                 string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
 
@@ -275,14 +269,14 @@ namespace CRESME.Controllers
 
         }
 
-        public byte[] ConvertStreamToBytes(FileStream stream)
+       /* public byte[] ConvertStreamToBytes(FileStream stream)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 stream.CopyTo(memoryStream);
                 return memoryStream.ToArray();
             }
-        }
+        }*/
 
 
 
@@ -297,15 +291,28 @@ namespace CRESME.Controllers
             }
         }*/
 
-        public void ConvertHtmlToPdf(string htmlContent, string outputPath)
+       /* public void ConvertHtmlToPdf(string htmlContent, string outputPath)
         {
             using (FileStream outputStream = new FileStream(outputPath, FileMode.Create))
             {
                 HtmlConverter.ConvertToPdf(htmlContent, outputStream);
             }
-        }
+        }*/
 
-        
+
+	
+
+/*static void Main(string[] args)
+        {
+            using (FileStream htmlSource = File.Open("input.html", FileMode.Open))
+            using (FileStream pdfDest = File.Open("output.pdf", FileMode.Create))
+            {
+                ConverterProperties converterProperties = new ConverterProperties();
+                HtmlConverter.ConvertToPdf(htmlSource, pdfDest, converterProperties);
+            }
+        }*/
+
+
 
 
 
