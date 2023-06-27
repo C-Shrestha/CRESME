@@ -40,60 +40,21 @@
         }
     }
 }
-<h1>@ViewData["Title"]</h1>
-
-@*<object >*@
-@*<object data="/images/USMLE_Lab_Reference_Values.pdf" type="application/pdf" width="100%" height="500px"></object>*@
 
 
-<div class="container-fluid border m-3 w-auto mw-50" style="height:670px;">
+
+<div id="startView" class="container-fluid border w-100 mw-50 flex-column" style="height:800px;">
     <div class="text-center">
-        @if (Model.Image0 != null && (Model.ImagePos0 == "1"))
-        {
-            <img src="@Model.Image0">
-        }
-        else if (Model.Image1 != null && (Model.ImagePos1 == "1"))
-        {
-            <img src="@Model.Image1">
-        }
-        else if (Model.Image2 != null && (Model.ImagePos2 == "1"))
-        {
-            <img src="@Model.Image2">
-        }
-        else if (Model.Image3 != null && (Model.ImagePos3 == "1"))
-        {
-            <img src="@Model.Image3">
-        }
-        else if (Model.Image4 != null && (Model.ImagePos4 == "1"))
-        {
-            <img src="@Model.Image4">
-        }
-        else if (Model.Image5 != null && (Model.ImagePos5 == "1"))
-        {
-            <img src="@Model.Image5">
-        }
-        else if (Model.Image6 != null && (Model.ImagePos6 == "1"))
-        {
-            <img src="@Model.Image6">
-        }
-        else if (Model.Image7 != null && (Model.ImagePos7 == "1"))
-        {
-            <img src="@Model.Image7">
-        }
-        else if (Model.Image8 != null && (Model.ImagePos8 == "1"))
-        {
-            <img src="@Model.Image8">
-        }
-        else if (Model.Image9 != null && (Model.ImagePos9 == "1"))
-        {
-            <img src="@Model.Image9">
-        }
+        
     </div>
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>
     <h4 class="text-center">
         Introduction:
         <div id="introduction">@Html.DisplayFor(model => model.PatientIntro)</div>
     </h4>
-    <br /><br />
+    <br/><br/>
     <h4 class="text-center">
         Instructions:
         <p id="instructions">
@@ -103,11 +64,26 @@
             these in the column with the HPI and physical findings. When done, save
             your slide to PDF or JPG and submit to the assignment in Webcourses.
         </p>
+        <button type="button" class="btn btn-primary" onclick="fillImages('quizView','startView')">Start Quiz</button>
     </h4>
+    
 </div>
 
 
 <style>
+    #quizView1 {
+        display: none;
+    }
+
+    #quizView2 {
+        display: none;
+    }
+
+    .image {
+        height: 200px;
+        width: 200px;
+    }
+
     .bable.draggable-word {
         background-color: red;
         padding: 0px;
@@ -124,11 +100,10 @@
         margin: 0;
         line-height: 1;
         width: 100%;
-        height: 50px;
+        height: 100px;
     }
 
     .drop-zone {
-        height: 190px;
         padding-left: 0px;
         padding-right: 0px;
         border: 1px solid white;
@@ -191,19 +166,105 @@
         height: 50px;
         text-align: center;
     }
+
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
+
+    /* Caption of Modal Image */
+    #caption {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      color: #ccc;
+      padding: 10px 0;
+      height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content, #caption {  
+      -webkit-animation-name: zoom;
+      -webkit-animation-duration: 0.6s;
+      animation-name: zoom;
+      animation-duration: 0.6s;
+    }
+
+
+    /* The Close Button */
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @@-webkit-keyframes zoom {
+      from {-webkit-transform:scale(0)} 
+      to {-webkit-transform:scale(1)}
+    }
+
+    @@keyframes zoom {
+      from {transform:scale(0)} 
+      to {transform:scale(1)}
+    }
+
+    
+    /* 100% Image Width on Smaller Screens */
+    @@media only screen and (max-width: 700px){
+      .modal-content {
+        width: 100%;
+      }
+    }
     /*
     [class*="col"] {
         padding: 1rem;
         background-color: #224163;
         border: 2px solid #fff;
         color: #fff;
-        }*/
+    }*/
 </style>
 
 <script>
     var user = "";
     var multiples = false;
     var data;
+    var quizViewNum = "@Model.NumColumns"
+
+    if (@Model.NumColumns == 4) 
+        quizViewNum = "1"
+    else if (@Model.NumColumns == 5) 
+        quizViewNum = "2"
+    
 
     function dragStartHandler(event, id, zone1) {
         event.dataTransfer.setData('Object', event.target.id);
@@ -211,108 +272,98 @@
         multiples = false;
         data = event.dataTransfer.getData('Object');
 
-
         var box = event.target;
 
         console.log("Zone: " + box.id);
-        //console.log(zone1.hasChildNodes());
         zone = box.parentNode;
+        
+        
         if (data.substring(1, 7) == "yellow") {
             if (zone.id.substring(21, 22) != "") {
                 console.log("Zone: " + zone.id.substring(21, 22));
-                console.log(document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
-                document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value = 0
-                console.log(document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
+
+                if (zone.id.substring(21, 22) != "-") {
+                    console.log("BEEP: PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum)
+                    document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0
+                }
                 console.log("TABLE")
-                console.log(document.getElementById("PhysicalAnswer+yellow-box1").value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box2").value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box3").value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box4").value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box1-quizView"+quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box2-quizView"+quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box3-quizView"+quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box4-quizView"+quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box5-quizView" + quizViewNum).value)
             }
-        } else if (data.substring(1, 7) == "purple") {
-            if(zone.id.substring(21, 22) != "") {
+        } 
+        else if (data.substring(1, 7) == "purple") {
+            if (zone.id.substring(21, 22) != "") {
                 console.log("Zone: " + zone.id.substring(21, 22));
-                console.log(document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
-                document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value = 0
-                console.log(document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22)).value)
+                
+                if (zone.id.substring(21, 22) != "-"){
+                    console.log("BEEP: DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum)
+                    document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0
+                }
                 console.log("TABLE")
-                console.log(document.getElementById("DiagnostAnswer+purple-box1").value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box2").value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box3").value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box4").value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box1-quizView"+quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box2-quizView"+quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box3-quizView"+quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box4-quizView"+quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box5-quizView"+quizViewNum).value)
             }
         }
-        
-            
-        
-        //console.log(zone1)
-        //console.log(zone1.childElementCount);
-        //zone1 = event.dataTransfer.getData('Object');
-        //console.log(zone1)
-        //while (zone1.id.substring(0, 10) !== 'drop-zone5') {
-        //    zone1 = zone1.parentNode;
-        //}
-
-        //console.log("Checking if element has child nodes: " + data.hasChildNodes())
-        // multipleDrag(data,"false");
-
     }
+
     function dropHandler(event) {
         preventDefaults(event);
         if (!event.target) {
             // alert('we');
             event.target = event.srcElement;
         }
+
         var dropzone = event.target;
+
         console.log("Drop")
         console.log(data)
+
         data = event.dataTransfer.getData('Object');
         console.log(data)
+
         while (dropzone.id.substring(0, 9) !== 'drop-zone') {
             dropzone = dropzone.parentNode;
         }
+
         console.log(dropzone);
-        console.log(dropzone.hasChildNodes());
-        console.log(document.getElementById("drop-zone-yellow-box1"));
-        console.log(document.getElementById("drop-zone-yellow-box1").childElementCount);
-        console.log(dropzone.id[21])
-        console.log(data.substring(0, 11))
+        console.log(dropzone.id)
+        
         if (dropzone.childElementCount == false && (dropzone.id.substring(17, 20) == data.substring(8, 11) || dropzone.id.substring(9, 16) == data.substring(0, 7))) {
             dropzone.appendChild(document.getElementById(data));
-            console.log(document.getElementById(dropzone.id).getAttribute("name"));
-            console.log(dropzone);
             if (data.substring(1, 7) == "yellow") {
-                //console.log("PhysicalAnswer"+data)
-                //console.log(document.getElementById(document.getElementById("PhysicalAnswer"+data.substring(0,11)+dropzone.id[21])))
-                if (dropzone.id.substring(21, 22) != "")
-                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21,22)).value = document.getElementById(data).getAttribute("name");
-                //console.log(document.getElementById(document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id[21]).value))
-                console.log("TABLE")
-                console.log(document.getElementById("PhysicalAnswer+yellow-box1").value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box2").value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box3").value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box4").value)
-            } else if (data.substring(1, 7) == "purple") {
-                //console.log("DiagnostAnswer"+data)
-                //console.log(document.getElementById("DiagnostAnswer" + data).value)
-                if (dropzone.id.substring(21, 22) != "")
-                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22)).value = document.getElementById(data).getAttribute("name");
-                //console.log(document.getElementById("DiagnostAnswer" + data).value)
-                console.log("TABLE")
-                console.log(document.getElementById("DiagnostAnswer+purple-box1").value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box2").value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box3").value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box4").value)
+                console.log("ZEBRA: " + document.getElementById(data).getAttribute("name"))
+                
+                if (dropzone.id.substring(21, 22) != "-") {
+                    console.log("TIGER: " + "PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum)
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                    console.log("SHEEP: " + document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value)
+                }
+                console.log("BABLE")
+                console.log(document.getElementById("PhysicalAnswer+yellow-box1-quizView" + quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box2-quizView" + quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box3-quizView" + quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box4-quizView" + quizViewNum).value)
+                console.log(document.getElementById("PhysicalAnswer+yellow-box5-quizView" + quizViewNum).value)
+            } 
+            else if (data.substring(1, 7) == "purple") {
+                if (dropzone.id.substring(21, 22) != "-") {
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                console.log("BABLE")
+                console.log(document.getElementById("DiagnostAnswer+purple-box1-quizView" + quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box2-quizView" + quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box3-quizView" + quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box4-quizView" + quizViewNum).value)
+                console.log(document.getElementById("DiagnostAnswer+purple-box5-quizView" + quizViewNum).value)
             }
-            
-            document.getElementById(dropzone.id).getAttribute("name")
         }
-
-
-        //data = event.dataTransfer.getData('Object');
-        //event.target.appendChild(document.getElementById(data));
         document.getElementById(data).selectedIndex = -1;
-        //alert(user);
     }
 
     function dragOverHandler(event) {
@@ -335,16 +386,16 @@
     function myFunction() {
         if (flag === 1) {
             document.querySelectorAll('.background-blue').forEach(item => {
-                item.style.backgroundColor = 'blue';
+                item.style.backgroundColor = '#B8F2E6';
             });
             document.querySelectorAll('.background-yellow').forEach(item => {
-                item.style.backgroundColor = 'yellow';
+                item.style.backgroundColor = '#FAF3DD';
             });
             document.querySelectorAll('.background-purple').forEach(item => {
-                item.style.backgroundColor = 'purple';
+                item.style.backgroundColor = '#FFA69E';
             });
             document.querySelectorAll('.background-green').forEach(item => {
-                item.style.backgroundColor = 'green';
+                item.style.backgroundColor = '#6FD08C';
             });
             flag = -1;
         } else {
@@ -364,16 +415,434 @@
             flag = 1;
         }
     }
+
+    function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires;
+    }
+
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function checkCookie(name) {
+        let clicks = getCookie(name);
+        if (clicks != "") {
+            alert("Amount of clicks are: " + clicks);
+        } else {
+            setCookie("NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value, 3);
+            console.log("Setting Cookie: " + clicks)
+        }
+    }
+
+    function isNumeric(value) {
+        return /^\d+$/.test(value);
+    }
+
+    function show(shown, hidden) {
+        if (@Model.NumColumns == 4) {
+            document.getElementById(shown+"1").style.display = 'block';
+                document.getElementById(hidden).style.display = 'none';
+        } 
+        else if (@Model.NumColumns == 5) {
+            console.log(shown+"2")
+            document.getElementById(shown+"2").style.display = 'block';
+            document.getElementById(hidden).style.display = 'none';
+        }
+    }
+
+    function fillImages(shown, hidden) {
+        show(shown, hidden)
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value = getCookie("NumImage0ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value = getCookie("NumImage1ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value = getCookie("NumImage2ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value = getCookie("NumImage3ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value = getCookie("NumImage4ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value = getCookie("NumImage5ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value = getCookie("NumImage6ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value = getCookie("NumImage7ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value = getCookie("NumImage8ClicksQuizID-" + "@Model.QuizId")
+        document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value = getCookie("NumImage9ClicksQuizID-" + "@Model.QuizId")
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        if ("@Model.ImagePos0" != "") {
+            console.log("@Model.ImagePos0")
+            const button0 = document.createElement("button");
+
+            modalImg0 = document.getElementById("image" + "@Model.ImagePos0");
+
+            button0.type = "button"
+            button0.classList.add("btn");
+            button0.classList.add("mb-1");
+            button0.classList.add("btn-primary");
+
+            button0.addEventListener('click', () => {
+                modalImg0.src = "@Model.Image0";
+                $("#image-modal" + "@Model.ImagePos0").modal('show');
+                document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView1").value, 3);
+                checkCookie("NumImage0ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node0 = document.createTextNode("image");
+            button0.appendChild(node0);
+
+            if (isNumeric("@Model.ImagePos0")) {
+                const element0 = document.getElementById("PhysicalButtons" + "@Model.ImagePos0" + "-quizView" + quizViewNum);
+                const child0 = document.getElementById("PhysicalBox" + "@Model.ImagePos0" + "-quizView" + quizViewNum);
+                element0.insertBefore(button0, child0);
+            }
+            else {
+                const element0 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos0" + "-quizView" + quizViewNum);
+                const child0 = document.getElementById("DiagnosticBox" + "@Model.ImagePos0" + "-quizView" + quizViewNum);
+                element0.insertBefore(button0, child0);
+            }
+            
+        }
+        if ("@Model.ImagePos1" != "") {
+            console.log("@Model.ImagePos1")
+            const button1 = document.createElement("button");
+
+            var modalImg1 = document.getElementById("image" + "@Model.ImagePos1");
+
+            button1.type = "button"
+            button1.classList.add("btn");
+            button1.classList.add("mb-1");
+            button1.classList.add("btn-primary");
+
+            button1.addEventListener('click', () => {
+                modalImg1.src = "@Model.Image1";
+                $("#image-modal" + "@Model.ImagePos1").modal('show');
+                document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage1ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage1Clicks-quizView1").value, 3);
+                checkCookie("NumImage1ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node1 = document.createTextNode("image");
+            button1.appendChild(node1);
+
+            if (isNumeric("@Model.ImagePos1")) {
+                const element1 = document.getElementById("PhysicalButtons" + "@Model.ImagePos1" + "-quizView" + quizViewNum);
+                const child1 = document.getElementById("PhysicalBox" + "@Model.ImagePos1" + "-quizView" + quizViewNum);
+                element1.insertBefore(button1, child1);
+            }
+            else {
+                const element1 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos1" + "-quizView" + quizViewNum);
+                const child1 = document.getElementById("DiagnosticBox" + "@Model.ImagePos1" + "-quizView" + quizViewNum);
+                element1.insertBefore(button1, child1);
+            }
+        }
+        if ("@Model.ImagePos2" != "") {
+            console.log("@Model.ImagePos2")
+            const button2 = document.createElement("button");
+
+            var modalImg2 = document.getElementById("image" + "@Model.ImagePos2");
+
+            button2.type = "button"
+            button2.classList.add("btn");
+            button2.classList.add("mb-1");
+            button2.classList.add("btn-primary");
+
+            button2.addEventListener('click', () => {
+                modalImg2.src = "@Model.Image2";
+                $("#image-modal" + "@Model.ImagePos2").modal('show');
+                document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage2ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage2Clicks-quizView1").value, 3);
+                checkCookie("NumImage2ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node2 = document.createTextNode("image");
+            button2.appendChild(node2);
+
+            if (isNumeric("@Model.ImagePos2")) {
+                const element2 = document.getElementById("PhysicalButtons" + "@Model.ImagePos2" + "-quizView" + quizViewNum);
+                const child2 = document.getElementById("PhysicalBox" + "@Model.ImagePos2" + "-quizView" + quizViewNum);
+                element2.insertBefore(button2, child2);
+            }
+            else {
+                const element2 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos2" + "-quizView" + quizViewNum);
+                const child2 = document.getElementById("DiagnosticBox" + "@Model.ImagePos2" + "-quizView" + quizViewNum);
+                element2.insertBefore(button2, child2);
+            }
+        }
+        if ("@Model.ImagePos3" != "") {
+            console.log("@Model.ImagePos3")
+            const button3 = document.createElement("button");
+
+            var modalImg3 = document.getElementById("image" + "@Model.ImagePos3");
+
+            button3.type = "button"
+            button3.classList.add("btn");
+            button3.classList.add("mb-1");
+            button3.classList.add("btn-primary");
+
+            button3.addEventListener('click', () => {
+                modalImg3.src = "@Model.Image3";
+                $("#image-modal" + "@Model.ImagePos3").modal('show');
+                document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage3ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage3Clicks-quizView1").value, 3);
+                checkCookie("NumImage3ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node3 = document.createTextNode("image");
+            button3.appendChild(node3);
+
+            if (isNumeric("@Model.ImagePos3")) {
+                const element3 = document.getElementById("PhysicalButtons" + "@Model.ImagePos3" + "-quizView" + quizViewNum);
+                const child3 = document.getElementById("PhysicalBox" + "@Model.ImagePos3" + "-quizView" + quizViewNum);
+                element3.insertBefore(button3, child3);
+            }
+            else {
+                const element3 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos3" + "-quizView" + quizViewNum);
+                const child3 = document.getElementById("DiagnosticBox" + "@Model.ImagePos3" + "-quizView" + quizViewNum);
+                element3.insertBefore(button3, child3);
+            }
+        }
+
+         if ("@Model.ImagePos4" != "") {
+            console.log("@Model.ImagePos4")
+            const button4 = document.createElement("button");
+
+            var modalImg4 = document.getElementById("image" + "@Model.ImagePos4");
+
+            button4.type = "button"
+            button4.classList.add("btn");
+            button4.classList.add("mb-1");
+            button4.classList.add("btn-primary");
+
+            button4.addEventListener('click', () => {
+                modalImg4.src = "@Model.Image4";
+                $("#image-modal" + "@Model.ImagePos4").modal('show');
+                document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage4ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage4Clicks-quizView1").value, 3);
+                checkCookie("NumImage4ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node4 = document.createTextNode("image");
+            button4.appendChild(node4);
+
+            if (isNumeric("@Model.ImagePos4")) {
+                const element4 = document.getElementById("PhysicalButtons" + "@Model.ImagePos4" + "-quizView" + quizViewNum);
+                const child4 = document.getElementById("PhysicalBox" + "@Model.ImagePos4" + "-quizView" + quizViewNum);
+                element4.insertBefore(button4, child4);
+            }
+            else {
+                const element4 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos4" + "-quizView" + quizViewNum);
+                const child4 = document.getElementById("DiagnosticBox" + "@Model.ImagePos4" + "-quizView" + quizViewNum);
+                element4.insertBefore(button4, child4);
+            }
+        }
+        if ("@Model.ImagePos5" != "") {
+            console.log("@Model.ImagePos5")
+            const button5 = document.createElement("button");
+
+            var modalImg5 = document.getElementById("image" + "@Model.ImagePos5");
+
+            button5.type = "button"
+            button5.classList.add("btn");
+            button5.classList.add("mb-1");
+            button5.classList.add("btn-primary");
+
+            button5.addEventListener('click', () => {
+                modalImg5.src = "@Model.Image5";
+                $("#image-modal" + "@Model.ImagePos5").modal('show');
+                document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage5ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage5Clicks-quizView1").value, 3);
+                checkCookie("NumImage5ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node5 = document.createTextNode("image");
+            button5.appendChild(node5);
+
+            if (isNumeric("@Model.ImagePos5")) {
+                const element5 = document.getElementById("PhysicalButtons" + "@Model.ImagePos5" + "-quizView" + quizViewNum);
+                const child5 = document.getElementById("PhysicalBox" + "@Model.ImagePos5" + "-quizView" + quizViewNum);
+                element5.insertBefore(button5, child5);
+            }
+            else {
+                const element5 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos5" + "-quizView" + quizViewNum);
+                const child5 = document.getElementById("DiagnosticBox" + "@Model.ImagePos5" + "-quizView" + quizViewNum);
+                element5.insertBefore(button5, child5);
+            }
+        }
+        if ("@Model.ImagePos6" != "") {
+            console.log("@Model.ImagePos6")
+            const button6 = document.createElement("button");
+
+            var modalImg6 = document.getElementById("image" + "@Model.ImagePos6");
+
+            button6.type = "button"
+            button6.classList.add("btn");
+            button6.classList.add("mb-1");
+            button6.classList.add("btn-primary");
+
+            button6.addEventListener('click', () => {
+                modalImg6.src = "@Model.Image6";
+                $("#image-modal" + "@Model.ImagePos6").modal('show');
+                document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage6ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage6Clicks-quizView1").value, 3);
+                checkCookie("NumImage6ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node6 = document.createTextNode("image");
+            button6.appendChild(node6);
+
+            if (isNumeric("@Model.ImagePos6")) {
+                const element6 = document.getElementById("PhysicalButtons" + "@Model.ImagePos6" + "-quizView" + quizViewNum);
+                const child6 = document.getElementById("PhysicalBox" + "@Model.ImagePos6" + "-quizView" + quizViewNum);
+                element.insertBefore(button6, child6);
+            }
+            else {
+                const element6 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos6" + "-quizView" + quizViewNum);
+                const child6 = document.getElementById("DiagnosticBox" + "@Model.ImagePos6" + "-quizView" + quizViewNum);
+                element6.insertBefore(button6, child6);
+            }
+        }
+        if ("@Model.ImagePos7" != "") {
+            console.log("@Model.ImagePos7")
+            const button7 = document.createElement("button");
+
+            var modalImg7 = document.getElementById("image" + "@Model.ImagePos7");
+
+            button7.type = "button"
+            button7.classList.add("btn");
+            button7.classList.add("mb-1");
+            button7.classList.add("btn-primary");
+
+            button7.addEventListener('click', () => {
+                modalImg7.src = "@Model.Image7";
+                $("#image-modal" + "@Model.ImagePos7").modal('show');
+                document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage7ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage7Clicks-quizView1").value, 3);
+                checkCookie("NumImage7ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node7 = document.createTextNode("image");
+            button7.appendChild(node7);
+
+            if (isNumeric("@Model.ImagePos7")) {
+                const element7 = document.getElementById("PhysicalButtons" + "@Model.ImagePos7" + "-quizView" + quizViewNum);
+                const child7 = document.getElementById("PhysicalBox" + "@Model.ImagePos7" + "-quizView" + quizViewNum);
+                element7.insertBefore(button7, child7);
+            }
+            else {
+                const element7 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos7" + "-quizView" + quizViewNum);
+                const child7 = document.getElementById("DiagnosticBox" + "@Model.ImagePos7" + "-quizView" + quizViewNum);
+                element.insertBefore(button7, child7);
+            }
+        }
+        if ("@Model.ImagePos8" != "") {
+            console.log("@Model.ImagePos8")
+            const button8 = document.createElement("button");
+
+            var modalImg8 = document.getElementById("image" + "@Model.ImagePos8");
+
+            button8.type = "button"
+            button8.classList.add("btn");
+            button8.classList.add("mb-1");
+            button8.classList.add("btn-primary");
+
+            button8.addEventListener('click', () => {
+                modalImg8.src = "@Model.Image8";
+                $("#image-modal" + "@Model.ImagePos8").modal('show');
+                document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage8ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage8Clicks-quizView1").value, 3);
+                checkCookie("NumImage8ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node8 = document.createTextNode("image");
+            button8.appendChild(node8);
+
+            if (isNumeric("@Model.ImagePos8")) {
+                const element8 = document.getElementById("PhysicalButtons" + "@Model.ImagePos8" + "-quizView" + quizViewNum);
+                const child8 = document.getElementById("PhysicalBox" + "@Model.ImagePos8" + "-quizView" + quizViewNum);
+                element8.insertBefore(button8, child8);
+            }
+            else {
+                const element8 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos8" + "-quizView" + quizViewNum);
+                const child8 = document.getElementById("DiagnosticBox" + "@Model.ImagePos8" + "-quizView" + quizViewNum);
+                element8.insertBefore(button8, child8);
+            }
+        }
+        if ("@Model.ImagePos9" != "") {
+            console.log("@Model.ImagePos9")
+            const button9 = document.createElement("button");
+
+            var modalImg9 = document.getElementById("image" + "@Model.ImagePos9");
+
+            button9.type = "button"
+            button9.classList.add("btn");
+            button9.classList.add("mb-1");
+            button9.classList.add("btn-primary");
+
+            button9.addEventListener('click', () => {
+                modalImg9.src = "@Model.Image9";
+                $("#image-modal" + "@Model.ImagePos9").modal('show');
+                document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value) + 1;
+                console.log(document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value)
+                setCookie("NumImage9ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value, 3);
+                checkCookie("NumImage9ClicksQuizID-" + "@Model.QuizId");
+            })
+
+            const node9 = document.createTextNode("image");
+            button9.appendChild(node);
+
+            if (isNumeric("@Model.ImagePos9")) {
+                const element9 = document.getElementById("PhysicalButtons" + "@Model.ImagePos9" + "-quizView" + quizViewNum);
+                const child9 = document.getElementById("PhysicalBox" + "@Model.ImagePos9" + "-quizView" + quizViewNum);
+                element9.insertBefore(button9, child9);
+            }
+            else {
+                const element9 = document.getElementById("DiagnosticButtons" + "@Model.ImagePos9" + "-quizView" + quizViewNum);
+                const child9 = document.getElementById("DiagnosticBox" + "@Model.ImagePos9" + "-quizView" + quizViewNum);
+                element9.insertBefore(button9, child9);
+            }
+        } 
+    }
+    
+    //document.cookie = "username=John Doe; expires=Thu, 18 Dec 2023 12:00:00 UTC"
 </script>
-<div class="container-fluid border rounded">
+
+
+<div id="quizView1" class="container-fluid border-3 rounded">
     <div class="container-fluid border rounded">
-        <form id="Form1" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
+        <form id="Form1-quizView1" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
             <div class="row bg-white">
-                <div class="col-4">
-                    <div class="row">
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1" ondragend="sort('drop-zone1')">
-                            <div name="1" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1" ;">
-                                <div>
+                <div class="col-4" style="height: 80vh;">
+                    <div class="row h-25">
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
+                            <div name="1" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
+                                <div id="PhysicalButtons1-quizView1">
+                                    <div id="PhysicalBox1-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                         expand
                                     </button>
@@ -381,21 +850,22 @@
                                 <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2">
-                            <div name="2" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2" ;">
-                                <div>
-                                    @*<button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView1">
+                            <div name="2" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
+                                <div id="PhysicalButtons2-quizView1">
+                                    <div id="PhysicalBox2-quizView1" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                         expand
                                     </button>*@
-
                                     <a type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB"> expand </a>
                                 </div>
                                 <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3">
-                            <div name="3" class="background-yellow  product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3" ;">
-                                <div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView1">
+                            <div name="3" class="background-yellow  product col-12 h-25" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
+                                <div id="PhysicalButtons3-quizView1">
+                                    <div id="PhysicalBox3-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                         expand
                                     </button>
@@ -403,9 +873,10 @@
                                 <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4">
-                            <div name="4" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4" ;">
-                                <div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView1">
+                            <div name="4" class="background-yellow product col-12 h-25" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
+                                <div id="PhysicalButtons4-quizView1">
+                                    <div id="PhysicalBox4-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                         expand
                                     </button>
@@ -413,9 +884,10 @@
                                 <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1">
-                            <div name="1" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1" ;">
-                                <div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
+                            <div name="1" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
+                                <div id="DiagnosticButtonsA-quizView1">
+                                    <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                         expand
                                     </button>
@@ -423,9 +895,10 @@
                                 <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2">
-                            <div name="2" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2" ;">
-                                <div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView1">
+                            <div name="2" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
+                                <div id="DiagnosticButtonsB-quizView1">
+                                    <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                         expand
                                     </button>
@@ -433,9 +906,10 @@
                                 <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3">
-                            <div name="3" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3" ;">
-                                <div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView1">
+                            <div name="3" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
+                                <div id="DiagnosticButtonsC-quizView1">
+                                    <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                         expand
                                     </button>
@@ -443,9 +917,10 @@
                                 <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                             </div>
                         </div>
-                        <div class="drop-zone col-6" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4">
-                            <div name="4" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4" ;">
-                                <div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView1">
+                            <div name="4" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
+                                <div id="DiagnosticButtonsD-quizView1">
+                                    <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                         expand
                                     </button>
@@ -455,9 +930,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                <div class="col" style="height: 80vh;">
+                    <div class="row h-25">
+                        <div class="background-blue drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             @if (column1 == 1){
                                 <span style="white-space: pre-line">@Model.HistoryA</span>}
                             else if (column1 == 2){
@@ -469,7 +944,7 @@
                             else if (column1 == 5){
                                 <span style="white-space: pre-line">@Model.HistoryE</span>}
                         </div>
-                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        <div class="background-blue drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             @if (column2 == 1){
                                 <span style="white-space: pre-line">@Model.HistoryA</span>}
                             else if (column2 == 2){
@@ -481,7 +956,7 @@
                             else if (column2 == 5){
                                 <span style="white-space: pre-line">@Model.HistoryE</span>}
                         </div>
-                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        <div class="background-blue drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             @if (column3 == 1){
                                 <span style="white-space: pre-line">@Model.HistoryA</span>}
                             else if (column3 == 2){
@@ -493,7 +968,7 @@
                             else if (column3 == 5){
                                 <span style="white-space: pre-line">@Model.HistoryE</span>}
                         </div>
-                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                        <div class="background-blue drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             @if (column4 == 1){
                                 <span style="white-space: pre-line">@Model.HistoryA</span>}
                             else if (column4 == 2){
@@ -506,56 +981,56 @@
                                 <span style="white-space: pre-line">@Model.HistoryE</span>}
                         </div>
                     </div>
-                    <input type="hidden" id="PhysicalAnswer+yellow-box1" name="PhysicalAnswerA" value="0" runat="server" required>
-                    <input type="hidden" id="PhysicalAnswer+yellow-box2" name="PhysicalAnswerB" value="0" runat="server" required>
-                    <input type="hidden" id="PhysicalAnswer+yellow-box3" name="PhysicalAnswerC" value="0" runat="server" required>
-                    <input type="hidden" id="PhysicalAnswer+yellow-box4" name="PhysicalAnswerD" value="0" runat="server" required>
-                    <input type="hidden" id="PhysicalAnswer+yellow-box5" name="PhysicalAnswerE" value="0" runat="server" required>
-                    <div class="row">
+                    <input type="hidden" id="PhysicalAnswer+yellow-box1-quizView1" name="PhysicalAnswerA" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box2-quizView1" name="PhysicalAnswerB" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box3-quizView1" name="PhysicalAnswerC" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box4-quizView1" name="PhysicalAnswerD" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box5-quizView1" name="PhysicalAnswerE" value="0" runat="server" required>
+                    <div class="row h-25">
 
-                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1"></div>
-                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2"></div>
-                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3"></div>
-                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4"></div>
-
-                    </div>
-                    <input type="hidden" id="DiagnostAnswer+purple-box1" name="DiagnosticAnswerA" value="0" runat="server" required>
-                    <input type="hidden" id="DiagnostAnswer+purple-box2" name="DiagnosticAnswerB" value="0" runat="server" required>
-                    <input type="hidden" id="DiagnostAnswer+purple-box3" name="DiagnosticAnswerC" value="0" runat="server" required>
-                    <input type="hidden" id="DiagnostAnswer+purple-box4" name="DiagnosticAnswerD" value="0" runat="server" required>
-                    <input type="hidden" id="DiagnostAnswer+purple-box5" name="DiagnosticAnswerE" value="0" runat="server" required>
-                    <div class="row">
-
-                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1"></div>
-                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2"></div>
-                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3"></div>
-                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4"></div>
+                        <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1-quizView1"></div>
+                        <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2-quizView1"></div>
+                        <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3-quizView1"></div>
+                        <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4-quizView1"></div>
 
                     </div>
-                    <div class="row">
-                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseA" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                    <input type="hidden" id="DiagnostAnswer+purple-box1-quizView1" name="DiagnosticAnswerA" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box2-quizView1" name="DiagnosticAnswerB" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box3-quizView1" name="DiagnosticAnswerC" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box4-quizView1" name="DiagnosticAnswerD" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box5-quizView1" name="DiagnosticAnswerE" value="0" runat="server" required>
+                    <div class="row h-25">
+
+                        <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1-quizView1"></div>
+                        <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2-quizView1"></div>
+                        <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3-quizView1"></div>
+                        <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4-quizView1"></div>
+
+                    </div>
+                    <div class="row h-25">
+                        <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseA" id="exampleFormControlTextarea1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                         </div>
-                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseB" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                        <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseB" id="exampleFormControlTextarea1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                         </div>
-                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseC" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                        <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseC" id="exampleFormControlTextarea1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                         </div>
-                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseD" id="exampleFormControlTextarea1" rows="3" form="Form1"></textarea>
+                        <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseD" id="exampleFormControlTextarea1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                         </div>
                     </div>
-                    <input type="hidden" id="NumImage0Clicks" name="NumImage0Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage1Clicks" name="NumImage1Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage2Clicks" name="NumImage2Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage3Clicks" name="NumImage3Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage4Clicks" name="NumImage4Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage5Clicks" name="NumImage5Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage6Clicks" name="NumImage6Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage7Clicks" name="NumImage7Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage8Clicks" name="NumImage8Clicks" value="0" runat="server" required>
-                    <input type="hidden" id="NumImage9Clicks" name="NumImage9Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage0Clicks-quizView1" name="NumImage0Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage1Clicks-quizView1" name="NumImage1Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage2Clicks-quizView1" name="NumImage2Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage3Clicks-quizView1" name="NumImage3Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage4Clicks-quizView1" name="NumImage4Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage5Clicks-quizView1" name="NumImage5Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage6Clicks-quizView1" name="NumImage6Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage7Clicks-quizView1" name="NumImage7Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage8Clicks-quizView1" name="NumImage8Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage9Clicks-quizView1" name="NumImage9Clicks" value="0" runat="server" required>
 
                     <input type="hidden" name="column1" value=@column1 runat="server" required>
                     <input type="hidden" name="column2" value=@column2 runat="server" required>
@@ -563,8 +1038,311 @@
                     <input type="hidden" name="column4" value=@column4 runat="server" required>
                     <input type="hidden" name="column5" value=@column5 runat="server" required>
 
-                    <input type="hidden" name="StartTime" value="@StartDate">
+                    <input type="hidden" name="QuizStringID" value=@Model.QuizId>
                     
+                </div>
+            </div>
+        </form>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="myFunction()" form="Form1-quizView1">Switch Colors</button>
+    <button type="submit" class="btn btn-primary" form="Form1-quizView1">Submit</button>
+</div>
+
+
+
+<div id="quizView2" class="container-fluid border rounded" style="flex: 1;">
+    <div class="container-fluid border rounded">
+        <form id="Form1-quizView2" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
+            <div class="row bg-white">
+                <div class="col-4" style="height: 80vh;">
+                    <div class="row h-25">
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
+                            <div name="1" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2" ;">
+                                <div id="PhysicalButtons1-quizView2">
+                                    <div id="PhysicalBox1-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        expand
+                                    </button>
+                                </div><!-- Button trigger modal -->
+                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
+                            <div name="2" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
+                                <div id="PhysicalButtons2-quizView2">
+                                    <div id="PhysicalBox2-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
+                            <div name="3" class="background-yellow  product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
+                                <div id="PhysicalButtons3-quizView2">
+                                    <div id="PhysicalBox3-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
+                            <div name="4" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
+                                <div id="PhysicalButtons4-quizView2">
+                                    <div id="PhysicalBox4-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
+                            <div name="5" class="background-yellow product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
+                                <div id="PhysicalButtons5-quizView2">
+                                    <div id="PhysicalBox5-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
+                            <div name="1" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
+                                <div id="DiagnosticButtonsA-quizView2">
+                                    <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
+                            <div name="2" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
+                                <div id="DiagnosticButtonsB-quizView2">
+                                    <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
+                            <div name="3" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
+                                <div id="DiagnosticButtonsC-quizView2">
+                                    <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
+                            <div name="4" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
+                                <div id="DiagnosticButtonsD-quizView2">
+                                    <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                            </div>
+                        </div>
+                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
+                            <div name="5" class="background-purple product col-12 h-100" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
+                                <div id="DiagnosticButtonsE-quizView2">
+                                    <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line"></div>
+                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                        expand
+                                    </button>
+                                </div>
+                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="height: 80vh;">
+                    <div class="row h-25">
+                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            @if (column1 == 1)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryA</span>
+                            }
+                            else if (column1 == 2)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryB</span>
+                            }
+                            else if (column1 == 3)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryC</span>
+                            }
+                            else if (column1 == 4)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryD</span>
+                            }
+                            else if (column1 == 5)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryE</span>
+                            }
+                        </div>
+                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            @if (column2 == 1)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryA</span>
+                            }
+                            else if (column2 == 2)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryB</span>
+                            }
+                            else if (column2 == 3)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryC</span>
+                            }
+                            else if (column2 == 4)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryD</span>
+                            }
+                            else if (column2 == 5)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryE</span>
+                            }
+                        </div>
+                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            @if (column3 == 1)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryA</span>
+                            }
+                            else if (column3 == 2)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryB</span>
+                            }
+                            else if (column3 == 3)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryC</span>
+                            }
+                            else if (column3 == 4)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryD</span>
+                            }
+                            else if (column3 == 5)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryE</span>
+                            }
+                        </div>
+                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            @if (column4 == 1)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryA</span>
+                            }
+                            else if (column4 == 2)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryB</span>
+                            }
+                            else if (column4 == 3)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryC</span>
+                            }
+                            else if (column4 == 4)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryD</span>
+                            }
+                            else if (column4 == 5)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryE</span>
+                            }
+                        </div>
+                        <div class="background-blue drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            @if (column5 == 1)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryA</span>
+                            }
+                            else if (column5 == 2)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryB</span>
+                            }
+                            else if (column5 == 3)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryC</span>
+                            }
+                            else if (column5 == 4)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryD</span>
+                            }
+                            else if (column5 == 5)
+                            {
+                                <span style="white-space: pre-line">@Model.HistoryE</span>
+                            }
+                        </div>
+                    </div>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box1-quizView2" name="PhysicalAnswerA" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box2-quizView2" name="PhysicalAnswerB" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box3-quizView2" name="PhysicalAnswerC" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box4-quizView2" name="PhysicalAnswerD" value="0" runat="server" required>
+                    <input type="hidden" id="PhysicalAnswer+yellow-box5-quizView2" name="PhysicalAnswerE" value="0" runat="server" required>
+                    <div class="row h-25">
+
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1-quizView2"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2-quizView2"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area3-quizView2"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area4-quizView2"></div>
+                        <div class="background-yellow drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area5-quizView2"></div>
+
+                    </div>
+                    <input type="hidden" id="DiagnostAnswer+purple-box1-quizView2" name="DiagnosticAnswerA" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box2-quizView2" name="DiagnosticAnswerB" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box3-quizView2" name="DiagnosticAnswerC" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box4-quizView2" name="DiagnosticAnswerD" value="0" runat="server" required>
+                    <input type="hidden" id="DiagnostAnswer+purple-box5-quizView2" name="DiagnosticAnswerE" value="0" runat="server" required>
+                    <div class="row h-25">
+
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1-quizView2"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2-quizView2"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area3-quizView2"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4-quizView2"></div>
+                        <div class="background-purple drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area5-quizView2"></div>
+
+                    </div>
+                    <div class="row h-25">
+                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseA" id="exampleFormControlTextarea1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                        </div>
+                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseB" id="exampleFormControlTextarea1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                        </div>
+                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseC" id="exampleFormControlTextarea1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                        </div>
+                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseD" id="exampleFormControlTextarea1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                        </div>
+                        <div class="background-green drop-zone col" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
+                            <textarea class="form-control" name="FreeResponseE" id="exampleFormControlTextarea1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" id="NumImage0Clicks-quizView2" name="NumImage0Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage1Clicks-quizView2" name="NumImage1Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage2Clicks-quizView2" name="NumImage2Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage3Clicks-quizView2" name="NumImage3Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage4Clicks-quizView2" name="NumImage4Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage5Clicks-quizView2" name="NumImage5Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage6Clicks-quizView2" name="NumImage6Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage7Clicks-quizView2" name="NumImage7Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage8Clicks-quizView2" name="NumImage8Clicks" value="0" runat="server" required>
+                    <input type="hidden" id="NumImage9Clicks-quizView2" name="NumImage9Clicks" value="0" runat="server" required>
+
+                    <input type="hidden" name="column1" value=@column1 runat="server" required>
+                    <input type="hidden" name="column2" value=@column2 runat="server" required>
+                    <input type="hidden" name="column3" value=@column3 runat="server" required>
+                    <input type="hidden" name="column4" value=@column4 runat="server" required>
+                    <input type="hidden" name="column5" value=@column5 runat="server" required>
+                    <input type="hidden" name="StartTime" value="@StartDate">
                     <input type="hidden" name="QuizStringID" value=@Model.QuizId>                   
                     <button type="button" class="btn btn-primary" onclick="myFunction()">Switch Colors</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -575,12 +1353,11 @@
 </div>
 
 
-
 <!-- PhysicalA -->
 <div class="modal fade" id="staticBackdropPhysicalA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.PhysicalA</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -591,8 +1368,8 @@
 <!-- PhysicalB -->
 <div class="modal fade" id="staticBackdropPhysicalB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.PhysicalB</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -603,8 +1380,8 @@
 <!-- PhysicalC -->
 <div class="modal fade" id="staticBackdropPhysicalC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.PhysicalC</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -615,8 +1392,20 @@
 <!-- PhysicalD -->
 <div class="modal fade" id="staticBackdropPhysicalD" data-bs-backdrop="staticPhysicalD" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.PhysicalD</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PhysicalE -->
+<div class="modal fade" id="staticBackdropPhysicalE" data-bs-backdrop="staticPhysicalE" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.PhysicalE</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -627,8 +1416,8 @@
 <!-- DiagnosticA -->
 <div class="modal fade" id="staticBackdropDiagnosticA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.DiagnosticA</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -639,8 +1428,8 @@
 <!-- DiagnosticB -->
 <div class="modal fade" id="staticBackdropDiagnosticB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.DiagnosticB</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -651,8 +1440,8 @@
 <!-- DiagnosticC -->
 <div class="modal fade" id="staticBackdropDiagnosticC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.DiagnosticC</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -663,11 +1452,93 @@
 <!-- DiagnosticD -->
 <div class="modal fade" id="staticBackdropDiagnosticD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.DiagnosticD</span>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
+
+<!-- DiagnosticE -->
+<div class="modal fade" id="staticBackdropDiagnosticE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center p-2">
+            <span style="white-space: pre-line">@Model.DiagnosticE</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Physical 1 Image Modal -->
+<div id="image-modal1" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="image1" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Physical 2 Image Modal -->
+<div id="image-modal2" class="modal fade">
+    <span class="close">asdf</span>
+    <img class="modal-content" id="image2" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Physical 3 Image Modal -->
+<div id="image-modal3" class="modal fade">
+    <span class="close">asdfs</span>
+    <img class="modal-content" id="image3" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Physical 4 Image Modal -->
+<div id="image-modal4" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="image4" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Physical 5 Image Modal -->
+<div id="image-modal5" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="image5" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Diagnostic A Image Modal -->
+<div id="image-modalA" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="imageA" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Diagnostic B Image Modal -->
+<div id="image-modalB" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="imageB" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Diagnostic C Image Modal -->
+<div id="image-modalC" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="imageC" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Diagnostic D Image Modal -->
+<div id="image-modalD" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="imageD" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
+</div>
+
+<!-- Diagnostic E Image Modal -->
+<div id="image-modalE" class="modal fade">
+    <span class="close"></span>
+    <img class="modal-content" id="imageE" oncontextmenu="return false;">
+    <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
