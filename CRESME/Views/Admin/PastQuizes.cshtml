@@ -6,40 +6,38 @@
 
 <br />
 
-<h1>Past CRESME</h1>
-
 
 <br />
 
 
 <div class="table-responsive">
 
-    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
             <tr>
-                <th>
+                <th class="table-dark">
                     CRESME
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Block)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Course)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Term)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     Completed
                 </th>
                 
-
+                <th class="table-dark"></th>
 
             </tr>
         </thead>
@@ -53,7 +51,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.QuizName)
+                        @Html.DisplayFor(modelItem => @item.QuizName)
                     </td>
 
                     <td>
@@ -70,8 +68,56 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.EndTime)
                     </td>
+                    <td>
 
+                        <form asp-action="GenerateAttemptPDF" asp-controller="Pdf">
 
+                            <input type="hidden" name="AttemptId" value="@item.AttemptId " />
+                            <input type="hidden" name="StudentNID" value="@item.StudentNID " />
+                            <input type="hidden" name="StudentName" value="@item.StudentName " />
+                            <input type="hidden" name="QuizName" value="@item.QuizName " />
+                            <input type="hidden" name="Score" value="@item.Score " />
+                            <input type="hidden" name="NumColumns" value="@item.NumColumns " />
+                            <input type="hidden" name="StartTime" value="@item.StartTime " />
+                            <input type="hidden" name="EndTime" value="@item.EndTime " />
+                            <input type="hidden" name="Term" value="@item.Term " />
+                            <input type="hidden" name="Course" value="@item.Course " />
+                            <input type="hidden" name="Block" value="@item.Block " />
+                            <input type="hidden" name="PatientIntro" value="@item.PatientIntro " />
+                            <input type="hidden" name="PhysicalAnswerA" value="@item.PhysicalAnswerA " />
+                            <input type="hidden" name="PhysicalAnswerB" value="@item.PhysicalAnswerB " />
+                            <input type="hidden" name="PhysicalAnswerC" value="@item.PhysicalAnswerC " />
+                            <input type="hidden" name="PhysicalAnswerD" value="@item.PhysicalAnswerD " />
+                            <input type="hidden" name="PhysicalAnswerE" value="@item.PhysicalAnswerE " />
+                            <input type="hidden" name="DiagnosticAnswerA" value="@item.DiagnosticAnswerA " />
+                            <input type="hidden" name="DiagnosticAnswerB" value="@item.DiagnosticAnswerB " />
+                            <input type="hidden" name="DiagnosticAnswerC" value="@item.DiagnosticAnswerC " />
+                            <input type="hidden" name="DiagnosticAnswerD" value="@item.DiagnosticAnswerD " />
+                            <input type="hidden" name="DiagnosticAnswerE" value="@item.DiagnosticAnswerE " />
+                            <input type="hidden" name="FreeResponseA" value="@item.FreeResponseA " />
+                            <input type="hidden" name="FreeResponseB" value="@item.FreeResponseB " />
+                            <input type="hidden" name="FreeResponseC" value="@item.FreeResponseC " />
+                            <input type="hidden" name="FreeResponseD" value="@item.FreeResponseD " />
+                            <input type="hidden" name="FreeResponseE" value="@item.FreeResponseE " />
+                            <input type="hidden" name="NumImage0Clicks" value="@item.NumImage0Clicks " />
+                            <input type="hidden" name="NumImage1Clicks" value="@item.NumImage1Clicks " />
+                            <input type="hidden" name="NumImage2Clicks" value="@item.NumImage2Clicks " />
+                            <input type="hidden" name="NumImage3Clicks" value="@item.NumImage3Clicks " />
+                            <input type="hidden" name="NumImage4Clicks" value="@item.NumImage4Clicks " />
+                            <input type="hidden" name="NumImage5Clicks" value="@item.NumImage5Clicks " />
+                            <input type="hidden" name="NumImage6Clicks" value="@item.NumImage6Clicks " />
+                            <input type="hidden" name="NumImage7Clicks" value="@item.NumImage7Clicks " />
+                            <input type="hidden" name="NumImage8Clicks" value="@item.NumImage8Clicks " />
+                            <input type="hidden" name="NumImage9Clicks" value="@item.NumImage9Clicks " />
+
+                            <button type="submit" class="btn btn-md btn-primary">
+                                <i class="fa-solid fa-download"></i>
+                                Download PDF
+                            </button>
+                        </form>
+
+                    </td>
+                   
 
                 </tr>
             }
@@ -88,6 +134,13 @@
 
 <br />
 
+<style>
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
+    }
+
+</style>
 
 @section scripts
     {

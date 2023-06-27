@@ -1,5 +1,8 @@
 ﻿using CRESME.Data;
 using CRESME.Models;
+using iText.Html2pdf;
+using iText.Html2pdf.Attach.Impl.Tags;
+using iText.Kernel.Pdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -158,7 +161,7 @@ namespace CRESME.Controllers
         /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
          * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
          * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
-        [Authorize(Roles = "Admin, Instructor")]
+        /*[Authorize(Roles = "Admin, Instructor, Student")]
         public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
         {
 
@@ -203,13 +206,68 @@ namespace CRESME.Controllers
 
 
             }
+        }*/
+
+
+
+
+
+
+
+
+
+        /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
+         * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
+         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public  async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
+        {
+            // using string Swriter to convert view with Model data into HTML string. 
+            using (var stringWriter = new StringWriter())
+            {
+                // finds the view, PrintAttempt.cshtml, that will be used to generate PDF. 
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, "PrintAttempt", false);
+                if (viewResult == null)
+                {
+                    throw new ArgumentException("View Cannot be Found");
+
+                }
+                var model = attempt;
+
+                // Dictionary is created with the Attempt model data added to the view
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                { Model = model };
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    viewDictionary,
+                    TempData,
+                    stringWriter,
+                    new HtmlHelperOptions()
+                    );
+
+                await viewResult.View.RenderAsync(viewContext);
+
+
+                // using the conver to PDF function to create a PDF stream
+                byte[] pdfBytes; 
+                using (MemoryStream outputStream = new MemoryStream())
+                {
+                    HtmlConverter.ConvertToPdf(stringWriter.ToString(), outputStream);
+                    pdfBytes = outputStream.ToArray();
+                }
+
+                
+                string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
+
+                // return PDF for as download file
+                return File(pdfBytes, "application/pdf", filename);
+
+
+            }
+
         }
-
-
-
-
-
-
 
 
 

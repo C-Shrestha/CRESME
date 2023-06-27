@@ -1,0 +1,74 @@
+﻿
+
+@model IEnumerable<CRESME.Data.Attempt>
+
+@{
+    ViewData["Title"] = "CRESME Details";
+     
+}
+
+<br />
+
+
+
+
+
+
+<style>
+
+
+    .custom_btn {
+        border-color: #F1C400 !important;
+        color: #F1C400;
+        font-weight: bold;
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
+    }
+</style>
+
+<div id="accordion">
+    
+    <div class="card-header bg-dark text-center" id="headingOne" style="color: #F1C400;">
+        <h1 class="text-center">@Model.FirstOrDefault().QuizName Details </h1>
+    </div>
+
+    <div class="card">
+
+        <div class="card-header bg-light text-center" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn custom_btn  btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Download CRESME
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
+            <div class="card-body">
+
+                <br />
+                <form asp-controller="Admin" asp-action="ExportQuizFromDetails">
+                    <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
+                    <button type="submit" class="btn btn-md btn-primary">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Export CRESME
+                    </button>
+                </form>
+                <br />
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<br />
+
+
+@section scripts
+{
+    <script src="~/js/datatable_file.js"></script>
+}

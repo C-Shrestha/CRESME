@@ -3,10 +3,15 @@
 }
 
 
+<div id="row" class="row justify-content-end"></div>
 <br />
-<br id="Form1" />
+<br />
+<br />
+<br />
+<br />
 
-<form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
+
+<form id="form"  method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
     <div class="container border rounded" style="width: 50%; background-color:#f8f9fa;">
         <div class="row gy-2 mb-3 justify-content-center">
 
@@ -48,7 +53,7 @@
                 <div class="w-100"></div>
 
 
-                <button onclick="validate(); deleteAlert()" class="col-4 btn btn-primary" type="submit">
+            <button onclick="validate();" class="col-4 btn custom_btn" type="submit">
                     <i class="fa-solid fa-user"></i> Create User Accounts
                 </button>
         </div>
@@ -94,46 +99,74 @@
 
         var fileButton = document.getElementById("file");
 
-        function deleteAlert() {
-            const toastAlert = document.getElementsByClassName('alert');
-            if (toastAlert.length) {
-                setTimeout(() => {
-                    toastAlert[0].remove();
-                    toastAlert[1].remove();
-                    toastAlert[2].remove();
-                }, 3000);
-            }
+
+
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+
+        function showToast(toast) {
+
+            var showToast = new bootstrap.Toast(toast);
+            showToast.show();
 
         }
 
         function validate() {
 
+
             if (fileButton.value == "") {
-                var div1 = document.createElement("div");
-                div1.setAttribute("aria-live", 'polite');
-                div1.setAttribute("aria-atomic", 'true');
-                div1.setAttribute("class", 'alert');
-                div1.style.position = "relative";
-                div1.style.minHeight = "0px";
 
-                var div2 = document.createElement("div");
-                div2.setAttribute("class", 'toast bg-success');
-                div2.style.position = "absolute";
-                div2.style.display = "initial";
-                div2.style.top = "0";
-                div2.style.right = "0";
-                div2.setAttribute("data-delay", '2000');
+                var toast = document.createElement("div");
+                toast.setAttribute("aria-live", 'assertive');
+                toast.setAttribute("aria-atomic", 'true');
+                toast.setAttribute("class", 'toast');
+                toast.setAttribute("role", 'alert');
+                toast.style.position = "absolute";
 
-                var div3 = document.createElement("div");
-                div3.setAttribute("class", 'toast-body');
-                div3.innerHTML = "Please Upload Excel File!";
 
-                var form = document.getElementById("Form1");
+                var toastHeader = document.createElement("div");
+                toastHeader.setAttribute("class", 'toast-header');
 
-                form.before(div1);
-                div1.appendChild(div2);
-                div2.appendChild(div3);
+                var img = document.createElement("img");
+                img.src = '../images/canvas3.png';
+                img.setAttribute("width", '30');
+                img.setAttribute("height", '30');
+                img.setAttribute("class", 'rounded mr-2');
+
+                var strong = document.createElement("strong");
+                strong.innerHTML = "CRESME";
+                strong.setAttribute("class", 'me-auto');
+
+                var button = document.createElement("button");
+                button.setAttribute("class", 'btn-close');
+                button.setAttribute("data-bs-dismiss", 'toast');
+                button.setAttribute("aria-label", 'Close');
+
+                var toastBody = document.createElement("div");
+                toastBody.setAttribute("class", 'toast-body bg-warning');
+                toastBody.innerHTML = "Please Upload Excel File!"
+
+                var form = document.getElementById("form");
+
+                row.before(toast);
+
+                toast.prepend(toastBody);
+                toast.prepend(toastHeader);
+
+                toastHeader.prepend(button);
+                toastHeader.prepend(strong);
+                toastHeader.prepend(img);
+
+
+                showToast(toast);
+
+
+
             }
+
         }
 
         fileButton.onchange = function () {

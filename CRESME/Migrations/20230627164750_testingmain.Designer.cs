@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230622220750_newmigration")]
-    partial class newmigration
+    [Migration("20230627164750_testingmain")]
+    partial class testingmain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -409,6 +409,10 @@ namespace CRESME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagePos9")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InstructorID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Legend")

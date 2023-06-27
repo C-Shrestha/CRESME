@@ -4,8 +4,23 @@
     ViewData["Title"] = "Instructor View";
 }
 
-<h1>Instructor View</h1>
 
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success">
+            @TempData["AlertMessage"]
+        </div>
+    </div>
+
+}
+
+<br />
 
 <form asp-controller="Quiz" asp-action="CreateQuiz">
     <button type="submit" class="btn btn-md btn-primary">
@@ -13,58 +28,58 @@
         Create New CRESME
     </button>
 </form>
-<br />
-<br />
+
 <br />
 
 <div class="table-responsive">
 
-    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
             <tr>
-                <th>
+                <th class="table-dark">
                     CRESME
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Block)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Course)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Term)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.DateCreated)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.StartDate)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.EndDate)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Published)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     Feedback
                 </th>
 
 
 
                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
-                <th></th>
-                <th></th>
+                <th class="table-dark"></th>
+                <th class="table-dark"></th>
+                <th class="table-dark"></th>
 
 
             </tr>
@@ -129,11 +144,20 @@
                         }
                     </td>
 
+                    <td>
+                        <form asp-controller="Admin" asp-action="QuizDetails" asp-route-QuizName="@item.QuizName" method="post">
+                            <button type="submit" class="btn btn-sm btn-warning">
+                                <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
+                                Details
+                            </button>
+                        </form>
+                    </td>
+
 
 
 
                     <td>
-                        <form asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizId="@item.QuizId">
+                        <form asp-controller="Admin" asp-action="InstructorEditQuiz" asp-route-QuizId="@item.QuizId">
                             <button type="submit" class="btn btn-sm btn-primary">
                                 <i class="fa-solid fa-user-pen"></i>
                                 Edit
@@ -143,7 +167,7 @@
 
 
                     <td>
-                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
+                        <form asp-controller="Admin" asp-action="InstructorDeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
                             <button type="submit" class="btn btn-sm btn-danger">
                                 <i class="fa-solid fa-trash-can"></i>
                                 Delete
@@ -164,11 +188,26 @@
 
 
 
+<style>
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
+    }
+
+</style>
 
 
 @section scripts
     {
     <script src="~/js/datatable_file.js"></script>
+
+    <script>
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+    </script>
 }
 
 

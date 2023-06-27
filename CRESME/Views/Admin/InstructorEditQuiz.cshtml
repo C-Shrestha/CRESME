@@ -19,7 +19,7 @@
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
                 <div class="col-6 text-center" style="font-weight: bold;">Name</div>
-
+            
                 <div class="w-100"></div>
                 <input asp-for="QuizName" class="col-4 input-field" placeholder="CRESME Name" required autocomplete="off" />
                 <span asp-validation-for="QuizName" class="text-danger"></span>
@@ -47,10 +47,6 @@
                 <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" />
                 <span asp-validation-for="Term" class="text-danger"></span>
 
-                <div class="col-6 text-center" style="font-weight: bold;">Assigned (Instructor's NID)</div>
-                <div class="w-100"></div>
-                <input asp-for="InstructorID" class="col-4 input-field" placeholder=" Instructor NID" required autocomplete="off" />
-                <span asp-validation-for="InstructorID" class="text-danger"></span>
 
                 <div class="col-6 text-center" style="font-weight: bold;">Date Created</div>
                 <div class="w-100"></div>
@@ -62,10 +58,10 @@
 
                 <div class="w-100"></div>
                 <div class="col-6 text-center" style="font-weight: bold;">Start Date</div>
-
+                
 
                 <div class="w-100"></div>
-                <input asp-for="StartDate" type="datetime-local" class="col-5 input-field" />
+                <input asp-for="StartDate" type="datetime-local"  class="col-5 input-field" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
 
 
@@ -73,7 +69,7 @@
                 <div class="col-6 text-center" style="font-weight: bold;">End Date</div>
 
                 <div class="w-100"></div>
-                <input asp-for="EndDate" type="datetime-local" class="col-5 input-field" />
+                <input asp-for="EndDate" type="datetime-local"  class="col-5 input-field" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
 
 
@@ -138,6 +134,8 @@
         border-color: #F1C400;
     }
 
+
+
 </style>
 
 <div>
@@ -145,7 +143,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -1,0 +1,199 @@
+﻿@model IEnumerable<CRESME.Data.Quiz>
+
+@{
+    ViewData["Title"] = "List All CRESMES";
+}
+
+
+<br />
+
+
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success">
+            @TempData["AlertMessage"]
+        </div>
+    </div>
+
+}
+
+
+<br />
+
+    <div class="table-responsive">
+
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
+
+
+        <thead>
+                <tr>
+                    <th class="table-dark">
+                    CRESME ID
+                    </th>
+
+                    <th class="table-dark">
+                    CRESME
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.Block)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.Course)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.Term)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.DateCreated)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.Published)
+                    </th>
+
+                    <th class="table-dark">
+                        Feedback
+                    </th>
+
+                    
+
+
+
+                    @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
+                    <th class="table-dark"></th>
+                    
+                    
+
+                    
+                </tr>
+            </thead>
+
+
+
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuizId)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QuizName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Block)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Term)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateCreated)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate).
+                        </td>
+
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Published)
+                        </td>*@
+
+                        <td>
+                        
+                        @if (item.Published == "Yes")
+                            {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            }
+                            else
+                            {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                            }
+                        </td>
+
+                    <td>
+
+                        @if (item.FeedBackEnabled == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
+
+                    <td>
+                        <form asp-controller="Admin" asp-action="InstructorQuizDetails" asp-route-QuizName="@item.QuizName" method="post">
+                            <button type="submit" class="btn btn-sm btn-warning">
+                                <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
+                                Details
+                            </button>
+                        </form>
+                    </td>
+
+
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+<style>
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
+    }
+
+</style>
+
+@section scripts
+{
+    <script src="~/js/datatable_file.js"></script>
+
+    <script>
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+    </script>
+}

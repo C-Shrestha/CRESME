@@ -9,11 +9,30 @@
 
 @if (TempData["AlertMessage"] != null)
 {
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0; color:white;" data-delay="2000">
-            <div class="toast-body">
-                @(TempData["AlertMessage"])
-            </div>
+
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+            <div class="toast-body bg-success" style="color:white">
+            @TempData["AlertMessage"]
+        </div>
+    </div>
+}
+
+@if (TempData["Delete"] != null)
+{
+
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-warning">
+            @TempData["Delete"]
         </div>
     </div>
 
@@ -21,21 +40,26 @@
 
 @if (TempData["AlertMessageFail"] != null)
 {
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-danger" style="position: absolute; top: 0; right: 0;" data-delay="2000">
-            <div class="toast-body">
-                @(TempData["AlertMessageFail"])
-            </div>
+
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-danger">
+            @TempData["AlertMessageFail"]
         </div>
     </div>
 
 }
 
 
+<div id="row" class="row justify-content-end"></div>
 
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="d-flex align-items-center min-vh-100">
-        <div class="container border bg-white rounded" style="width: 50%;">
+        <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
              
@@ -147,7 +171,7 @@
                 </select>
                 <div class="w-100"></div>
 
-                <button onclick="validate(); deleteAlert();" type="submit" class="btn custom_btn col-5">Create CRESME</button>
+                <button onclick="validate()" type="submit" class="btn custom_btn col-5">Create CRESME</button>
                 <div class="w-100"></div>
 
             </div>
@@ -191,28 +215,126 @@
 
 <script>
 
+
     var i = 0;
+    var j = 0;
     var fileButton = document.getElementById("excelButton");
     var legendButton = document.getElementById("Legend");
 
+    window.onload = function () {
+        // your code here
+        $('.toast').toast('show');
+    };
 
-
-
-    function deleteAlert() {
-        const toastAlert = document.getElementsByClassName('alert');
-        if (toastAlert.length) {
-            setTimeout(() => {
-                toastAlert[0].remove();
-                toastAlert[1].remove();
-                toastAlert[2].remove();
-            }, 3000);
-        }
+    function showToast(toast)
+    {
+        var showToast = new bootstrap.Toast(toast);
+        showToast.show();
 
     }
-
     
     function validate(){
 
+
+        if (legendButton.value == "") {
+
+            var toast = document.createElement("div");
+            toast.setAttribute("aria-live", 'assertive');
+            toast.setAttribute("aria-atomic", 'true');
+            toast.setAttribute("class", 'toast');
+            toast.setAttribute("role", 'alert');
+            toast.style.position = "absolute";
+
+
+
+            var toastHeader = document.createElement("div");
+            toastHeader.setAttribute("class", 'toast-header');
+
+            var img = document.createElement("img");
+            img.src = '../images/canvas3.png';
+            img.setAttribute("width", '30');
+            img.setAttribute("height", '30');
+            img.setAttribute("class", 'rounded mr-2');
+
+            var strong = document.createElement("strong");
+            strong.innerHTML = "CRESME";
+            strong.setAttribute("class", 'me-auto');
+
+            var button = document.createElement("button");
+            button.setAttribute("class", 'btn-close');
+            button.setAttribute("data-bs-dismiss", 'toast');
+            button.setAttribute("aria-label", 'Close');
+
+            var toastBody = document.createElement("div");
+            toastBody.setAttribute("class", 'toast-body bg-warning');
+            toastBody.innerHTML = "Please Upload Legend Image!"
+
+            var form = document.getElementById("Form1");
+
+            form.prepend(toast);
+
+            toast.prepend(toastBody);
+            toast.prepend(toastHeader);
+
+            toastHeader.prepend(button);
+            toastHeader.prepend(strong);
+            toastHeader.prepend(img);
+
+
+            showToast(toast);
+
+
+            
+        }
+        else if (fileButton.value == "") {
+
+            var toast = document.createElement("div");
+            toast.setAttribute("aria-live", 'assertive');
+            toast.setAttribute("aria-atomic", 'true');
+            toast.setAttribute("class", 'toast');
+            toast.setAttribute("role", 'alert');
+            toast.style.position = "absolute";
+
+
+            var toastHeader = document.createElement("div");
+            toastHeader.setAttribute("class", 'toast-header');
+
+            var img = document.createElement("img");
+            img.src = '../images/canvas3.png';
+            img.setAttribute("width", '30');
+            img.setAttribute("height", '30');
+            img.setAttribute("class", 'rounded mr-2');
+
+            var strong = document.createElement("strong");
+            strong.innerHTML = "CRESME";
+            strong.setAttribute("class", 'me-auto');
+
+            var button = document.createElement("button");
+            button.setAttribute("class", 'btn-close');
+            button.setAttribute("data-bs-dismiss", 'toast');
+            button.setAttribute("aria-label", 'Close');
+
+            var toastBody = document.createElement("div");
+            toastBody.setAttribute("class", 'toast-body bg-warning');
+            toastBody.innerHTML = "Please Upload Excel File!"
+
+            var form = document.getElementById("Form1");
+
+            form.prepend(toast);
+
+            toast.prepend(toastBody);
+            toast.prepend(toastHeader);
+
+            toastHeader.prepend(button);
+            toastHeader.prepend(strong);
+            toastHeader.prepend(img);
+
+
+            showToast(toast);
+
+        }
+
+        /*
         if(legendButton.value == "")
         {
             
@@ -224,7 +346,7 @@
             div1.style.minHeight = "0px";
 
             var div2 = document.createElement("div");
-            div2.setAttribute("class", 'toast bg-success');
+            div2.setAttribute("class", 'toast bg-danger');
             div2.style.position = "absolute";
             div2.style.display = "initial";
             div2.style.top = "0";
@@ -270,7 +392,7 @@
             div1.appendChild(div2);
             div2.appendChild(div3);
 
-        }
+        }*/
     }
     function deleteButton(k) {
         var deleteButton = document.getElementById(k);
@@ -541,15 +663,8 @@
     }
 
 
-    }
+ }
 
 
 
-</script>
-<script>
-
-    window.onload = function () {
-        // your code here
-        $('.toast').toast('show');
-    };
 </script>

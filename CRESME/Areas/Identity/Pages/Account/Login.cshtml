@@ -1,6 +1,11 @@
 ﻿@page
 @model LoginModel
 
+
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 @{
     ViewData["Title"] = "Log in";
 }
@@ -9,7 +14,17 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<form id="account" method="post">
+
+
+<img id="img" src="~/images/canvas3.png" style="display: none"/>
+<div id="error" display="none">
+</div>
+<br />
+<br />
+
+
+
+<form id="account" method="post" onsubmit="setStorage()">
     <div class="d-flex align-items-center">
         <div class="container  border p-3 mb-5 mt-5 bg-white rounded" style="width: 50%;">
             <div class="row justify-content-center gy-2">
@@ -159,3 +174,75 @@
     <partial name="_ValidationScriptsPartial" />
 }*@
 
+<script>
+
+       window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+
+        function showToast(toast) {
+
+            var showToast = new bootstrap.Toast(toast);
+            showToast.show();
+
+        }
+
+        var reloading = sessionStorage.getItem("reloading");
+
+        if (reloading) {
+
+            var toast = document.createElement("div");
+            toast.setAttribute("aria-live", 'assertive');
+            toast.setAttribute("aria-atomic", 'true');
+            toast.setAttribute("class", 'toast');
+            toast.setAttribute("role", 'alert');
+            toast.style.position = "absolute";
+
+
+            var toastHeader = document.createElement("div");
+            toastHeader.setAttribute("class", 'toast-header');
+
+            var img = document.getElementById("img");
+            img.setAttribute("width", '30');
+            img.setAttribute("height", '30');
+            img.style.display = "initial";
+            img.setAttribute("class", 'rounded mr-2');
+
+            var strong = document.createElement("strong");
+            strong.innerHTML = "CRESME";
+            strong.setAttribute("class", 'me-auto');
+
+            var button = document.createElement("button");
+            button.setAttribute("class", 'btn-close');
+            button.setAttribute("data-bs-dismiss", 'toast');
+            button.setAttribute("aria-label", 'Close');
+
+            var toastBody = document.createElement("div");
+            toastBody.setAttribute("class", 'toast-body bg-danger');
+            toastBody.innerHTML = "Login Failure! Please Make Sure Your NID and Password are Correct!"
+
+            var div = document.getElementById("error");
+
+            div.before(toast);
+
+            toast.prepend(toastBody);
+            toast.prepend(toastHeader);
+
+            toastHeader.prepend(button);
+            toastHeader.prepend(strong);
+            toastHeader.prepend(img);
+
+            sessionStorage.removeItem("reloading");
+            showToast(toast);
+
+        }
+
+
+
+
+    function setStorage() {
+        sessionStorage.setItem("reloading", "true");
+    }
+
+</script>

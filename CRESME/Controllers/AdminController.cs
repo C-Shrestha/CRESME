@@ -3,9 +3,10 @@ using CRESME.Constants;
 using CRESME.Data;
 using CRESME.Models;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,12 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.IO;
 using System.IO.Compression;
-using System.Drawing;
+using System.Security.Policy;
 
 namespace CRESME.Controllers
 {
@@ -64,89 +66,7 @@ namespace CRESME.Controllers
         }
 
 
-/*
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        [Route("/Admin/ImportExcel")]
-        *//*Takes in a properly formated Excel file and create a users (both instructors and studnets)*//*
-        public async Task<IActionResult> ImportExcel(IFormFile file)
 
-        {
-            var list = new List<ApplicationUser>();
-            using (var stream = new MemoryStream())
-            {
-                
-                await file.CopyToAsync(stream);
-              
-                using (XLWorkbook workbook = new XLWorkbook(stream))
-                
-                {                    
-                    IXLWorksheet worksheet = workbook.Worksheets.First();
-                        
-                    int rowCount = worksheet.RowsUsed().Count();
-
-                    for (int row = 2; row <= rowCount; row++)
-                    {
-                        //storing variables for password and for assigning roles later
-                        var PasswordHash = worksheet.Cell(row, 7).Value.ToString();
-                        var assignRole = worksheet.Cell(row, 17).Value.ToString().Trim();
-
-                        //creating a new user object
-                        var user = new ApplicationUser
-                        {
-
-                            UserName = worksheet.Cell(row, 2).Value.ToString().Trim(),
-                            NormalizedUserName = worksheet.Cell(row, 3).Value.ToString().Trim(),
-                            Email = worksheet.Cell(row, 4).Value.ToString().Trim(),
-                            NormalizedEmail = worksheet.Cell(row, 5).Value.ToString().Trim(),
-                            EmailConfirmed = true,
-                            PhoneNumber = worksheet.Cell(row, 10).Value.ToString().Trim(),
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            LockoutEnd = null,
-                            LockoutEnabled = true,
-                            AccessFailedCount = 0,
-                            Name = worksheet.Cell(row, 16).Value.ToString().Trim(),
-                            Role = worksheet.Cell(row, 17).Value.ToString().Trim(),
-                            Block = worksheet.Cell(row, 18).Value.ToString().Trim(),
-                            Course = worksheet.Cell(row, 19).Value.ToString().Trim(),
-                            Term = worksheet.Cell(row, 20).Value.ToString().Trim()
-
-                        };
-
-                        //creating a new user
-                        var result = await _userManager.CreateAsync(user, PasswordHash);
-
-                        //assigning roles to the user
-                        if (assignRole == "Instructor")
-                        {
-                            await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
-                        }
-
-                        if (assignRole == "Student")
-                        {
-                            await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
-                        }
-
-
-
-                    }
-
-
-                }
-            }
-
-            _context.Users.AddRange(list);
-
-            _context.SaveChanges();
-
-            TempData["AlertMessage"] = "Users created sucessfully!";
-
-            return RedirectToAction("ListUsers");
-
-        } // importToExcel
-
-*/
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("/Admin/ImportExcel")]
@@ -173,7 +93,7 @@ namespace CRESME.Controllers
                     for (int row = 2; row <= rowCount; row++)
                     {
                         //storing variables for password and for assigning roles later
-                        var PasswordHash = worksheet.Cell(row, 3).Value.ToString();
+                        var PasswordHash = worksheet.Cell(row, 3).Value.ToString().Trim();
                         var assignRole = worksheet.Cell(row, 4).Value.ToString().Trim();
                         var nid = worksheet.Cell(row, 1).Value.ToString().Trim();
 
@@ -256,12 +176,12 @@ namespace CRESME.Controllers
             // update the user data
             if (user != null)
             {
-                user.UserName = UserName;
-                user.Email = UserName; 
-                user.Name = Name;
-                user.Block = Block;
-                user.Course = Course;
-                user.Term = Term;
+                user.UserName = UserName.Trim();
+                user.Email = UserName.Trim(); 
+                user.Name = Name.Trim();
+                user.Block = Block.Trim();
+                user.Course = Course.Trim();
+                user.Term = Term.Trim();
 
                 // check if the update was sucessful
                 IdentityResult result = await _userManager.UpdateAsync(user);
@@ -307,11 +227,11 @@ namespace CRESME.Controllers
             ApplicationUser user = new ApplicationUser
             {
 
-                UserName = UserName,
-                Name = Name,
-                NormalizedUserName = UserName.ToUpper(),
-                Email = UserName,
-                NormalizedEmail = UserName.ToUpper(),
+                UserName = UserName.Trim(),
+                Name = Name.Trim(),
+                NormalizedUserName = UserName.ToUpper().Trim(),
+                Email = UserName.Trim(),
+                NormalizedEmail = UserName.ToUpper().Trim(),
                 EmailConfirmed = true,
                 PhoneNumber = null,
                 PhoneNumberConfirmed = false,
@@ -319,11 +239,10 @@ namespace CRESME.Controllers
                 LockoutEnd = null,
                 LockoutEnabled = true,
                 AccessFailedCount = 0,
-                Role = Role,
-                Block = Block,
-                Course = Course,
-                Term = Term
-
+                Role = Role.Trim(),
+                Block = Block.Trim(),
+                Course = Course.Trim(),
+                Term = Term.Trim()
 
             };
 
@@ -350,13 +269,33 @@ namespace CRESME.Controllers
         }
 
 
-        /*Located in ListUsers.cshtml. Deletes a user based on the passsed ID*/
+        /*Deletes a user based on the passsed ID*/
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
+            // find the user object in Database
             var user = await _userManager.FindByIdAsync(id);
+            
+
             if (user != null)
             {
+                if (user.Role == "Instructor")
+                {
+                    //find users NID == Username
+                    var nid = user.UserName;
+
+                    // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                    var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                    foreach (var row in matchingRows)
+                    {
+                        row.InstructorID = "";
+                    }
+
+                    _context.SaveChanges();
+
+
+                }
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
@@ -372,6 +311,8 @@ namespace CRESME.Controllers
 
             return RedirectToAction("CreateAccounts");
         }
+
+
 
         /*Located in ListUsers.cshtml. Deletes all Users in the database except for the Admin.*/
         [HttpPost]
@@ -401,7 +342,7 @@ namespace CRESME.Controllers
 
 
         /*Returns all the quizes in the database.*/
-        [Authorize(Roles = "Admin, Instructor")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ListAllQuizes()
         {
             return _context.Users != null ?
@@ -420,38 +361,7 @@ namespace CRESME.Controllers
 
         }
 
-        
-        /*Located in EditQuiz.cshtml. Updates a CRESME*/
-        [HttpPost]
-        [Route("/Admin/UpdateQuiz")]
-        [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> UpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate)
-        {
-            
-            // find the quiz to be updated
-            var quiz = await _context.Quiz.FindAsync(QuizId);
 
-            //update based on the new values
-            if (quiz != null)
-            {
-                quiz.QuizName = QuizName;
-                quiz.Block = Block;
-                quiz.Course = Course;
-                quiz.Term = Term;
-                quiz.DateCreated = DateCreated;
-                quiz.StartDate = StartDate;
-                quiz.EndDate = EndDate;
-
-                 _context.SaveChanges();
-                TempData["AlertMessage"] = "CRESME updated sucessfully!";
-                return RedirectToAction("ListAllQuizes");
-
-            }
-            else
-                ModelState.AddModelError("", "User Not Found");
-
-            return RedirectToAction("CreateAccounts");
-        }
 
         /*Located in ListAllQuizes.cshtml. Delete a CRESME*/
         [HttpPost]
@@ -636,87 +546,6 @@ namespace CRESME.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-        /*Located in ListAllUsers.cshtml. Returns all the users in database. *//*
-        [HttpPost]
-        [Route("/Admin/ExportUsersToExcel")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult ExportUsersToExcel()
-        {
-            // Create a new Excel workbook
-            using (XLWorkbook workbook = new XLWorkbook())
-            {
-                //get a list of all users in database
-                var userList = _context.Users
-                        .FromSqlInterpolated($"select * from AspNetUsers")
-                        .ToList();
-
-                // Add a worksheet to the workbook
-                var worksheet = workbook.Worksheets.Add("Users");
-
-                // Set the column headers
-                worksheet.Cell(1, 1).Value = "Id";
-                worksheet.Cell(1, 2).Value = "UserName";
-                worksheet.Cell(1, 3).Value = "NormalizedUserName";
-                worksheet.Cell(1, 4).Value = "Email";
-                worksheet.Cell(1, 5).Value = "NormalizedEmail";
-                worksheet.Cell(1, 6).Value = "EmailConfirmed";
-                worksheet.Cell(1, 7).Value = "PasswordHash";
-                worksheet.Cell(1, 8).Value = "SecurityStamp";
-                worksheet.Cell(1, 9).Value = "ConcurrencyStamp";
-                worksheet.Cell(1, 10).Value = "PhoneNumber";
-                worksheet.Cell(1, 11).Value = "PhoneNumberConfirmed";
-                worksheet.Cell(1, 12).Value = "TwoFactorEnabled";
-                worksheet.Cell(1, 13).Value = "LockoutEnd";
-                worksheet.Cell(1, 14).Value = "LockoutEnabled";
-                worksheet.Cell(1, 15).Value = "AccessFailedCount";
-                worksheet.Cell(1, 16).Value = "Name";
-                worksheet.Cell(1, 17).Value = "Role";
-                worksheet.Cell(1, 18).Value = "Block";
-                worksheet.Cell(1, 19).Value = "Course";
-                worksheet.Cell(1, 20).Value = "Term";
-
-                // Set the row values
-                for (int i = 0; i < userList.Count; i++)
-                {
-                    worksheet.Cell(i + 2, 1).Value = userList[i].Id;
-                    worksheet.Cell(i + 2, 2).Value = userList[i].UserName;
-                    worksheet.Cell(i + 2, 3).Value = userList[i].NormalizedUserName;
-                    worksheet.Cell(i + 2, 4).Value = userList[i].Email;
-                    worksheet.Cell(i + 2, 5).Value = userList[i].NormalizedEmail;
-                    worksheet.Cell(i + 2, 6).Value = userList[i].EmailConfirmed;
-                    worksheet.Cell(i + 2, 7).Value = userList[i].PasswordHash;
-                    worksheet.Cell(i + 2, 8).Value = userList[i].SecurityStamp;
-                    worksheet.Cell(i + 2, 9).Value = userList[i].ConcurrencyStamp;
-                    worksheet.Cell(i + 2, 10).Value = userList[i].PhoneNumber;
-                    worksheet.Cell(i + 2, 11).Value = userList[i].PhoneNumberConfirmed;
-                    worksheet.Cell(i + 2, 12).Value = userList[i].TwoFactorEnabled;
-                    worksheet.Cell(i + 2, 13).Value = "";
-                    worksheet.Cell(i + 2, 14).Value = userList[i].LockoutEnabled;
-                    worksheet.Cell(i + 2, 15).Value = userList[i].AccessFailedCount;
-                    worksheet.Cell(i + 2, 16).Value = userList[i].Name;
-                    worksheet.Cell(i + 2, 17).Value = userList[i].Role;
-                    worksheet.Cell(i + 2, 18).Value = userList[i].Block;
-                    worksheet.Cell(i + 2, 19).Value = userList[i].Course;
-                    worksheet.Cell(i + 2, 20).Value = userList[i].Term;
-                    
-
-                }
-
-                using var stream = new MemoryStream();
-                workbook.SaveAs(stream);
-                var content = stream.ToArray();
-                
-                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Users.xlsx");
-            }
-        }*/
 
         /*Located in ListAllUsers.cshtml. Returns all the users in database. */
         [HttpPost]
@@ -1012,7 +841,7 @@ namespace CRESME.Controllers
 
                 worksheet.Cell(1, 37).Value = "QuizID";
                 worksheet.Cell(1, 38).Value = "PatientIntro";
-                worksheet.Cell(1, 39).Value = "StudentID";
+                
 
 
                 // Set the row values
@@ -1065,7 +894,7 @@ namespace CRESME.Controllers
 
                     worksheet.Cell(i + 2, 37).Value = userList[i].QuizID;
                     worksheet.Cell(i + 2, 38).Value = userList[i].PatientIntro;
-                    worksheet.Cell(i + 2, 39).Value = userList[i].StudentID;
+                    
 
 
                 }
@@ -1342,8 +1171,31 @@ namespace CRESME.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermInstructors(ApplicationUser user)
         {
-
+            
             var rowsToDelete = _context.Users.Where(e => e.Term == user.Term && e.Role == "Instructor");
+
+
+            var term = user.Term;
+            var matchingUsers = _context.Users.Where(user => user.Term == term);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+                
+            }
+            
+            //remove users
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
@@ -1393,6 +1245,30 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Block == user.Block && e.Role == "Instructor");
+
+            var block = user.Block;
+            var matchingUsers = _context.Users.Where(user => user.Block == block);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+
+            }
+
+
+
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
@@ -1470,6 +1346,7 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Student");
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Student in the course deleted!";
@@ -1493,6 +1370,27 @@ namespace CRESME.Controllers
         {
 
             var rowsToDelete = _context.Users.Where(e => e.Course == user.Course && e.Role == "Instructor");
+
+            var course = user.Course;
+            var matchingUsers = _context.Users.Where(user => user.Course == course);
+
+            // change quizes with deleted instructors to empty string for InstructorID. 
+            foreach (var users in matchingUsers)
+            {
+                //find users NID == Username
+                var nid = users.UserName;
+
+                // in quiz table, whereever the instrustor was assigned a quiz, change that to empty string
+                var matchingRows = _context.Quiz.Where(q => q.InstructorID == nid);
+
+                foreach (var row in matchingRows)
+                {
+                    row.InstructorID = "";
+                }
+
+
+            }
+
             _context.Users.RemoveRange(rowsToDelete);
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the course deleted!";
@@ -1500,73 +1398,102 @@ namespace CRESME.Controllers
 
         }
 
-        /*Located in AssignedQuizes.cshtml. Returns a list of quizes assigned to a particular student.*/
+
+
+        /*compares two list, one of Quiz and one of Attempts. 
+         * comapres and returns a list of quizes that have not been attempted yet by the students.*/
+        public static List<Quiz> CompareLists(List<Quiz> list1, List<Attempt> list2)
+        {
+            // Retrieve the IDs from list2
+            var idsList2 = list2.Select(obj => obj.QuizID);
+
+            // Filter the objects in list1 based on the IDs not present in list2
+            var result = list1.Where(obj => !idsList2.Contains(obj.QuizId)).ToList();
+
+            return result;
+        }
+
+
+
+
+        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
+         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
+         */
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> AssignedQuizes()
         {
             //get the current studnets object
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
+            List<Quiz> quizes = new List<Quiz>();
 
-            List<Quiz> quizes = new List<Quiz>(); 
-
-            // list of quizes assinged to the user
+            // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
             var assignedQuizes = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
+                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
                         .ToList();
 
             // list of quizes already taken by the user
-            var TakenQuizes = _context.Attempt
+            var takenQuizes = _context.Attempt
                         .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
                         .ToList();
 
-            // check if the studnet has any assigned quizes, if not return empty object
-            if ( assignedQuizes.Count() == 0 ) {
+            // if no quizes have been assingend to the student yet, return an empty list of quizes 
+            if(assignedQuizes.Count() == 0)
+            {
                 return View(quizes); 
             }
             else
             {
-                // check if the student already done any quizes, if not return all the quizes assinged to the student
-                if ( TakenQuizes.Count() == 0)
+                // if no quizes have been taken yet by the student, return the list with all quizes assigned to the student
+                if(takenQuizes.Count()  == 0)
                 {
-                    return View(assignedQuizes); 
+                    return View(assignedQuizes);
                 }
-
                 else
                 {
-                    // loop and find the quizes done by the student. Then return the quizes yet to be completed. 
-                    foreach (var quiz1 in assignedQuizes)
-                    {
-                        foreach(var quiz2 in TakenQuizes)
-                        {
-                            if (quiz1.QuizId != quiz2.QuizID)
-                            {
-                                quizes.Add(quiz1);
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-                        
-                    }
+                    // some quizes have been assigned and some quizes have been taken already by the studnet. 
+                    // look and find the quizes yet to be taken. 
 
-                    //getting only distinct objects in list 
-                    quizes = quizes.Distinct().ToList();
+                    // Compare the lists
+                    List<Quiz> result = CompareLists(assignedQuizes, takenQuizes);
 
-                    //if no quizes, return empty object, else retun quizes assinged, but not completed.
-                    if(quizes.Count() == 0)
+                    // if result is empty, return an empty list of quizes
+                    if (result.Count() == 0) 
                     {
                         return View(new List<Quiz>());
                     }
                     else
                     {
-                        return View(quizes);
+                        return View(result.Distinct()); 
                     }
-
-                    
                 }
-            } 
+
+            }
+
+
+
+        }
+
+
+
+
+        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PracticeQuizes()
+        {
+          
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            // list of practice CRESME assinged to the student that are published and feedback is enabled.
+            var feedbackQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
+                        .ToList();
+
+            return View(feedbackQuizes);
+
+
 
         }
 
@@ -1575,72 +1502,286 @@ namespace CRESME.Controllers
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> PastQuizes()
         {
+            
+
             //get the current studnets object
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
-
-            List<Attempt> attempts = new List<Attempt>();
-
-            // list of quizes assinged to the user
-            var assignedQuizes = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term}")
-                        .ToList();
 
             // list of quizes already taken by the user
             var TakenQuizes = _context.Attempt
                         .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
                         .ToList();
 
-            // check if the studnet has any assigned quizes, if not return empty object
-            if (assignedQuizes.Count() == 0)
+            return View(TakenQuizes); 
+
+
+
+        }
+
+
+        /*Located in nav-link "ALL CRESMES"
+         * Returns all the quizes in the database.
+         Function is same as ListAllQuizs Function.
+         Difference is in the View Page, the Quizees are only viewable, not editable. 
+         */
+            [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> AllCresmeInstructors()
+        {
+            return _context.Users != null ?
+
+                        View(await _context.Quiz.ToListAsync()) :
+
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
+
+
+        //POST:Details
+        //Located in InstructorQuizView Page. 
+        //Returns a list of attempts for a particular quiz.
+        //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
+        //QuizName is required for Excel Generation in Quiz Details page. So, we create a new attempt object with that quiz name and return it.  
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> InstructorQuizDetails(Quiz quiz)
+        {
+
+            var quizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where QuizName = {quiz.QuizName}")
+                        .ToList();
+
+            //if no studnet has taken the quiz yet, return a list of Attempts with QuizName for QuizDetails page
+            if (quizes.Count() == 0)
             {
-                return View(attempts);
+                List<Attempt> temp = new List<Attempt>();
+                Attempt attempt = new Attempt();
+                attempt.QuizName = quiz.QuizName;
+                temp.Add(attempt);
+                return View(temp);
+            }
+
+            return View(quizes.ToList());
+
+        }
+
+
+
+        /*Located in ListAllQuizes.cshtml.Rerurns a view to edit a CRESME.*/
+        [Authorize(Roles = "Admin, Instructor")]
+        public IActionResult InstructorEditQuiz(int QuizId)
+        {
+
+            return View(_context.Quiz.Find(QuizId));
+
+        }
+
+        /*Located in EditQuiz.cshtml. Updates a CRESME*/
+        [HttpPost]    
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate, string PatientIntro, string Published, string FeedBackEnabled, string InstructorID)
+        {
+
+            // find the quiz to be updated
+            var quiz = await _context.Quiz.FindAsync(QuizId);
+            //find current user
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            //update based on the new values
+            if (quiz != null)
+            {
+                quiz.QuizName = QuizName.Trim();
+                quiz.Block = Block.Trim();
+                quiz.Course = Course.Trim();
+                quiz.Term = Term.Trim();
+                quiz.DateCreated = DateCreated;
+                quiz.StartDate = StartDate;
+                quiz.EndDate = EndDate;
+                quiz.PatientIntro = PatientIntro.Trim();
+                if (InstructorID != null)
+                {
+                    quiz.InstructorID = InstructorID.Trim();
+                }
+                
+
+                //checkboxes is checked and changed to correct format for database entry
+                if (FeedBackEnabled == "1")
+                {
+                    quiz.FeedBackEnabled = "Yes";
+                }
+                else
+                {
+                    quiz.FeedBackEnabled = "No";
+                }
+
+                if (Published == "1")
+                {
+                    quiz.Published = "Yes";
+                }
+                else
+                {
+                    quiz.Published = "No";
+                }
+
+
+
+                _context.SaveChanges();
+                TempData["AlertMessage"] = "CRESME updated sucessfully!";
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("ListAllQuizes");
+                }
+                else
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
+                
+
             }
             else
             {
-                // check if the student already done any quizes, if not return all the quizes assinged to the student
-                if (TakenQuizes.Count() == 0)
+                if (user.Role == "Admin")
                 {
-                    return View(attempts);
+                    return RedirectToAction("ListAllQuizes");
                 }
-
                 else
                 {
-                    // loop and find the quizes done by the student. Then return the quizes already completed by the student. 
-                    foreach (var item1 in assignedQuizes)
-                    {
-                        foreach (var item2 in TakenQuizes)
-                        {
-                            if (item1.QuizId == item2.QuizID)
-                            {
-                                attempts.Add(item2);
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-
-                    }
-
-                    //getting only distinct objects in list 
-                    attempts = attempts.Distinct().ToList();
-
-                    //if no quizes, return empty object, else retun quizes already completed
-                    if (attempts.Count() == 0)
-                    {
-                        return View(new List<Attempt>());
-                    }
-                    else
-                    {
-                        return View(attempts);
-                    }
-
-
+                    return RedirectToAction("InstructorQuizesView");
                 }
+
+            }
+                
+
+            
+        }
+
+
+
+        /*Located in InstructorQuizView.cshtml. Delete a CRESME*/
+        [HttpPost]
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> InstructorDeleteQuiz(int QuizId)
+        {
+
+            var quiz = _context.Quiz.Find(QuizId);
+
+
+            if (quiz != null)
+            {
+                //deletes images 0 - 9 and legend image for each quiz if they are not null
+                string path;
+                FileInfo imagefile;
+                if (quiz.Legend != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image0 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image1 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image2 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image3 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image4 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image5 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image6 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image7 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image8 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+                if (quiz.Image9 != null)
+                {
+                    path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
+                    imagefile = new FileInfo(path);
+                    if (imagefile.Exists)
+                    {
+                        imagefile.Delete();
+                    }
+                }
+
+
+                _context.Remove(quiz);
+                _context.SaveChanges();
+                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
+                return RedirectToAction("InstructorQuizesView");
+
             }
 
+
+            return RedirectToAction("InstructorQuizesView");
         }
+
 
 
 
