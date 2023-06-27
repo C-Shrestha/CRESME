@@ -23,6 +23,12 @@ namespace CRESME.Data
         [Required]
         public string? Term { get; set; }
 
+        [Required]
+        public string? OriginalNID { get; set; }
+
+        [Required]
+        public string? OriginalAccount { get; set; }
+
 
 
     }
