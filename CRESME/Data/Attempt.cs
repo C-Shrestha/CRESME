@@ -13,18 +13,31 @@ namespace CRESME.Data
         public int AttemptId { get; set; }
      
         [BindProperty]
-        public int QuizID { get; set; }
+        public int? QuizID { get; set; }
 
+        public string? QuizName { get; set; }
+
+        public int? NumColumns { get; set; }
+
+        public string? PatientIntro { get; set; }
+
+        public string? StudentNID { get; set; }
+        
         public string? StudentID { get; set; } 
+
+        public string? StudentName { get; set; }
+        
+        public string? Term { get; set; }
+        public string? Course { get; set; }
+        public string? Block { get; set; }
 
         public int? Score { get; set; }
       
         [DataType(DataType.Date)]
-        [BindProperty]
+       
         public DateTime StartTime { get; set; }
 
         [DataType(DataType.Date)]
-        [BindProperty]
         public DateTime EndTime { get; set; }
 
 
@@ -62,26 +75,20 @@ namespace CRESME.Data
         [BindProperty] 
         public string? FreeResponseE { get; set; } = "";
 
-        [BindProperty] 
         public string? NumImage0Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage1Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage2Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage3Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage4Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage5Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage6Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage7Clicks { get; set; }
-        [BindProperty] 
         public string? NumImage8Clicks { get; set; }
-        [BindProperty] 
-        public string? NumImage9Clicks { get; set; } 
+        public string? NumImage9Clicks { get; set; }
+        
+        public string? NumLegendClicks { get; set; }
+
+        public string? NumLabValueClicks { get; set; }
 
 
     }

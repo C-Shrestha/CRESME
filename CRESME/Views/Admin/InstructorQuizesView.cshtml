@@ -1,0 +1,176 @@
+﻿@model IEnumerable<CRESME.Data.Quiz>
+
+@{
+    ViewData["Title"] = "Instructor View";
+}
+
+<h1>Instructor View</h1>
+
+
+<form asp-controller="Quiz" asp-action="CreateQuiz">
+    <button type="submit" class="btn btn-md btn-primary">
+        <i class="fa-solid fa-square-plus"></i>
+        Create New CRESME
+    </button>
+</form>
+<br />
+<br />
+<br />
+
+<div class="table-responsive">
+
+    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+
+
+        <thead>
+            <tr>
+                <th>
+                    CRESME
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Block)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Course)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Term)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreated)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Published)
+                </th>
+
+                <th>
+                    Feedback
+                </th>
+
+
+
+                @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
+                <th></th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+
+
+
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuizName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Block)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Term)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreated)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+
+                    <td>
+
+                        @if (item.Published == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
+
+                    <td>
+
+                        @if (item.FeedBackEnabled == "Yes")
+                        {
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle-xmark fa-2xl" style="color: #ff0000;"></i>
+                        }
+                    </td>
+
+
+
+
+                    <td>
+                        <form asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizId="@item.QuizId">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-user-pen"></i>
+                                Edit
+                            </button>
+                        </form>
+                    </td>
+
+
+                    <td>
+                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+
+
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+
+
+@section scripts
+    {
+    <script src="~/js/datatable_file.js"></script>
+}
+
+
+
+

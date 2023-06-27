@@ -41,16 +41,16 @@ namespace CRESME.Controllers
 
 
 
-        // GET: Users
+        /*// GET: Users
         public async Task<IActionResult> GetAll()
         {
             return _context.Users != null ?
                         View(await _userManager.Users.ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
-        }
+        }*/
 
         /*[Route("quiz")]*/
-        public async Task<IActionResult> GeneratePDF()
+        /*public async Task<IActionResult> GeneratePDF()
         {
 
             using (var stringWriter = new StringWriter())
@@ -62,7 +62,7 @@ namespace CRESME.Controllers
 
                 }
                 var model = _userManager.Users;
-                /*var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());*/
+                *//*var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary());*//* 
 
                 var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
                 { Model = model };
@@ -93,21 +93,21 @@ namespace CRESME.Controllers
 
 
             }
-        }
+        }*/
 
 
 
         /*[Route("website")]
          This requires a website and is not used in this website currently.
          */
-        public async Task<IActionResult> WebsiteAsync()
+        /*public async Task<IActionResult> WebsiteAsync()
         {
             // Imported package "Select.HtmlToPdf.NetCore" from  SelectPDF
             // Free version (this one) can only process up to 5 pages(?), should work for our purposes
             // Easy, but probably not viable as I assume UCF wouldn't want to use third party packages for security purposes.
 
 
-            /* Account for different devices
+            *//* Account for different devices
             var mobileView = new HtmlToPdf();
             mobileView.Options.WebPageWidth = 480;
 
@@ -118,24 +118,21 @@ namespace CRESME.Controllers
             var pdf = mobileView.ConvertUrl("https://www.roundthecode.com/");
             pdf.Append(tabletView.ConvertUrl("https://www.roundthecode.com/"));
             pdf.Append(desktopView.ConvertUrl("https://www.roundthecode.com/"));
-             */
-
-
-
+             *//*
 
 
 
             // Generates a PDF from an HTML page and displays a preview.
-            var desktopView = new HtmlToPdf();
+            *//*var desktopView = new HtmlToPdf();
             desktopView.Options.WebPageWidth = 1920;
             var pdf = desktopView.ConvertUrl("https://localhost:7103/Quiz/GetAll");
             var pdfBytes = pdf.Save();
 
-            return File(pdfBytes, "application/pdf");
-        }
+            return File(pdfBytes, "application/pdf");*//*
+        }*/
 
 
-        //Showing Students Graades
+        /*//Showing Students Graades
         // GET: Tests/Create
         public IActionResult Grades()
         {
@@ -143,7 +140,73 @@ namespace CRESME.Controllers
             
             return View();
 
+        }*/
+
+
+
+
+        /*Returns a view with a PDF template format that will be submitted to webcourses.*/
+        [Authorize(Roles = "Admin, Instructor")]
+        public IActionResult TestAttempt()
+        {
+            return View(_context.Attempt.FirstOrDefault());
+
         }
+
+
+
+        /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
+         * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
+         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
+        [Authorize(Roles = "Admin, Instructor")]
+        public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
+        {
+
+            using (var stringWriter = new StringWriter())
+            {
+                // finds the view, PrintAttempt.cshtml, that will be used to generate PDF. 
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, "PrintAttempt", false);
+                if (viewResult == null)
+                {
+                    throw new ArgumentException("View Cannot be Found");
+
+                }
+                var model = attempt;
+                
+                // Dictionary is created with the Attempt model data added to the view
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                { Model = model };
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    viewDictionary,
+                    TempData,
+                    stringWriter,
+                    new HtmlHelperOptions()
+                    );
+
+                await viewResult.View.RenderAsync(viewContext);
+
+                // convert PDF to HTML
+                var htmlToPdf = new HtmlToPdf(1000, 1414);
+                htmlToPdf.Options.DrawBackground = true;
+
+                var pdf = htmlToPdf.ConvertHtmlString(stringWriter.ToString());
+
+                var pdfBytes = pdf.Save();
+
+                string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
+
+                // return PDF for as download file
+                return File(pdfBytes, "application/pdf", filename);
+
+
+            }
+        }
+
+
+
 
 
 

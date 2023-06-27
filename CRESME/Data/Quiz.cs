@@ -12,6 +12,8 @@ namespace CRESME.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuizId { get; set; }
 
+        public string InstructorID { get; set; } = "";
+
         [Required]
         [BindProperty]
         public string QuizName { get; set; } = "";
@@ -33,7 +35,7 @@ namespace CRESME.Data
 
         public string Published { get; set; } = "false";
 
-        public string FeedBackEnabled { get; set; } = "false";
+        public string FeedBackEnabled { get; set; } = "no";
 
         [BindProperty]
         public string? NIDAssignment { get; set; } = ""; // comma seperated NID
@@ -49,7 +51,9 @@ namespace CRESME.Data
 
 
         [BindProperty]
-        public string? PatientIntro { get; set; } = ""; //might be the same as QuizName, check with Melissa
+        public string? PatientIntro { get; set; } = ""; 
+
+        public string? Legend { get; set; } = "";
 
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
@@ -105,5 +109,27 @@ namespace CRESME.Data
         public string? ImagePos7 { get; set; } = "";
         public string? ImagePos8 { get; set; } = "";
         public string? ImagePos9 { get; set; } = "";
+
+        [BindProperty]
+        public string? Image0Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image1Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image2Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image3Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image4Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image5Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image6Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image7Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image8Alt { get; set; } = "";
+        [BindProperty]
+        public string? Image9Alt { get; set; } = "";
+
     }
 }

@@ -1,88 +1,103 @@
 ﻿@model CRESME.Data.Quiz
 
 @{
-    ViewData["Title"] = "Edit Quiz";
+    ViewData["Title"] = "Edit CRESME";
 }
 
-<h1>Edit</h1>
 
-<h4>Edit Quiz</h4>
-<hr />
+ <form asp-controller="Admin" asp-action="UpdateQuiz" method="post" onsubmit="return confirm('Are you sure you want to EDIT this quiz data?');">
+    <div class="d-flex align-items-center min-vh-100">
+        <div class="container border bg-white rounded" style="width: 50%;">
+            <div class="row gx-5 justify-content-center gy-2">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="w-100"></div>
+                <h4 class="col-6 text-center" style="font-weight: bold;">Edit CRESME Form</h4>
+
+                <div class="w-100"></div>
+                <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Admin" asp-action="UpdateQuiz" method="post" onsubmit="return confirm('Are you sure you want to EDIT this quiz data?');">
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="QuizName" class="control-label"></label>
-                <input asp-for="QuizName" class="form-control" />
+                <div class="w-100"></div>
+                <input asp-for="QuizName" class="col-4 input-field" placeholder="CRESME Name" required autocomplete="off" />
                 <span asp-validation-for="QuizName" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="Block" class="control-label"></label>
-                <input asp-for="Block" class="form-control" />
+
+                <div class="w-100"></div>
+                <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" />
                 <span asp-validation-for="Block" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="Course" class="control-label"></label>
-                <input asp-for="Course" class="form-control" />
+
+                <div class="w-100"></div>
+                <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" />
                 <span asp-validation-for="Course" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="Term" class="control-label"></label>
-                <input asp-for="Term" class="form-control" />
+                <div class="w-100"></div>
+                <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" />
                 <span asp-validation-for="Term" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
+                <div class="col-6 text-center" style="font-weight: bold;">Date Created:</div>
+                <div class="w-100"></div>
+
+                <div class="w-100"></div>
+                <input asp-for="DateCreated" type="datetime-local" class="col-5 input-field" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                <div class="w-100"></div>
+                <div class="col-6 text-center" style="font-weight: bold;">Start Date:</div>
+                
+
+                <div class="w-100"></div>
+                <input asp-for="StartDate" type="datetime-local"  class="col-5 input-field" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
 
-            <br />
 
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
+                <div class="w-100"></div>
+                <div class="col-6 text-center" style="font-weight: bold;">End Date:</div>
+
+                <div class="w-100"></div>
+                <input asp-for="EndDate" type="datetime-local"  class="col-5 input-field" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
+
+
+                <input type="hidden" asp-for="QuizId" />
+
+                <input type="submit" value="Submit" class="btn custom_btn col-5" id="buyNow" />
+                <div class="w-100"></div>
+
+
+
             </div>
-
-            <br />
-
-            <input type="hidden" asp-for="QuizId" />
-
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-
-            <br />
-
-        </form>
+        </div>
     </div>
-</div>
+
+</form>
+
+<style>
+
+    .container {
+        border-color: #F1C400 !important;
+        border-radius: 20px !important;
+    }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+    .input-field {
+        border-color: #F1C400;
+    }
+
+
+
+</style>
 
 <div>
     <a asp-action="ListUsers">Back to List</a>

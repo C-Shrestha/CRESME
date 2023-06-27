@@ -1,0 +1,97 @@
+﻿@model IEnumerable<CRESME.Data.Attempt>
+
+@{
+    ViewData["Title"] = "Student View";
+}
+
+<br />
+
+<h1>Past CRESME</h1>
+
+
+<br />
+
+
+<div class="table-responsive">
+
+    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+
+
+        <thead>
+            <tr>
+                <th>
+                    CRESME
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Block)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Course)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Term)
+                </th>
+
+                <th>
+                    Completed
+                </th>
+                
+
+
+            </tr>
+        </thead>
+
+
+
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuizName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Block)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Term)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+
+
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+
+
+
+<br />
+
+
+@section scripts
+    {
+    <script src="~/js/datatable_file.js"></script>
+}
+
+

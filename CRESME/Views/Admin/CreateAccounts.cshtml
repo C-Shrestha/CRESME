@@ -1,37 +1,185 @@
-﻿@{
+@{
     ViewData["Title"] = "Create Accounts";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-
-<h2>Please select an EXCEL file to create accounts.</h2>
 
 <br />
-<hr />
+<br id="Form1" />
+
+<form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
+    <div class="container border rounded" style="width: 50%; background-color:#f8f9fa;">
+        <div class="row gy-2 mb-3 justify-content-center">
+
+                @*<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        B12, Cardiac Arrest
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                       </div>
+                    </div>
+                  </div>
+                </div>*@
+
+
+                <div class="container p-2 border col-12" style="border-style: solid !important; background-color: #f8f4f4; border-color: #fcfcfc !important;">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center">Create User Accounts</div>
+                        </div>
+                </div>
+
+                <div class="col-12 text-center" style="font-weight: bold;">Upload an Excel file to create user accounts</div>
+                <div class="w-100"></div>
+
+                <div class="col-12 text-center" style="font-weight: lighter;">*All NID's must be unique*</div>
+                <div class="w-100"></div>
+
+                <input  type="file" name="file" id="file" accept=".xlsx" style="display: none;" required />
+                <label class="col-4 row justify-content-center border" id="excelLabel" for="file" style="border-color: black !important;">
+                        <i class="col-md-auto fa-sharp fa-solid fa-upload"></i>
+                </label>
+
+                <div class="w-100"></div>
+
+
+                <button onclick="validate(); deleteAlert()" class="col-4 btn btn-primary" type="submit">
+                    <i class="fa-solid fa-user"></i> Create User Accounts
+                </button>
+        </div>
+    </div>                                
+</form>
+
+<br />
 <br />
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        B12, Cardiac Arrest
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
+<style>
 
 
+    .container {
+        border-color: #F1C400 !important;
+
+    }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+    .upload-btn {
+        border-color: #F1C400 !important;
+        background: transparent;
+    }
+
+    .input-field {
+        border-color: black;
+
+    }
+
+    label {
+        background-color: white;
+        padding: 0.5rem;
+        border-color: #F1C400 !important;
+        cursor: pointer;
+    }
+
+</style>
+
+<script>
+
+        var fileButton = document.getElementById("file");
+
+        function deleteAlert() {
+            const toastAlert = document.getElementsByClassName('alert');
+            if (toastAlert.length) {
+                setTimeout(() => {
+                    toastAlert[0].remove();
+                    toastAlert[1].remove();
+                    toastAlert[2].remove();
+                }, 3000);
+            }
+
+        }
+
+        function validate() {
+
+            if (fileButton.value == "") {
+                var div1 = document.createElement("div");
+                div1.setAttribute("aria-live", 'polite');
+                div1.setAttribute("aria-atomic", 'true');
+                div1.setAttribute("class", 'alert');
+                div1.style.position = "relative";
+                div1.style.minHeight = "0px";
+
+                var div2 = document.createElement("div");
+                div2.setAttribute("class", 'toast bg-success');
+                div2.style.position = "absolute";
+                div2.style.display = "initial";
+                div2.style.top = "0";
+                div2.style.right = "0";
+                div2.setAttribute("data-delay", '2000');
+
+                var div3 = document.createElement("div");
+                div3.setAttribute("class", 'toast-body');
+                div3.innerHTML = "Please Upload Excel File!";
+
+                var form = document.getElementById("Form1");
+
+                form.before(div1);
+                div1.appendChild(div2);
+                div2.appendChild(div3);
+            }
+        }
+
+        fileButton.onchange = function () {
+
+        var checkForI = document.getElementById("excelCheckMark");
+
+        if ((fileButton.value) != "" && (checkForI == null)) {
+
+            var newi = document.createElement("i");
+            newi.setAttribute("class", "col-2 fa-solid fa-check");
+            newi.setAttribute("id", "excelCheckMark");
+
+            var newBreak = document.createElement("div");
+            newBreak.setAttribute("class", 'w-100');
+
+            var div = document.createElement("div");
+            div.setAttribute("class", 'col-1');
+
+            document.getElementById("excelLabel").after(div);
+            div.after(newi);
+            newi.after(newBreak);
+
+            var newdiv = document.createElement("div");
+            newdiv.setAttribute("class", "col-6 text-center");
+            newdiv.setAttribute("id", "excelFileName");
+            newdiv.style.fontWeight = "bold";
+            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+            newBreak.after(newdiv);
+
+            var newBreak1 = document.createElement("div");
+            newBreak1.setAttribute("class", 'w-100');
+
+            newdiv.after(newBreak1);
+
+        }
+        else if (checkForI != null) 
+        {
+
+            var newdiv = document.getElementById("excelFileName");
+            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+        }
+}
+
+</script>
 
 @*<div class="text-center">
     <div class="container">
@@ -41,18 +189,5 @@
 
         </form>
     </div>
-</div>*@
-
-<br/>
-<br/>
-<br/>
-
-<div class="text-center">
-    <div class="container">
-        <form method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <button type="submit"> New Import from Excel</button>
-
-        </form>
-    </div>
 </div>
+   *@

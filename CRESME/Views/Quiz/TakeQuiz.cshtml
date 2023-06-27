@@ -1,8 +1,8 @@
 ﻿@model CRESME.Data.Quiz
 @{
-    ViewData["Title"] = "Quiz";
+    ViewData["Title"] = "CRESME";
 
-    DateTime StartData = DateTime.Now;
+    DateTime StartDate = DateTime.Now;
 
     Random rand = new Random();
     int column1 = 0;
@@ -40,6 +40,7 @@
         }
     }
 }
+
 
 
 <div id="startView" class="container-fluid border w-100 mw-50 flex-column" style="height:800px;">
@@ -855,7 +856,8 @@
                                     <div id="PhysicalBox2-quizView1" style="white-space: pre-line"></div>
                                     <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                         expand
-                                    </button>
+                                    </button>*@
+                                    <a type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB"> expand </a>
                                 </div>
                                 <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                             </div>
@@ -1340,8 +1342,8 @@
                     <input type="hidden" name="column3" value=@column3 runat="server" required>
                     <input type="hidden" name="column4" value=@column4 runat="server" required>
                     <input type="hidden" name="column5" value=@column5 runat="server" required>
-
-                    <input type="hidden" name="QuizStringID" value=@Model.QuizId>
+                    <input type="hidden" name="StartTime" value="@StartDate">
+                    <input type="hidden" name="QuizStringID" value=@Model.QuizId>                   
                     <button type="button" class="btn btn-primary" onclick="myFunction()">Switch Colors</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
