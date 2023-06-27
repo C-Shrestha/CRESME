@@ -4,81 +4,82 @@
     ViewData["Title"] = "Instructor View";
 }
 
-<h1>Instructor View</h1>
-
 
 @if (TempData["AlertMessage"] != null)
 {
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 0px;">
-        <div class="toast bg-success" style="position: absolute; top: 0; right: 0;" data-delay="2000">
-            <div class="toast-body">
-                @(TempData["AlertMessage"])
-            </div>
+    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
+        <div class="toast-header">
+            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+            <strong class="me-auto">CRESME</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-success">
+            @TempData["AlertMessage"]
         </div>
     </div>
 
 }
 
 <br />
+
 <form asp-controller="Quiz" asp-action="CreateQuiz">
     <button type="submit" class="btn btn-md btn-primary">
         <i class="fa-solid fa-square-plus"></i>
         Create New CRESME
     </button>
 </form>
-<br />
-<br />
+
 <br />
 
 <div class="table-responsive">
 
-    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
             <tr>
-                <th>
+                <th class="table-dark">
                     CRESME
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Block)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Course)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Term)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.DateCreated)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.StartDate)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.EndDate)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Published)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     Feedback
                 </th>
 
 
 
                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
-                <th></th>
-                <th></th>
-                <th></th>
+                <th class="table-dark"></th>
+                <th class="table-dark"></th>
+                <th class="table-dark"></th>
 
 
             </tr>
@@ -187,6 +188,13 @@
 
 
 
+<style>
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
+    }
+
+</style>
 
 
 @section scripts

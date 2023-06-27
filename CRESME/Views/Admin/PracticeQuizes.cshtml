@@ -7,7 +7,6 @@
 
 <br />
 
-<h1>Practice CRESME</h1>
 
 
 <br />
@@ -15,47 +14,47 @@
 
 <div class="table-responsive">
 
-    <table class="table table-hover table-bordered" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
             <tr>
-                <th>
+                <th class="table-dark">
                     CRESME
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Block)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Course)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.Term)
                 </th>
 
                 
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.StartDate)
                 </th>
 
-                <th>
+                <th class="table-dark">
                     @Html.DisplayNameFor(model => model.EndDate)
                 </th>
 
                
 
-                <th>
+                <th class="table-dark">
                     Practice
                 </th>
 
 
 
                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
-                <th></th>
+                <th class="table-dark"></th>
                 
                 
 
@@ -134,20 +133,8 @@
 
 <style>
 
-    #dataTableData {
-        color: black;
-        border-style: solid;
-        border-color: #F1C400;
-    }
-
-    td {
-        color: black;
-        font-weight: bold;
-    }
-
-    th {
-        color: black;
-        font-weight: bold;
+    .table-bordered th, .table-bordered td {
+        border: 1px solid grey !important
     }
 
 </style>
