@@ -1418,7 +1418,7 @@ namespace CRESME.Controllers
 
         /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
          CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
-         */
+         *//*
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> AssignedQuizes()
         {
@@ -1472,7 +1472,7 @@ namespace CRESME.Controllers
 
 
 
-        }
+        } // end assigned quizes*/
 
 
 
@@ -2036,8 +2036,82 @@ namespace CRESME.Controllers
 
 
 
+        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
+         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
+         */
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            List<Quiz> quizes = new List<Quiz>();
+            var blockList = user.Block.Split(",");
+            var courseList = user.Course.Split(",");
+            var termList = user.Term.Split(",");
 
 
+            for (int i = 0; i < blockList.Count(); i++)
+            {
+                // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
+                var assignedQuizes = _context.Quiz
+                            .FromSqlInterpolated($"select * from Quiz where Course = {courseList[i].Trim()} and Block = {blockList[i].Trim()} and Term = {termList[i].Trim()} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
+                            .ToList();
+                // list of quizes already taken by the user
+                var takenQuizes = _context.Attempt
+                            .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                            .ToList();
+
+                // if no quizes have been assingend to the student yet, return an empty list of quizes 
+                if (assignedQuizes.Count() == 0)
+                {
+                    //return View(quizes);
+                    ;
+                }
+                else
+                {
+                    // if no quizes have been taken yet by the student, return the list with all quizes assigned to the student
+                    if (takenQuizes.Count() == 0)
+                    {
+                        //return View(assignedQuizes);
+                        quizes.AddRange(assignedQuizes); 
+                    }
+                    else
+                    {
+                        // some quizes have been assigned and some quizes have been taken already by the studnet. 
+                        // look and find the quizes yet to be taken. 
+
+                        // Compare the lists
+                        List<Quiz> result = CompareLists(assignedQuizes, takenQuizes);
+
+                        // if result is empty, return an empty list of quizes
+                        if (result.Count() == 0)
+                        {
+                            //return View(new List<Quiz>());
+                        }
+                        else
+                        {
+                            //return View(result.Distinct());
+                            quizes.AddRange(result); 
+                        }
+                    }
+
+             
+                
+                }
+
+
+
+
+            }//for loop 
+
+
+            return View(quizes.Distinct());
+            
+
+
+
+        } // end assigned quizes
 
 
 
