@@ -67,13 +67,13 @@ namespace CRESME.Controllers
 
 
 
-        [HttpPost]
+        /*[HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("/Admin/ImportExcel")]
-        /*Takes in a properly formated Excel file and create a users (both instructors and studnets).
+        *//*Takes in a properly formated Excel file and create a users (both instructors and studnets).
          Since we used Identity, we opted to keep the UserName Column.
          So, NID(excel upload) == Username (Database) == Email(Database). They are same value.
-         */
+         *//*
         public async Task<IActionResult> ImportExcel(IFormFile file)
 
         {
@@ -152,7 +152,7 @@ namespace CRESME.Controllers
 
             return RedirectToAction("ListUsers");
 
-        } // importToExcel
+        } // importToExcel*/
 
 
 
@@ -1781,6 +1781,283 @@ namespace CRESME.Controllers
 
             return RedirectToAction("InstructorQuizesView");
         }
+
+
+        /*-----------------------------------------Multiple Users--------------------------------------------------*/
+
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("/Admin/ImportExcel")]
+        /*Takes in a properly formated Excel file and create a users(both instructors and studnets).
+         Since we used Identity, we opted to keep the UserName Column.
+         So, NID(excel upload) == Username (Database) == Email(Database). They are same value.*/
+
+
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        //public async IActionResult ImportExcel(IFormFile file)
+        {
+            var newUsersList = new List<ApplicationUser>();
+
+            using (var stream = new MemoryStream())
+            {
+
+                await file.CopyToAsync(stream);
+
+                using (XLWorkbook workbook = new XLWorkbook(stream))
+
+                {
+                    IXLWorksheet worksheet = workbook.Worksheets.First();
+
+                    int rowCount = worksheet.RowsUsed().Count();
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+
+                        var password = GenerateRandomPassword();
+
+                        //var password = worksheet.Cell(row, 7).Value.ToString().Trim();
+
+
+                        var nid = worksheet.Cell(row, 1).Value.ToString().Trim();
+                        var name = worksheet.Cell(row, 2).Value.ToString().Trim();
+                        var role = worksheet.Cell(row, 3).Value.ToString().Trim();
+                        var block = worksheet.Cell(row, 4).Value.ToString().Trim();
+                        var course = worksheet.Cell(row, 5).Value.ToString().Trim();
+                        var term = worksheet.Cell(row, 6).Value.ToString().Trim();
+
+                        // if nid does not exit, then create a new account with that nid. Store in list to export to user. 
+                        var nidExits = _userManager.Users.Where(e => e.UserName == nid).FirstOrDefault();
+
+                        // if nid exits, change nid data in DB
+                        if (nidExits != null)
+                        {
+                            nidExits.Block = string.Join(", ", nidExits.Block, block).Trim();
+                            nidExits.Course = string.Join(", ", nidExits.Course, course).Trim();
+                            nidExits.Term = string.Join(", ", nidExits.Term, term).Trim();
+                        }
+
+                        // if nid does not not exit, create new user and add in newUsersList
+                        else
+                        {
+
+                            //creating a new user object
+                            //columns created by Identity and not used in this app are labeled "false" or null or empty
+                            var user = new ApplicationUser
+                            {
+                                UserName = nid,
+                                NormalizedUserName = nid,
+                                Email = nid,
+                                NormalizedEmail = nid,
+                                EmailConfirmed = true,
+                                PhoneNumber = "",
+                                PhoneNumberConfirmed = false,
+                                TwoFactorEnabled = false,
+                                LockoutEnd = null,
+                                LockoutEnabled = true,
+                                AccessFailedCount = 0,
+                                Name = name,
+                                Role = role,
+                                Block = block,
+                                Course = course,
+                                Term = term
+
+                            };
+
+                            //creating a new user
+                            var result = await _userManager.CreateAsync(user, password);
+
+                            //assigning roles to the user
+                            if (role == "Instructor")
+                            {
+                                await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                            }
+
+                            if (role == "Student")
+                            {
+                                await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                            }
+
+
+                            // adding the newly user to the newUsersList to export as excel
+                            //before adding to excel, change the password to actual value so that can be sent to the students. 
+
+                            var newUser = new ApplicationUser
+                            {
+                                UserName = nid,
+                                NormalizedUserName = nid,
+                                Email = nid,
+                                NormalizedEmail = nid,
+                                EmailConfirmed = true,
+                                PhoneNumber = "",
+                                PhoneNumberConfirmed = false,
+                                TwoFactorEnabled = false,
+                                LockoutEnd = null,
+                                LockoutEnabled = true,
+                                AccessFailedCount = 0,
+                                Name = name,
+                                Role = role,
+                                Block = block,
+                                Course = course,
+                                Term = term, 
+                                PasswordHash = password
+
+
+                            };
+
+
+                            newUsersList.Add(newUser);
+
+                        }
+
+
+                    }// end for loop
+
+
+
+                }
+            }
+
+            //_context.Users.AddRange(list);
+
+            _context.SaveChanges();
+
+            TempData["AlertMessage"] = "Users created sucessfully!";
+            return ExportExcelForMail(newUsersList);
+
+            //return RedirectToAction("ListUsers");
+
+        } // importToExcel
+
+
+        /// <summary>
+        /// Generates a Random Password
+        /// respecting the given strength requirements.
+        /// </summary>
+        /// <param name="opts">A valid PasswordOptions object
+        /// containing the password strength requirements.</param>
+        /// <returns>A random password</returns>
+        public static string GenerateRandomPassword(PasswordOptions opts = null)
+        {
+            if (opts == null) opts = new PasswordOptions()
+            {
+                RequiredLength = 8,
+                RequiredUniqueChars = 4,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireNonAlphanumeric = true,
+                RequireUppercase = true
+            };
+
+            string[] randomChars = new[] {
+            "ABCDEFGHJKLMNOPQRSTUVWXYZ",    // uppercase 
+            "abcdefghijkmnopqrstuvwxyz",    // lowercase
+            "0123456789",                   // digits
+            "!@$?_-"                        // non-alphanumeric
+        };
+
+            Random rand = new Random(Environment.TickCount);
+            List<char> chars = new List<char>();
+
+            if (opts.RequireUppercase)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[0][rand.Next(0, randomChars[0].Length)]);
+
+            if (opts.RequireLowercase)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[1][rand.Next(0, randomChars[1].Length)]);
+
+            if (opts.RequireDigit)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[2][rand.Next(0, randomChars[2].Length)]);
+
+            if (opts.RequireNonAlphanumeric)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[3][rand.Next(0, randomChars[3].Length)]);
+
+            for (int i = chars.Count; i < opts.RequiredLength
+                || chars.Distinct().Count() < opts.RequiredUniqueChars; i++)
+            {
+                string rcs = randomChars[rand.Next(0, randomChars.Length)];
+                chars.Insert(rand.Next(0, chars.Count),
+                    rcs[rand.Next(0, rcs.Length)]);
+            }
+
+            return new string(chars.ToArray());
+        }
+
+
+
+        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult ExportExcelForMail(List<ApplicationUser> userList)
+        {
+            // Create a new Excel workbook
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+
+                // Add a worksheet to the workbook
+                var worksheet = workbook.Worksheets.Add("Users");
+
+                // Set the column headers
+
+                worksheet.Cell(1, 1).Value = "NID";
+                worksheet.Cell(1, 2).Value = "Name";
+                worksheet.Cell(1, 3).Value = "Password";
+                worksheet.Cell(1, 4).Value = "Role";
+                //worksheet.Cell(1, 5).Value = "Block";
+                //worksheet.Cell(1, 6).Value = "Course";
+               // worksheet.Cell(1, 7).Value = "Term";
+
+                // Set the row values
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    //NID == UserName == Email. They are all same. We are using UserName to retrive NID. 
+                    worksheet.Cell(i + 2, 1).Value = userList[i].UserName;
+                    worksheet.Cell(i + 2, 2).Value = userList[i].Name;
+                    worksheet.Cell(i + 2, 3).Value = userList[i].PasswordHash;
+                    worksheet.Cell(i + 2, 4).Value = userList[i].Role;
+                    //worksheet.Cell(i + 2, 5).Value = userList[i].Block;
+                    //worksheet.Cell(i + 2, 6).Value = userList[i].Course;
+                    //worksheet.Cell(i + 2, 7).Value = userList[i].Term;
+
+
+                }
+
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CRESME Users Mailing List.xlsx");
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
