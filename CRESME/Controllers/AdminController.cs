@@ -1498,7 +1498,9 @@ namespace CRESME.Controllers
         }
 
 
-        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*/
+
+
+        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*//*
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> PastQuizes()
         {
@@ -1517,7 +1519,12 @@ namespace CRESME.Controllers
 
 
 
-        }
+        } // end past quizes*/
+
+
+
+
+
 
 
         /*Located in nav-link "ALL CRESMES"
@@ -2113,7 +2120,24 @@ namespace CRESME.Controllers
 
 
 
+        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PastQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
 
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            return View(TakenQuizes);
+
+
+
+        } // end past quizes
 
 
 
