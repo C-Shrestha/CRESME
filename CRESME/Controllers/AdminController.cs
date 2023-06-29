@@ -2109,8 +2109,6 @@ namespace CRESME.Controllers
             return View(quizes.Distinct());
             
 
-
-
         } // end assigned quizes
 
 
