@@ -19,9 +19,9 @@ namespace CRESME.Data
 
             var user = new ApplicationUser
             {
-                UserName = "admin@gmail.com",
-                Email = "admin@gmail.com",
-                Name = "Admin",
+                UserName = "cresmeAdmin",
+                Email = "cresmeAdmin",
+                Name = "cresmeAdmin",
                 Role = "Admin",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true

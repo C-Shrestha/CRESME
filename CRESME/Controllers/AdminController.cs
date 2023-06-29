@@ -326,7 +326,7 @@ namespace CRESME.Controllers
 
                 foreach (var item in users)
                 {
-                    if (item.UserName != "admin@gmail.com")
+                    if (item.Role != "Admin")
                     {
                         await _userManager.DeleteAsync(item);
                     }
