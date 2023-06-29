@@ -2095,6 +2095,7 @@ namespace CRESME.Controllers
                         if (result.Count() == 0)
                         {
                             //return View(new List<Quiz>());
+                            ;
                         }
                         else
                         {
