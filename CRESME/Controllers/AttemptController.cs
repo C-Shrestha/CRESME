@@ -210,9 +210,44 @@ namespace CRESME.Controllers
 
             //CRESME meta data
             if (ParentQuiz.Image0 != null) {
-                attempt.NumImage0Clicks = "number of clicks for image 0" + "("+ ParentQuiz.ImagePos0 +")" + " is " + attempt.NumImage0Clicks;
+                attempt.Image0Pos = ParentQuiz.ImagePos0;
             }
-
+            if (ParentQuiz.Image1 != null)
+            {
+                attempt.Image1Pos = ParentQuiz.ImagePos1;
+            }
+            if (ParentQuiz.Image2 != null)
+            {
+                attempt.Image2Pos = ParentQuiz.ImagePos2;
+            }
+            if (ParentQuiz.Image3 != null)
+            {
+                attempt.Image3Pos = ParentQuiz.ImagePos3;
+            }
+            if (ParentQuiz.Image4 != null)
+            {
+                attempt.Image4Pos = ParentQuiz.ImagePos4;
+            }
+            if (ParentQuiz.Image5 != null)
+            {
+                attempt.Image5Pos = ParentQuiz.ImagePos5;
+            }
+            if (ParentQuiz.Image6 != null)
+            {
+                attempt.Image6Pos = ParentQuiz.ImagePos6;
+            }
+            if (ParentQuiz.Image7 != null)
+            {
+                attempt.Image7Pos = ParentQuiz.ImagePos7;
+            }
+            if (ParentQuiz.Image8 != null)
+            {
+                attempt.Image8Pos = ParentQuiz.ImagePos8;
+            }
+            if (ParentQuiz.Image9 != null)
+            {
+                attempt.Image9Pos = ParentQuiz.ImagePos9;
+            }
 
 
             //student info
@@ -223,11 +258,11 @@ namespace CRESME.Controllers
             attempt.Course = CurrentStudent.Course;
             attempt.Block = CurrentStudent.Block;
             attempt.Term = CurrentStudent.Term;
-            //if ((ModelState.IsValid && ParentQuiz.FeedBackEnabled!="Yes") && not admin/instructor)
-            //{
+            if (ModelState.IsValid && User.IsInRole("Student"))
+            {
                 _context.Add(attempt);
                 _context.SaveChanges();
-            //}
+            }
            return View("_LoginPartial");
         }
 

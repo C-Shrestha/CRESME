@@ -149,6 +149,36 @@ namespace CRESME.Migrations
                     b.Property<string>("FreeResponseE")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image0Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image1Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image2Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image4Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image5Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image6Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image7Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image8Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image9Pos")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("NumColumns")
                         .HasColumnType("int");
 

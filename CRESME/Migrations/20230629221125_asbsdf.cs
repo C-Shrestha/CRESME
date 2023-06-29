@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class testingmain : Migration
+    public partial class asbsdf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -97,6 +97,16 @@ namespace CRESME.Migrations
                     NumImage7Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumImage8Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumImage9Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image0Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image1Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image2Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image3Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image4Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image5Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image6Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image7Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image8Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image9Pos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumLegendClicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumLabValueClicks = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

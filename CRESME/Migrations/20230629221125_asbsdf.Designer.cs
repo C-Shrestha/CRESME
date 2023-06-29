@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230627164750_testingmain")]
-    partial class testingmain
+    [Migration("20230629221125_asbsdf")]
+    partial class asbsdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -149,6 +149,36 @@ namespace CRESME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FreeResponseE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image0Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image1Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image2Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image3Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image4Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image5Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image6Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image7Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image8Pos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image9Pos")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("NumColumns")
