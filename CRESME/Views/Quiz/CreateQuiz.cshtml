@@ -1,5 +1,5 @@
-﻿@model IEnumerable<CRESME.Data.ApplicationUser>
-﻿@{
+@model IEnumerable<CRESME.Data.ApplicationUser>
+@{
 
     ViewData["Title"] = "Create CRESME";
     IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null);
@@ -7,58 +7,46 @@
 }
 
 
-@if (TempData["AlertMessage"] != null)
-{
 
-    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
-        <div class="toast-header">
-            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
-            <strong class="me-auto">CRESME</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
+
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-danger">
+                @TempData["AlertMessage"]
+            </div>
         </div>
-            <div class="toast-body bg-success" style="color:white">
-            @TempData["AlertMessage"]
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-success">
+                @TempData["Success"]
+            </div>
         </div>
-    </div>
-}
+    }
 
-@if (TempData["Delete"] != null)
-{
-
-    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
-        <div class="toast-header">
-            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
-            <strong class="me-auto">CRESME</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body bg-warning">
-            @TempData["Delete"]
-        </div>
-    </div>
-
-}
-
-@if (TempData["AlertMessageFail"] != null)
-{
-
-    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
-        <div class="toast-header">
-            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
-            <strong class="me-auto">CRESME</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body bg-danger">
-            @TempData["AlertMessageFail"]
-        </div>
-    </div>
-
-}
+    
+    
+</div>
 
 
-<div id="row" class="row justify-content-end"></div>
+
 
 <form id="Form1" asp-controller="Quiz" asp-action="Create" method="post" enctype="multipart/form-data">
-    <div class="d-flex align-items-center min-vh-100">
+    <div class="d-flex align-items-center min-vh-100" >
         <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
@@ -95,12 +83,12 @@
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
 
                 <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4">
-                    <label class="form-check-label" for="NumColumns">4</label>
+                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4" checked>
+                    <label class="form-check-label bg-light" for="NumColumns">4</label>
                 </div>
                 <div class="form-check form-check-inline col-1">
                     <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5">
-                    <label class="form-check-label" for="NumColumns">5</label>
+                    <label class="form-check-label bg-light" for="NumColumns">5</label>
                 </div>
                 <div class="w-100"></div>
 
@@ -146,7 +134,7 @@
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="none " selected>N\A</option>
+                    <option value="0" selected>0</option>
                     <option value="B1">1</option>
                     <option value="B2">2</option>
                     <option value="B3">3</option>
@@ -269,9 +257,9 @@
             toastBody.setAttribute("class", 'toast-body bg-warning');
             toastBody.innerHTML = "Please Upload Legend Image!"
 
-            var form = document.getElementById("Form1");
+            var flexbox = document.getElementById("flexbox");
 
-            form.prepend(toast);
+            flexbox.prepend(toast);
 
             toast.prepend(toastBody);
             toast.prepend(toastHeader);
@@ -318,9 +306,9 @@
             toastBody.setAttribute("class", 'toast-body bg-warning');
             toastBody.innerHTML = "Please Upload Excel File!"
 
-            var form = document.getElementById("Form1");
+            var flexbox = document.getElementById("flexbox");
 
-            form.prepend(toast);
+            flexbox.prepend(toast);
 
             toast.prepend(toastBody);
             toast.prepend(toastHeader);
