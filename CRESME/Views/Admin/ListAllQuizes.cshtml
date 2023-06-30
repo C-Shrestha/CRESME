@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CRESME.Data.Quiz>
+@model IEnumerable<CRESME.Data.Quiz>
 
 @{
     ViewData["Title"] = "List All CRESMES";
@@ -22,6 +22,7 @@
                 @TempData["AlertMessage"]
             </div>
         </div>
+
     }
 
     @if (TempData["Success"] != null)
@@ -35,6 +36,9 @@
             <div class="toast-body bg-success">
                 @TempData["Success"]
             </div>
+
+        
+
         </div>
     }
 

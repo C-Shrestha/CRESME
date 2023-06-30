@@ -1,10 +1,11 @@
-﻿@model IEnumerable<CRESME.Data.ApplicationUser>
-﻿@{
+@model IEnumerable<CRESME.Data.ApplicationUser>
+@{
 
     ViewData["Title"] = "Create CRESME";
     IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null);
     IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
 }
+
 
 
 <div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
@@ -48,6 +49,9 @@
     <div class="d-flex align-items-center min-vh-100" >
         <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
+
+             
+
 
                 <div class="w-100"></div>
                 <h4 class="col-6 text-center" style="font-weight: bold;">Create CRESME Form</h4>
@@ -100,7 +104,7 @@
                 <div class="col-4 text-center" style="font-weight: bold;">Upload Legend Image</div>
                 <div class="w-100"></div>
 
-                <input type="file" name="Legend" id="Legend" accept=".jpg, .jpeg" style="display: none;" required />
+                <input type="file" name="Legend" id="Legend" accept="image/*" style="display: none;" required />
                 <label class="col-4 row justify-content-center border" id="legendLabel" for="Legend" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-flag"></i>
                 </label>
@@ -447,7 +451,7 @@
         newfile.setAttribute("type", 'file');
         newfile.setAttribute("name", 'imageFile' + i);
         newfile.setAttribute("id", 'imageFile' + i);
-        newfile.setAttribute("accept", '.jpg, .jpeg');
+        newfile.setAttribute("accept", 'image/*');
         newfile.setAttribute("onchange", 'checkForImage(this.id)');
         newfile.style.display = "none";
 

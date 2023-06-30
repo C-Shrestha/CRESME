@@ -55,6 +55,7 @@ namespace CRESME.Controllers
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) //closedxml update
         {
+            // alternative texts, quiz name, patient intro, start date, end date etc. for images is directly routed, so no need to change it explicitely
 
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
 
@@ -124,6 +125,7 @@ namespace CRESME.Controllers
                                 quiz.FeedBackB = worksheet.Cell(5, 2).Value.ToString().Trim();
                                 quiz.FeedBackC = worksheet.Cell(5, 3).Value.ToString().Trim();
                                 quiz.FeedBackD = worksheet.Cell(5, 4).Value.ToString().Trim();
+                                quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
                             }
                             if (quiz.NumColumns == 5)
                             {
@@ -131,7 +133,7 @@ namespace CRESME.Controllers
                                 quiz.PhysicalE = worksheet.Cell(2, 5).Value.ToString().Trim();
                                 quiz.DiagnosticE = worksheet.Cell(3, 5).Value.ToString().Trim();
                                 quiz.DiagnosisKeyWordsE = worksheet.Cell(4, 5).Value.ToString().Trim();
-                                quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
+                                
                             }
                         }
                     }
