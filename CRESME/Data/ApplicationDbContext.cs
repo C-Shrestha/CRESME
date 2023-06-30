@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRESME.Data
@@ -12,9 +13,10 @@ namespace CRESME.Data
 
         // this will create a new table called Quiz in the DB
         public DbSet<Quiz> Quiz { get; set; }
-
-       
-
+   
         public DbSet<Attempt> Attempt { get; set; }
+
+
+
     }
 }
