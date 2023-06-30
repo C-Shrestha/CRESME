@@ -20,6 +20,8 @@ using System.Security.Claims;
 using System.IO;
 using System.IO.Compression;
 using System.Security.Policy;
+using NuGet.Versioning;
+using System.Configuration;
 
 namespace CRESME.Controllers
 {
@@ -1477,7 +1479,7 @@ namespace CRESME.Controllers
 
 
 
-        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*/
+        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*//*
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> PracticeQuizes()
         {
@@ -1495,7 +1497,7 @@ namespace CRESME.Controllers
 
 
 
-        }
+        }*/
 
 
 
@@ -2142,6 +2144,175 @@ namespace CRESME.Controllers
 
 
 
+        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PracticeQuizes()
+        {
+
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            // list of practice CRESME assinged to the student that are published and feedback is enabled.
+            var feedbackQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
+                        .ToList();
+
+            return View(feedbackQuizes);
+
+
+
+        }
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> StudentDetails(string id)
+        {
+            return _context.Users != null ?
+                        View(await _userManager.FindByIdAsync(id)) :
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
+
+
+
+
+        /*Deletes a user based on the passsed ID*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteCourse(int index, string id)
+        {
+            /*//get the current studnets object
+            //var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(student.Id);
+
+            // user is the object passed which contains the course which must be deleted from the student.
+            var course = student.Course;
+            
+            // check if the student has more than one course
+            if (user.Course.Split(",").Count() == 1)
+            {
+                // if the student is enrolled in only one course, delete the entire student.
+                //_userManager.DeleteAsync(user);
+                //TempData["Success"] = "Course deleted from user sucessfully! Since student was only enrolled in one course, student was alos deleted.";
+
+            }
+            // else, if studentt has more than one course, delete the specified course*/
+
+
+
+
+            /* if (user != null)
+             {
+
+                 IdentityResult result = await _userManager.DeleteAsync(user);
+                 if (result.Succeeded)
+                 {
+                     TempData["Success"] = "Course deleted from user sucessfully!";
+                     return RedirectToAction("ListUsers");
+                 }
+                 else
+                 {
+                     TempData["AlertMessage"] = "Failed to delete Course!";
+                     return RedirectToAction("ListUsers");
+
+                 }
+
+             }
+             else
+             {
+                 ModelState.AddModelError("", "User Not Found");
+                 return RedirectToAction("ListUsers");
+
+             }*/
+
+
+            //else student is null
+            //return error message
+            if (id == null)
+            {
+                TempData["AlertMessage"] = "Failed to delete Course! Student does not exist!";
+                return Redirect(Request.Headers["Referer"].ToString());
+
+            }
+            //if student in not null
+            else
+            {
+                
+                //get the student with that user ID
+                //var user = _context.Users.SingleOrDefault(user => user.Id == student.Id);
+                
+                //get user data to update
+                var user = await _userManager.FindByIdAsync(id);
+
+                /*//get the couse to be removed along with respective block and term
+                var courseRemove = student.Course;
+                var blockRemove = student.Block;
+                var termRemove = student.Term;*/
+
+                /*// list of course a studnet is currently enrolled in
+                var courseList = user.Course; 
+
+                //remove the course
+                string updatedList = RemoveStringFromList(courseList, courseRemove);
+
+                // add back the new course list
+                user.Course = updatedList; 
+
+                await _userManager.UpdateAsync(user);*/
+
+                // remove the block, course, term at "index" for student
+                user.Block = RemoveStringAtIndex(user.Block, index);
+                user.Course = RemoveStringAtIndex(user.Course, index); 
+                user.Term = RemoveStringAtIndex(user.Term, index);
+
+                await _userManager.UpdateAsync(user);
+
+                TempData["Success"] = "Course removed from user sucessfully!";
+                return Redirect(Request.Headers["Referer"].ToString());
+
+
+            }
+
+        }
+
+        
+
+
+        public static string RemoveStringFromList(string inputString, string stringToRemove)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(", ");
+            
+
+            // Convert the array into a list
+            List<string> stringList = stringArray.ToList();
+
+            // Remove the desired string from the list
+            stringList.Remove(stringToRemove.Trim());
+
+            // Join the updated list elements back into a string
+            string updatedString = string.Join(",", stringList);
+
+            return updatedString;
+        }
+
+        public static string RemoveStringAtIndex(string inputString, int index)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(", ");
+
+            // Convert the array into a list
+            List<string> stringList = stringArray.ToList();
+
+            // remove element at the index
+            stringList.RemoveAt(index);
+
+            //convert list to a single string
+            string updatedString = string.Join(",", stringList);
+
+            return updatedString; 
+            
+            
+        }
 
 
 
