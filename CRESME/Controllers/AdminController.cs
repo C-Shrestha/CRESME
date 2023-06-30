@@ -20,6 +20,8 @@ using System.Security.Claims;
 using System.IO;
 using System.IO.Compression;
 using System.Security.Policy;
+using NuGet.Versioning;
+using System.Configuration;
 
 namespace CRESME.Controllers
 {
@@ -67,13 +69,13 @@ namespace CRESME.Controllers
 
 
 
-        [HttpPost]
+        /*[HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("/Admin/ImportExcel")]
-        /*Takes in a properly formated Excel file and create a users (both instructors and studnets).
+        *//*Takes in a properly formated Excel file and create a users (both instructors and studnets).
          Since we used Identity, we opted to keep the UserName Column.
          So, NID(excel upload) == Username (Database) == Email(Database). They are same value.
-         */
+         *//*
         public async Task<IActionResult> ImportExcel(IFormFile file)
 
         {
@@ -152,7 +154,7 @@ namespace CRESME.Controllers
 
             return RedirectToAction("ListUsers");
 
-        } // importToExcel
+        } // importToExcel*/
 
 
 
@@ -326,7 +328,7 @@ namespace CRESME.Controllers
 
                 foreach (var item in users)
                 {
-                    if (item.UserName != "admin@gmail.com")
+                    if (item.Role != "Admin")
                     {
                         await _userManager.DeleteAsync(item);
                     }
@@ -1418,7 +1420,7 @@ namespace CRESME.Controllers
 
         /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
          CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
-         */
+         *//*
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> AssignedQuizes()
         {
@@ -1472,12 +1474,12 @@ namespace CRESME.Controllers
 
 
 
-        }
+        } // end assigned quizes*/
 
 
 
 
-        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*/
+        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*//*
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> PracticeQuizes()
         {
@@ -1495,10 +1497,12 @@ namespace CRESME.Controllers
 
 
 
-        }
+        }*/
 
 
-        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*/
+
+
+        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*//*
         [Authorize(Roles = "Admin, Instructor,Student")]
         public async Task<IActionResult> PastQuizes()
         {
@@ -1517,7 +1521,12 @@ namespace CRESME.Controllers
 
 
 
-        }
+        } // end past quizes*/
+
+
+
+
+
 
 
         /*Located in nav-link "ALL CRESMES"
@@ -1781,6 +1790,530 @@ namespace CRESME.Controllers
 
             return RedirectToAction("InstructorQuizesView");
         }
+
+
+        /*-----------------------------------------Multiple Users--------------------------------------------------*/
+
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("/Admin/ImportExcel")]
+        /*Takes in a properly formated Excel file and create a users(both instructors and studnets).
+         Since we used Identity, we opted to keep the UserName Column.
+         So, NID(excel upload) == Username (Database) == Email(Database). They are same value.*/
+
+
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        //public async IActionResult ImportExcel(IFormFile file)
+        {
+            var newUsersList = new List<ApplicationUser>();
+
+            using (var stream = new MemoryStream())
+            {
+
+                await file.CopyToAsync(stream);
+
+                using (XLWorkbook workbook = new XLWorkbook(stream))
+
+                {
+                    IXLWorksheet worksheet = workbook.Worksheets.First();
+
+                    int rowCount = worksheet.RowsUsed().Count();
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+
+                        var password = GenerateRandomPassword();
+
+                        //var password = worksheet.Cell(row, 7).Value.ToString().Trim();
+
+
+                        var nid = worksheet.Cell(row, 1).Value.ToString().Trim();
+                        var name = worksheet.Cell(row, 2).Value.ToString().Trim();
+                        var role = worksheet.Cell(row, 3).Value.ToString().Trim();
+                        var block = worksheet.Cell(row, 4).Value.ToString().Trim();
+                        var course = worksheet.Cell(row, 5).Value.ToString().Trim();
+                        var term = worksheet.Cell(row, 6).Value.ToString().Trim();
+
+                        // if nid does not exit, then create a new account with that nid. Store in list to export to user. 
+                        var nidExits = _userManager.Users.Where(e => e.UserName == nid).FirstOrDefault();
+
+                        // if nid exits, change nid data in DB
+                        if (nidExits != null)
+                        {
+                            nidExits.Block = string.Join(", ", nidExits.Block, block).Trim();
+                            nidExits.Course = string.Join(", ", nidExits.Course, course).Trim();
+                            nidExits.Term = string.Join(", ", nidExits.Term, term).Trim();
+                        }
+
+                        // if nid does not not exit, create new user and add in newUsersList
+                        else
+                        {
+
+                            //creating a new user object
+                            //columns created by Identity and not used in this app are labeled "false" or null or empty
+                            var user = new ApplicationUser
+                            {
+                                UserName = nid,
+                                NormalizedUserName = nid,
+                                Email = nid,
+                                NormalizedEmail = nid,
+                                EmailConfirmed = true,
+                                PhoneNumber = "",
+                                PhoneNumberConfirmed = false,
+                                TwoFactorEnabled = false,
+                                LockoutEnd = null,
+                                LockoutEnabled = true,
+                                AccessFailedCount = 0,
+                                Name = name,
+                                Role = role,
+                                Block = block,
+                                Course = course,
+                                Term = term
+
+                            };
+
+                            //creating a new user
+                            var result = await _userManager.CreateAsync(user, password);
+
+                            //assigning roles to the user
+                            if (role == "Instructor")
+                            {
+                                await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
+                            }
+
+                            if (role == "Student")
+                            {
+                                await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
+                            }
+
+
+                            // adding the newly user to the newUsersList to export as excel
+                            //before adding to excel, change the password to actual value so that can be sent to the students. 
+
+                            var newUser = new ApplicationUser
+                            {
+                                UserName = nid,
+                                NormalizedUserName = nid,
+                                Email = nid,
+                                NormalizedEmail = nid,
+                                EmailConfirmed = true,
+                                PhoneNumber = "",
+                                PhoneNumberConfirmed = false,
+                                TwoFactorEnabled = false,
+                                LockoutEnd = null,
+                                LockoutEnabled = true,
+                                AccessFailedCount = 0,
+                                Name = name,
+                                Role = role,
+                                Block = block,
+                                Course = course,
+                                Term = term, 
+                                PasswordHash = password
+
+
+                            };
+
+
+                            newUsersList.Add(newUser);
+
+                        }
+
+
+                    }// end for loop
+
+
+
+                }
+            }
+
+            //_context.Users.AddRange(list);
+
+            _context.SaveChanges();
+
+            TempData["AlertMessage"] = "Users created sucessfully!";
+            return ExportExcelForMail(newUsersList);
+
+            //return RedirectToAction("ListUsers");
+
+        } // importToExcel
+
+
+        /// <summary>
+        /// Generates a Random Password
+        /// respecting the given strength requirements.
+        /// </summary>
+        /// <param name="opts">A valid PasswordOptions object
+        /// containing the password strength requirements.</param>
+        /// <returns>A random password</returns>
+        public static string GenerateRandomPassword(PasswordOptions opts = null)
+        {
+            if (opts == null) opts = new PasswordOptions()
+            {
+                RequiredLength = 8,
+                RequiredUniqueChars = 4,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireNonAlphanumeric = true,
+                RequireUppercase = true
+            };
+
+            string[] randomChars = new[] {
+            "ABCDEFGHJKLMNOPQRSTUVWXYZ",    // uppercase 
+            "abcdefghijkmnopqrstuvwxyz",    // lowercase
+            "0123456789",                   // digits
+            "!@$?_-"                        // non-alphanumeric
+        };
+
+            Random rand = new Random(Environment.TickCount);
+            List<char> chars = new List<char>();
+
+            if (opts.RequireUppercase)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[0][rand.Next(0, randomChars[0].Length)]);
+
+            if (opts.RequireLowercase)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[1][rand.Next(0, randomChars[1].Length)]);
+
+            if (opts.RequireDigit)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[2][rand.Next(0, randomChars[2].Length)]);
+
+            if (opts.RequireNonAlphanumeric)
+                chars.Insert(rand.Next(0, chars.Count),
+                    randomChars[3][rand.Next(0, randomChars[3].Length)]);
+
+            for (int i = chars.Count; i < opts.RequiredLength
+                || chars.Distinct().Count() < opts.RequiredUniqueChars; i++)
+            {
+                string rcs = randomChars[rand.Next(0, randomChars.Length)];
+                chars.Insert(rand.Next(0, chars.Count),
+                    rcs[rand.Next(0, rcs.Length)]);
+            }
+
+            return new string(chars.ToArray());
+        }
+
+
+
+        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult ExportExcelForMail(List<ApplicationUser> userList)
+        {
+            // Create a new Excel workbook
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+
+                // Add a worksheet to the workbook
+                var worksheet = workbook.Worksheets.Add("Users");
+
+                // Set the column headers
+
+                worksheet.Cell(1, 1).Value = "NID";
+                worksheet.Cell(1, 2).Value = "Name";
+                worksheet.Cell(1, 3).Value = "Password";
+                worksheet.Cell(1, 4).Value = "Role";
+                //worksheet.Cell(1, 5).Value = "Block";
+                //worksheet.Cell(1, 6).Value = "Course";
+               // worksheet.Cell(1, 7).Value = "Term";
+
+                // Set the row values
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    //NID == UserName == Email. They are all same. We are using UserName to retrive NID. 
+                    worksheet.Cell(i + 2, 1).Value = userList[i].UserName;
+                    worksheet.Cell(i + 2, 2).Value = userList[i].Name;
+                    worksheet.Cell(i + 2, 3).Value = userList[i].PasswordHash;
+                    worksheet.Cell(i + 2, 4).Value = userList[i].Role;
+                    //worksheet.Cell(i + 2, 5).Value = userList[i].Block;
+                    //worksheet.Cell(i + 2, 6).Value = userList[i].Course;
+                    //worksheet.Cell(i + 2, 7).Value = userList[i].Term;
+
+
+                }
+
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CRESME Users Mailing List.xlsx");
+            }
+        }
+
+
+
+        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
+         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
+         */
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> AssignedQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+            List<Quiz> quizes = new List<Quiz>();
+            var blockList = user.Block.Split(",");
+            var courseList = user.Course.Split(",");
+            var termList = user.Term.Split(",");
+
+
+            for (int i = 0; i < blockList.Count(); i++)
+            {
+                // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
+                var assignedQuizes = _context.Quiz
+                            .FromSqlInterpolated($"select * from Quiz where Course = {courseList[i].Trim()} and Block = {blockList[i].Trim()} and Term = {termList[i].Trim()} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
+                            .ToList();
+                // list of quizes already taken by the user
+                var takenQuizes = _context.Attempt
+                            .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                            .ToList();
+
+                // if no quizes have been assingend to the student yet, return an empty list of quizes 
+                if (assignedQuizes.Count() == 0)
+                {
+                    //return View(quizes);
+                    ;
+                }
+                else
+                {
+                    // if no quizes have been taken yet by the student, return the list with all quizes assigned to the student
+                    if (takenQuizes.Count() == 0)
+                    {
+                        //return View(assignedQuizes);
+                        quizes.AddRange(assignedQuizes); 
+                    }
+                    else
+                    {
+                        // some quizes have been assigned and some quizes have been taken already by the studnet. 
+                        // look and find the quizes yet to be taken. 
+
+                        // Compare the lists
+                        List<Quiz> result = CompareLists(assignedQuizes, takenQuizes);
+
+                        // if result is empty, return an empty list of quizes
+                        if (result.Count() == 0)
+                        {
+                            //return View(new List<Quiz>());
+                            ;
+                        }
+                        else
+                        {
+                            //return View(result.Distinct());
+                            quizes.AddRange(result); 
+                        }
+                    }
+
+             
+                
+                }
+
+
+
+
+            }//for loop 
+
+
+            return View(quizes.Distinct());
+            
+
+        } // end assigned quizes
+
+
+
+        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PastQuizes()
+        {
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            // list of quizes already taken by the user
+            var TakenQuizes = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
+                        .ToList();
+
+            return View(TakenQuizes);
+
+
+
+        } // end past quizes
+
+
+
+        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*/
+        [Authorize(Roles = "Admin, Instructor,Student")]
+        public async Task<IActionResult> PracticeQuizes()
+        {
+
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            // list of practice CRESME assinged to the student that are published and feedback is enabled.
+            var feedbackQuizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
+                        .ToList();
+
+            return View(feedbackQuizes);
+
+
+
+        }
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> StudentDetails(string id)
+        {
+            return _context.Users != null ?
+                        View(await _userManager.FindByIdAsync(id)) :
+                        Problem("Entity set 'ApplicationDbContext.Test'  is null.");
+        }
+
+
+
+
+        /*Deletes a user based on the passsed ID*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteCourse(int index, string id)
+        {
+            /*//get the current studnets object
+            //var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(student.Id);
+
+            // user is the object passed which contains the course which must be deleted from the student.
+            var course = student.Course;
+            
+            // check if the student has more than one course
+            if (user.Course.Split(",").Count() == 1)
+            {
+                // if the student is enrolled in only one course, delete the entire student.
+                //_userManager.DeleteAsync(user);
+                //TempData["Success"] = "Course deleted from user sucessfully! Since student was only enrolled in one course, student was alos deleted.";
+
+            }
+            // else, if studentt has more than one course, delete the specified course*/
+
+
+
+
+            /* if (user != null)
+             {
+
+                 IdentityResult result = await _userManager.DeleteAsync(user);
+                 if (result.Succeeded)
+                 {
+                     TempData["Success"] = "Course deleted from user sucessfully!";
+                     return RedirectToAction("ListUsers");
+                 }
+                 else
+                 {
+                     TempData["AlertMessage"] = "Failed to delete Course!";
+                     return RedirectToAction("ListUsers");
+
+                 }
+
+             }
+             else
+             {
+                 ModelState.AddModelError("", "User Not Found");
+                 return RedirectToAction("ListUsers");
+
+             }*/
+
+
+            //else student is null
+            //return error message
+            if (id == null)
+            {
+                TempData["AlertMessage"] = "Failed to delete Course! Student does not exist!";
+                return Redirect(Request.Headers["Referer"].ToString());
+
+            }
+            //if student in not null
+            else
+            {
+                
+                //get the student with that user ID
+                //var user = _context.Users.SingleOrDefault(user => user.Id == student.Id);
+                
+                //get user data to update
+                var user = await _userManager.FindByIdAsync(id);
+
+                /*//get the couse to be removed along with respective block and term
+                var courseRemove = student.Course;
+                var blockRemove = student.Block;
+                var termRemove = student.Term;*/
+
+                /*// list of course a studnet is currently enrolled in
+                var courseList = user.Course; 
+
+                //remove the course
+                string updatedList = RemoveStringFromList(courseList, courseRemove);
+
+                // add back the new course list
+                user.Course = updatedList; 
+
+                await _userManager.UpdateAsync(user);*/
+
+                // remove the block, course, term at "index" for student
+                user.Block = RemoveStringAtIndex(user.Block, index);
+                user.Course = RemoveStringAtIndex(user.Course, index); 
+                user.Term = RemoveStringAtIndex(user.Term, index);
+
+                await _userManager.UpdateAsync(user);
+
+                TempData["Success"] = "Course removed from user sucessfully!";
+                return Redirect(Request.Headers["Referer"].ToString());
+
+
+            }
+
+        }
+
+        
+
+
+        public static string RemoveStringFromList(string inputString, string stringToRemove)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(", ");
+            
+
+            // Convert the array into a list
+            List<string> stringList = stringArray.ToList();
+
+            // Remove the desired string from the list
+            stringList.Remove(stringToRemove.Trim());
+
+            // Join the updated list elements back into a string
+            string updatedString = string.Join(",", stringList);
+
+            return updatedString;
+        }
+
+        public static string RemoveStringAtIndex(string inputString, int index)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(", ");
+
+            // Convert the array into a list
+            List<string> stringList = stringArray.ToList();
+
+            // remove element at the index
+            stringList.RemoveAt(index);
+
+            //convert list to a single string
+            string updatedString = string.Join(",", stringList);
+
+            return updatedString; 
+            
+            
+        }
+
 
 
 

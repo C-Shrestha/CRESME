@@ -55,6 +55,7 @@ namespace CRESME.Controllers
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) //closedxml update
         {
+            // alternative texts, quiz name, patient intro, start date, end date etc. for images is directly routed, so no need to change it explicitely
 
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
 
