@@ -15,7 +15,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100"></div>
 <img id="img" src="~/images/canvas3.png" style="display: none"/>
 <div id="error" display="none">
 </div>
@@ -36,13 +36,17 @@
                 <i class="col-lg-1 col-2 fa-solid fa-user"></i>
                 <input asp-for="Input.Email" class="col-4 shadow-none input-field" autocomplete="NID" placeholder="Enter user NID" aria-required="true" />
                 <label asp-for="Input.Email" style="display: none;"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                <div class="w-100"></div>
+                <span asp-validation-for="Input.Email" class="text-danger text-center col-6"></span>
 
                 <div class="w-100"></div>
                 <i class="col-lg-1 col-2 fa-solid fa-lock"></i>
                 <input asp-for="Input.Password" class="col-4 input-field" autocomplete="current-password" placeholder="Enter user password" aria-required="true" />
                 <label asp-for="Input.Password" style="display: none;"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                <div class="w-100"></div>
+                <span asp-validation-for="Input.Password" class="text-danger text-center col-6"></span>
 
                 <div class="w-100"></div>
                 <label asp-for="Input.RememberMe" class="col-4">
@@ -222,9 +226,9 @@
             toastBody.setAttribute("class", 'toast-body bg-danger');
             toastBody.innerHTML = "Login Failure! Please Make Sure Your NID and Password are Correct!"
 
-            var div = document.getElementById("error");
+            var flexbox = document.getElementById("flexbox");
 
-            div.before(toast);
+            flexbox.prepend(toast);
 
             toast.prepend(toastBody);
             toast.prepend(toastHeader);

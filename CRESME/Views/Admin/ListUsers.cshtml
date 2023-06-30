@@ -7,20 +7,39 @@
 
 <br />
 
-@if (TempData["AlertMessage"] != null)
-{
-    <div class="toast" role="alert" aria-live="assertive" style="position: absolute" aria-atomic="true">
-        <div class="toast-header">
-            <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
-            <strong class="me-auto">CRESME</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
+
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-danger">
+                @TempData["AlertMessage"]
+            </div>
         </div>
-        <div class="toast-body bg-success">
-            @TempData["AlertMessage"]
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-success">
+                @TempData["Success"]
+            </div>
         </div>
-    </div>
-    
-}
+    }
+
+
+
+</div>
 
 
 <div class="container-fluid">

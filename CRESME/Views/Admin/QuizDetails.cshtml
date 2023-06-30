@@ -283,41 +283,54 @@
 
     <div class="card">
 
-        <div class="card-header bg-light text-center" id="headingTwo">
+        <div class="card-header bg-light text-center" id="downloadCresmeData">
             <h5 class="mb-0">
-                <form asp-controller="Admin" asp-action="QuizDetailsToExcel">
-
-                    <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
-                    <button type="submit" class="btn custom_btn btn-outline-success">
-                        <i class="fa-solid fa-file-arrow-down"></i>
-                        Export CRESME Data
-                    </button>
-                </form>
+                <button class="btn  custom_btn btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapsedownloadCresmeData" aria-expanded="false" aria-controls="collapsedownloadCresmeData">
+                    Download CRESME Data
+                </button>
             </h5>
         </div>
+
+        <div id="collapsedownloadCresmeData" class="collapse" aria-labelledby="studentData" data-bs-parent="#accordion">
+            <div class="card-body">
+
+                <br />
+                <br />
+                <br />
+
+                <p>button</p>
+                <br />
+                <br />
+                <br />
+
+            </div>
+        </div>
+
+    </div>
 
 
     </div>
 
     <div class="card">
 
-        <div class="card-header bg-light text-center" id="headingThree">
+        <div class="card-header bg-light text-center" id="exportCresmeData">
             <h5 class="mb-0">
-                <form asp-controller="Admin" asp-action="ExportQuizFromDetails">
-                    <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
-                    <button type="submit" class="btn custom_btn btn-outline-success">
-                        <i class="fa-solid fa-file-arrow-down"></i>
-                        Export CRESME
-                    </button>
-                </form>
+            <button class="btn  custom_btn btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseexportCresmeData" aria-expanded="false" aria-controls="collapseexportCresmeData">
+                    Export CRESME Data
+                </button>
             </h5>
         </div>
 
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
+        <div id="collapseexportCresmeData" class="collapse" aria-labelledby="studentData" data-bs-parent="#accordion">
             <div class="card-body">
 
                 <br />
-              
+                <br />
+                <br />
+
+                <p>button</p>
+                <br />
+                <br />
                 <br />
 
             </div>
