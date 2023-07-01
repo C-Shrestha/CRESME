@@ -59,6 +59,9 @@ namespace CRESME.Controllers
                 attempt.QuizName = ParentQuiz.QuizName;
                 attempt.PatientIntro = ParentQuiz.PatientIntro;
                 attempt.NumColumns = ParentQuiz.NumColumns;
+                attempt.Course = ParentQuiz.Course;
+                attempt.Block = ParentQuiz.Block;
+                attempt.Term = ParentQuiz.Term;
             }
             else
             {
@@ -255,9 +258,6 @@ namespace CRESME.Controllers
             attempt.StudentID = CurrentStudent.Id;
             attempt.StudentNID = CurrentStudent.UserName;
             attempt.StudentName = CurrentStudent.Name;
-            attempt.Course = CurrentStudent.Course;
-            attempt.Block = CurrentStudent.Block;
-            attempt.Term = CurrentStudent.Term;
             if (ModelState.IsValid && User.IsInRole("Student"))
             {
                 _context.Add(attempt);
