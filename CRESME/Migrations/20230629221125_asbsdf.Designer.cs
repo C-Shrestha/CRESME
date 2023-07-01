@@ -4,6 +4,7 @@ using CRESME.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230629221125_asbsdf")]
+    partial class asbsdf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,34 +151,34 @@ namespace CRESME.Migrations
                     b.Property<string>("FreeResponseE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image0Name")
+                    b.Property<string>("Image0Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image1Name")
+                    b.Property<string>("Image1Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image2Name")
+                    b.Property<string>("Image2Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image3Name")
+                    b.Property<string>("Image3Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image4Name")
+                    b.Property<string>("Image4Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image5Name")
+                    b.Property<string>("Image5Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image6Name")
+                    b.Property<string>("Image6Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image7Name")
+                    b.Property<string>("Image7Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image8Name")
+                    b.Property<string>("Image8Pos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image9Name")
+                    b.Property<string>("Image9Pos")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("NumColumns")

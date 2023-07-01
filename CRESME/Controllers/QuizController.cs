@@ -55,7 +55,24 @@ namespace CRESME.Controllers
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) //closedxml update
         {
+
+            quiz.DateCreated = DateTime.Now;
+            if (quiz.EndDate < quiz.StartDate)
+            {
+                TempData["AlertMessageFail"] = "Start time cannot be after End time.";
+
+                return View("CreateQuiz", _context.Users.ToList());
+            }
+
+            if (_context.Quiz.SingleOrDefault(q => q.QuizName == Request.Form["QuizName"].ToString()) != null)
+            {
+                TempData["AlertMessageFail"] = "Name cannot be duplicate of existing CRESME: " + Request.Form["QuizName"];
+
+                return View("CreateQuiz", _context.Users.ToList());
+            }
+
             // alternative texts, quiz name, patient intro, start date, end date etc. for images is directly routed, so no need to change it explicitely
+
 
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
 
@@ -125,7 +142,6 @@ namespace CRESME.Controllers
                                 quiz.FeedBackB = worksheet.Cell(5, 2).Value.ToString().Trim();
                                 quiz.FeedBackC = worksheet.Cell(5, 3).Value.ToString().Trim();
                                 quiz.FeedBackD = worksheet.Cell(5, 4).Value.ToString().Trim();
-                                quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
                             }
                             if (quiz.NumColumns == 5)
                             {
@@ -133,7 +149,10 @@ namespace CRESME.Controllers
                                 quiz.PhysicalE = worksheet.Cell(2, 5).Value.ToString().Trim();
                                 quiz.DiagnosticE = worksheet.Cell(3, 5).Value.ToString().Trim();
                                 quiz.DiagnosisKeyWordsE = worksheet.Cell(4, 5).Value.ToString().Trim();
-                                
+                                if (quiz.FeedBackEnabled == "Yes")
+                                {
+                                    quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
+                                }
                             }
                         }
                     }

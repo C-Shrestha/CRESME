@@ -207,13 +207,48 @@ namespace CRESME.Controllers
                 (attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.FreeResponseE) = UnshuffleColumn("5", OriginalAttemptAnswers);
             }
 
-
+            
             //CRESME meta data
             if (ParentQuiz.Image0 != null) {
-                attempt.NumImage0Clicks = "number of clicks for image 0" + "("+ ParentQuiz.ImagePos0 +")" + " is " + attempt.NumImage0Clicks;
+                attempt.Image0Name = ParentQuiz.Image0[16..^40];
             }
-
-
+            if (ParentQuiz.Image1 != null)
+            {
+                attempt.Image1Name = ParentQuiz.Image1[16..^40];
+            }
+            if (ParentQuiz.Image2 != null)
+            {
+                attempt.Image2Name = ParentQuiz.Image2[16..^40];
+            }
+            if (ParentQuiz.Image3 != null)
+            {
+                attempt.Image3Name = ParentQuiz.Image3[16..^40];
+            }
+            if (ParentQuiz.Image4 != null)
+            {
+                attempt.Image4Name = ParentQuiz.Image4[16..^40];
+            }
+            if (ParentQuiz.Image5 != null)
+            {
+                attempt.Image5Name = ParentQuiz.Image5[16..^40];
+            }
+            if (ParentQuiz.Image6 != null)
+            {
+                attempt.Image6Name = ParentQuiz.Image6[16..^40];
+            }
+            if (ParentQuiz.Image7 != null)
+            {
+                attempt.Image7Name = ParentQuiz.Image7[16..^40];
+            }
+            if (ParentQuiz.Image8 != null)
+            {
+                attempt.Image8Name = ParentQuiz.Image8[16..^40];
+            }
+            if (ParentQuiz.Image9 != null)
+            {
+                attempt.Image9Name = ParentQuiz.Image9[16..^40];
+            }
+           
 
             //student info
             var CurrentStudent = _context.Users.SingleOrDefault( user => user.UserName == User.Identity.Name);
@@ -223,11 +258,11 @@ namespace CRESME.Controllers
             attempt.Course = CurrentStudent.Course;
             attempt.Block = CurrentStudent.Block;
             attempt.Term = CurrentStudent.Term;
-            //if ((ModelState.IsValid && ParentQuiz.FeedBackEnabled!="Yes") && not admin/instructor)
-            //{
+            if (ModelState.IsValid && User.IsInRole("Student"))
+            {
                 _context.Add(attempt);
                 _context.SaveChanges();
-            //}
+            }
            return View("_LoginPartial");
         }
 
