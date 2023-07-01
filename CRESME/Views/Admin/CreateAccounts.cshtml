@@ -3,12 +3,9 @@
 }
 
 
-<div id="row" class="row justify-content-end"></div>
-<br />
-<br />
-<br />
-<br />
-<br />
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
+    </div>
+
 
 
 <form id="form"  method="post" asp-controller="Admin" asp-action="ImportExcel" enctype="multipart/form-data">
@@ -149,9 +146,9 @@
                 toastBody.setAttribute("class", 'toast-body bg-warning');
                 toastBody.innerHTML = "Please Upload Excel File!"
 
-                var form = document.getElementById("form");
+                var flexbox = document.getElementById("flexbox");
 
-                row.before(toast);
+                flexbox.prepend(toast);
 
                 toast.prepend(toastBody);
                 toast.prepend(toastHeader);
