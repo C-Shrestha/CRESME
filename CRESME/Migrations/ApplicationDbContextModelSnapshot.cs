@@ -273,10 +273,16 @@ namespace CRESME.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"), 1L, 1);
 
+                    b.Property<string>("AuthorNames")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Block")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Course")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -475,6 +481,10 @@ namespace CRESME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuizName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShuffleEnabled")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
