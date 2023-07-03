@@ -2180,49 +2180,7 @@ namespace CRESME.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCourse()
         {
-            /*//get the current studnets object
-            //var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(student.Id);
-
-            // user is the object passed which contains the course which must be deleted from the student.
-            var course = student.Course;
             
-            // check if the student has more than one course
-            if (user.Course.Split(",").Count() == 1)
-            {
-                // if the student is enrolled in only one course, delete the entire student.
-                //_userManager.DeleteAsync(user);
-                //TempData["Success"] = "Course deleted from user sucessfully! Since student was only enrolled in one course, student was alos deleted.";
-
-            }
-            // else, if studentt has more than one course, delete the specified course*/
-
-
-
-
-            /* if (user != null)
-             {
-
-                 IdentityResult result = await _userManager.DeleteAsync(user);
-                 if (result.Succeeded)
-                 {
-                     TempData["Success"] = "Course deleted from user sucessfully!";
-                     return RedirectToAction("ListUsers");
-                 }
-                 else
-                 {
-                     TempData["AlertMessage"] = "Failed to delete Course!";
-                     return RedirectToAction("ListUsers");
-
-                 }
-
-             }
-             else
-             {
-                 ModelState.AddModelError("", "User Not Found");
-                 return RedirectToAction("ListUsers");
-
-             }*/
 
             string stringIndex = Request.Form["index"]; 
             int index =  Int32.Parse(stringIndex);
@@ -2241,27 +2199,8 @@ namespace CRESME.Controllers
             else
             {
                 
-                //get the student with that user ID
-                //var user = _context.Users.SingleOrDefault(user => user.Id == student.Id);
-                
                 //get user data to update
                 var user = await _userManager.FindByIdAsync(id);
-
-                /*//get the couse to be removed along with respective block and term
-                var courseRemove = student.Course;
-                var blockRemove = student.Block;
-                var termRemove = student.Term;*/
-
-                /*// list of course a studnet is currently enrolled in
-                var courseList = user.Course; 
-
-                //remove the course
-                string updatedList = RemoveStringFromList(courseList, courseRemove);
-
-                // add back the new course list
-                user.Course = updatedList; 
-
-                await _userManager.UpdateAsync(user);*/
 
                 // remove the block, course, term at "index" for student
                 user.Block = RemoveStringAtIndex(user.Block, index);
@@ -2331,39 +2270,42 @@ namespace CRESME.Controllers
         }
 
 
-
-        /*Located in the EditUsers.cshtml.This function will edit the user's data*/
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> UpdateCourse(string Id, string Name, string UserName, string Block, string Course, string Term)
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public async Task<IActionResult> ChangePassword()
         {
-            //find the user to be updated
-            var user = await _userManager.FindByIdAsync(Id);
-
-            // update the user data
-            if (user != null)
-            {
-                user.UserName = UserName.Trim();
-                user.Email = UserName.Trim();
-                user.Name = Name.Trim();
-                user.Block = Block.Trim();
-                user.Course = Course.Trim();
-                user.Term = Term.Trim();
-
-                // check if the update was sucessful
-                IdentityResult result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    TempData["AlertMessage"] = "User updated sucessfully!";
-                    return RedirectToAction("ListUsers");
-
-                }
-            }
-            else
-                ModelState.AddModelError("", "User Not Found");
-
-            return RedirectToAction("CreateAccounts");
+            return View();
+             
         }
+
+        public async Task<IActionResult> UpdatePassword(string oldPassword, string newPassword)
+        {
+
+            //var user = await _userManager.GetUserAsync(User);
+
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                TempData["AlertMessage"] = "Password could not be updated!";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+
+
+            TempData["Success"] = "Password updated sucessfully!";
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
 
 
 
