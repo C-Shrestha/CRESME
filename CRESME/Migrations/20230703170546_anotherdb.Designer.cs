@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230629221125_asbsdf")]
-    partial class asbsdf
+    [Migration("20230703170546_anotherdb")]
+    partial class anotherdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,34 +151,34 @@ namespace CRESME.Migrations
                     b.Property<string>("FreeResponseE")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image0Pos")
+                    b.Property<string>("Image0Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image1Pos")
+                    b.Property<string>("Image1Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image2Pos")
+                    b.Property<string>("Image2Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image3Pos")
+                    b.Property<string>("Image3Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image4Pos")
+                    b.Property<string>("Image4Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image5Pos")
+                    b.Property<string>("Image5Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image6Pos")
+                    b.Property<string>("Image6Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image7Pos")
+                    b.Property<string>("Image7Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image8Pos")
+                    b.Property<string>("Image8Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image9Pos")
+                    b.Property<string>("Image9Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("NumColumns")
@@ -275,10 +275,16 @@ namespace CRESME.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"), 1L, 1);
 
+                    b.Property<string>("AuthorNames")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Block")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Course")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -477,6 +483,10 @@ namespace CRESME.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuizName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShuffleEnabled")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
