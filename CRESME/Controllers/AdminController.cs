@@ -2178,7 +2178,7 @@ namespace CRESME.Controllers
 
         /*Deletes a user based on the passsed ID*/
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteCourse(int index, string id)
+        public async Task<IActionResult> DeleteCourse()
         {
             /*//get the current studnets object
             //var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -2224,7 +2224,11 @@ namespace CRESME.Controllers
 
              }*/
 
-
+            string stringIndex = Request.Form["index"]; 
+            int index =  Int32.Parse(stringIndex);
+            
+            string id = Request.Form["id"];
+            
             //else student is null
             //return error message
             if (id == null)
@@ -2261,7 +2265,7 @@ namespace CRESME.Controllers
 
                 // remove the block, course, term at "index" for student
                 user.Block = RemoveStringAtIndex(user.Block, index);
-                user.Course = RemoveStringAtIndex(user.Course, index); 
+                user.Course = RemoveStringAtIndex(user.Course, index);
                 user.Term = RemoveStringAtIndex(user.Term, index);
 
                 await _userManager.UpdateAsync(user);
@@ -2312,6 +2316,53 @@ namespace CRESME.Controllers
             return updatedString; 
             
             
+        }
+
+
+        public static string ReturnStringAtIndex(string inputString, int index)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(", ");
+
+
+            return stringArray[index];
+
+
+        }
+
+
+
+        /*Located in the EditUsers.cshtml.This function will edit the user's data*/
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateCourse(string Id, string Name, string UserName, string Block, string Course, string Term)
+        {
+            //find the user to be updated
+            var user = await _userManager.FindByIdAsync(Id);
+
+            // update the user data
+            if (user != null)
+            {
+                user.UserName = UserName.Trim();
+                user.Email = UserName.Trim();
+                user.Name = Name.Trim();
+                user.Block = Block.Trim();
+                user.Course = Course.Trim();
+                user.Term = Term.Trim();
+
+                // check if the update was sucessful
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    TempData["AlertMessage"] = "User updated sucessfully!";
+                    return RedirectToAction("ListUsers");
+
+                }
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+
+            return RedirectToAction("CreateAccounts");
         }
 
 
