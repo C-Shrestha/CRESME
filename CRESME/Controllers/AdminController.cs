@@ -2227,8 +2227,13 @@ namespace CRESME.Controllers
         public static string RemoveStringFromList(string inputString, string stringToRemove)
         {
             // Split the input string into an array of strings
-            string[] stringArray = inputString.Split(", ");
-            
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
 
             // Convert the array into a list
             List<string> stringList = stringArray.ToList();
@@ -2245,7 +2250,13 @@ namespace CRESME.Controllers
         public static string RemoveStringAtIndex(string inputString, int index)
         {
             // Split the input string into an array of strings
-            string[] stringArray = inputString.Split(", ");
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
 
             // Convert the array into a list
             List<string> stringList = stringArray.ToList();
@@ -2265,13 +2276,53 @@ namespace CRESME.Controllers
         public static string ReturnStringAtIndex(string inputString, int index)
         {
             // Split the input string into an array of strings
-            string[] stringArray = inputString.Split(", ");
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
+
 
 
             return stringArray[index];
 
 
         }
+
+
+
+        public static string UpdateStringAtIndex(string inputString, int index, string value)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
+
+            stringArray[index] = value;
+
+
+            //convert list to a single string
+            string updatedString = string.Join(",", stringArray);
+
+            return updatedString;
+
+
+        }
+
+
+
+
+
+
+
+
+
 
 
         /*returns a list of users in the database.*/
@@ -2282,6 +2333,8 @@ namespace CRESME.Controllers
              
         }
 
+
+        [Authorize(Roles = "Admin, Instructor, Student")]
         public async Task<IActionResult> UpdatePassword(string oldPassword, string newPassword)
         {
 
@@ -2319,6 +2372,7 @@ namespace CRESME.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> FromAdminChangePassword(string oldPassword, string newPassword, string nid)
         {
 
@@ -2344,7 +2398,68 @@ namespace CRESME.Controllers
             
         }
 
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditCourse(string id, string indexString)
+        {
+            //get the current studnets object
+            //var user =  _context.Users.SingleOrDefault(user => user.UserName == id);
+            //get user data to update
+            var user = await _userManager.FindByIdAsync(id);
+            int index = Int32.Parse(indexString);
 
+
+            // find the course/block/term for that user and for that index that was clicked
+            TempData["block"] = ReturnStringAtIndex(user.Block, index);
+            TempData["course"] = ReturnStringAtIndex(user.Course, index);
+            TempData["term"] = ReturnStringAtIndex(user.Term, index);
+            TempData["index"] = index;
+
+            // send back that data in the page
+            return View();
+        }
+
+        /*Located in the EditUsers.cshtml.This function will edit the user's data*/
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateCourse(string Id, string Block, string Course, string Term, string indexString)
+        {
+            //find the user to be updated
+            var user = await _userManager.FindByIdAsync(Id);
+            int index = Int32.Parse(indexString);
+
+
+            // update the user data
+            if (user != null)
+            {
+
+                user.Block = UpdateStringAtIndex(user.Block, index, Block); 
+                user.Course = UpdateStringAtIndex(user.Course, index, Course);
+                user.Term = UpdateStringAtIndex(user.Term, index, Term);
+
+                // check if the update was sucessful
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    TempData["Success"] = "Course updated sucessfully!";
+                    return RedirectToAction("ListUsers");
+
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "Course could not be updated.!";
+                    return RedirectToAction("ListUsers");
+
+                }
+            }
+            else
+            {
+                TempData["Success"] = "User does not exit!";
+                return RedirectToAction("ListUsers");
+
+            }
+
+        }
 
 
 
