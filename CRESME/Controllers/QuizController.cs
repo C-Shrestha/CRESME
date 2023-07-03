@@ -175,8 +175,8 @@ namespace CRESME.Controllers
             {
                 quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
             }
-            else { 
-                //assign default cover image
+            else {
+                quiz.CoverImage = "/images/CoverImage";
             }
 
             //checks for image upload and image position input, only saves image if both are present
