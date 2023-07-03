@@ -65,6 +65,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All CRESMES</a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ForgotPassword">Forgot Password</a>
+                                </li>
                             }
 
                             @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))

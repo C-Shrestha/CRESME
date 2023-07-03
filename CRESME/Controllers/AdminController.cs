@@ -22,6 +22,10 @@ using System.IO.Compression;
 using System.Security.Policy;
 using NuGet.Versioning;
 using System.Configuration;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
+using System.Text;
 
 namespace CRESME.Controllers
 {
@@ -2306,6 +2310,39 @@ namespace CRESME.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            return View();
+
+        }
+
+        public async Task<IActionResult> FromAdminChangePassword(string oldPassword, string newPassword, string nid)
+        {
+
+            //get the current studnets object
+            var user =  _context.Users.SingleOrDefault(user => user.UserName == nid);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            if(result.Succeeded)
+            {
+                TempData["Success"] = "Password updated sucessfully!";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+
+            else
+            {
+                TempData["AlertMessage"] = "Password could not be updated!";
+                return Redirect(Request.Headers["Referer"].ToString());
+
+            }
+            
+        }
 
 
 
