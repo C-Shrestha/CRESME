@@ -2409,7 +2409,9 @@ namespace CRESME.Controllers
             int index = Int32.Parse(indexString);
 
 
-            // find the course/block/term for that user and for that index that was clicked
+            // find the data for that user and for that index that was clicked
+            TempData["nid"] = ReturnStringAtIndex(user.UserName, index);
+            TempData["name"] = ReturnStringAtIndex(user.Name, index);
             TempData["block"] = ReturnStringAtIndex(user.Block, index);
             TempData["course"] = ReturnStringAtIndex(user.Course, index);
             TempData["term"] = ReturnStringAtIndex(user.Term, index);

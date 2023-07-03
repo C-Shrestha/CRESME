@@ -57,6 +57,40 @@
 
 
 
+
+                <div class="w-100"></div>
+                <div class="col-6 text-center" style="font-weight: bold;">NID</div>
+
+                <div class="w-100"></div>
+                <input asp-for="UserName" class="col-4 input-field" placeholder="NID" required autocomplete="off" style="background-color:#D7D8D7;" value="@TempData["nid"]" readonly/>
+
+                <div class="w-100"></div>
+                <span asp-validation-for="UserName" class="text-danger text-center col-6"></span>
+                <div class="w-100"></div>
+
+
+                <div class="w-100"></div>
+                <div class="col-6 text-center" style="font-weight: bold;">Name</div>
+
+                <div class="w-100"></div>
+                <input asp-for="Name" class="col-4 input-field" placeholder="Name" required autocomplete="off" style="background-color:#D7D8D7;" value="@TempData["name"]" readonly/>
+
+                <div class="w-100"></div>
+                <span asp-validation-for="Name" class="text-danger text-center col-6"></span>
+                <div class="w-100"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <div class="w-100"></div>
                 <div class="col-6 text-center" style="font-weight: bold;">Block</div>
 

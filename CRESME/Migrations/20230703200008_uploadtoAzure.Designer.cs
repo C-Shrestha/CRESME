@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230703142137_newDB07032023")]
-    partial class newDB07032023
+    [Migration("20230703200008_uploadtoAzure")]
+    partial class uploadtoAzure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

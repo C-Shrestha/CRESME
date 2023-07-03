@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class newDB07032023 : Migration
+    public partial class uploadtoAzure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
