@@ -98,6 +98,15 @@ namespace CRESME.Controllers
                 quiz.Published = "No";
             }
 
+            if (Request.Form["ShuffleEnabled"] == "1")
+            {
+                quiz.Published = "Yes";
+            }
+            else
+            {
+                quiz.Published = "No";
+            }
+
             quiz.DateCreated = DateTime.Now;
             if (quiz.EndDate < quiz.StartDate)
             {
@@ -166,7 +175,14 @@ namespace CRESME.Controllers
             if (Request.Form.Files["Legend"] != null) {
                 quiz.Legend = UploadImagetoFile(Request.Form.Files["Legend"]);
             }
-            
+
+            if (Request.Form.Files["CoverImage"] != null)
+            {
+                quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
+            }
+            else { 
+                //assign default cover image
+            }
 
             //checks for image upload and image position input, only saves image if both are present
             if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count>0)

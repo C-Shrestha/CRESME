@@ -7,7 +7,7 @@ namespace CRESME.Data
     [Table("Quiz")]
     public class Quiz
     {
-        
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuizId { get; set; }
@@ -33,12 +33,17 @@ namespace CRESME.Data
         [BindProperty]
         public DateTime EndDate { get; set; }
 
-        public string Published { get; set; } = "false";
+        public string Published { get; set; } = "Yes";
 
-        public string FeedBackEnabled { get; set; } = "no";
+        public string FeedBackEnabled { get; set; } = "No";
+
+        public string ShuffleEnabled { get; set; } = "No";
 
         [BindProperty]
         public string? NIDAssignment { get; set; } = ""; // comma seperated NID
+
+        [BindProperty]
+        public string? AuthorNames { get; set; } = "";
 
         [BindProperty]
         public string? Term { get; set; } = "";
@@ -54,6 +59,8 @@ namespace CRESME.Data
         public string? PatientIntro { get; set; } = ""; 
 
         public string? Legend { get; set; } = "";
+
+        public string? CoverImage { get; set; }
 
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
