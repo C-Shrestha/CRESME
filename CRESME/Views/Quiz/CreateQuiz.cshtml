@@ -2,8 +2,8 @@
 @{
 
     ViewData["Title"] = "Create CRESME";
-    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null);
-    IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
+    var UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null).ToList();
+    var UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null).ToList();
 }
 
 

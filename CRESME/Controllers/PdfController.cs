@@ -1,4 +1,4 @@
-﻿using CRESME.Data;
+﻿/*using CRESME.Data;
 using CRESME.Models;
 using iText.Html2pdf;
 using iText.Html2pdf.Attach.Impl.Tags;
@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace CRESME.Controllers
 {
-    /*[Route("pdf")]*/
+    *//*[Route("pdf")]*//*
     public class PdfController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -44,7 +44,7 @@ namespace CRESME.Controllers
 
 
 
-        /*// GET: Users
+        *//*// GET: Users
         public async Task<IActionResult> GetAll()
         {
             return _context.Users != null ?
@@ -148,7 +148,7 @@ namespace CRESME.Controllers
 
 
 
-        /*Returns a view with a PDF template format that will be submitted to webcourses.*/
+        /*Returns a view with a PDF template format that will be submitted to webcourses.*//*
         [Authorize(Roles = "Admin, Instructor")]
         public IActionResult TestAttempt()
         {
@@ -158,7 +158,7 @@ namespace CRESME.Controllers
 
 
 
-        /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
+        *//*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
          * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
          * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
         /*[Authorize(Roles = "Admin, Instructor, Student")]
@@ -218,7 +218,7 @@ namespace CRESME.Controllers
 
         /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
          * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
-         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
+         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*//*
         [Authorize(Roles = "Admin, Instructor, Student")]
         public  async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
         {
@@ -273,3 +273,4 @@ namespace CRESME.Controllers
 
     }
 }
+*/
