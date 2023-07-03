@@ -34,40 +34,40 @@
 
     <div class="table-responsive">
 
-    <table class="table table-bordered table-dark  table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
+    <table class="table table-bordered table-secondary table-hover table-sm" id="dataTableData" width="100%" cellspacing="0">
 
 
         <thead>
                 <tr>
-                    <th scope="col">
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.UserName)
                     </th>
 
-                    <th scope="col">
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
 
-                    <th scope="col">
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Role)
                     </th>
 
-                    <th scope="col">
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Block)
                     </th>
 
-                    <th scope="col">
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Course)
                     </th>
 
-                    <th scope="col">
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Term)
                     </th>
 
 
 
                     @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
-                    
-                    <th></th>
+
+                <th scope="col" class="table-dark"></th>
 
                     
                 </tr>

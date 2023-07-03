@@ -67,10 +67,19 @@
                 <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required>
                 <div class="w-100"></div>
 
+                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required>
+                <div class="w-100"></div>
+
+                <div class="col-5 text-center" style="font-weight: bold;">Start Date</div>
+                <div class="col-1 text-center"></div>
+                <div class="col-5 text-center" style="font-weight: bold;">End Date</div>
+                <div class="w-100"></div>
+
                 <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required>
                 <div class="col-1 text-center">-</div>
                 <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required>
                 <div class="w-100"></div>
+
 
                 <div class="col-2" style="font-weight: bold;">Publish</div>
                 <input class="col-1" type="checkbox" id="publish" name="Publish" value="1">
@@ -78,6 +87,10 @@
 
                 <div class="col-2" style="font-weight: bold;">Feedback</div>
                 <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1">
+                <div class="w-100"></div>
+
+                <div class="col-2" style="font-weight: bold;">Shuffle</div>
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
                 <div class="w-100"></div>
 
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
@@ -101,7 +114,16 @@
                 <div class="col-10" style="height: 2px; background-color: black"></div>
                 <div class="w-100"></div>
 
-                <div class="col-4 text-center" style="font-weight: bold;">Upload Legend Image</div>
+                <div class="col-4 text-center" style="font-weight: bold;">Upload Cover Image</div>
+                <div class="w-100"></div>
+
+                <input type="file" name="CoverImage" id="CoverImage" accept="image/*" style="display: none;" required />
+                <label  class="col-4 row justify-content-center border" id="coverLabel" for="CoverImage" style="border-color: black !important;">
+                    <i class="text-center fa-solid fa-panorama"></i>
+                </label>
+                <div class="w-100"></div>
+
+                 <div class="col-4 text-center" style="font-weight: bold;">Upload Legend Photo</div>
                 <div class="w-100"></div>
 
                 <input type="file" name="Legend" id="Legend" accept="image/*" style="display: none;" required />
@@ -208,6 +230,7 @@
     var j = 0;
     var fileButton = document.getElementById("excelButton");
     var legendButton = document.getElementById("Legend");
+    var coverButton = document.getElementById("CoverImage");
 
     window.onload = function () {
         // your code here
@@ -221,10 +244,66 @@
 
     }
     
+
+    function CheckCoverImage()
+    {
+        if(coverButton.value == "")
+        {
+            defaultImg =  document.getElementById("defaultImg");
+            coverButton.ariaValueMax = defaultImg;
+        }
+    }
+
     function validate(){
 
+        if (coverButton.value == "")
+        {
+            var toast = document.createElement("div");
+            toast.setAttribute("aria-live", 'assertive');
+            toast.setAttribute("aria-atomic", 'true');
+            toast.setAttribute("class", 'toast');
+            toast.setAttribute("role", 'alert');
+            toast.style.position = "absolute";
 
-        if (legendButton.value == "") {
+
+
+            var toastHeader = document.createElement("div");
+            toastHeader.setAttribute("class", 'toast-header');
+
+            var img = document.createElement("img");
+            img.src = '../images/canvas3.png';
+            img.setAttribute("width", '30');
+            img.setAttribute("height", '30');
+            img.setAttribute("class", 'rounded mr-2');
+
+            var strong = document.createElement("strong");
+            strong.innerHTML = "CRESME";
+            strong.setAttribute("class", 'me-auto');
+
+            var button = document.createElement("button");
+            button.setAttribute("class", 'btn-close');
+            button.setAttribute("data-bs-dismiss", 'toast');
+            button.setAttribute("aria-label", 'Close');
+
+            var toastBody = document.createElement("div");
+            toastBody.setAttribute("class", 'toast-body bg-warning');
+            toastBody.innerHTML = "Please Upload Cover Image!"
+
+            var flexbox = document.getElementById("flexbox");
+
+            flexbox.prepend(toast);
+
+            toast.prepend(toastBody);
+            toast.prepend(toastHeader);
+
+            toastHeader.prepend(button);
+            toastHeader.prepend(strong);
+            toastHeader.prepend(img);
+
+
+            showToast(toast);
+        }
+        else if (legendButton.value == "") {
 
             var toast = document.createElement("div");
             toast.setAttribute("aria-live", 'assertive');
@@ -255,7 +334,7 @@
 
             var toastBody = document.createElement("div");
             toastBody.setAttribute("class", 'toast-body bg-warning');
-            toastBody.innerHTML = "Please Upload Legend Image!"
+            toastBody.innerHTML = "Please Upload Legend Photo!"
 
             var flexbox = document.getElementById("flexbox");
 
@@ -568,6 +647,44 @@
     }
 
 
+        coverButton.onchange = function () {
+
+        var checkForI = document.getElementById("coverCheckMark");
+
+        if ((coverButton.value) != "" && (checkForI == null)) {
+
+            var newi = document.createElement("i");
+            newi.setAttribute("class", "col-1 fa-solid fa-check");
+            newi.setAttribute("id", "coverCheckMark");
+
+            var newBreak = document.createElement("div");
+            newBreak.setAttribute("class", 'w-100');
+
+            document.getElementById("coverLabel").after(newi);
+            newi.after(newBreak);
+
+            var newdiv = document.createElement("div");
+            newdiv.setAttribute("class", "col-6 text-center");
+            newdiv.setAttribute("id", "coverName");
+            newdiv.style.fontWeight = "bold";
+            newdiv.innerHTML = coverButton.value.substr(coverButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+            newBreak.after(newdiv);
+
+            var newBreak1 = document.createElement("div");
+            newBreak1.setAttribute("class", 'w-100');
+
+            newdiv.after(newBreak1);
+
+        }
+        else if (checkForI != null) {
+
+            var newdiv = document.getElementById("coverName");
+            newdiv.innerHTML = coverButton.value.substr(coverButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+        }
+
+    }
 
     legendButton.onchange = function () {
 
