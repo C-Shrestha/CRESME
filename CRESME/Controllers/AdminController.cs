@@ -1545,7 +1545,7 @@ namespace CRESME.Controllers
         }
 
 
-        //POST:Details
+        /*//POST:Details
         //Located in InstructorQuizView Page. 
         //Returns a list of attempts for a particular quiz.
         //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
@@ -1570,7 +1570,7 @@ namespace CRESME.Controllers
 
             return View(quizes.ToList());
 
-        }
+        }*/
 
 
 

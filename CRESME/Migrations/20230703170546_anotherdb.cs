@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class testlogin99 : Migration
+    public partial class anotherdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -97,6 +97,16 @@ namespace CRESME.Migrations
                     NumImage7Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumImage8Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumImage9Clicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image0Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image1Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image2Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image3Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image4Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image5Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image6Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image7Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image8Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image9Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumLegendClicks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumLabValueClicks = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -119,12 +129,15 @@ namespace CRESME.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Published = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FeedBackEnabled = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShuffleEnabled = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NIDAssignment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuthorNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Term = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Course = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Block = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PatientIntro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Legend = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CoverImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryB = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryC = table.Column<string>(type: "nvarchar(max)", nullable: true),

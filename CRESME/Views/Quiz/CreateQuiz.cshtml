@@ -32,7 +32,7 @@
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body bg-success">
+            <div class="toast-body bg-success" style="color:white">
                 @TempData["Success"]
             </div>
         </div>
@@ -64,7 +64,7 @@
 
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Patient Intro" required>
+                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required>
                 <div class="w-100"></div>
 
                 <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required>
@@ -147,7 +147,7 @@
                 <div class="col-4 text-center" style="font-weight: bold;">Courses</div>
 
                 <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    <option value="none " selected>N\A</option>
+                    <option value="N/A" selected>N\A</option>
                     @foreach (var term in UniqueTerms)
                     {
                         <option value=@term>@term</option>
@@ -156,7 +156,7 @@
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="0" selected>0</option>
+                    <option value="B0" selected>N\A</option>
                     <option value="B1">1</option>
                     <option value="B2">2</option>
                     <option value="B3">3</option>
@@ -173,7 +173,7 @@
                 <div class="col-1"></div>
 
                 <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    <option value="none" selected>N\A</option>
+                    <option value="N/A" selected>N\A</option>
                     @foreach (var course in UniqueCourses)
                     {
                         <option value=@course>@course</option>

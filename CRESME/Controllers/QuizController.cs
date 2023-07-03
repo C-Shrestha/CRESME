@@ -55,7 +55,24 @@ namespace CRESME.Controllers
         [ValidateAntiForgeryToken]  
         public ActionResult Create(Quiz quiz) //closedxml update
         {
+
+            quiz.DateCreated = DateTime.Now;
+            if (quiz.EndDate < quiz.StartDate)
+            {
+                TempData["AlertMessage"] = "Start time cannot be after End time.";
+
+                return View("CreateQuiz", _context.Users.ToList());
+            }
+
+            if (_context.Quiz.SingleOrDefault(q => q.QuizName == Request.Form["QuizName"].ToString()) != null)
+            {
+                TempData["AlertMessage"] = "Name cannot be duplicate of existing CRESME: " + Request.Form["QuizName"];
+
+                return View("CreateQuiz", _context.Users.ToList());
+            }
+
             // alternative texts, quiz name, patient intro, start date, end date etc. for images is directly routed, so no need to change it explicitely
+
 
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
 
@@ -81,13 +98,17 @@ namespace CRESME.Controllers
                 quiz.Published = "No";
             }
 
-            quiz.DateCreated = DateTime.Now;
-            if (quiz.EndDate < quiz.StartDate)
+            if (Request.Form["ShuffleEnabled"] == "1")
             {
-                TempData["AlertMessageFail"] = "Start time cannot be after End time.";
-
-                return View("CreateQuiz", _context.Users.ToList());
+                quiz.Published = "Yes";
             }
+            else
+            {
+                quiz.Published = "No";
+            }
+
+            quiz.DateCreated = DateTime.Now;
+            
 
             //Reading Excel File upload for quiz info
             if (Request.Form.Files["ExcelFileUpload"] != null)
@@ -125,7 +146,6 @@ namespace CRESME.Controllers
                                 quiz.FeedBackB = worksheet.Cell(5, 2).Value.ToString().Trim();
                                 quiz.FeedBackC = worksheet.Cell(5, 3).Value.ToString().Trim();
                                 quiz.FeedBackD = worksheet.Cell(5, 4).Value.ToString().Trim();
-                                quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
                             }
                             if (quiz.NumColumns == 5)
                             {
@@ -133,7 +153,10 @@ namespace CRESME.Controllers
                                 quiz.PhysicalE = worksheet.Cell(2, 5).Value.ToString().Trim();
                                 quiz.DiagnosticE = worksheet.Cell(3, 5).Value.ToString().Trim();
                                 quiz.DiagnosisKeyWordsE = worksheet.Cell(4, 5).Value.ToString().Trim();
-                                
+                                if (quiz.FeedBackEnabled == "Yes")
+                                {
+                                    quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
+                                }
                             }
                         }
                     }
@@ -147,7 +170,14 @@ namespace CRESME.Controllers
             if (Request.Form.Files["Legend"] != null) {
                 quiz.Legend = UploadImagetoFile(Request.Form.Files["Legend"]);
             }
-            
+
+            if (Request.Form.Files["CoverImage"] != null)
+            {
+                quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
+            }
+            else { 
+                //assign default cover image
+            }
 
             //checks for image upload and image position input, only saves image if both are present
             if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count>0)
@@ -266,8 +296,8 @@ namespace CRESME.Controllers
             {
                 _context.Add(quiz);
                 _context.SaveChanges();
-                TempData["AlertMessage"] = "CRESME created sucessfully!";
-                //ViewBag.Result = "Successfully created CRESME.";
+                TempData["Success"] = "CRESME created sucessfully!";
+                
             }
             else {
                 throw new Exception("Failed to create CRESME.");
