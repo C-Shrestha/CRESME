@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class testingmain : Migration
+    public partial class Feedback : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
