@@ -74,7 +74,7 @@
                                 </li>*@
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz"> Create CRESME</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz">Create CRESME</a>
                                 </li>
                                 
 
@@ -171,5 +171,30 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://kit.fontawesome.com/50d8449c4c.js" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <style>
+        .nav-item .active {
+            color: #F1C400 !important;
+        }
+    </style>
+
+    <script>
+
+        window.onload = function () {
+
+            var links = document.getElementsByClassName("nav-link");
+            length = links.length;
+
+            for (let i = 0; i < length; i++) {
+
+                if (links[i].innerHTML == "@ViewData["Title"]")
+                    links[i].classList.add("active");
+
+                console.log("@ViewData["Title"]");
+            }
+        };
+
+    </script>
+
 </body>
 </html>
