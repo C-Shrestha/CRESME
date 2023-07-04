@@ -2043,7 +2043,7 @@ namespace CRESME.Controllers
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
 
-                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CRESME Users Mailing List.xlsx");
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CRESME Users Mailing List " + DateTime.Now.ToShortDateString() + ".xlsx");
             }
         }
 
