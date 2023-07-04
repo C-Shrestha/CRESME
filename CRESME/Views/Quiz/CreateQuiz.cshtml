@@ -56,8 +56,6 @@
         <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
-             
-
 
                 <div class="w-100"></div>
                 <h4 class="col-6 text-center" style="font-weight: bold;">Create CRESME Form</h4>
@@ -547,6 +545,27 @@
             var newDiv1 = document.getElementById('vrDiv1' + k);
             newDiv1.setAttribute("id", 'vrDiv1' + (k-1));
 
+            var checkForI = document.getElementById("imgCheckMark" + k);
+
+            if (checkForI != null) {
+
+                var newi = document.getElementById("imgCheckMark" + k);
+                newi.setAttribute("id", "imgCheckMark" + (k-1));
+
+                var newBreak = document.getElementById('newBreak1' + k);
+                newBreak.setAttribute("id", 'newBreak1' + (k-1));
+
+                var newdiv = document.getElementById('imageName' + k);
+                newdiv.setAttribute("id", 'imageName' + (k-1));
+
+                newBreak.after(newdiv);
+
+                var newBreak1 = document.getElementById('newBreak2' + k);
+                newBreak1.setAttribute("id", 'newBreak2' + (k-1));
+
+
+            }
+
             k++;
         }
 
@@ -603,7 +622,7 @@
         select.style.height = "10%";
         select.style.textAlignLast = "center"
 
-        const options = ["A", "B", "C", "D", "E", "1", "2", "3", "4", "5"];
+        const options = ["PE 1", "PE 2", "PE 3", "PE 4", "PE 5", "Data A", "Data B", "Data C", "Data D", "Data E"];
 
         options.forEach((element, key) => {
             select[key] = new Option(element, key);
