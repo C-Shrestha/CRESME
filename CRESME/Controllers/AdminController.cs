@@ -685,6 +685,21 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 58).Value = "ImagePos9";
                 worksheet.Cell(1, 59).Value = "InstructorID";
 
+                worksheet.Cell(1, 60).Value = "ShuffleEnabled";
+                worksheet.Cell(1, 61).Value = "AuthorNames";
+                worksheet.Cell(1, 62).Value = "Image0Alt";
+                worksheet.Cell(1, 63).Value = "Image1Alt";
+                worksheet.Cell(1, 64).Value = "Image2Alt";
+                worksheet.Cell(1, 65).Value = "Image3Alt";
+                worksheet.Cell(1, 66).Value = "Image4Alt";
+                worksheet.Cell(1, 67).Value = "Image5Alt";
+                worksheet.Cell(1, 68).Value = "Image6Alt";
+                worksheet.Cell(1, 69).Value = "Image7Alt";
+                worksheet.Cell(1, 70).Value = "Image8Alt";
+                worksheet.Cell(1, 71).Value = "Image9Alt";
+
+
+
 
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
@@ -748,7 +763,22 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 57).Value = userList[i].ImagePos8;
                     worksheet.Cell(i + 2, 58).Value = userList[i].ImagePos9;
                     worksheet.Cell(i + 2, 59).Value = userList[i].InstructorID;
-                    
+
+                    worksheet.Cell(i + 2, 60).Value = userList[i].ShuffleEnabled;
+                    worksheet.Cell(i + 2, 61).Value = userList[i].AuthorNames;
+                    worksheet.Cell(i + 2, 62).Value = userList[i].Image0Alt;
+                    worksheet.Cell(i + 2, 63).Value = userList[i].Image1Alt;
+                    worksheet.Cell(i + 2, 64).Value = userList[i].Image2Alt;
+                    worksheet.Cell(i + 2, 65).Value = userList[i].Image3Alt;
+                    worksheet.Cell(i + 2, 66).Value = userList[i].Image4Alt;
+                    worksheet.Cell(i + 2, 67).Value = userList[i].Image5Alt;
+                    worksheet.Cell(i + 2, 68).Value = userList[i].Image6Alt;
+                    worksheet.Cell(i + 2, 69).Value = userList[i].Image7Alt;
+                    worksheet.Cell(i + 2, 70).Value = userList[i].Image8Alt;
+                    worksheet.Cell(i + 2, 71).Value = userList[i].Image9Alt;
+
+
+
 
 
                 }
@@ -847,7 +877,12 @@ namespace CRESME.Controllers
 
                 worksheet.Cell(1, 37).Value = "QuizID";
                 worksheet.Cell(1, 38).Value = "PatientIntro";
-                
+
+                worksheet.Cell(1, 39).Value = "NumLegendClicks";
+                worksheet.Cell(1, 40).Value = "NumLabValueClicks";
+
+
+
 
 
                 // Set the row values
@@ -900,7 +935,10 @@ namespace CRESME.Controllers
 
                     worksheet.Cell(i + 2, 37).Value = userList[i].QuizID;
                     worksheet.Cell(i + 2, 38).Value = userList[i].PatientIntro;
-                    
+
+                    worksheet.Cell(i + 2, 39).Value = userList[i].NumLegendClicks;
+                    worksheet.Cell(i + 2, 40).Value = userList[i].NumLabValueClicks;
+
 
 
                 }
@@ -1549,7 +1587,7 @@ namespace CRESME.Controllers
         }
 
 
-        /*//POST:Details
+        //POST:Details
         //Located in InstructorQuizView Page. 
         //Returns a list of attempts for a particular quiz.
         //If quiz has not been taken by any student yet, then returns a List of Attempts with one object contaning the QuizName
@@ -1574,7 +1612,7 @@ namespace CRESME.Controllers
 
             return View(quizes.ToList());
 
-        }*/
+        }
 
 
 
@@ -1846,9 +1884,9 @@ namespace CRESME.Controllers
                         // if nid exits, change nid data in DB
                         if (nidExits != null)
                         {
-                            nidExits.Block = string.Join(", ", nidExits.Block, block).Trim();
-                            nidExits.Course = string.Join(", ", nidExits.Course, course).Trim();
-                            nidExits.Term = string.Join(", ", nidExits.Term, term).Trim();
+                            nidExits.Block = string.Join(",", nidExits.Block, block).Trim();
+                            nidExits.Course = string.Join(",", nidExits.Course, course).Trim();
+                            nidExits.Term = string.Join(",", nidExits.Term, term).Trim();
                         }
 
                         // if nid does not not exit, create new user and add in newUsersList
