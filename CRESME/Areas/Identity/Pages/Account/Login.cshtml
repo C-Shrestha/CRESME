@@ -23,7 +23,6 @@
 <br />
 
 
-
 <form id="account" method="post" onsubmit="setStorage()">
     <div class="d-flex align-items-center">
         <div class="container  border p-3 mb-5 mt-5 bg-white rounded" style="width: 50%;">
@@ -34,7 +33,7 @@
 
                 <div class="w-100"></div>
                 <i class="col-lg-1 col-2 fa-solid fa-user"></i>
-                <input asp-for="Input.Email" class="col-4 shadow-none input-field" autocomplete="NID" placeholder="Enter user NID" aria-required="true" />
+                <input asp-for="Input.Email" class="col-4 shadow-none input-field" autocomplete="NID" placeholder="Enter user NID" aria-required="true" style="background-color:#FCF5D8;" />
                 <label asp-for="Input.Email" style="display: none;"></label>
 
                 <div class="w-100"></div>
@@ -42,7 +41,7 @@
 
                 <div class="w-100"></div>
                 <i class="col-lg-1 col-2 fa-solid fa-lock"></i>
-                <input asp-for="Input.Password" class="col-4 input-field" autocomplete="current-password" placeholder="Enter user password" aria-required="true" />
+                <input asp-for="Input.Password" class="col-4 input-field" autocomplete="current-password" placeholder="Enter user password" aria-required="true" style="background-color:#FCF5D8;" />
                 <label asp-for="Input.Password" style="display: none;"></label>
 
                 <div class="w-100"></div>

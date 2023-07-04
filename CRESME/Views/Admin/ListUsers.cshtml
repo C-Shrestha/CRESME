@@ -273,7 +273,7 @@
         <thead>
                 <tr>
                     <th scope="col" class="table-dark">
-                        @Html.DisplayNameFor(model => model.UserName)
+                        NID
                     </th>
 
                     <th scope="col" class="table-dark">
@@ -333,53 +333,58 @@
                             @Html.DisplayFor(modelItem => item.Course)
                         </td>
 
-                    <td class="table-secondary">
+                        <td class="table-secondary">
                             @Html.DisplayFor(modelItem => item.Term)
                         </td>
 
-                    @if (item.Name == "Admin")
-                    {
-                        <td class="table-secondary"></td>
-                        <td class="table-secondary"></td>
-                        <td class="table-secondary"></td>
-                    }
-                    else
-                    {
+
+                        @if (item.Role == "Admin")
+                        {
+                            <td class="table-secondary"></td>
+                            <td class="table-secondary"></td>
+                            <td class="table-secondary"></td>
+                            
+                        }
+
+                        else
+                        {
+                            
+                            
+                                <td class="table-secondary">
+                                    <form asp-controller="Admin" asp-action="StudentDetails" asp-route-id="@item.Id" method="post">
+                                        <button type="submit" class="btn btn-sm btn-warning">
+                                            <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
+                                            Details
+                                        </button>
+                                    </form>
+                                 </td>
 
 
-                        <td class="table-secondary">
-                            <form asp-controller="Admin" asp-action="StudentDetails" asp-route-id="@item.Id" method="post">
-                                <button type="submit" class="btn btn-sm btn-warning">
-                                    <i class="fa-solid fa-circle-info" style="color: #000000;"></i>
-                                    Details
-                                </button>
-                            </form>
-                         </td>
+                                <td class="table-secondary">
+                                    <form asp-controller="Admin"   asp-action="EditUsers" asp-route-id="@item.Id" method="post">
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            <i class="fa-solid fa-user-pen"></i>
+                                            Edit
+                                        </button>
+                                    </form>
+                                </td>
 
 
-                        <td class="table-secondary">
-                            <form asp-controller="Admin"   asp-action="EditUsers" asp-route-id="@item.Id" method="post">
-                                <button type="submit" class="btn btn-sm btn-primary">
-                                    <i class="fa-solid fa-user-pen"></i>
-                                    Edit
-                                </button>
-                            </form>
-                        </td>
+                                <td class="table-secondary">
 
+                                    <form asp-controller="Admin" asp-action="Delete" asp-route-id="@item.Id" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            Delete
+                                        </button>
+                                    </form>
 
-                        <td class="table-secondary">
-                            <form asp-controller="Admin" asp-action="Delete" asp-route-id="@item.Id" method="post" onclick="return confirm('Are you sure you want to DELETE this user?')">
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    Delete
-                                </button>
-                            </form>
-                        </td>
-                    }
+                                </td>
 
+                            
 
                         
-
+                        }
 
 
                     </tr>
