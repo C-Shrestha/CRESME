@@ -64,14 +64,14 @@
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
                 <div class="w-100"></div>
-                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter CRESME Name" required>
+                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter CRESME Name" required style="background-color:#FCF5D8;">
 
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required>
+                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required>
+                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-5 text-center" style="font-weight: bold;">Start Date</div>
@@ -79,22 +79,22 @@
                 <div class="col-5 text-center" style="font-weight: bold;">End Date</div>
                 <div class="w-100"></div>
 
-                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required>
+                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required style="background-color:#FCF5D8;">
                 <div class="col-1 text-center">-</div>
-                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required>
+                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
 
-                <div class="col-2" style="font-weight: bold;">Publish</div>
-                <input class="col-1" type="checkbox" id="publish" name="Publish" value="1">
+                <div class="col-2" style="font-weight: bold; ">Publish</div>
+                <input class="col-1" type="checkbox" id="publish" name="Publish" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-2" style="font-weight: bold;">Feedback</div>
-                <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1">
+                <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-2" style="font-weight: bold;">Shuffle</div>
-                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
@@ -184,6 +184,21 @@
                     }
                 </select>
                 <div class="w-100"></div>
+
+                <div class="text-center" style="font-weight: bold;">Instructor</div>
+
+                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                    <option value="N/A" selected>N\A</option>
+                    @foreach (var course in UniqueCourses)
+                    {
+                        <option value=@course>@course</option>
+                    }
+                </select>
+                <div class="w-100"></div>
+
+
+
+
 
                 <button onclick="validate()" type="submit" class="btn custom_btn col-5">Create CRESME</button>
                 <div class="w-100"></div>

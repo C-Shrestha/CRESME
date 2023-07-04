@@ -5,6 +5,46 @@
 }
 
 
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
+
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-danger">
+                @TempData["AlertMessage"]
+            </div>
+        </div>
+
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-success" style="color:white">
+                @TempData["Success"]
+            </div>
+
+
+
+        </div>
+    }
+
+
+
+</div>
+
+
+
 <form asp-controller="Admin" asp-action="InstructorUpdateQuiz" method="post" onsubmit="return confirm('Are you sure you want to EDIT this quiz data?');">
     <div class="d-flex align-items-center min-vh-100">
         <div class="container border bg-white rounded" style="width: 50%;">
@@ -21,30 +61,36 @@
                 <div class="col-6 text-center" style="font-weight: bold;">Name</div>
             
                 <div class="w-100"></div>
-                <input asp-for="QuizName" class="col-4 input-field" placeholder="CRESME Name" required autocomplete="off" />
+                <input asp-for="QuizName" class="col-4 input-field" placeholder="CRESME Name" required autocomplete="off" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="QuizName" class="text-danger"></span>
 
 
                 <div class="col-6 text-center" style="font-weight: bold;">Patient Introduction</div>
                 <div class="w-100"></div>
-                <input asp-for="PatientIntro" class="col-4 input-field" placeholder="Patient Introduction" required autocomplete="off" />
+                <input asp-for="PatientIntro" class="col-4 input-field" placeholder="Patient Introduction" required autocomplete="off" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="PatientIntro" class="text-danger"></span>
+
+
+                <div class="col-6 text-center" style="font-weight: bold;">Authors</div>
+                <div class="w-100"></div>
+                <input asp-for="AuthorNames" class="col-4 input-field" placeholder="Patient Introduction" required autocomplete="off" style="background-color:#FCF5D8;" />
+                <span asp-validation-for="AuthorNames" class="text-danger"></span>
 
 
                 <div class="col-6 text-center" style="font-weight: bold;">Block</div>
                 <div class="w-100"></div>
-                <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" />
+                <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="Block" class="text-danger"></span>
 
 
                 <div class="col-6 text-center" style="font-weight: bold;">Course</div>
                 <div class="w-100"></div>
-                <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" />
+                <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="Course" class="text-danger"></span>
 
                 <div class="col-6 text-center" style="font-weight: bold;">Term</div>
                 <div class="w-100"></div>
-                <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" />
+                <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="Term" class="text-danger"></span>
 
 
@@ -52,7 +98,7 @@
                 <div class="w-100"></div>
 
                 <div class="w-100"></div>
-                <input asp-for="DateCreated" type="datetime-local" class="col-5 input-field" />
+                <input asp-for="DateCreated" type="datetime-local" class="col-5 input-field" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
 
 
@@ -61,7 +107,7 @@
                 
 
                 <div class="w-100"></div>
-                <input asp-for="StartDate" type="datetime-local"  class="col-5 input-field" />
+                <input asp-for="StartDate" type="datetime-local"  class="col-5 input-field" style="background-color:#FCF5D8;"/>
                 <span asp-validation-for="StartDate" class="text-danger"></span>
 
 
@@ -69,7 +115,7 @@
                 <div class="col-6 text-center" style="font-weight: bold;">End Date</div>
 
                 <div class="w-100"></div>
-                <input asp-for="EndDate" type="datetime-local"  class="col-5 input-field" />
+                <input asp-for="EndDate" type="datetime-local" class="col-5 input-field" style="background-color:#FCF5D8;" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
 
 
@@ -101,9 +147,20 @@
                     <div class="w-100"></div>
                 }
 
+                @if (Model.ShuffleEnabled == "Yes")
+                {
+                <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" checked>
+                <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
+                <div class="w-100"></div>
+                }
 
-
-                <br />
+                 <br />
 
                 <input type="hidden" asp-for="QuizId" />
 
@@ -144,4 +201,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+    </script>
 }
