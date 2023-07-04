@@ -358,14 +358,14 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
-        /*Located in ListAllQuizes.cshtml.Rerurns a view to edit a CRESME.*/
+        /*Located in ListAllQuizes.cshtml.Rerurns a view to edit a CRESME.*//*
         [Authorize(Roles = "Admin, Instructor")]
         public IActionResult EditQuiz(int QuizId)
         {
 
             return View(_context.Quiz.Find(QuizId));
 
-        }
+        }*/
 
 
 
@@ -1628,7 +1628,7 @@ namespace CRESME.Controllers
         /*Located in EditQuiz.cshtml. Updates a CRESME*/
         [HttpPost]    
         [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate, string PatientIntro, string Published, string FeedBackEnabled, string InstructorID)
+        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate, string PatientIntro, string Published, string FeedBackEnabled, string InstructorID, string ShuffleEnabled, string AuthorNames)
         {
 
             // find the quiz to be updated
@@ -1648,6 +1648,7 @@ namespace CRESME.Controllers
                 quiz.StartDate = StartDate;
                 quiz.EndDate = EndDate;
                 quiz.PatientIntro = PatientIntro.Trim();
+                quiz.AuthorNames = AuthorNames.Trim();
                 if (InstructorID != null)
                 {
                     quiz.InstructorID = InstructorID.Trim();
@@ -1673,9 +1674,19 @@ namespace CRESME.Controllers
                     quiz.Published = "No";
                 }
 
+                if (ShuffleEnabled == "1")
+                {
+                    quiz.ShuffleEnabled = "Yes";
+                }
+                else
+                {
+                    quiz.ShuffleEnabled = "No";
+                }
+
 
 
                 _context.SaveChanges();
+
                 TempData["AlertMessage"] = "CRESME updated sucessfully!";
                 if (user.Role == "Admin")
                 {

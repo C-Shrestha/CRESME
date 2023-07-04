@@ -181,6 +181,21 @@
                 </select>
                 <div class="w-100"></div>
 
+                <div class="text-center" style="font-weight: bold;">Instructor</div>
+
+                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                    <option value="N/A" selected>N\A</option>
+                    @foreach (var course in UniqueCourses)
+                    {
+                        <option value=@course>@course</option>
+                    }
+                </select>
+                <div class="w-100"></div>
+
+
+
+
+
                 <button onclick="validate()" type="submit" class="btn custom_btn col-5">Create CRESME</button>
                 <div class="w-100"></div>
 
