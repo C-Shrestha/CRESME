@@ -502,6 +502,53 @@
 
         }
 
+        k++;
+
+        while(k < i)
+        {
+            var deleteButton = document.getElementById('' + k);
+            deleteButton.setAttribute("id", '' + (k-1));
+
+
+            var newDiv = document.getElementById('vrDiv' + k);
+            newDiv.setAttribute("id", 'vrDiv' + (k - 1));
+
+
+            var hrDiv1 = document.getElementById('hrDiv1' + k);
+            hrDiv1.setAttribute("id", 'hrDiv1' + (k-1));
+
+            var hrDiv2 = document.getElementById('hrDiv2' + k);
+            hrDiv2.setAttribute("id", 'hrDiv2' + (k-1));
+
+
+
+            var newfile = document.getElementById('imageFile' + k);
+            newfile.setAttribute("name", 'imageFile' + (k-1));
+            newfile.setAttribute("id", 'imageFile' + (k-1));
+
+
+
+            var select = document.getElementById('ImagePos' + k);
+            select.setAttribute("id", 'ImagePos' + (k-1));
+            select.setAttribute("name", 'ImagePos' + (k-1));
+
+
+
+            var altText = document.getElementById('altText' + k);
+            altText.setAttribute("name", 'Image' + (k-1) + 'Alt');
+            altText.setAttribute("id", 'altText' + (k-1));
+
+
+            var newlabel = document.getElementById('imageLabel' + k);
+            newlabel.setAttribute("for", 'imageFile' + (k-1));
+            newlabel.setAttribute("id", 'imageLabel' + (k-1));
+
+
+            var newDiv1 = document.getElementById('vrDiv1' + k);
+            newDiv1.setAttribute("id", 'vrDiv1' + (k-1));
+
+            k++;
+        }
 
         i--;
     }
