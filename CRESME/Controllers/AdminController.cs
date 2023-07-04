@@ -2247,6 +2247,8 @@ namespace CRESME.Controllers
             return updatedString;
         }
 
+
+
         public static string RemoveStringAtIndex(string inputString, int index)
         {
             // Split the input string into an array of strings
@@ -2314,13 +2316,6 @@ namespace CRESME.Controllers
 
 
         }
-
-
-
-
-
-
-
 
 
 
