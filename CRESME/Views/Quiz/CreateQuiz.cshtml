@@ -5,11 +5,15 @@
     //list of of each students course column
     var courses = Model.Select(x => x.Course).Distinct().Where(x => x != null).ToList();
     var terms = Model.Select(x => x.Term).Distinct().Where(x => x != null).ToList();
-    
+
     //parse each string in courses/term separated by comma into individual strings 
     //trim and return only unique elements 
     List<string> UniqueCourses = courses.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
     List<string> UniqueTerms = terms.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
+
+    // list of instructors
+    var instructors = Model.Where(x => x.Role == "Instructor");
+
 }
 
 
@@ -189,11 +193,11 @@
 
                 <div class="text-center" style="font-weight: bold;">Instructor</div>
 
-                <select id="Course" name="Course" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                <select id="Instructor" name="Instructor" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
                     <option value="N/A" selected>N\A</option>
-                    @foreach (var course in UniqueCourses)
+                    @foreach (var item in instructors)
                     {
-                        <option value=@course>@course</option>
+                        <option value=@item>@item</option>
                     }
                 </select>
                 <div class="w-100"></div>
