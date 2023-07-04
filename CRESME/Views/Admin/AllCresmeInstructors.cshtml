@@ -86,6 +86,10 @@
                     </th>
 
                     <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.ShuffleEnabled)
+                    </th>
+
+                    <th class="table-dark">
                         @Html.DisplayNameFor(model => model.Published)
                     </th>
 
@@ -146,9 +150,11 @@
                             @Html.DisplayFor(modelItem => item.EndDate).
                         </td>
 
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.Published)
-                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShuffleEnabled)
+                        </td>
+
+                        
 
                         <td>
                         
