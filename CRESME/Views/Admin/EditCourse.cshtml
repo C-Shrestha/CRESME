@@ -1,12 +1,47 @@
 ﻿@model CRESME.Data.ApplicationUser
 
 @{
-    ViewData["Title"] = "Edit User";
+    ViewData["Title"] = "Edit Course";
 }
 
 
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
 
- <form asp-controller="Admin" asp-action="Update" method="post" onsubmit="return confirm('Are you sure you want to EDIT this user data?');">
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-danger">
+                @TempData["AlertMessage"]
+            </div>
+        </div>
+
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-success">
+                @TempData["Success"]
+            </div>
+        </div>
+    }
+
+
+
+</div>
+
+
+ <form asp-controller="Admin" asp-action="UpdateCourse" method="post" onsubmit="return confirm('Are you sure you want to EDIT this user data?');">
     <div class="d-flex align-items-center min-vh-100">
         <div class="container border bg-white rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
@@ -21,13 +56,13 @@
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
 
-                
+
 
                 <div class="w-100"></div>
                 <div class="col-6 text-center" style="font-weight: bold;">NID</div>
 
                 <div class="w-100"></div>
-                <input asp-for="UserName" class="col-4 input-field" placeholder="NID" required autocomplete="off" style="background-color:#FCF5D8;" />
+                <input asp-for="UserName" class="col-4 input-field" placeholder="NID" required autocomplete="off" style="background-color:#D7D8D7;" value="@TempData["nid"]" readonly/>
 
                 <div class="w-100"></div>
                 <span asp-validation-for="UserName" class="text-danger text-center col-6"></span>
@@ -38,7 +73,7 @@
                 <div class="col-6 text-center" style="font-weight: bold;">Name</div>
 
                 <div class="w-100"></div>
-                <input asp-for="Name" class="col-4 input-field" placeholder="Name" required autocomplete="off" style="background-color:#FCF5D8;" />
+                <input asp-for="Name" class="col-4 input-field" placeholder="Name" required autocomplete="off" style="background-color:#D7D8D7;" value="@TempData["name"]" readonly/>
 
                 <div class="w-100"></div>
                 <span asp-validation-for="Name" class="text-danger text-center col-6"></span>
@@ -47,23 +82,31 @@
 
 
 
+
+
+
+
+
+
+
+
+
                 <div class="w-100"></div>
                 <div class="col-6 text-center" style="font-weight: bold;">Block</div>
 
                 <div class="w-100"></div>
-                <input asp-for="Block" class="col-4 input-field" placeholder="Block" required autocomplete="off" style="background-color:#FCF5D8;" />
+                <input asp-for="Block" class="col-4 input-field" placeholder="Block" value="@TempData["block"]" required autocomplete="off" />
 
                 <div class="w-100"></div>
                 <span asp-validation-for="Block" class="text-danger text-center col-6"></span>
                 <div class="w-100"></div>
 
 
-
                 <div class="w-100"></div>
                 <div class="col-6 text-center" style="font-weight: bold;">Course</div>
 
                 <div class="w-100"></div>
-                <input asp-for="Course" class="col-4 input-field" placeholder="Course" required autocomplete="off" style="background-color:#FCF5D8;" />
+                <input asp-for="Course" class="col-4 input-field" value="@TempData["course"]"  placeholder="Course" required autocomplete="off" />
 
                 <div class="w-100"></div>
                 <span asp-validation-for="Course" class="text-danger text-center col-6"></span>
@@ -75,17 +118,17 @@
                 <div class="col-6 text-center" style="font-weight: bold;">Term</div>
 
                 <div class="w-100"></div>
-                <input asp-for="Term" class="col-4 input-field" placeholder="Term" required autocomplete="off" style="background-color:#FCF5D8;" />
+                <input asp-for="Term" class="col-4 input-field" placeholder="Term" value="@TempData["term"]" required autocomplete="off" />
 
                 <div class="w-100"></div>
                 <span asp-validation-for="Term" class="text-danger text-center col-6"></span>
                 <div class="w-100"></div>
 
 
+
                 <div class="w-100"></div>
                 <input type="hidden" asp-for="Id" />
-
-
+                <input type="hidden" name="indexString" value="@TempData["index"]" />
                 <input type="submit" value="Submit" class="btn custom_btn col-5"  />
                 <div class="w-100"></div>
 
@@ -122,4 +165,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        window.onload = function () {
+            // your code here
+            $('.toast').toast('show');
+        };
+    </script>
 }

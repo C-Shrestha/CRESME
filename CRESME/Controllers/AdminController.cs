@@ -22,6 +22,10 @@ using System.IO.Compression;
 using System.Security.Policy;
 using NuGet.Versioning;
 using System.Configuration;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
+using System.Text;
 
 namespace CRESME.Controllers
 {
@@ -2178,53 +2182,15 @@ namespace CRESME.Controllers
 
         /*Deletes a user based on the passsed ID*/
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteCourse(int index, string id)
+        public async Task<IActionResult> DeleteCourse()
         {
-            /*//get the current studnets object
-            //var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(student.Id);
-
-            // user is the object passed which contains the course which must be deleted from the student.
-            var course = student.Course;
             
-            // check if the student has more than one course
-            if (user.Course.Split(",").Count() == 1)
-            {
-                // if the student is enrolled in only one course, delete the entire student.
-                //_userManager.DeleteAsync(user);
-                //TempData["Success"] = "Course deleted from user sucessfully! Since student was only enrolled in one course, student was alos deleted.";
 
-            }
-            // else, if studentt has more than one course, delete the specified course*/
-
-
-
-
-            /* if (user != null)
-             {
-
-                 IdentityResult result = await _userManager.DeleteAsync(user);
-                 if (result.Succeeded)
-                 {
-                     TempData["Success"] = "Course deleted from user sucessfully!";
-                     return RedirectToAction("ListUsers");
-                 }
-                 else
-                 {
-                     TempData["AlertMessage"] = "Failed to delete Course!";
-                     return RedirectToAction("ListUsers");
-
-                 }
-
-             }
-             else
-             {
-                 ModelState.AddModelError("", "User Not Found");
-                 return RedirectToAction("ListUsers");
-
-             }*/
-
-
+            string stringIndex = Request.Form["index"]; 
+            int index =  Int32.Parse(stringIndex);
+            
+            string id = Request.Form["id"];
+            
             //else student is null
             //return error message
             if (id == null)
@@ -2237,31 +2203,12 @@ namespace CRESME.Controllers
             else
             {
                 
-                //get the student with that user ID
-                //var user = _context.Users.SingleOrDefault(user => user.Id == student.Id);
-                
                 //get user data to update
                 var user = await _userManager.FindByIdAsync(id);
 
-                /*//get the couse to be removed along with respective block and term
-                var courseRemove = student.Course;
-                var blockRemove = student.Block;
-                var termRemove = student.Term;*/
-
-                /*// list of course a studnet is currently enrolled in
-                var courseList = user.Course; 
-
-                //remove the course
-                string updatedList = RemoveStringFromList(courseList, courseRemove);
-
-                // add back the new course list
-                user.Course = updatedList; 
-
-                await _userManager.UpdateAsync(user);*/
-
                 // remove the block, course, term at "index" for student
                 user.Block = RemoveStringAtIndex(user.Block, index);
-                user.Course = RemoveStringAtIndex(user.Course, index); 
+                user.Course = RemoveStringAtIndex(user.Course, index);
                 user.Term = RemoveStringAtIndex(user.Term, index);
 
                 await _userManager.UpdateAsync(user);
@@ -2280,8 +2227,13 @@ namespace CRESME.Controllers
         public static string RemoveStringFromList(string inputString, string stringToRemove)
         {
             // Split the input string into an array of strings
-            string[] stringArray = inputString.Split(", ");
-            
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
 
             // Convert the array into a list
             List<string> stringList = stringArray.ToList();
@@ -2295,10 +2247,18 @@ namespace CRESME.Controllers
             return updatedString;
         }
 
+
+
         public static string RemoveStringAtIndex(string inputString, int index)
         {
             // Split the input string into an array of strings
-            string[] stringArray = inputString.Split(", ");
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
 
             // Convert the array into a list
             List<string> stringList = stringArray.ToList();
@@ -2315,6 +2275,188 @@ namespace CRESME.Controllers
         }
 
 
+        public static string ReturnStringAtIndex(string inputString, int index)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
+
+
+
+            return stringArray[index];
+
+
+        }
+
+
+
+        public static string UpdateStringAtIndex(string inputString, int index, string value)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
+
+            stringArray[index] = value;
+
+
+            //convert list to a single string
+            string updatedString = string.Join(",", stringArray);
+
+            return updatedString;
+
+
+        }
+
+
+
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public async Task<IActionResult> ChangePassword()
+        {
+            return View();
+             
+        }
+
+
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public async Task<IActionResult> UpdatePassword(string oldPassword, string newPassword)
+        {
+
+            //var user = await _userManager.GetUserAsync(User);
+
+            //get the current studnets object
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
+
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                TempData["AlertMessage"] = "Password could not be updated!";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+
+
+            TempData["Success"] = "Password updated sucessfully!";
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            return View();
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> FromAdminChangePassword(string oldPassword, string newPassword, string nid)
+        {
+
+            //get the current studnets object
+            var user =  _context.Users.SingleOrDefault(user => user.UserName == nid);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            if(result.Succeeded)
+            {
+                TempData["Success"] = "Password updated sucessfully!";
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+
+            else
+            {
+                TempData["AlertMessage"] = "Password could not be updated!";
+                return Redirect(Request.Headers["Referer"].ToString());
+
+            }
+            
+        }
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditCourse(string id, string indexString)
+        {
+            //get the current studnets object
+            //var user =  _context.Users.SingleOrDefault(user => user.UserName == id);
+            //get user data to update
+            var user = await _userManager.FindByIdAsync(id);
+            int index = Int32.Parse(indexString);
+
+
+            // find the data for that user and for that index that was clicked
+            TempData["nid"] = ReturnStringAtIndex(user.UserName, index);
+            TempData["name"] = ReturnStringAtIndex(user.Name, index);
+            TempData["block"] = ReturnStringAtIndex(user.Block, index);
+            TempData["course"] = ReturnStringAtIndex(user.Course, index);
+            TempData["term"] = ReturnStringAtIndex(user.Term, index);
+            TempData["index"] = index;
+
+            // send back that data in the page
+            return View();
+        }
+
+        /*Located in the EditUsers.cshtml.This function will edit the user's data*/
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateCourse(string Id, string Block, string Course, string Term, string indexString)
+        {
+            //find the user to be updated
+            var user = await _userManager.FindByIdAsync(Id);
+            int index = Int32.Parse(indexString);
+
+
+            // update the user data
+            if (user != null)
+            {
+
+                user.Block = UpdateStringAtIndex(user.Block, index, Block); 
+                user.Course = UpdateStringAtIndex(user.Course, index, Course);
+                user.Term = UpdateStringAtIndex(user.Term, index, Term);
+
+                // check if the update was sucessful
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    TempData["Success"] = "Course updated sucessfully!";
+                    return RedirectToAction("ListUsers");
+
+                }
+                else
+                {
+                    TempData["AlertMessage"] = "Course could not be updated.!";
+                    return RedirectToAction("ListUsers");
+
+                }
+            }
+            else
+            {
+                TempData["Success"] = "User does not exit!";
+                return RedirectToAction("ListUsers");
+
+            }
+
+        }
 
 
 

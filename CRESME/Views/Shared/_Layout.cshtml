@@ -38,7 +38,8 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                        
+
+                            
 
 
                             @if (User.IsInRole("Admin"))
@@ -62,6 +63,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All CRESMES</a>
                                 </li>
+
+                                
                             }
 
                             @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
@@ -129,9 +132,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="TakeQuiz">Take CRESME</a>
                             </li>
 
-                            
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ChangePassword">Change Password</a>
+                            </li>
 
-                            
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ForgotPassword">Forgot Password</a>
+                            </li>
 
                         }
 
