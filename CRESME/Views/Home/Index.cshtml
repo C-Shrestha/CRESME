@@ -126,11 +126,13 @@
             // your code here
             $('.toast').toast('show');
 
-            var reloading = sessionStorage.getItem("reloading");
-
-            if (reloading) 
-                sessionStorage.removeItem("reloading");
+           
         };
+
+        var reloading = sessionStorage.getItem("reloading");
+
+        if (reloading)
+            sessionStorage.removeItem("reloading");
     </script>
 }
 

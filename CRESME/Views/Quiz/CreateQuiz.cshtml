@@ -125,7 +125,9 @@
                 <div class="col-4 text-center" style="font-weight: bold;">Upload Cover Image</div>
                 <div class="w-100"></div>
 
-                <input type="file" name="CoverImage" id="CoverImage" accept="image/*" style="display: none;" />
+
+                <input type="file" name="CoverImage" id="CoverImage" accept="image/*" style="display: none;"/>
+
                 <label  class="col-4 row justify-content-center border" id="coverLabel" for="CoverImage" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-panorama"></i>
                 </label>
@@ -255,9 +257,13 @@
     var legendButton = document.getElementById("Legend");
     var coverButton = document.getElementById("CoverImage");
 
+ 
     window.onload = function () {
-        // your code here
-        $('.toast').toast('show');
+       // var toasts = document.getElementsByClassName("toasts")
+       // var length = toasts.length;
+
+        //for(let i = 0; i<length; i++)
+        console.log("@ViewData["Title"]");
     };
 
     function showToast(toast)
@@ -279,7 +285,7 @@
 
     function validate(){
 
-        if (coverButton.value == "")
+        /*if (coverButton.value == "")
         {
             var toast = document.createElement("div");
             toast.setAttribute("aria-live", 'assertive');
@@ -325,8 +331,8 @@
 
 
             showToast(toast);
-        }
-        else if (legendButton.value == "") {
+        }*/
+        if (legendButton.value == "") {
 
             var toast = document.createElement("div");
             toast.setAttribute("aria-live", 'assertive');

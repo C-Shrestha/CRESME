@@ -143,8 +143,11 @@
 
 
         window.onload = function () {
-            // your code here
-            $('.toast').toast('show');
+            var toasts = document.getElementsByClassName("toasts")
+            var length = toasts.length;
+
+            for(let i = 0; i<length; i++)
+                showToast(toasts[i]);
         };
 
         function showToast(toast) {
