@@ -75,16 +75,16 @@ namespace CRESME.Data
         [BindProperty] 
         public string? FreeResponseE { get; set; } = "";
 
-        public string? NumImage0Clicks { get; set; }
-        public string? NumImage1Clicks { get; set; }
-        public string? NumImage2Clicks { get; set; }
-        public string? NumImage3Clicks { get; set; }
-        public string? NumImage4Clicks { get; set; }
-        public string? NumImage5Clicks { get; set; }
-        public string? NumImage6Clicks { get; set; }
-        public string? NumImage7Clicks { get; set; }
-        public string? NumImage8Clicks { get; set; }
-        public string? NumImage9Clicks { get; set; }
+        public string? NumImage0Clicks { get; set; } = "0";
+        public string? NumImage1Clicks { get; set; } = "0";
+        public string? NumImage2Clicks { get; set; } = "0";
+        public string? NumImage3Clicks { get; set; } = "0";
+        public string? NumImage4Clicks { get; set; } = "0";
+        public string? NumImage5Clicks { get; set; } = "0";
+        public string? NumImage6Clicks { get; set; } = "0";
+        public string? NumImage7Clicks { get; set; } = "0";
+        public string? NumImage8Clicks { get; set; } = "0";
+        public string? NumImage9Clicks { get; set; } = "0";
 
         public string? Image0Name { get; set; }
         public string? Image1Name { get; set; }
@@ -98,9 +98,9 @@ namespace CRESME.Data
         public string? Image9Name { get; set; }
 
 
-        public string? NumLegendClicks { get; set; }
+        public string? NumLegendClicks { get; set; } = "0";
 
-        public string? NumLabValueClicks { get; set; }
+        public string? NumLabValueClicks { get; set; } = "0";
 
 
     }
