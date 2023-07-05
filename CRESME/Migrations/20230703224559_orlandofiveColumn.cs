@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class anotherdb : Migration
+    public partial class orlandofiveColumn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
