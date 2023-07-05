@@ -295,7 +295,7 @@ namespace CRESME.Controllers
 
                     foreach (var row in matchingRows)
                     {
-                        row.InstructorID = "";
+                        row.InstructorID = "N/A";
                     }
 
                     _context.SaveChanges();
@@ -326,22 +326,43 @@ namespace CRESME.Controllers
         [Route("/Admin/DeleteAll")]
         public async Task<IActionResult> DeleteAll()
         {
+            // get a list of all users in the DB
             var users = await _userManager.Users.ToListAsync();
+
             if (users != null)
             {
-
+                // delete all users in the DB
                 foreach (var item in users)
                 {
                     if (item.Role != "Admin")
                     {
+
                         await _userManager.DeleteAsync(item);
                     }
 
                 }
 
+                // in CRESME table, change all assignedID to "N/A" since all instructors are deleted.
+                // no CRESME is assinged to any instrustor since all are deleted. 
+                var quizes = _context.Quiz
+                                    .FromSqlInterpolated($"select * from Quiz")
+                                    .ToList();
+                foreach(var item in quizes)
+                {
+                    item.InstructorID = "N/A"; 
+                }
+
 
             }
-            TempData["AlertMessage"] = "All users deleted sucessfully!";
+            else
+            {
+                // if no users exits in the DB
+                TempData["AlertMessage"] = "No users exit in the database!";
+                return RedirectToAction("ListUsers");
+            }
+
+             _context.SaveChanges();
+            TempData["Success"] = "All users deleted sucessfully!";
             return RedirectToAction("ListUsers");
 
         }
@@ -531,7 +552,7 @@ namespace CRESME.Controllers
 
             var user = await _userManager.FindByIdAsync(currentUserId);
 
-            // list of CRESMES created by the Admin + Instructor by CRESME name
+            /*// list of CRESMES created by the Admin + Instructor by CRESME name
             //Here, some CRESMES might be created by Admin so will have Admin's InstructorID in Quiz. To find all CRESMES,
             //we need to check for CRESMES created by instructors themselves also in second query on the bottom
             var quizes1 = _context.Quiz
@@ -547,7 +568,14 @@ namespace CRESME.Controllers
             quizes1.AddRange(quizes2);
 
 
-            return View(quizes1.Distinct());
+            return View(quizes1.Distinct());*/
+
+            // find all the CRESMES assigned to the instructor
+            var quizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where InstructorID = {user.UserName}")
+                        .ToList();
+
+            return View(quizes); 
 
         }
 
