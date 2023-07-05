@@ -2,6 +2,44 @@
     ViewData["Title"] = "Create Accounts";
 }
 
+<div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
+
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-danger">
+                @TempData["AlertMessage"]
+            </div>
+        </div>
+
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
+            <div class="toast-header">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <strong class="me-auto">CRESME</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-success" style="color:white">
+                @TempData["Success"]
+            </div>
+        </div>
+    }
+
+
+
+</div>
+
+
+
+
 
 <div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
     </div>
@@ -36,10 +74,10 @@
                         </div>
                 </div>
 
-                <div class="col-12 text-center" style="font-weight: bold;">Upload an Excel file to create user accounts</div>
+                <div class="col-12 text-center" style="font-weight: bold;">Upload an Excel file to create/update user accounts</div>
                 <div class="w-100"></div>
 
-                <div class="col-12 text-center" style="font-weight: lighter;">*All NID's must be unique*</div>
+                @*<div class="col-12 text-center" style="font-weight: lighter;">*All NID's must be unique*</div>*@
                 <div class="w-100"></div>
 
                 <input  type="file" name="file" id="file" accept=".xlsx" style="display: none;" required />
@@ -92,11 +130,16 @@
 
 </style>
 
-<script>
+
+
+
+@section scripts
+    {
+    <script src="~/js/datatable_file.js"></script>
+
+    <script>
 
         var fileButton = document.getElementById("file");
-
-
 
 
         window.onload = function () {
@@ -168,56 +211,50 @@
 
         fileButton.onchange = function () {
 
-        var checkForI = document.getElementById("excelCheckMark");
+            var checkForI = document.getElementById("excelCheckMark");
 
-        if ((fileButton.value) != "" && (checkForI == null)) {
+            if ((fileButton.value) != "" && (checkForI == null)) {
 
-            var newi = document.createElement("i");
-            newi.setAttribute("class", "col-2 fa-solid fa-check");
-            newi.setAttribute("id", "excelCheckMark");
+                var newi = document.createElement("i");
+                newi.setAttribute("class", "col-2 fa-solid fa-check");
+                newi.setAttribute("id", "excelCheckMark");
 
-            var newBreak = document.createElement("div");
-            newBreak.setAttribute("class", 'w-100');
+                var newBreak = document.createElement("div");
+                newBreak.setAttribute("class", 'w-100');
 
-            var div = document.createElement("div");
-            div.setAttribute("class", 'col-1');
+                var div = document.createElement("div");
+                div.setAttribute("class", 'col-1');
 
-            document.getElementById("excelLabel").after(div);
-            div.after(newi);
-            newi.after(newBreak);
+                document.getElementById("excelLabel").after(div);
+                div.after(newi);
+                newi.after(newBreak);
 
-            var newdiv = document.createElement("div");
-            newdiv.setAttribute("class", "col-6 text-center");
-            newdiv.setAttribute("id", "excelFileName");
-            newdiv.style.fontWeight = "bold";
-            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+                var newdiv = document.createElement("div");
+                newdiv.setAttribute("class", "col-6 text-center");
+                newdiv.setAttribute("id", "excelFileName");
+                newdiv.style.fontWeight = "bold";
+                newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
 
-            newBreak.after(newdiv);
+                newBreak.after(newdiv);
 
-            var newBreak1 = document.createElement("div");
-            newBreak1.setAttribute("class", 'w-100');
+                var newBreak1 = document.createElement("div");
+                newBreak1.setAttribute("class", 'w-100');
 
-            newdiv.after(newBreak1);
+                newdiv.after(newBreak1);
 
+            }
+            else if (checkForI != null) {
+
+                var newdiv = document.getElementById("excelFileName");
+                newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+
+            }
         }
-        else if (checkForI != null) 
-        {
 
-            var newdiv = document.getElementById("excelFileName");
-            newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+    </script>
 
-        }
+
+    
 }
 
-</script>
 
-@*<div class="text-center">
-    <div class="container">
-        <form method="post" asp-controller="Admin" asp-action="Import" enctype="multipart/form-data">
-            <input type="file" name="file" />
-            <button type="submit">Import from Excel</button>
-
-        </form>
-    </div>
-</div>
-   *@

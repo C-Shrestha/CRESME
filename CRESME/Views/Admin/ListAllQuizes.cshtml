@@ -78,10 +78,21 @@
                     <form class="dropdown-item" asp-controller="Admin" asp-action="ExportQuizesToExcel">
                         <button type="submit" class="btn btn-md btn-primary">
                             <i class="fa-solid fa-file-arrow-down"></i>
-                            New Export Quizes to Excel
+                           Export All CRESMES
                         </button>
                     </form>
                 </li>
+
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="ExportAllAttempts">
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            Export All Attempts
+                        </button>
+                    </form>
+                </li>
+
+
                 <li>
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAllQuizes">
                         <button onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')" type="submit" class="btn btn-md btn-danger">
@@ -90,6 +101,11 @@
                         </button>
                     </form>
                 </li>
+
+                
+
+
+
             </ul>
         </div>
        

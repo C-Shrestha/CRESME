@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace CRESME.Controllers
 {
@@ -295,7 +296,7 @@ namespace CRESME.Controllers
 
                     foreach (var row in matchingRows)
                     {
-                        row.InstructorID = "";
+                        row.InstructorID = "N/A";
                     }
 
                     _context.SaveChanges();
@@ -320,28 +321,50 @@ namespace CRESME.Controllers
 
 
 
-        /*Located in ListUsers.cshtml. Deletes all Users in the database except for the Admin.*/
+        /*Located in ListUsers.cshtml. Deletes all Users in the database except for the Admin.
+         When instructors are delete, change the instructorID in CRESME to N/A.*/
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("/Admin/DeleteAll")]
         public async Task<IActionResult> DeleteAll()
         {
+            // get a list of all users in the DB
             var users = await _userManager.Users.ToListAsync();
+
             if (users != null)
             {
-
+                // delete all users in the DB
                 foreach (var item in users)
                 {
                     if (item.Role != "Admin")
                     {
+
                         await _userManager.DeleteAsync(item);
                     }
 
                 }
 
+                // in CRESME table, change all assignedID to "N/A" since all instructors are deleted.
+                // no CRESME is assinged to any instrustor since all are deleted. 
+                var quizes = _context.Quiz
+                                    .FromSqlInterpolated($"select * from Quiz")
+                                    .ToList();
+                foreach(var item in quizes)
+                {
+                    item.InstructorID = "N/A"; 
+                }
+
 
             }
-            TempData["AlertMessage"] = "All users deleted sucessfully!";
+            else
+            {
+                // if no users exits in the DB
+                TempData["AlertMessage"] = "No users exit in the database!";
+                return RedirectToAction("ListUsers");
+            }
+
+             _context.SaveChanges();
+            TempData["Success"] = "All users deleted sucessfully!";
             return RedirectToAction("ListUsers");
 
         }
@@ -531,7 +554,7 @@ namespace CRESME.Controllers
 
             var user = await _userManager.FindByIdAsync(currentUserId);
 
-            // list of CRESMES created by the Admin + Instructor by CRESME name
+            /*// list of CRESMES created by the Admin + Instructor by CRESME name
             //Here, some CRESMES might be created by Admin so will have Admin's InstructorID in Quiz. To find all CRESMES,
             //we need to check for CRESMES created by instructors themselves also in second query on the bottom
             var quizes1 = _context.Quiz
@@ -547,7 +570,14 @@ namespace CRESME.Controllers
             quizes1.AddRange(quizes2);
 
 
-            return View(quizes1.Distinct());
+            return View(quizes1.Distinct());*/
+
+            // find all the CRESMES assigned to the instructor
+            var quizes = _context.Quiz
+                        .FromSqlInterpolated($"select * from Quiz where InstructorID = {user.UserName}")
+                        .ToList();
+
+            return View(quizes); 
 
         }
 
@@ -818,6 +848,11 @@ namespace CRESME.Controllers
             return View(quizes.ToList());
 
         }
+
+
+
+
+
 
         /*Located in QuizDetails.csthml. Export CRESME data about the particular CRESME being viewed currently. Includes students attempts metadata about the CRESME*/
         [HttpPost]
@@ -1176,6 +1211,13 @@ namespace CRESME.Controllers
         }
 
 
+
+
+
+
+
+
+
         //return view with a Term input box that will delete all students with specified Term
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermStudentsView()
@@ -1233,7 +1275,7 @@ namespace CRESME.Controllers
 
                 foreach (var row in matchingRows)
                 {
-                    row.InstructorID = "";
+                    row.InstructorID = "N/A";
                 }
 
                 
@@ -1319,6 +1361,130 @@ namespace CRESME.Controllers
             return RedirectToAction("ListUsers");
 
         }
+
+
+        //delete users of a particular block/course
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteByCombinationView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all users with the specified Block/Course/Term
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteByCombination(ApplicationUser client)
+        {
+            var block = client.Block;
+            var course = client.Course;
+            var term = client.Term;
+            var role = client.Role;
+
+
+            //go through the list of users in the table
+            /*var usersList = _context.Users
+                        .FromSqlInterpolated($"select * from Users where Role = {role}")
+                        .ToList();*/
+
+            var usersList = _userManager.Users.Where(e=> e.Role == role).ToList();
+
+            // if they are not admin then
+            foreach (var user in usersList)
+            {
+                // if role is Admin, skip
+                if (user.Role == "Admin")
+                {
+                    continue; 
+                }
+                //if role is student or Instructor
+                else
+                {
+                    // get all the blocks, course, terms the user is enrolled in
+                    var blockList = ReturnCommaSeperatedStrings(user.Block);
+                    var courseList = ReturnCommaSeperatedStrings(user.Course);
+                    var termList = ReturnCommaSeperatedStrings(user.Term);
+
+                    // flag == false means user is not enrolled in that combination of block/course/term
+                    var flag = false;
+                    var index = int.MinValue;
+
+                    for (int i = 0; i < blockList.Count(); i++)
+                    {
+                        if (blockList[i] == block & courseList[i] == course & termList[i] == term)
+                        {
+                            flag = true;
+                            index = i;
+                            break;
+                        }
+
+                    }
+
+                    //if flag == true then the combination of block, course and term does exits
+                    //remove that combiantion from the user
+
+                    if(flag == true)
+                    {
+                        // remove the respective block, course and term at this index
+                        user.Block = RemoveStringAtIndex(user.Block, index);
+                        user.Course = RemoveStringAtIndex(user.Course, index);
+                        user.Term = RemoveStringAtIndex(user.Term, index);
+
+                    }
+
+                    if (user.Role == "Instructor")
+                    {
+                        // if the user is an instructor, check if they have a quiz with the block/term/course combination
+                        var quizList = _context.Quiz
+                                        .FromSqlInterpolated($"select * from Quiz where Block = {block} and Course = {course} and Term = {term}")
+                                        .ToList();
+
+                        // if they are not teaching any course with that combination, continue
+                        if (quizList == null)
+                        {
+                            continue; 
+                        }
+                        // if they have that combination, replace InstructorID with "N/A"
+                        else
+                        {
+                            foreach (var quiz in quizList)
+                            {
+                                quiz.InstructorID = "N/A"; 
+                            }
+
+                        }
+                    }
+
+                }
+; 
+
+            }
+
+            _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //POST:Delete all attempts
         [HttpPost]
@@ -1861,6 +2027,7 @@ namespace CRESME.Controllers
         //public async IActionResult ImportExcel(IFormFile file)
         {
             var newUsersList = new List<ApplicationUser>();
+            List<string> warningList = new List<string>();
 
             using (var stream = new MemoryStream())
             {
@@ -1895,9 +2062,70 @@ namespace CRESME.Controllers
                         // if nid exits, change nid data in DB
                         if (nidExits != null)
                         {
-                            nidExits.Block = string.Join(",", nidExits.Block, block).Trim();
-                            nidExits.Course = string.Join(",", nidExits.Course, course).Trim();
-                            nidExits.Term = string.Join(",", nidExits.Term, term).Trim();
+
+                            // Split the input string into an array of strings
+                            var userBlocks = ReturnCommaSeperatedStrings(nidExits.Block);
+                            var userCourse = ReturnCommaSeperatedStrings(nidExits.Course);
+                            var userTerm = ReturnCommaSeperatedStrings(nidExits.Term);
+
+                            // if flad is false, the user is not enrolled in that specfic combination of block/course/term
+                            bool flag = false;
+
+                            // loop through the blocks/terms/courses the student is enrolled in
+                            // check if the studnet is enrolled in that combination of block/course/term
+                            for(int i =0; i < userBlocks.Count(); i++)
+                            {
+                                if (userBlocks[i] == block & userCourse[i] == course & userTerm[i] == term)
+                                {
+                                    flag = true;
+                                }
+                            }
+
+                            // if flag is false, user does not have that combination
+                            // add the user to the new block, couse, term
+                            if (flag == false)
+                            {
+                                nidExits.Block = string.Join(",", nidExits.Block, block).Trim();
+                                nidExits.Course = string.Join(",", nidExits.Course, course).Trim();
+                                nidExits.Term = string.Join(",", nidExits.Term, term).Trim();
+                                
+                            }
+                            else
+                            {
+                                
+                                // the user already has that specific combination
+                                // add warning why no user was created.
+
+                                var newUser = new ApplicationUser
+                                {
+                                    UserName = nid,
+                                    NormalizedUserName = nid,
+                                    Email = nid,
+                                    NormalizedEmail = nid,
+                                    EmailConfirmed = true,
+                                    PhoneNumber = "",
+                                    PhoneNumberConfirmed = false,
+                                    TwoFactorEnabled = false,
+                                    LockoutEnd = null,
+                                    LockoutEnabled = true,
+                                    AccessFailedCount = 0,
+                                    Name = name,
+                                    Role = role,
+                                    Block = block,
+                                    Course = course,
+                                    Term = term,
+                                    PasswordHash = ""
+
+
+                                };
+
+
+                                newUsersList.Add(newUser);
+                                warningList.Add("User with this specific combination of block/course/term already exits!"); 
+
+
+                            }
+
                         }
 
                         // if nid does not not exit, create new user and add in newUsersList
@@ -1943,7 +2171,7 @@ namespace CRESME.Controllers
 
 
                             // adding the newly user to the newUsersList to export as excel
-                            //before adding to excel, change the password to actual value so that can be sent to the students. 
+                            //before adding to excel, change the password hash to actual plain text access code so that it can be sent to the students. 
 
                             var newUser = new ApplicationUser
                             {
@@ -1970,6 +2198,7 @@ namespace CRESME.Controllers
 
 
                             newUsersList.Add(newUser);
+                            warningList.Add("New user created!");
 
                         }
 
@@ -1981,14 +2210,9 @@ namespace CRESME.Controllers
                 }
             }
 
-            //_context.Users.AddRange(list);
-
             _context.SaveChanges();
+            return ExportExcelForMail(newUsersList, warningList);
 
-            TempData["AlertMessage"] = "Users created sucessfully!";
-            return ExportExcelForMail(newUsersList);
-
-            //return RedirectToAction("ListUsers");
 
         } // importToExcel
 
@@ -2051,10 +2275,11 @@ namespace CRESME.Controllers
 
 
 
-        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
+        /*Returns ane excel file with users created or updated. 
+         *WARNING: userList and warningList must be of the of same count. They are acting as key-value pair */
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult ExportExcelForMail(List<ApplicationUser> userList)
+        public IActionResult ExportExcelForMail(List<ApplicationUser> userList, List<string> warningList)
         {
             // Create a new Excel workbook
             using (XLWorkbook workbook = new XLWorkbook())
@@ -2069,9 +2294,8 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 2).Value = "Name";
                 worksheet.Cell(1, 3).Value = "Password";
                 worksheet.Cell(1, 4).Value = "Role";
-                //worksheet.Cell(1, 5).Value = "Block";
-                //worksheet.Cell(1, 6).Value = "Course";
-               // worksheet.Cell(1, 7).Value = "Term";
+                worksheet.Cell(1, 5).Value = "Warning";
+                
 
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
@@ -2081,9 +2305,8 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 2).Value = userList[i].Name;
                     worksheet.Cell(i + 2, 3).Value = userList[i].PasswordHash;
                     worksheet.Cell(i + 2, 4).Value = userList[i].Role;
-                    //worksheet.Cell(i + 2, 5).Value = userList[i].Block;
-                    //worksheet.Cell(i + 2, 6).Value = userList[i].Course;
-                    //worksheet.Cell(i + 2, 7).Value = userList[i].Term;
+                    worksheet.Cell(i + 2, 5).Value = warningList[i];
+                    
 
 
                 }
@@ -2368,6 +2591,27 @@ namespace CRESME.Controllers
 
 
 
+        public static List<string> ReturnCommaSeperatedStrings(string inputString)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
+
+            // Convert the array into a list
+            List<string> stringList = stringArray.ToList();
+
+            return stringList;
+
+
+        }
+
+
+
 
         /*returns a list of users in the database.*/
         [Authorize(Roles = "Admin, Instructor, Student")]
@@ -2506,6 +2750,160 @@ namespace CRESME.Controllers
             }
 
         }
+
+
+
+        /*Export all Attempts taken by users.*/
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult ExportAllAttempts()
+        {
+            // Create a new Excel workbook
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+                var userList = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts")
+                        .ToList();
+
+                // Add a worksheet to the workbook
+                var worksheet = workbook.Worksheets.Add("Quizes");
+
+                // Set the column headers
+                worksheet.Cell(1, 1).Value = "AttemptId";
+                worksheet.Cell(1, 2).Value = "StudentNID";
+                worksheet.Cell(1, 3).Value = "StudentName";
+                worksheet.Cell(1, 4).Value = "QuizName";
+                worksheet.Cell(1, 5).Value = "Score";
+                worksheet.Cell(1, 6).Value = "NumColumns";
+                worksheet.Cell(1, 7).Value = "StartTime";
+                worksheet.Cell(1, 8).Value = "EndTime";
+                worksheet.Cell(1, 9).Value = "Term";
+                worksheet.Cell(1, 10).Value = "Course";
+                worksheet.Cell(1, 11).Value = "Block";
+
+
+
+                worksheet.Cell(1, 12).Value = "PhysicalAnswerA";
+                worksheet.Cell(1, 13).Value = "PhysicalAnswerB";
+                worksheet.Cell(1, 14).Value = "PhysicalAnswerC";
+                worksheet.Cell(1, 15).Value = "PhysicalAnswerD";
+                worksheet.Cell(1, 16).Value = "PhysicalAnswerE";
+                worksheet.Cell(1, 17).Value = "DiagnosticAnswerA";
+                worksheet.Cell(1, 18).Value = "DiagnosticAnswerB";
+                worksheet.Cell(1, 19).Value = "DiagnosticAnswerC";
+                worksheet.Cell(1, 20).Value = "DiagnosticAnswerD";
+                worksheet.Cell(1, 21).Value = "DiagnosticAnswerE";
+                worksheet.Cell(1, 22).Value = "FreeResponseA";
+                worksheet.Cell(1, 23).Value = "FreeResponseB";
+                worksheet.Cell(1, 24).Value = "FreeResponseC";
+                worksheet.Cell(1, 25).Value = "FreeResponseD";
+                worksheet.Cell(1, 26).Value = "FreeResponseE";
+                worksheet.Cell(1, 27).Value = "NumImage0Clicks";
+                worksheet.Cell(1, 28).Value = "NumImage1Clicks";
+                worksheet.Cell(1, 29).Value = "NumImage2Clicks";
+                worksheet.Cell(1, 30).Value = "NumImage3Clicks";
+                worksheet.Cell(1, 31).Value = "NumImage4Clicks";
+                worksheet.Cell(1, 32).Value = "NumImage5Clicks";
+                worksheet.Cell(1, 33).Value = "NumImage6Clicks";
+                worksheet.Cell(1, 34).Value = "NumImage7Clicks";
+                worksheet.Cell(1, 35).Value = "NumImage8Clicks";
+                worksheet.Cell(1, 36).Value = "NumImage9Clicks";
+
+                worksheet.Cell(1, 37).Value = "QuizID";
+                worksheet.Cell(1, 38).Value = "PatientIntro";
+
+                worksheet.Cell(1, 39).Value = "NumLegendClicks";
+                worksheet.Cell(1, 40).Value = "NumLabValueClicks";
+
+
+
+
+
+                // Set the row values
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    worksheet.Cell(i + 2, 1).Value = userList[i].AttemptId;
+                    worksheet.Cell(i + 2, 2).Value = userList[i].StudentNID;
+                    worksheet.Cell(i + 2, 3).Value = userList[i].StudentName;
+                    worksheet.Cell(i + 2, 4).Value = userList[i].QuizName;
+                    worksheet.Cell(i + 2, 5).Value = userList[i].Score;
+                    worksheet.Cell(i + 2, 6).Value = userList[i].NumColumns;
+                    worksheet.Cell(i + 2, 7).Value = userList[i].StartTime;
+                    worksheet.Cell(i + 2, 8).Value = userList[i].EndTime;
+                    worksheet.Cell(i + 2, 9).Value = userList[i].Term;
+                    worksheet.Cell(i + 2, 10).Value = userList[i].Course;
+                    worksheet.Cell(i + 2, 11).Value = userList[i].Block;
+
+
+
+
+                    worksheet.Cell(i + 2, 12).Value = userList[i].PhysicalAnswerA;
+                    worksheet.Cell(i + 2, 13).Value = userList[i].PhysicalAnswerB;
+                    worksheet.Cell(i + 2, 14).Value = userList[i].PhysicalAnswerC;
+                    worksheet.Cell(i + 2, 15).Value = userList[i].PhysicalAnswerD;
+                    worksheet.Cell(i + 2, 16).Value = userList[i].PhysicalAnswerE;
+                    worksheet.Cell(i + 2, 17).Value = userList[i].DiagnosticAnswerA;
+                    worksheet.Cell(i + 2, 18).Value = userList[i].DiagnosticAnswerB;
+                    worksheet.Cell(i + 2, 19).Value = userList[i].DiagnosticAnswerC;
+                    worksheet.Cell(i + 2, 20).Value = userList[i].DiagnosticAnswerD;
+                    worksheet.Cell(i + 2, 21).Value = userList[i].DiagnosticAnswerE;
+
+                    worksheet.Cell(i + 2, 22).Value = userList[i].FreeResponseA;
+                    worksheet.Cell(i + 2, 23).Value = userList[i].FreeResponseB;
+                    worksheet.Cell(i + 2, 24).Value = userList[i].FreeResponseC;
+                    worksheet.Cell(i + 2, 25).Value = userList[i].FreeResponseD;
+                    worksheet.Cell(i + 2, 26).Value = userList[i].FreeResponseE;
+
+                    worksheet.Cell(i + 2, 27).Value = userList[i].NumImage0Clicks;
+                    worksheet.Cell(i + 2, 28).Value = userList[i].NumImage1Clicks;
+                    worksheet.Cell(i + 2, 29).Value = userList[i].NumImage2Clicks;
+                    worksheet.Cell(i + 2, 30).Value = userList[i].NumImage3Clicks;
+                    worksheet.Cell(i + 2, 31).Value = userList[i].NumImage4Clicks;
+                    worksheet.Cell(i + 2, 32).Value = userList[i].NumImage5Clicks;
+                    worksheet.Cell(i + 2, 33).Value = userList[i].NumImage6Clicks;
+                    worksheet.Cell(i + 2, 34).Value = userList[i].NumImage7Clicks;
+                    worksheet.Cell(i + 2, 35).Value = userList[i].NumImage8Clicks;
+                    worksheet.Cell(i + 2, 36).Value = userList[i].NumImage9Clicks;
+
+
+
+                    worksheet.Cell(i + 2, 37).Value = userList[i].QuizID;
+                    worksheet.Cell(i + 2, 38).Value = userList[i].PatientIntro;
+
+                    worksheet.Cell(i + 2, 39).Value = userList[i].NumLegendClicks;
+                    worksheet.Cell(i + 2, 40).Value = userList[i].NumLabValueClicks;
+
+
+
+                }
+
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                string filename = $"All Attempts {DateTime.Now:MM/dd/yyy}.xlsx";
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
