@@ -139,6 +139,10 @@
                     </th>
 
                     <th scope="col" class="table-dark">
+                        @Html.DisplayNameFor(model => model.ShuffleEnabled)
+                    </th>
+
+                    <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.Published)
                     </th>
 
@@ -208,6 +212,9 @@
                             @Html.DisplayFor(modelItem => item.EndDate)
                         </td>
 
+                        <td class="table-secondary">
+                            @Html.DisplayFor(modelItem => item.ShuffleEnabled)
+                        </td>
                         
 
                         <td class="table-secondary">
@@ -238,7 +245,7 @@
 
                     <td class="table-secondary">
 
-                        @if (item.InstructorID != "")
+                        @if (item.InstructorID != "N/A")
                         {
                             <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
                         }

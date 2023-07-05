@@ -77,7 +77,7 @@ namespace CRESME.Controllers
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
 
             // NID == UserName == Email in Database.
-            quiz.InstructorID = CurrentInstructor.UserName;
+            quiz.InstructorID = Request.Form["Instructor"]; 
 
             //checkboxes only send output if they are checked(default is "on"), otherwise null
             if (Request.Form["Feedback"] == "1")
@@ -100,11 +100,11 @@ namespace CRESME.Controllers
 
             if (Request.Form["ShuffleEnabled"] == "1")
             {
-                quiz.Published = "Yes";
+                quiz.ShuffleEnabled = "Yes";
             }
             else
             {
-                quiz.Published = "No";
+                quiz.ShuffleEnabled = "No";
             }
 
             quiz.DateCreated = DateTime.Now;
@@ -176,7 +176,7 @@ namespace CRESME.Controllers
                 quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
             }
             else {
-                quiz.CoverImage = "/images/CoverImage";
+                quiz.CoverImage = "/images/CoverImage.png";
             }
 
             //checks for image upload and image position input, only saves image if both are present
