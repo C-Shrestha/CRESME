@@ -1895,6 +1895,7 @@ namespace CRESME.Controllers
         //public async IActionResult ImportExcel(IFormFile file)
         {
             var newUsersList = new List<ApplicationUser>();
+            List<string> warningList = new List<string>();
 
             using (var stream = new MemoryStream())
             {
@@ -1929,9 +1930,70 @@ namespace CRESME.Controllers
                         // if nid exits, change nid data in DB
                         if (nidExits != null)
                         {
-                            nidExits.Block = string.Join(",", nidExits.Block, block).Trim();
-                            nidExits.Course = string.Join(",", nidExits.Course, course).Trim();
-                            nidExits.Term = string.Join(",", nidExits.Term, term).Trim();
+
+                            // Split the input string into an array of strings
+                            var userBlocks = ReturnCommaSeperatedStrings(nidExits.Block);
+                            var userCourse = ReturnCommaSeperatedStrings(nidExits.Course);
+                            var userTerm = ReturnCommaSeperatedStrings(nidExits.Term);
+
+                            // if flad is false, the user is not enrolled in that specfic combination of block/course/term
+                            bool flag = false;
+
+                            // loop through the blocks/terms/courses the student is enrolled in
+                            // check if the studnet is enrolled in that combination of block/course/term
+                            for(int i =0; i < userBlocks.Count(); i++)
+                            {
+                                if (userBlocks[i] == block && userCourse[i] == course && userTerm[i] == term)
+                                {
+                                    flag = true;
+                                }
+                            }
+
+                            // if flag is false, user does not have that combination
+                            // add the user to the new block, couse, term
+                            if (flag == false)
+                            {
+                                nidExits.Block = string.Join(",", nidExits.Block, block).Trim();
+                                nidExits.Course = string.Join(",", nidExits.Course, course).Trim();
+                                nidExits.Term = string.Join(",", nidExits.Term, term).Trim();
+                                
+                            }
+                            else
+                            {
+                                
+                                // the user already has that specific combination
+                                // add warning why no user was created.
+
+                                var newUser = new ApplicationUser
+                                {
+                                    UserName = nid,
+                                    NormalizedUserName = nid,
+                                    Email = nid,
+                                    NormalizedEmail = nid,
+                                    EmailConfirmed = true,
+                                    PhoneNumber = "",
+                                    PhoneNumberConfirmed = false,
+                                    TwoFactorEnabled = false,
+                                    LockoutEnd = null,
+                                    LockoutEnabled = true,
+                                    AccessFailedCount = 0,
+                                    Name = name,
+                                    Role = role,
+                                    Block = block,
+                                    Course = course,
+                                    Term = term,
+                                    PasswordHash = ""
+
+
+                                };
+
+
+                                newUsersList.Add(newUser);
+                                warningList.Add("User with this specific combination of block/course/term already exits!"); 
+
+
+                            }
+
                         }
 
                         // if nid does not not exit, create new user and add in newUsersList
@@ -1977,7 +2039,7 @@ namespace CRESME.Controllers
 
 
                             // adding the newly user to the newUsersList to export as excel
-                            //before adding to excel, change the password to actual value so that can be sent to the students. 
+                            //before adding to excel, change the password hash to actual plain text access code so that it can be sent to the students. 
 
                             var newUser = new ApplicationUser
                             {
@@ -2004,6 +2066,7 @@ namespace CRESME.Controllers
 
 
                             newUsersList.Add(newUser);
+                            warningList.Add("New user created!");
 
                         }
 
@@ -2015,14 +2078,9 @@ namespace CRESME.Controllers
                 }
             }
 
-            //_context.Users.AddRange(list);
-
             _context.SaveChanges();
+            return ExportExcelForMail(newUsersList, warningList);
 
-            TempData["AlertMessage"] = "Users created sucessfully!";
-            return ExportExcelForMail(newUsersList);
-
-            //return RedirectToAction("ListUsers");
 
         } // importToExcel
 
@@ -2085,10 +2143,11 @@ namespace CRESME.Controllers
 
 
 
-        /*Located in ListAllUsers.cshtml. Returns all the users in database. */
+        /*Returns ane excel file with users created or updated. 
+         *WARNING: userList and warningList must be of the of same count. They are acting as key-value pair */
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult ExportExcelForMail(List<ApplicationUser> userList)
+        public IActionResult ExportExcelForMail(List<ApplicationUser> userList, List<string> warningList)
         {
             // Create a new Excel workbook
             using (XLWorkbook workbook = new XLWorkbook())
@@ -2103,9 +2162,8 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 2).Value = "Name";
                 worksheet.Cell(1, 3).Value = "Password";
                 worksheet.Cell(1, 4).Value = "Role";
-                //worksheet.Cell(1, 5).Value = "Block";
-                //worksheet.Cell(1, 6).Value = "Course";
-               // worksheet.Cell(1, 7).Value = "Term";
+                worksheet.Cell(1, 5).Value = "Warning";
+                
 
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
@@ -2115,9 +2173,8 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 2).Value = userList[i].Name;
                     worksheet.Cell(i + 2, 3).Value = userList[i].PasswordHash;
                     worksheet.Cell(i + 2, 4).Value = userList[i].Role;
-                    //worksheet.Cell(i + 2, 5).Value = userList[i].Block;
-                    //worksheet.Cell(i + 2, 6).Value = userList[i].Course;
-                    //worksheet.Cell(i + 2, 7).Value = userList[i].Term;
+                    worksheet.Cell(i + 2, 5).Value = warningList[i];
+                    
 
 
                 }
@@ -2396,6 +2453,27 @@ namespace CRESME.Controllers
             string updatedString = string.Join(",", stringArray);
 
             return updatedString;
+
+
+        }
+
+
+
+        public static List<string> ReturnCommaSeperatedStrings(string inputString)
+        {
+            // Split the input string into an array of strings
+            string[] stringArray = inputString.Split(",");
+
+            // Trim the spaces from each value in the array
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArray[i] = stringArray[i].Trim();
+            }
+
+            // Convert the array into a list
+            List<string> stringList = stringArray.ToList();
+
+            return stringList;
 
 
         }
