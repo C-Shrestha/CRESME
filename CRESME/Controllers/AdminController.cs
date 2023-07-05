@@ -1212,12 +1212,6 @@ namespace CRESME.Controllers
 
 
 
-
-
-
-
-
-
         //return view with a Term input box that will delete all students with specified Term
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermStudentsView()
@@ -1377,29 +1371,20 @@ namespace CRESME.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByCombination(ApplicationUser client)
         {
-            var block = client.Block;
-            var course = client.Course;
-            var term = client.Term;
+            var block = client.Block.Trim();
+            var course = client.Course.Trim();
+            var term = client.Term.Trim();
             var role = client.Role;
 
-
-            //go through the list of users in the table
-            /*var usersList = _context.Users
-                        .FromSqlInterpolated($"select * from Users where Role = {role}")
-                        .ToList();*/
 
             var usersList = _userManager.Users.Where(e=> e.Role == role).ToList();
 
             // if they are not admin then
             foreach (var user in usersList)
             {
-                // if role is Admin, skip
-                if (user.Role == "Admin")
-                {
-                    continue; 
-                }
-                //if role is student or Instructor
-                else
+                
+                //if role is student
+                if (user.Role == "Student")
                 {
                     // get all the blocks, course, terms the user is enrolled in
                     var blockList = ReturnCommaSeperatedStrings(user.Block);
@@ -1424,7 +1409,7 @@ namespace CRESME.Controllers
                     //if flag == true then the combination of block, course and term does exits
                     //remove that combiantion from the user
 
-                    if(flag == true)
+                    if (flag == true)
                     {
                         // remove the respective block, course and term at this index
                         user.Block = RemoveStringAtIndex(user.Block, index);
@@ -1433,15 +1418,48 @@ namespace CRESME.Controllers
 
                     }
 
-                    if (user.Role == "Instructor")
+                }   
+                
+                //if role is instructor
+                if (user.Role == "Instructor")
+                {
+
+                    var blockList = ReturnCommaSeperatedStrings(user.Block);
+                    var courseList = ReturnCommaSeperatedStrings(user.Course);
+                    var termList = ReturnCommaSeperatedStrings(user.Term);
+
+                    // flag == false means user is not enrolled in that combination of block/course/term
+                    var flag = false;
+                    var index = int.MinValue;
+
+                    for (int i = 0; i < blockList.Count(); i++)
                     {
+                        if (blockList[i] == block & courseList[i] == course & termList[i] == term)
+                        {
+                            flag = true;
+                            index = i;
+                            break;
+                        }
+
+                    }
+
+                    //if flag == true then the combination of block, course and term does exits
+                    //remove that combiantion from the user
+
+                    if (flag == true)
+                    {
+                        // remove the respective block, course and term at this index
+                        user.Block = RemoveStringAtIndex(user.Block, index);
+                        user.Course = RemoveStringAtIndex(user.Course, index);
+                        user.Term = RemoveStringAtIndex(user.Term, index);
+
                         // if the user is an instructor, check if they have a quiz with the block/term/course combination
                         var quizList = _context.Quiz
-                                        .FromSqlInterpolated($"select * from Quiz where Block = {block} and Course = {course} and Term = {term}")
+                                        .FromSqlInterpolated($"select * from Quiz where Block = {block} and Course = {course} and Term = {term} and InstructorID = {user.UserName}")
                                         .ToList();
 
                         // if they are not teaching any course with that combination, continue
-                        if (quizList == null)
+                        if (quizList.Count() == 0)
                         {
                             continue; 
                         }
@@ -1454,12 +1472,13 @@ namespace CRESME.Controllers
                             }
 
                         }
+
                     }
 
                 }
-; 
 
-            }
+
+            } // foreach
 
             _context.SaveChanges();
             TempData["AlertMessage"] = "Instructor in the term deleted!";
