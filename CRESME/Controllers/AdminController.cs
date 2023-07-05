@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace CRESME.Controllers
 {
@@ -1210,6 +1211,13 @@ namespace CRESME.Controllers
         }
 
 
+
+
+
+
+
+
+
         //return view with a Term input box that will delete all students with specified Term
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByTermStudentsView()
@@ -1267,7 +1275,7 @@ namespace CRESME.Controllers
 
                 foreach (var row in matchingRows)
                 {
-                    row.InstructorID = "";
+                    row.InstructorID = "N/A";
                 }
 
                 
@@ -1353,6 +1361,131 @@ namespace CRESME.Controllers
             return RedirectToAction("ListUsers");
 
         }
+
+
+
+        //delete users of a particular block/course
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteByCombinationView()
+        {
+
+            return View();
+
+        }
+
+        // deletes all users with the specified Block/Course/Term
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteByCombination(ApplicationUser client)
+        {
+            var block = client.Block;
+            var course = client.Course;
+            var term = client.Term;
+            var role = client.Role;
+
+
+            //go through the list of users in the table
+            /*var usersList = _context.Users
+                        .FromSqlInterpolated($"select * from Users where Role = {role}")
+                        .ToList();*/
+
+            var usersList = _userManager.Users.Where(e=> e.Role == role).ToList();
+
+            // if they are not admin then
+            foreach (var user in usersList)
+            {
+                // if role is Admin, skip
+                if (user.Role == "Admin")
+                {
+                    continue; 
+                }
+                //if role is student or Instructor
+                else
+                {
+                    // get all the blocks, course, terms the user is enrolled in
+                    var blockList = ReturnCommaSeperatedStrings(user.Block);
+                    var courseList = ReturnCommaSeperatedStrings(user.Course);
+                    var termList = ReturnCommaSeperatedStrings(user.Term);
+
+                    // flag == false means user is not enrolled in that combination of block/course/term
+                    var flag = false;
+                    var index = int.MinValue;
+
+                    for (int i = 0; i < blockList.Count(); i++)
+                    {
+                        if (blockList[i] == block & courseList[i] == course & termList[i] == term)
+                        {
+                            flag = true;
+                            index = i;
+                            break;
+                        }
+
+                    }
+
+                    //if flag == true then the combination of block, course and term does exits
+                    //remove that combiantion from the user
+
+                    if(flag == true)
+                    {
+                        // remove the respective block, course and term at this index
+                        user.Block = RemoveStringAtIndex(user.Block, index);
+                        user.Course = RemoveStringAtIndex(user.Course, index);
+                        user.Term = RemoveStringAtIndex(user.Term, index);
+
+                    }
+
+                    if (user.Role == "Instructor")
+                    {
+                        // if the user is an instructor, check if they have a quiz with the block/term/course combination
+                        var quizList = _context.Quiz
+                                        .FromSqlInterpolated($"select * from Quiz where Block = {block} and Course = {course} and Term = {term}")
+                                        .ToList();
+
+                        // if they are not teaching any course with that combination, continue
+                        if (quizList == null)
+                        {
+                            continue; 
+                        }
+                        // if they have that combination, replace InstructorID with "N/A"
+                        else
+                        {
+                            foreach (var quiz in quizList)
+                            {
+                                quiz.InstructorID = "N/A"; 
+                            }
+
+                        }
+                    }
+
+                }
+; 
+
+            }
+
+            _context.SaveChanges();
+            TempData["AlertMessage"] = "Instructor in the term deleted!";
+            return RedirectToAction("ListUsers");
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //POST:Delete all attempts
         [HttpPost]
@@ -1943,7 +2076,7 @@ namespace CRESME.Controllers
                             // check if the studnet is enrolled in that combination of block/course/term
                             for(int i =0; i < userBlocks.Count(); i++)
                             {
-                                if (userBlocks[i] == block && userCourse[i] == course && userTerm[i] == term)
+                                if (userBlocks[i] == block & userCourse[i] == course & userTerm[i] == term)
                                 {
                                     flag = true;
                                 }
