@@ -1363,7 +1363,6 @@ namespace CRESME.Controllers
         }
 
 
-
         //delete users of a particular block/course
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteByCombinationView()
