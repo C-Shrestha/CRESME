@@ -180,6 +180,13 @@
 
     <script>
 
+        function showToast(toast) {
+
+            var showToast = new bootstrap.Toast(toast);
+            showToast.show();
+
+        }
+
         window.onload = function () {
 
             var links = document.getElementsByClassName("nav-link");
@@ -192,7 +199,22 @@
 
                 
             }
+
+            var toasts = document.getElementsByClassName("toast")
+
+            if (toasts != null) {
+                var length = toasts.length;
+
+                console.log("length:" + length);
+
+                for (let i = 0; i < length; i++)
+                    showToast(toasts[i]);
+            }
+
         };
+
+
+      
 
     </script>
 

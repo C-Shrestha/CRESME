@@ -142,21 +142,6 @@
         var fileButton = document.getElementById("file");
 
 
-        window.onload = function () {
-            var toasts = document.getElementsByClassName("toasts")
-            var length = toasts.length;
-
-            for(let i = 0; i<length; i++)
-                showToast(toasts[i]);
-        };
-
-        function showToast(toast) {
-
-            var showToast = new bootstrap.Toast(toast);
-            showToast.show();
-
-        }
-
         function validate() {
 
 

@@ -4,76 +4,103 @@
     ViewData["Title"] = "Delete by Block/Course";
 }
 
-<h1>Delete by Block/Course</h1>
 
+<form asp-controller="Admin" asp-action="DeleteByCombination" method="post" onsubmit="return confirm('Are you sure you want to delete all users in the selected block/term?');">
+    <div class="container border bg-light rounded pt-5 mt-5" style="width: 50%;">
+        <div class="row gx-5 justify-content-center gy-2">
 
-<hr />
-
-
-<div class="row">
-    <div class="col-md-4">
-
-        <form asp-controller="Admin" asp-action="DeleteByCombination" method="post" onsubmit="return confirm('Are you sure you want to delete all users in the selected block/term?');">
-
+      
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <p>Warning: This will delete all users in the selected block/course combination. Their Attempts will not be deleted.</p>
+            <h4 class="col-6 text-center" style="font-weight: bold;">Delete by Block/Course</h4>
+            <div class="w-100"></div>
+            
+            <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
+            <div class="w-100"></div>
 
-            <div class="form-group">
-                <label>Block</label>
-                <input asp-for="Block" class="form-control" />
-               
-            </div>
+            <div class="col-2" style="font-weight: bold;">Block</div>
+            <div class="w-100"></div>
 
-            <br />
+            <input asp-for="Block" class="col-4 input-field" placeholder="Enter Block"/>
+            <div class="w-100"></div>
 
-            <div class="form-group">
-                <label>Course</label>
-                <input asp-for="Course" class="form-control" />
-               
-            </div>
+            <div class="col-2" style="font-weight: bold;">Course</div>
+            <div class="w-100"></div>
 
-            <br />
+			<input asp-for="Course" class="col-4 input-field" placeholder="Enter Course" />
+            <div class="w-100"></div>
 
-            <div class="form-group">
-                <label>Term</label>
-                <input asp-for="Term" class="form-control" />
 
-            </div>
+            <div class="col-2" style="font-weight: bold;">Term</div>
+            <div class="w-100"></div>
 
-            <br />
+            <input asp-for="Term" class="col-4 input-field" placeholder="Enter Term" />
+            <div class="w-100"></div>
+
 
             <div class="col-4 text-center" style="font-weight: bold;">Role:</div>
 
                 <div class="form-check form-check-inline col-3">
                     <input class="form-check-input" type="radio" asp-for="Role" value="Student" checked>
-                    <label class="form-check-label" for="flexRadioDefault1">
+                    <label class="form-check-label bg-light" for="flexRadioDefault1">
                         Student
                     </label>
                 </div>
 
                 <div class="form-check form-check-inline col-3">
                     <input class="form-check-input" type="radio" asp-for="Role" value="Instructor">
-                    <label class="form-check-label" for="flexRadioDefault2">
+                    <label class="form-check-label bg-light" for="flexRadioDefault2">
                         Instructor
                     </label>
                 </div>
                 <div class="w-100"></div>
-           
-                <br />
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
 
-            <br />
 
-        </form>
+            <input type="submit" value="Submit" class="btn custom_btn col-5" id="buyNow" />
+            <div class="w-100"></div>
+
+
+            <p class="col-12 text-center" style="color: red">Warning! This will delete all users in the selected block/course combination. Their Attempts will not be deleted.</p>
+            <div class="w-100"></div>
+
+        </div>
     </div>
-</div>
+</form>
+
 
 <div>
     <a asp-action="ListUsers">Back to List</a>
 </div>
+
+<style>
+
+    .container {
+        border-color: #F1C400 !important;
+        border-radius: 20px !important;
+    }
+
+    .custom_btn {
+        background-color: #F1C400;
+        font-weight: bold;
+    }
+
+    .upload-btn {
+        border-color: #F1C400 !important;
+        background: transparent;
+    }
+
+    .input-field {
+        border-color: #F1C400;
+    }
+
+    label {
+        background-color: white;
+        padding: 0.5rem;
+        border-color: #F1C400 !important;
+        cursor: pointer;
+    }
+
+</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
