@@ -29,9 +29,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddControllersWithViews();
 
 
-// added for SwaggerHub
-
-// Searches for and generates endpoints in Swagger
+//SwaggerHub Integration
+// Searches for endpoints by headers in the code and generates them in Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -65,7 +64,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// *****need to change this later*****
+// *****Need to change this later*****
 app.MapControllerRoute(
     name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");
