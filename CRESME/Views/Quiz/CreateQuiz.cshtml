@@ -64,7 +64,9 @@
                 <div class="w-100"></div>
                 <h4 class="col-6 text-center" style="font-weight: bold;">Create CRESME Form</h4>
 
+
                 <div class="w-100"></div>
+
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
                 <div class="w-100"></div>
@@ -93,7 +95,7 @@
                 <input class="col-1" type="checkbox" id="publish" name="Publish" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <div class="col-2" style="font-weight: bold;">Feedback</div>
+                <div class="col-2" style="font-weight: bold;">Practice</div>
                 <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
@@ -257,21 +259,6 @@
     var legendButton = document.getElementById("Legend");
     var coverButton = document.getElementById("CoverImage");
 
- 
-    window.onload = function () {
-       // var toasts = document.getElementsByClassName("toasts")
-       // var length = toasts.length;
-
-        //for(let i = 0; i<length; i++)
-        console.log("@ViewData["Title"]");
-    };
-
-    function showToast(toast)
-    {
-        var showToast = new bootstrap.Toast(toast);
-        showToast.show();
-
-    }
     
 
     function CheckCoverImage()
@@ -504,6 +491,7 @@
         var break1 = document.getElementById('newBreak1' + k);
         var break2 = document.getElementById('newBreak2' + k);
         var vrDiv1 = document.getElementById('vrDiv1' + k);
+        var breakPoint = document.getElementById('breakPoint' + k);
         
 
         deleteButton.remove();
@@ -524,6 +512,8 @@
             break2.remove();
 
         }
+
+        breakPoint.remove();
 
         k++;
 
@@ -591,6 +581,9 @@
 
             }
 
+            var breakPoint = document.getElementById('breakPoint' + k);
+            breakPoint.setAttribute("id", 'breakPoint' + (k - 1));
+
             k++;
         }
 
@@ -647,12 +640,18 @@
         select.style.height = "10%";
         select.style.textAlignLast = "center"
 
-        const options = ["PE 1", "PE 2", "PE 3", "PE 4", "PE 5", "Data A", "Data B", "Data C", "Data D", "Data E"];
+        var options = ["PE 1", "PE 2", "PE 3", "PE 4", "PE 5", "Data A", "Data B", "Data C", "Data D", "Data E"];
 
         options.forEach((element, key) => {
             select[key] = new Option(element, key);
             select[key].setAttribute("value", element);
             select[key].setAttribute("name", 'Image' + key + 'Pos');
+        });
+
+        options = ["1", "2", "3", "4", "5", "A", "B", "C", "D", "E"];
+
+        options.forEach((element, key) => {
+            select[key].setAttribute("value", element);
         });
 
         hrDiv2.after(select);
@@ -685,6 +684,14 @@
 
         select.after(newDiv1);
         newDiv1.after(altText);
+
+        var breakPoint = document.createElement("div");
+        breakPoint.setAttribute("class", 'col-8');
+        breakPoint.setAttribute("id", "breakPoint" + i);
+        breakPoint.style.height = "5px";
+        breakPoint.style.backgroundColor = "#f1c400";
+
+        altText.after(breakPoint); 
 
 
             i++;
@@ -764,7 +771,7 @@
             newdiv.setAttribute("class", "col-6 text-center");
             newdiv.setAttribute("id", "coverName");
             newdiv.style.fontWeight = "bold";
-            newdiv.innerHTML = coverButton.value.substr(coverButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = coverButton.value.split("\\").pop();
 
             newBreak.after(newdiv);
 
@@ -777,7 +784,7 @@
         else if (checkForI != null) {
 
             var newdiv = document.getElementById("coverName");
-            newdiv.innerHTML = coverButton.value.substr(coverButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = coverButton.value.split("\\").pop();
 
         }
 
@@ -804,7 +811,7 @@
         newdiv.setAttribute("class", "col-6 text-center");
         newdiv.setAttribute("id", "legendName");
         newdiv.style.fontWeight = "bold";
-        newdiv.innerHTML = legendButton.value.substr(legendButton.value.lastIndexOf('\\') + 1).split('.')[0];
+        newdiv.innerHTML = legendButton.value.split("\\").pop();
 
         newBreak.after(newdiv);
 
@@ -817,7 +824,7 @@
     else if (checkForI != null) {
 
         var newdiv = document.getElementById("legendName");
-        newdiv.innerHTML = legendButton.value.substr(legendButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = legendButton.value.split("\\").pop();
 
     }
 
@@ -847,7 +854,7 @@
         newdiv.setAttribute("class", "col-6 text-center");
         newdiv.setAttribute("id", "excelFileName");
         newdiv.style.fontWeight = "bold";
-        newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+        newdiv.innerHTML = fileButton.value.split("\\").pop();
 
         newBreak.after(newdiv);
 
@@ -860,7 +867,7 @@
     else if (checkForI != null)
     {
         var newdiv = document.getElementById("excelFileName");
-        newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = fileButton.value.split("\\").pop();
 
     }
 
