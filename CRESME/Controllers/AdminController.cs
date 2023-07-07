@@ -2910,7 +2910,7 @@ namespace CRESME.Controllers
 
         /*returns a list of users in the database.*/
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GeneratePasswordView()
+        public IActionResult GeneratePasswordView()
         {
             TempData["RandomPassowrdGenerated"] = GenerateRandomPassword();
             return View();
