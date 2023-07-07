@@ -46,6 +46,41 @@
         column4=4;
         column5=5;
     }
+
+    int answerCell1 = 0;
+    int answerCell2 = 0;
+    int answerCell3 = 0;
+    int answerCell4 = 0;
+    int answerCell5 = 0;
+    Done = false;
+    numLoops = 0;
+    while(!Done || numLoops>9999){
+        numLoops++;
+        if (answerCell1 == 0)
+        {
+            answerCell1 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else if (answerCell2 == 0 || answerCell2 == answerCell1)
+        {
+            answerCell2 = Model.NumColumns == 4 ? rand.Next(1,5) : rand.Next(1,6);
+        }
+        else if (answerCell3 == 0 || (answerCell3 == answerCell2 || answerCell3 == answerCell1))
+        {
+            answerCell3 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else if (answerCell4 == 0 || (answerCell4 == answerCell3 || (answerCell4 ==answerCell2 || answerCell4==answerCell1)))
+        {
+            answerCell4 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else if ((answerCell5 == 0 || (answerCell5 == answerCell4 || (answerCell5 == answerCell3 || (answerCell5 == answerCell2 || answerCell5 == answerCell1)))) && Model.NumColumns == 5)
+        {
+            answerCell5 = Model.NumColumns == 4 ? rand.Next(1, 5) : rand.Next(1, 6);
+        }
+        else
+        {
+            Done = true;    
+        }
+    }
 }
 
 
@@ -58,9 +93,9 @@
     </div>
     
 
-    <div class="row" style="height: 200px;">
+    <div class="row" style="max-height: 200px;">
         <div style="display: flex; justify-content: center; margin-top: 2%;">
-            <img src="@Model.CoverImage">
+            <img src="@Model.CoverImage" style="max-height: 200px;">
         </div>
     </div>
     
@@ -87,7 +122,7 @@
     </div>
     
     <div class="row" style="position: absolute; bottom: 10px; width: 100%;">
-        <img src="/images/CollegeMedicine.png" alt="UCF College of Medicine LOGO" style="height: 80px; width: 265px; display:flex; align-items: start; margin-left: 3%;"/>
+        <img src="/images/CollegeMedicine.png" alt="UCF College of Medicine LOGO" style="max-height: 80px; width: 265px; display:flex; align-items: start; margin-left: 3%;"/>
         <h4 class="text-center">
             Authors: @Model.AuthorNames
         </h4>
@@ -2176,100 +2211,450 @@
                         </p>
                     </div>
                     <div class="row" style="height: 22.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
-                            <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                <div id="PhysicalButtons1-quizView1" style="height: 39px;">
-                                    <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
-                                        Expand
-                                    </button>
+                        @if (answerCell1 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                        <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView1">
-                            <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
-                                <div id="PhysicalButtons2-quizView1">
-                                    <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell1 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView1">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
+                                    <div id="PhysicalButtons2-quizView1">
+                                        <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell1 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView1">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
+                                    <div id="PhysicalButtons3-quizView1">
+                                        <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView1">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
+                                    <div id="PhysicalButtons4-quizView1">
+                                        <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell2 == 1)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                        <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell2 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView1">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
+                                    <div id="PhysicalButtons2-quizView1">
+                                        <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView1">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
+                                    <div id="PhysicalButtons3-quizView1">
+                                        <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView1">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
+                                    <div id="PhysicalButtons4-quizView1">
+                                        <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row" style="height: 22.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView1">
-                            <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
-                                <div id="PhysicalButtons3-quizView1">
-                                    <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
-                                        Expand
-                                    </button>
+                        @if (answerCell3 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                        <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView1">
-                            <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
-                                <div id="PhysicalButtons4-quizView1">
-                                    <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell3 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView1">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
+                                    <div id="PhysicalButtons2-quizView1">
+                                        <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell3 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView1">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
+                                    <div id="PhysicalButtons3-quizView1">
+                                        <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView1">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
+                                    <div id="PhysicalButtons4-quizView1">
+                                        <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell4 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                        <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell4 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView1">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
+                                    <div id="PhysicalButtons2-quizView1">
+                                        <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView1">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
+                                    <div id="PhysicalButtons3-quizView1">
+                                        <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView1">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
+                                    <div id="PhysicalButtons4-quizView1">
+                                        <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row" style="height: 22.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
-                            <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
-                                <div id="DiagnosticButtonsA-quizView1">
-                                    <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
-                                        Expand
-                                    </button>
+                        @if (answerCell1 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
+                                    <div id="DiagnosticButtonsA-quizView1">
+                                        <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView1">
-                            <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
-                                <div id="DiagnosticButtonsB-quizView1">
-                                    <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell1 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView1">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
+                                    <div id="DiagnosticButtonsB-quizView1">
+                                        <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell1 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView1">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
+                                    <div id="DiagnosticButtonsC-quizView1">
+                                        <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView1">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
+                                    <div id="DiagnosticButtonsD-quizView1">
+                                        <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell2 == 1)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
+                                    <div id="DiagnosticButtonsA-quizView1">
+                                        <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell2 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView1">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
+                                    <div id="DiagnosticButtonsB-quizView1">
+                                        <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView1">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
+                                    <div id="DiagnosticButtonsC-quizView1">
+                                        <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView1">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
+                                    <div id="DiagnosticButtonsD-quizView1">
+                                        <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row" style="height: 22.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView1">
-                            <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
-                                <div id="DiagnosticButtonsC-quizView1">
-                                    <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
-                                        Expand
-                                    </button>
+                        @if (answerCell3 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
+                                    <div id="DiagnosticButtonsA-quizView1">
+                                        <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView1">
-                            <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
-                                <div id="DiagnosticButtonsD-quizView1">
-                                    <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell3 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView1">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
+                                    <div id="DiagnosticButtonsB-quizView1">
+                                        <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell3 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView1">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
+                                    <div id="DiagnosticButtonsC-quizView1">
+                                        <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView1">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
+                                    <div id="DiagnosticButtonsD-quizView1">
+                                        <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell4 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
+                                    <div id="DiagnosticButtonsA-quizView1">
+                                        <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell4 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView1">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
+                                    <div id="DiagnosticButtonsB-quizView1">
+                                        <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView1">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
+                                    <div id="DiagnosticButtonsC-quizView1">
+                                        <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView1">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
+                                    <div id="DiagnosticButtonsD-quizView1">
+                                        <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row drop-zone  rounded-bottom" style="justify-content: center; align-items: center;">
                         <button type="button" class="btn btn-primary" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Instructions</button>
@@ -2309,6 +2694,7 @@
                             else if (column1 == 2){
                                 <span style="white-space: pre-line">@Model.HistoryB</span>}
                             else if (column1 == 3){
+
                                 <span style="white-space: pre-line">@Model.HistoryC</span>}
                             else if (column1 == 4){
                                 <span style="white-space: pre-line">@Model.HistoryD</span>}
@@ -2460,124 +2846,701 @@
                         </p>
                     </div>
                     <div class="row" style="height: 19.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
-                            <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
-                                <div id="PhysicalButtons1-quizView2">
-                                    <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
-                                        Expand
-                                    </button>
+                        @if (answerCell1 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
+                                    <div id="PhysicalButtons1-quizView2">
+                                        <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
-                            <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
-                                <div id="PhysicalButtons2-quizView2">
-                                    <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell1 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
+                                    <div id="PhysicalButtons2-quizView2">
+                                        <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell1 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
+                                    <div id="PhysicalButtons3-quizView2">
+                                        <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
+                                    <div id="PhysicalButtons4-quizView2">
+                                        <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
+                                <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
+                                    <div id="PhysicalButtons5-quizView2">
+                                        <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell2 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
+                                    <div id="PhysicalButtons1-quizView2">
+                                        <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell2 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
+                                    <div id="PhysicalButtons2-quizView2">
+                                        <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
+                                    <div id="PhysicalButtons3-quizView2">
+                                        <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
+                                    <div id="PhysicalButtons4-quizView2">
+                                        <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
+                                <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
+                                    <div id="PhysicalButtons5-quizView2">
+                                        <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
+                                </div>
+                            </div>
+                        }
+
                     </div>
                     <div class="row" style="height: 19.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
-                            <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
-                                <div id="PhysicalButtons3-quizView2">
-                                    <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
-                                        Expand
-                                    </button>
+                        @if (answerCell3 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
+                                    <div id="PhysicalButtons1-quizView2">
+                                        <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
-                            <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
-                                <div id="PhysicalButtons4-quizView2">
-                                    <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell3 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
+                                    <div id="PhysicalButtons2-quizView2">
+                                        <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell3 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
+                                    <div id="PhysicalButtons3-quizView2">
+                                        <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
+                                    <div id="PhysicalButtons4-quizView2">
+                                        <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
+                                <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
+                                    <div id="PhysicalButtons5-quizView2">
+                                        <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell4 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
+                                    <div id="PhysicalButtons1-quizView2">
+                                        <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell4 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
+                                    <div id="PhysicalButtons2-quizView2">
+                                        <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
+                                    <div id="PhysicalButtons3-quizView2">
+                                        <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
+                                    <div id="PhysicalButtons4-quizView2">
+                                        <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
+                                <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
+                                    <div id="PhysicalButtons5-quizView2">
+                                        <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row" style="height: 19.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
-                            <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
-                                <div id="PhysicalButtons5-quizView2">
-                                    <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
-                                        Expand
-                                    </button>
+                        @if (answerCell5 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
+                                <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
+                                    <div id="PhysicalButtons1-quizView2">
+                                        <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
-                            <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
-                                <div id="DiagnosticButtonsA-quizView2">
-                                    <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell5 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box2-quizView2">
+                                <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
+                                    <div id="PhysicalButtons2-quizView2">
+                                        <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell5 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box3-quizView2">
+                                <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
+                                    <div id="PhysicalButtons3-quizView2">
+                                        <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell5 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box4-quizView2">
+                                <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
+                                    <div id="PhysicalButtons4-quizView2">
+                                        <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell5 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box5-quizView2">
+                                <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
+                                    <div id="PhysicalButtons5-quizView2">
+                                        <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell1 == 1)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
+                                    <div id="DiagnosticButtonsA-quizView2">
+                                        <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell1 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
+                                    <div id="DiagnosticButtonsB-quizView2">
+                                        <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
+                                    <div id="DiagnosticButtonsC-quizView2">
+                                        <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
+                                    <div id="DiagnosticButtonsD-quizView2">
+                                        <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell1 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
+                                <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
+                                    <div id="DiagnosticButtonsE-quizView2">
+                                        <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row" style="height: 19.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
-                            <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
-                                <div id="DiagnosticButtonsB-quizView2">
-                                    <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
-                                        Expand
-                                    </button>
+                        @if (answerCell2 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
+                                    <div id="DiagnosticButtonsA-quizView2">
+                                        <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
-                            <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
-                                <div id="DiagnosticButtonsC-quizView2">
-                                    <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell2 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
+                                    <div id="DiagnosticButtonsB-quizView2">
+                                        <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell2 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
+                                    <div id="DiagnosticButtonsC-quizView2">
+                                        <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
+                                    <div id="DiagnosticButtonsD-quizView2">
+                                        <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell2 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
+                                <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
+                                    <div id="DiagnosticButtonsE-quizView2">
+                                        <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell3 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
+                                    <div id="DiagnosticButtonsA-quizView2">
+                                        <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell3 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
+                                    <div id="DiagnosticButtonsB-quizView2">
+                                        <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
+                                    <div id="DiagnosticButtonsC-quizView2">
+                                        <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
+                                    <div id="DiagnosticButtonsD-quizView2">
+                                        <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell3 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
+                                <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
+                                    <div id="DiagnosticButtonsE-quizView2">
+                                        <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row" style="height: 19.5%;">
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
-                            <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
-                                <div id="DiagnosticButtonsD-quizView2">
-                                    <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
-                                        Expand
-                                    </button>
+                        @if (answerCell4 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
+                                    <div id="DiagnosticButtonsA-quizView2">
+                                        <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
-                            </div>
-                        </div>
-                        <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
-                            <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
-                                <div id="DiagnosticButtonsE-quizView2">
-                                    <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                    <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
-                                        Expand
-                                    </button>
+                            </div> }
+                        else if (answerCell4 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
+                                    <div id="DiagnosticButtonsB-quizView2">
+                                        <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
-                                <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
                             </div>
-                        </div>
+                        }
+                        else if (answerCell4 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
+                                    <div id="DiagnosticButtonsC-quizView2">
+                                        <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
+                                    <div id="DiagnosticButtonsD-quizView2">
+                                        <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell4 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
+                                <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
+                                    <div id="DiagnosticButtonsE-quizView2">
+                                        <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (answerCell5 == 1) {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
+                                <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
+                                    <div id="DiagnosticButtonsA-quizView2">
+                                        <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
+                                </div>
+                            </div> }
+                        else if (answerCell5 == 2)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box2-quizView2">
+                                <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
+                                    <div id="DiagnosticButtonsB-quizView2">
+                                        <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell5 == 3)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box3-quizView2">
+                                <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
+                                    <div id="DiagnosticButtonsC-quizView2">
+                                        <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell5 == 4)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box4-quizView2">
+                                <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
+                                    <div id="DiagnosticButtonsD-quizView2">
+                                        <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
+                                </div>
+                            </div>
+                        }
+                        else if (answerCell5 == 5)
+                        {
+                            <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box5-quizView2">
+                                <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
+                                    <div id="DiagnosticButtonsE-quizView2">
+                                        <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
+                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                            Expand
+                                        </button>
+                                    </div>
+                                    <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="row drop-zone  rounded-bottom" style="justify-content: center; align-items: center;">
                         <button type="button" class="btn btn-primary" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Instructions</button>
@@ -3291,7 +4254,7 @@
 
             </div>
             <div style="display:flex;">
-                    <button type="button" class="btn btn-danger float-right" onclick="" style="color: black; font-weight: bold; margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Close</button>
+                <button type="button" class="btn btn-danger float-right" onclick="window.location.href='/../Admin/AssignedQuizes'" style="color: black; font-weight: bold; margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Close</button>
             </div>
         </div>
     </div>
@@ -3659,7 +4622,7 @@
 
             </div>
             <div style="display:flex;">
-                    <button type="button" class="btn btn-danger float-right" onclick="" style="color: black; font-weight: bold; margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Close</button>
+                    <button type="button" class="btn btn-danger float-right" onclick="window.location.href='/../Admin/AssignedQuizes'" style="color: black; font-weight: bold; margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Close</button>
             </div>
         </div>
     </div>
