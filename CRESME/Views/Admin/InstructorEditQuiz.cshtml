@@ -1,8 +1,19 @@
-﻿@model CRESME.Data.Quiz
+﻿@model CRESME.Data.UserQuizUnion
 
 @{
     ViewData["Title"] = "Edit CRESME";
+    var courses = Model.users.Select(x => x.Course).Distinct().Where(x => x != null).ToList();
+    var terms = Model.users.Select(x => x.Term).Distinct().Where(x => x != null).ToList();
+
+    //parse each string in courses/term separated by comma into individual strings
+    //trim and return only unique elements
+    List<string> UniqueCourses = courses.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
+    List<string> UniqueTerms = terms.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
+
+    // list of instructors
+    var instructors = Model.users.Where(x => x.Role == "Instructor");
 }
+
 
 
 <div id="flexbox" aria-live="polite" aria-atomic="true" class="pt-5 d-flex justify-content-end align-items-end w-100">
@@ -43,7 +54,7 @@
 
 </div>
 
-
+@*
 
 <form asp-controller="Admin" asp-action="InstructorUpdateQuiz" method="post" onsubmit="return confirm('Are you sure you want to EDIT this quiz data?');">
     <div class="d-flex align-items-center min-vh-100">
@@ -173,7 +184,7 @@
         </div>
     </div>
 
-</form>
+</form>*@
 
 <style>
 
