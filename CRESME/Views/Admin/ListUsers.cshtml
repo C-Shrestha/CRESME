@@ -53,18 +53,21 @@
                 Choose Action
             </button>
             <ul class="dropdown-menu">
-                <li>
+
+                @*<li>
                     <form class="dropdown-item" asp-controller="Admin" asp-action="CreateUsers">
                         <button type="submit" class="btn btn-md btn-primary">
                             <i class="fa-solid fa-square-plus"></i>
                             Create New
                         </button>
                     </form>
-                </li>
+                </li>*@
+
+
                 <li>
                     <form class="dropdown-item" asp-controller="Admin" asp-action="ExportUsersToExcel">
                         <button type="submit" class="btn btn-md btn-primary">
-                            <i class="fa-solid fa-square-plus"></i>
+                            <i class="fa-solid fa-file-arrow-down"></i>
                             Export users to Excel
                         </button>
                     </form>
@@ -79,14 +82,6 @@
                     </form>
                 </li>
 
-
-
-
-
-
-
-
-
                 <li>
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAll">
                         <button onclick="return confirm('Are you sure you want to DELETE ALL the users?')" type="submit" class="btn btn-md btn-danger">
@@ -95,7 +90,10 @@
                         </button>
                     </form>
                 </li>
-                <li>
+
+
+
+                @*<li>
 
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteByTermStudentsView">
                         <button type="submit" class="btn btn-md btn-danger">
@@ -148,7 +146,8 @@
                         </button>
                     </form>
 
-                </li>
+                </li>*@
+
 
 
                 

@@ -2247,7 +2247,7 @@ namespace CRESME.Controllers
         {
             if (opts == null) opts = new PasswordOptions()
             {
-                RequiredLength = 8,
+                RequiredLength = 10,
                 RequiredUniqueChars = 4,
                 RequireDigit = true,
                 RequireLowercase = true,
@@ -2906,6 +2906,16 @@ namespace CRESME.Controllers
 
         }
 
+
+
+        /*returns a list of users in the database.*/
+        [Authorize(Roles = "Admin")]
+        public IActionResult GeneratePasswordView()
+        {
+            TempData["RandomPassowrdGenerated"] = GenerateRandomPassword();
+            return View();
+
+        }
 
 
 
