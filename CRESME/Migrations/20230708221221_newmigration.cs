@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class imagecount : Migration
+    public partial class newmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -143,6 +143,7 @@ namespace CRESME.Migrations
                     PatientIntro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Legend = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CoverImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExcelName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryB = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HistoryC = table.Column<string>(type: "nvarchar(max)", nullable: true),

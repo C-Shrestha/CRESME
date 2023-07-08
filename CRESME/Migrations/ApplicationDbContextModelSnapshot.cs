@@ -336,6 +336,9 @@ namespace CRESME.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ExcelName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FeedBackA")
                         .HasColumnType("nvarchar(max)");
 

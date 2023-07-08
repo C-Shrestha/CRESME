@@ -154,6 +154,8 @@
                 <button type="button" id="imageButton" class="col-4 btn btn-link" onclick="addImage()">+Image to Table Cell</button>
                 <div class="w-100"></div>
 
+                @{string[] imagenames = {Model.quiz.Image0[16..^40], Model.quiz.Image1[16..^40], Model.quiz.Image2[16..^40], Model.quiz.Image3[16..^40], Model.quiz.Image4[16..^40], Model.quiz.Image5[16..^40], Model.quiz.Image6[16..^40], Model.quiz.Image7[16..^40], Model.quiz.Image8[16..^40], Model.quiz.Image9[16..^40]};};
+
 
                 @for (int i = (Model.quiz.ImageCount-1); i>=0; i--)
                 {
@@ -175,34 +177,61 @@
                     <input type="file" name=@imagestring  id=@imagestring accept="image/*" onchange="checkForImage(this.id)" style="display: none;">
                     <label class="col-4 row justify-content-center border" for=@imagestring id=@labelstring style="border-color: black !important;"><i class="text-center fa-solid fa-image"></i></label>
 
-                    <div class="col-1" id="hrDiv2" + i></div>
+                    
+                    string hrdiv2string = "hrDiv2" + i;
 
-                    <select id="ImagePos" + i class="form-select col-1" aria-label="Default select example" name="ImagePos" + i style="width: 15%; height: 10%; text-align-last:center;">
-                        <option value="1" name="Image0Pos">PE 1</option>
-                        <option value="2" name="Image1Pos">PE 2</option>
-                        <option value="3" name="Image1Pos">PE 3</option>
-                        <option value="4" name="Image3Pos">PE 4</option>
-                        <option value="5" name="Image4Pos">PE 5</option>
-                        <option value="A" name="Image5Pos">Data A</option>
-                        <option value="B" name="Image6Pos">Data B</option>
-                        <option value="C" name="Image7Pos">Data C</option>
-                        <option value="D" name="Image8Pos">Data D</option>
-                        <option value="E" name="Image9Pos">Data E</option>
+                    <div class="col-1" id=@hrdiv2string></div>
+
+                    string ImagePos = "ImagePos" + i;
+                    string[] names = { "PE 1", "PE 2", "PE 3", "PE 4", "PE 5", "Data A", "Data B", "Data C", "Data D", "Data E" };
+                    string[] values = { "1", "2", "3", "4", "5", "A", "B", "C", "D", "E" };
+                    string[] position = {Model.quiz.ImagePos0, Model.quiz.ImagePos1, Model.quiz.ImagePos2, Model.quiz.ImagePos3, Model.quiz.ImagePos4, Model.quiz.ImagePos5, Model.quiz.ImagePos6, Model.quiz.ImagePos7, Model.quiz.ImagePos8, Model.quiz.ImagePos9}; 
+
+
+                    <select id=@ImagePos class="form-select col-1" aria-label="Default select example" name=@ImagePos style="width: 15%; height: 10%; text-align-last:center;">
+                        @for(int j = 0; j<9; j++)
+                        {
+                            string imagePos = "Image" + j + "Pos";
+                            Console.Write(j);
+
+                            if (position[j] == values[j]) {
+                                <option value=@values[j] name=@imagePos selected>@names[j]</option>}
+                            else{
+                                <option value=@values[j] name=@imagePos>@names[j]</option>};
+
+                        }      
                     </select>
 
-                    <i class="col-1 fa-solid fa-check" id="imgCheckMark" + i></i>
 
-                    <div class="w-100" id="vrDiv1" + i></div>
+                    string imgCheckMark = "imgCheckMark" + i;
 
-                    <input class="col-6  input-field" type="text" name="Image0Alt" id="altText" + i placeholder="Enter Alt Text">
+                    <i class="col-1 fa-solid fa-check" id=@imgCheckMark></i>
 
-                    <div class="w-100" id="newBreak1" + i></div>
+                    string vrdiv1string = "vrDiv1" + i;
 
-                    <div class="col-12 text-center" id="imageName" + i style="font-weight: bold;">ApplicationFrameHost_8EX3l7aavP.png</div>
+                    <div class="w-100" id=@vrdiv1string></div>
 
-                    <div class="w-100" id="newBreak2" + i></div>
+                    string imageAlt = "Image" + i + "Alt";
+                    string altText = "altText" + i;
 
-                    <div class="col-8" id="breakPoint" + i style="height: 5px; background-color: rgb(241, 196, 0);"></div>
+                    <input class="col-6  input-field" type="text" name=@imageAlt id=@altText placeholder="Enter Alt Text">
+
+                    string newBreak1 = "newBreak1" + i;
+
+                    <div class="w-100" id=@newBreak1></div>
+
+                    string imageName = "imageName" + i;
+       
+
+                    <div class="col-12 text-center" id=@imageName style="font-weight: bold;">@imagenames[i]</div>
+
+                     string newBreak2 = "newBreak2" + i;
+
+                    <div class="w-100" id=@newBreak2></div>
+
+                    string breakPoint = "breakPoint" + i;
+
+                    <div class="col-8" id=@breakPoint style="height: 5px; background-color: rgb(241, 196, 0);"></div>
                     
                 }
 

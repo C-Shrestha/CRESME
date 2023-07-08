@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230708214239_imagecount")]
-    partial class imagecount
+    [Migration("20230708221221_newmigration")]
+    partial class newmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -337,6 +337,9 @@ namespace CRESME.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ExcelName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FeedBackA")
                         .HasColumnType("nvarchar(max)");
