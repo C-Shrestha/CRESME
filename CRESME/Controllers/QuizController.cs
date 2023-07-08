@@ -113,6 +113,7 @@ namespace CRESME.Controllers
             //Reading Excel File upload for quiz info
             if (Request.Form.Files["ExcelFileUpload"] != null)
             {
+                quiz.ExcelName = Request.Form.Files["ExcelFileUpload"].FileName;
                 try
                 {
                     using (var stream = new MemoryStream())
@@ -222,7 +223,7 @@ namespace CRESME.Controllers
                 quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
                 quiz.ImagePos5 = Request.Form["ImagePos5"];
                 quiz.ImageCount++;
-            }
+            }   
 
             if (Request.Form.Files["imageFile6"] != null & Request.Form["ImagePos6"].Count > 0)
             {
@@ -235,21 +236,24 @@ namespace CRESME.Controllers
             {
                 quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
                 quiz.ImagePos7 = Request.Form["ImagePos7"];
-
+                quiz.ImageCount++;
             }
-          
 
             if (Request.Form.Files["imageFile8"] != null & Request.Form["ImagePos8"].Count > 0)
             {
                 quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
                 quiz.ImagePos8 = Request.Form["ImagePos8"];
+                quiz.ImageCount++;
             }
+            
 
             if (Request.Form.Files["imageFile9"] != null & Request.Form["ImagePos9"].Count > 0)
             {
                 quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
                 quiz.ImagePos9 = Request.Form["ImagePos9"];
+                quiz.ImageCount++;
             }
+            
 
 
             if (ModelState.IsValid)
