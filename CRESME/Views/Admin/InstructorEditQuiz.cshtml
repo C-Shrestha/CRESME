@@ -74,10 +74,10 @@
 
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
+                <input class="col-4  input-field" type="text" name="PatientIntro" value="@Model.quiz.PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required style="background-color:#FCF5D8;">
+                <input class="col-4  input-field" type="text" name="AuthorNames" value="@Model.quiz.AuthorNames" placeholder="Enter Authors' Names" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-5 text-center" style="font-weight: bold;">Start Date</div>
@@ -159,10 +159,10 @@
                 @{
                     string[] trueImageNames = new string[10];
 
-                    for(int j = 0; j<10; j++)
+                    @for(int j = 0; j<10; j++)
                     {
                         if (imagenames[j] != "")
-                            trueImageNames[j] = imagenames[j][16..^40];
+                            trueImageNames[j] = imagenames[j].ToString()[16..^40];
                         else
                             break;
                     };
