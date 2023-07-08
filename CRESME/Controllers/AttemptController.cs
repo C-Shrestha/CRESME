@@ -162,16 +162,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey1)
                 {
-                    if (attempt.FreeResponseA.Contains(key) && (attempt.PhysicalAnswerA == PhysicalAnswer1 || attempt.DiagnosticAnswerA == DiagnosticAnswer1))
+                    if (attempt.FreeResponseA.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnAGrade += 3;
                         if (attempt.PhysicalAnswerA == PhysicalAnswer1)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnAGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerA == DiagnosticAnswer1)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnAGrade += 1;
                         }
                         break;
                     }
@@ -182,16 +182,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey2)
                 {
-                    if (attempt.FreeResponseB.Contains(key) && (attempt.PhysicalAnswerB == PhysicalAnswer2 || attempt.DiagnosticAnswerB == DiagnosticAnswer2))
+                    if (attempt.FreeResponseB.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnBGrade += 3;
                         if (attempt.PhysicalAnswerB == PhysicalAnswer2)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnBGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerB == DiagnosticAnswer2)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnBGrade += 1;
                         }
 
                         break;
@@ -203,16 +203,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey3)
                 {
-                    if (attempt.FreeResponseC.Contains(key) && (attempt.PhysicalAnswerC == PhysicalAnswer3 || attempt.DiagnosticAnswerC == DiagnosticAnswer3))
+                    if (attempt.FreeResponseC.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnCGrade += 3;
                         if (attempt.PhysicalAnswerC == PhysicalAnswer3)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnCGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerC == DiagnosticAnswer3)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnCGrade += 1;
                         }
 
                         break;
@@ -224,16 +224,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey4)
                 {
-                    if (attempt.FreeResponseD.Contains(key) && (attempt.PhysicalAnswerD == PhysicalAnswer4 || attempt.DiagnosticAnswerD == DiagnosticAnswer4))
+                    if (attempt.FreeResponseD.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnDGrade += 3;
                         if (attempt.PhysicalAnswerD == PhysicalAnswer4)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnDGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerD == DiagnosticAnswer4)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnDGrade += 1;
                         }
 
                         break;
@@ -245,22 +245,24 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey5)
                 {
-                    if (attempt.FreeResponseE.Contains(key) && (attempt.PhysicalAnswerE == PhysicalAnswer5 || attempt.DiagnosticAnswerE == DiagnosticAnswer5))
+                    if (attempt.FreeResponseE.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnEGrade += 3;
                         if (attempt.PhysicalAnswerE == PhysicalAnswer5)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnEGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerE == DiagnosticAnswer5)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnEGrade += 1;
                         }
 
                         break;
                     }
                 }
             }
+
+            attempt.Score = attempt.ColumnAGrade + attempt.ColumnBGrade + attempt.ColumnCGrade + attempt.ColumnDGrade + attempt.ColumnEGrade;
 
             //  UNSHUFFLING COLUMNS
             string[] OriginalAttemptAnswers = { attempt.PhysicalAnswerA, attempt.PhysicalAnswerB, attempt.PhysicalAnswerC, attempt.PhysicalAnswerD, attempt.PhysicalAnswerE,
