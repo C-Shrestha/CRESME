@@ -62,7 +62,7 @@
 
 
                 <div class="w-100"></div>
-                <h4 class="col-6 text-center" style="font-weight: bold;">Create CRESME Form</h4>
+                <h4 class="col-6 text-center" style="font-weight: bold;">Edit CRESME Form</h4>
 
 
                 <div class="w-100"></div>
@@ -70,7 +70,7 @@
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
                 <div class="w-100"></div>
-                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter CRESME Name" required style="background-color:#FCF5D8;">
+                <input class="col-4  input-field" type="text" name="QuizName" value="@Model.quiz.QuizName" placeholder="Enter CRESME Name" required style="background-color:#FCF5D8;">
 
                 <div class="w-100"></div>
 
@@ -85,23 +85,56 @@
                 <div class="col-5 text-center" style="font-weight: bold;">End Date</div>
                 <div class="w-100"></div>
 
-                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required style="background-color:#FCF5D8;">
+                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" value="@Model.quiz.StartDate.ToLocalTime()" runat="server" required style="background-color:#FCF5D8;">
                 <div class="col-1 text-center">-</div>
                 <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
 
-                <div class="col-2" style="font-weight: bold; ">Publish</div>
-                <input class="col-1" type="checkbox" id="publish" name="Publish" value="1" style="background-color:#FCF5D8;">
-                <div class="w-100"></div>
 
-                <div class="col-2" style="font-weight: bold;">Practice</div>
-                <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1" style="background-color:#FCF5D8;">
-                <div class="w-100"></div>
 
-                <div class="col-2" style="font-weight: bold;">Shuffle</div>
-                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" style="background-color:#FCF5D8;">
+                @if (Model.quiz.Published == "Yes")
+                {
+                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <input class="col-1" type="checkbox" id="Published" name="Published" value="1" checked>
+                    <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <input class="col-1" type="checkbox" id="Published" name="Published" value="1">
+                    <div class="w-100"></div>
+                }
+
+
+                @if (Model.quiz.FeedBackEnabled == "Yes")
+                {
+                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1" checked>
+                    <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1">
+                    <div class="w-100"></div>
+                }
+
+                @if (Model.quiz.ShuffleEnabled == "Yes")
+                {
+                <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" checked>
                 <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
+                <div class="w-100"></div>
+                }
+
+
+
 
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
 
@@ -208,7 +241,7 @@
 
 
 
-                <button onclick="validate()" type="submit" class="btn custom_btn col-5">Create CRESME</button>
+                <button onclick="validate()" type="submit" class="btn custom_btn col-5">Edit CRESME</button>
                 <div class="w-100"></div>
 
             </div>
