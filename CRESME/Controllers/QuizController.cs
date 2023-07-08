@@ -176,7 +176,7 @@ namespace CRESME.Controllers
                 quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
             }
             else {
-                quiz.CoverImage = "/images/CoverImage.png";
+                quiz.CoverImage = "/images/CoverImage123456789012345678901234567890123456000000000000000000000000000000000000000000000000000000000.png";
             }
 
             //checks for image upload and image position input, only saves image if both are present
@@ -184,7 +184,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
                 quiz.ImagePos0 = Request.Form["ImagePos0"];
-
+                quiz.ImageCount++;
             }
             else
             {
@@ -196,6 +196,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
                 quiz.ImagePos1 = Request.Form["ImagePos1"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -207,6 +208,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
                 quiz.ImagePos2 = Request.Form["ImagePos2"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -218,6 +220,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
                 quiz.ImagePos3 = Request.Form["ImagePos3"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -229,6 +232,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
                 quiz.ImagePos4 = Request.Form["ImagePos4"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -240,6 +244,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
                 quiz.ImagePos5 = Request.Form["ImagePos5"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -251,6 +256,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
                 quiz.ImagePos6 = Request.Form["ImagePos6"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -262,6 +268,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
                 quiz.ImagePos7 = Request.Form["ImagePos7"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -273,6 +280,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
                 quiz.ImagePos8 = Request.Form["ImagePos8"];
+                quiz.ImageCount++;
             }
             else
             {
@@ -284,6 +292,7 @@ namespace CRESME.Controllers
             {
                 quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
                 quiz.ImagePos9 = Request.Form["ImagePos9"];
+                quiz.ImageCount++;
             }
             else
             {

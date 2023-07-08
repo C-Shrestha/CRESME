@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class orlandofiveColumn : Migration
+    public partial class imagecount : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,6 +72,11 @@ namespace CRESME.Migrations
                     Score = table.Column<int>(type: "int", nullable: true),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ColumnAGrade = table.Column<int>(type: "int", nullable: true),
+                    ColumnBGrade = table.Column<int>(type: "int", nullable: true),
+                    ColumnCGrade = table.Column<int>(type: "int", nullable: true),
+                    ColumnDGrade = table.Column<int>(type: "int", nullable: true),
+                    ColumnEGrade = table.Column<int>(type: "int", nullable: true),
                     PhysicalAnswerA = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAnswerB = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAnswerC = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -173,6 +178,7 @@ namespace CRESME.Migrations
                     Image7 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image8 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image9 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageCount = table.Column<int>(type: "int", nullable: false),
                     ImagePos0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImagePos1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImagePos2 = table.Column<string>(type: "nvarchar(max)", nullable: true),

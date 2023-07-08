@@ -1817,11 +1817,11 @@ namespace CRESME.Controllers
         /*Located in EditQuiz.cshtml. Updates a CRESME*/
         [HttpPost]    
         [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> InstructorUpdateQuiz(int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate, string PatientIntro, string Published, string FeedBackEnabled, string InstructorID, string ShuffleEnabled, string AuthorNames)
+        public async Task<IActionResult> InstructorUpdateQuiz(Quiz formQuiz)
         {
 
             // find the quiz to be updated
-            var quiz = await _context.Quiz.FindAsync(QuizId);
+            var quiz = await _context.Quiz.FindAsync(formQuiz.QuizId);
             //find current user
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
@@ -1829,23 +1829,23 @@ namespace CRESME.Controllers
             //update based on the new values
             if (quiz != null)
             {
-                quiz.QuizName = QuizName.Trim();
-                quiz.Block = Block.Trim();
-                quiz.Course = Course.Trim();
-                quiz.Term = Term.Trim();
-                quiz.DateCreated = DateCreated;
-                quiz.StartDate = StartDate;
-                quiz.EndDate = EndDate;
-                quiz.PatientIntro = PatientIntro.Trim();
-                quiz.AuthorNames = AuthorNames.Trim();
-                if (InstructorID != null)
+                quiz.QuizName = formQuiz.QuizName.Trim();
+                quiz.Block = formQuiz.Block.Trim();
+                quiz.Course = formQuiz.Course.Trim();
+                quiz.Term = formQuiz.Term.Trim();
+                quiz.DateCreated = formQuiz.DateCreated;
+                quiz.StartDate = formQuiz.StartDate;
+                quiz.EndDate = formQuiz.EndDate;
+                quiz.PatientIntro = formQuiz.PatientIntro.Trim();
+                quiz.AuthorNames = formQuiz.AuthorNames.Trim();
+                if (formQuiz.InstructorID != null)
                 {
-                    quiz.InstructorID = InstructorID.Trim();
+                    quiz.InstructorID = formQuiz.InstructorID.Trim();
                 }
                 
 
                 //checkboxes is checked and changed to correct format for database entry
-                if (FeedBackEnabled == "1")
+                if (formQuiz.FeedBackEnabled == "1")
                 {
                     quiz.FeedBackEnabled = "Yes";
                 }
@@ -1854,7 +1854,7 @@ namespace CRESME.Controllers
                     quiz.FeedBackEnabled = "No";
                 }
 
-                if (Published == "1")
+                if (formQuiz.Published == "1")
                 {
                     quiz.Published = "Yes";
                 }
@@ -1863,7 +1863,7 @@ namespace CRESME.Controllers
                     quiz.Published = "No";
                 }
 
-                if (ShuffleEnabled == "1")
+                if (formQuiz.ShuffleEnabled == "1")
                 {
                     quiz.ShuffleEnabled = "Yes";
                 }

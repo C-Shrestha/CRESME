@@ -154,6 +154,60 @@
                 <button type="button" id="imageButton" class="col-4 btn btn-link" onclick="addImage()">+Image to Table Cell</button>
                 <div class="w-100"></div>
 
+
+                @for (int i = (Model.quiz.ImageCount-1); i>=0; i--)
+                {
+                    string vrdivstring = "vrDiv" + i;
+
+                    <div class="w-100" id=@vrdivstring></div>
+
+                    string deletestring = "" + i;
+
+                    <button class="custom_btn col-2" onclick="deleteButton(this.id)" id=@deletestring>Delete</button>
+
+                    string hrdiv1string = "hrDiv1" + i;
+
+                    <div class="col-1" id=@hrdiv1string></div>
+
+                    string imagestring = "imageFile" + i;
+                    string labelstring = "imageLabel" + i;
+
+                    <input type="file" name=@imagestring  id=@imagestring accept="image/*" onchange="checkForImage(this.id)" style="display: none;">
+                    <label class="col-4 row justify-content-center border" for=@imagestring id=@labelstring style="border-color: black !important;"><i class="text-center fa-solid fa-image"></i></label>
+
+                    <div class="col-1" id="hrDiv2" + i></div>
+
+                    <select id="ImagePos" + i class="form-select col-1" aria-label="Default select example" name="ImagePos" + i style="width: 15%; height: 10%; text-align-last:center;">
+                        <option value="1" name="Image0Pos">PE 1</option>
+                        <option value="2" name="Image1Pos">PE 2</option>
+                        <option value="3" name="Image1Pos">PE 3</option>
+                        <option value="4" name="Image3Pos">PE 4</option>
+                        <option value="5" name="Image4Pos">PE 5</option>
+                        <option value="A" name="Image5Pos">Data A</option>
+                        <option value="B" name="Image6Pos">Data B</option>
+                        <option value="C" name="Image7Pos">Data C</option>
+                        <option value="D" name="Image8Pos">Data D</option>
+                        <option value="E" name="Image9Pos">Data E</option>
+                    </select>
+
+                    <i class="col-1 fa-solid fa-check" id="imgCheckMark" + i></i>
+
+                    <div class="w-100" id="vrDiv1" + i></div>
+
+                    <input class="col-6  input-field" type="text" name="Image0Alt" id="altText" + i placeholder="Enter Alt Text">
+
+                    <div class="w-100" id="newBreak1" + i></div>
+
+                    <div class="col-12 text-center" id="imageName" + i style="font-weight: bold;">ApplicationFrameHost_8EX3l7aavP.png</div>
+
+                    <div class="w-100" id="newBreak2" + i></div>
+
+                    <div class="col-8" id="breakPoint" + i style="height: 5px; background-color: rgb(241, 196, 0);"></div>
+                    
+                }
+
+
+
                 <div class="col-10" style="height: 2px; background-color: black"></div>
                 <div class="w-100"></div>
 
@@ -166,22 +220,29 @@
                 <label  class="col-4 row justify-content-center border" id="coverLabel" for="CoverImage" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-panorama"></i>
                 </label>
+                <i class="col-1 fa-solid fa-check" id="CoverCheckMark"></i>
+                <div class="w-100"></div>
+                <div class="col-6 text-center" id="CoverName" style="font-weight: bold;">@Model.quiz.CoverImage[16..^40]</div>
                 <div class="w-100"></div>
 
+                
                  <div class="col-4 text-center" style="font-weight: bold;">Upload Legend Photo</div>
                 <div class="w-100"></div>
-
-                <input type="file" name="Legend" id="Legend" accept="image/*" style="display: none;" required />
+                <input type="file" name="Legend" id="Legend"  accept="image/*" style="display: none;"  />
                 <label class="col-4 row justify-content-center border" id="legendLabel" for="Legend" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-flag"></i>
                 </label>
+                
+                <i class="col-1 fa-solid fa-check" id="legendCheckMark"></i>
+                <div class="w-100"></div>
+                <div class="col-6 text-center" id="legendName" style="font-weight: bold;">@Model.quiz.Legend[16..^40]</div>
                 <div class="w-100"></div>
 
-                <div class="col-4 text-center" style="font-weight: bold;">Upload Excel File</div>
+
+                <div class="col-4 text-center" style="font-weight: bold;">Upload New Excel File</div>
                 <div class="w-100"></div>
 
-
-                <input type="file" name="ExcelFileUpload" id="excelButton" accept=".xlsx" style="display: none;" required />
+                <input type="file" name="ExcelFileUpload" id="excelButton" accept=".xlsx" style="display: none;"  />
                 <label class="col-4 row justify-content-center border" id="excelLabel" for="excelButton" style="border-color: black !important;">
                     <i class="text-center fa-sharp fa-solid fa-upload"></i>
                 </label>

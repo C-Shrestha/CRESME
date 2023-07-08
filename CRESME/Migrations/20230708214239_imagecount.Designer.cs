@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230703224559_orlandofiveColumn")]
-    partial class orlandofiveColumn
+    [Migration("20230708214239_imagecount")]
+    partial class imagecount
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,6 +114,21 @@ namespace CRESME.Migrations
 
                     b.Property<string>("Block")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ColumnAGrade")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ColumnBGrade")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ColumnCGrade")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ColumnDGrade")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ColumnEGrade")
+                        .HasColumnType("int");
 
                     b.Property<string>("Course")
                         .HasColumnType("nvarchar(max)");
@@ -416,6 +431,9 @@ namespace CRESME.Migrations
 
                     b.Property<string>("Image9Alt")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ImageCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePos0")
                         .HasColumnType("nvarchar(max)");
