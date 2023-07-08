@@ -313,6 +313,16 @@
                 </form>
                 <br />
 
+                <form asp-controller="Admin" asp-action="ExportForGrading">
+
+                    <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
+                    <button type="submit" class="btn btn-md btn-primary">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Export for Grading
+                    </button>
+                </form>
+                <br />
+
             </div>
         </div>
 

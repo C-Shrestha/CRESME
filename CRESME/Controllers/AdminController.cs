@@ -817,7 +817,7 @@ namespace CRESME.Controllers
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
 
-                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_Quizes.xlsx");
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "List_of_CRESMES.xlsx");
 
             }
 
@@ -987,6 +987,8 @@ namespace CRESME.Controllers
             }
 
         }
+
+
 
         //located in QuizDetails.cshtml page. exports images for a quiz including legend
         public IActionResult ExportQuizImages(string quizname) {
@@ -1197,7 +1199,7 @@ namespace CRESME.Controllers
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-                string filename = $" Quiz: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
+                string filename = $" CRESME: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
 
             }
@@ -2916,6 +2918,65 @@ namespace CRESME.Controllers
             return View();
 
         }
+
+        /*Located in QuizDetails.csthml. Export CRESME data about the particular CRESME being viewed currently. Includes students attempts metadata about the CRESME*/
+        [HttpPost]
+        [Authorize(Roles = "Admin, Instructor")]
+        public IActionResult ExportForGrading(Attempt formData)
+        {
+            // Create a new Excel workbook
+            using (XLWorkbook workbook = new XLWorkbook())
+            {
+                var userList = _context.Attempt
+                        .FromSqlInterpolated($"select * from Attempts where QuizName = {formData.QuizName}")
+                        .ToList();
+
+                // Add a worksheet to the workbook
+                var worksheet = workbook.Worksheets.Add("Quizes");
+
+                // Set the column headers
+                
+                worksheet.Cell(1, 1).Value = "StudentNID";
+                worksheet.Cell(1, 2).Value = "StudentName";
+                worksheet.Cell(1, 3).Value = "Score";
+                worksheet.Cell(1, 4).Value = "QuizName";                
+                worksheet.Cell(1, 5).Value = "Block";
+                worksheet.Cell(1, 6).Value = "Term";
+                worksheet.Cell(1, 7).Value = "Course";
+                
+
+
+                // Set the row values
+                for (int i = 0; i < userList.Count; i++)
+                {
+                    var name = userList[i].StudentName;
+                    string[] arr = name.Split(" ");
+                    string formattedName = $"{arr[1]}, {arr[0]}";
+
+
+                    worksheet.Cell(i + 2, 1).Value = userList[i].StudentNID;
+                    worksheet.Cell(i + 2, 2).Value = formattedName;
+                    worksheet.Cell(i + 2, 3).Value = userList[i].Score;
+                    worksheet.Cell(i + 2, 4).Value = userList[i].QuizName;                   
+                    worksheet.Cell(i + 2, 5).Value = userList[i].Block;
+                    worksheet.Cell(i + 2, 6).Value = userList[i].Term;
+                    worksheet.Cell(i + 2, 7).Value = userList[i].Course;
+                    
+
+
+                }
+
+                using var stream = new MemoryStream();
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+                string filename = $"CRESME Grading: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+
+            }
+
+        }
+
+
 
 
 
