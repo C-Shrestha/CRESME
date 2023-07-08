@@ -154,8 +154,20 @@
                 <button type="button" id="imageButton" class="col-4 btn btn-link" onclick="addImage()">+Image to Table Cell</button>
                 <div class="w-100"></div>
 
-                @{string[] imagenames = {Model.quiz.Image0[16..^40], Model.quiz.Image1[16..^40], Model.quiz.Image2[16..^40], Model.quiz.Image3[16..^40], Model.quiz.Image4[16..^40], Model.quiz.Image5[16..^40], Model.quiz.Image6[16..^40], Model.quiz.Image7[16..^40], Model.quiz.Image8[16..^40], Model.quiz.Image9[16..^40]};};
+                @{string[] imagenames = {Model.quiz.Image0, Model.quiz.Image1, Model.quiz.Image2, Model.quiz.Image3, Model.quiz.Image4, Model.quiz.Image5, Model.quiz.Image6, Model.quiz.Image7, Model.quiz.Image8, Model.quiz.Image9};}
 
+                @{
+                    string[] trueImageNames = new string[10];
+
+                    for(int j = 0; j<10; j++)
+                    {
+                        if (imagenames[j] != "")
+                            trueImageNames[j] = imagenames[j][16..^40];
+                        else
+                            break;
+                    };
+
+               }
 
                 @for (int i = (Model.quiz.ImageCount-1); i>=0; i--)
                 {
