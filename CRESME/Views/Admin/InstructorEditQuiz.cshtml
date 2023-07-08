@@ -60,6 +60,8 @@
         <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
+                @{int numOfImages = Model.quiz.ImageCount;}
+                <input type="hidden" value=@numOfImages id="NumImages">
 
                 <div class="w-100"></div>
                 <h4 class="col-6 text-center" style="font-weight: bold;">Edit CRESME Form</h4>
@@ -173,7 +175,7 @@
                 {
                     string vrdivstring = "vrDiv" + i;
 
-                    <div class="w-100" id=@vrdivstring></div>
+                    <div class="w-100" id=@vrdivstring onload="incrementI()"></div>
 
                     string deletestring = "" + i;
 
@@ -388,11 +390,13 @@
 <script>
 
 
-    var i = 0;
+    
+    var i = document.getElementById("NumImages").value;
     var j = 0;
     var fileButton = document.getElementById("excelButton");
     var legendButton = document.getElementById("Legend");
     var coverButton = document.getElementById("CoverImage");
+
 
     
 
