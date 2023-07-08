@@ -1199,7 +1199,7 @@ namespace CRESME.Controllers
                 using var stream = new MemoryStream();
                 workbook.SaveAs(stream);
                 var content = stream.ToArray();
-                string filename = $" Quiz: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
+                string filename = $" CRESME: {formData.QuizName} {DateTime.Now:MM/dd/yyy}.xlsx";
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
 
             }
@@ -2949,9 +2949,13 @@ namespace CRESME.Controllers
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
                 {
-                    
+                    var name = userList[i].StudentName;
+                    string[] arr = name.Split(" ");
+                    string formattedName = $"{arr[1]}, {arr[0]}";
+
+
                     worksheet.Cell(i + 2, 1).Value = userList[i].StudentNID;
-                    worksheet.Cell(i + 2, 2).Value = userList[i].StudentName;
+                    worksheet.Cell(i + 2, 2).Value = formattedName;
                     worksheet.Cell(i + 2, 3).Value = userList[i].Score;
                     worksheet.Cell(i + 2, 4).Value = userList[i].QuizName;                   
                     worksheet.Cell(i + 2, 5).Value = userList[i].Block;
@@ -2971,6 +2975,8 @@ namespace CRESME.Controllers
             }
 
         }
+
+
 
 
 
