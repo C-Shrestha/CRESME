@@ -1808,7 +1808,11 @@ namespace CRESME.Controllers
         public IActionResult InstructorEditQuiz(int QuizId)
         {
 
-            return View(_context.Quiz.Find(QuizId));
+            UserQuizUnion union = new UserQuizUnion();
+            union.users = _context.Users.ToList();
+            union.quiz = _context.Quiz.Find(QuizId);
+            return View(union);
+            // return View(_context.Quiz.Find(QuizId));
 
         }
 

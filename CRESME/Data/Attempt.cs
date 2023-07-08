@@ -40,6 +40,11 @@ namespace CRESME.Data
         [DataType(DataType.Date)]
         public DateTime EndTime { get; set; }
 
+        public int? ColumnAGrade { get; set; } = 0;
+        public int? ColumnBGrade { get; set; } = 0;
+        public int? ColumnCGrade { get; set; } = 0;
+        public int? ColumnDGrade { get; set; } = 0;
+        public int? ColumnEGrade { get; set; } = 0;
 
 
         [BindProperty]
