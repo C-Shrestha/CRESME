@@ -47,7 +47,7 @@
 
 <form asp-controller="Admin" asp-action="InstructorUpdateQuiz" method="post" onsubmit="return confirm('Are you sure you want to EDIT this quiz data?');">
     <div class="d-flex align-items-center min-vh-100">
-        <div class="container border bg-white rounded" style="width: 50%;">
+        <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -127,13 +127,13 @@
 
                 @if (Model.Published == "Yes")
                 {
-                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <div class="col-3" style="font-weight: bold;">Published</div>
                     <input class="col-1" type="checkbox" id="Published" name="Published" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <div class="col-3" style="font-weight: bold;">Published</div>
                     <input class="col-1" type="checkbox" id="Published" name="Published" value="1">
                     <div class="w-100"></div>
                 }
@@ -141,26 +141,26 @@
 
                 @if (Model.FeedBackEnabled == "Yes")
                 {
-                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <div class="col-3" style="font-weight: bold;">Feedback</div>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <div class="col-3" style="font-weight: bold;">Feedback</div>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1">
                     <div class="w-100"></div>
                 }
 
                 @if (Model.ShuffleEnabled == "Yes")
                 {
-                <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                <div class="col-3" style="font-weight: bold;">ShuffleEnabled</div>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" checked>
                 <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                    <div class="col-3" style="font-weight: bold;">ShuffleEnabled</div>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
                 <div class="w-100"></div>
                 }
