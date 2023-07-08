@@ -176,7 +176,7 @@ namespace CRESME.Controllers
                 quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
             }
             else {
-                quiz.CoverImage = "/images/CoverImage123456789012345678901234567890123456000000000000000000000000000000000000000000000000000000000.png";
+                quiz.CoverImage = "/images/CoverImage.png";
             }
 
             //checks for image upload and image position input, only saves image if both are present
@@ -186,11 +186,7 @@ namespace CRESME.Controllers
                 quiz.ImagePos0 = Request.Form["ImagePos0"];
                 quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image0 = null;
-                quiz.ImagePos0 = null;
-            }
+          
 
             if (Request.Form.Files["imageFile1"] != null & Request.Form["ImagePos1"].Count > 0)
             {
@@ -198,22 +194,13 @@ namespace CRESME.Controllers
                 quiz.ImagePos1 = Request.Form["ImagePos1"];
                 quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image1 = null;
-                quiz.ImagePos1 = null;
-            }
+         
 
             if (Request.Form.Files["imageFile2"] != null & Request.Form["ImagePos2"].Count > 0)
             {
                 quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
                 quiz.ImagePos2 = Request.Form["ImagePos2"];
                 quiz.ImageCount++;
-            }
-            else
-            {
-                quiz.Image2 = null;
-                quiz.ImagePos2 = null;
             }
 
             if (Request.Form.Files["imageFile3"] != null & Request.Form["ImagePos3"].Count > 0)
@@ -222,22 +209,12 @@ namespace CRESME.Controllers
                 quiz.ImagePos3 = Request.Form["ImagePos3"];
                 quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image3 = null;
-                quiz.ImagePos3 = null;
-            }
 
             if (Request.Form.Files["imageFile4"] != null & Request.Form["ImagePos4"].Count > 0)
             {
                 quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
                 quiz.ImagePos4 = Request.Form["ImagePos4"];
                 quiz.ImageCount++;
-            }
-            else
-            {
-                quiz.Image4 = null;
-                quiz.ImagePos4 = null;
             }
 
             if (Request.Form.Files["imageFile5"] != null & Request.Form["ImagePos5"].Count > 0)
@@ -246,11 +223,6 @@ namespace CRESME.Controllers
                 quiz.ImagePos5 = Request.Form["ImagePos5"];
                 quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image5 = null;
-                quiz.ImagePos5 = null;
-            }
 
             if (Request.Form.Files["imageFile6"] != null & Request.Form["ImagePos6"].Count > 0)
             {
@@ -258,46 +230,25 @@ namespace CRESME.Controllers
                 quiz.ImagePos6 = Request.Form["ImagePos6"];
                 quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image6 = null;
-                quiz.ImagePos6 = null;
-            }
 
             if (Request.Form.Files["imageFile7"] != null & Request.Form["ImagePos7"].Count > 0)
             {
                 quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
                 quiz.ImagePos7 = Request.Form["ImagePos7"];
-                quiz.ImageCount++;
+
             }
-            else
-            {
-                quiz.Image7 = null;
-                quiz.ImagePos7 = null;
-            }
+          
 
             if (Request.Form.Files["imageFile8"] != null & Request.Form["ImagePos8"].Count > 0)
             {
                 quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
                 quiz.ImagePos8 = Request.Form["ImagePos8"];
-                quiz.ImageCount++;
-            }
-            else
-            {
-                quiz.Image8 = null;
-                quiz.ImagePos8 = null;
             }
 
             if (Request.Form.Files["imageFile9"] != null & Request.Form["ImagePos9"].Count > 0)
             {
                 quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
                 quiz.ImagePos9 = Request.Form["ImagePos9"];
-                quiz.ImageCount++;
-            }
-            else
-            {
-                quiz.Image9 = null;
-                quiz.ImagePos9 = null;
             }
 
 
