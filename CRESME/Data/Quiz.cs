@@ -62,6 +62,8 @@ namespace CRESME.Data
 
         public string? CoverImage { get; set; }
 
+        public string? ExcelName { get; set; }
+
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
         public string? HistoryC { get; set; } = "";
