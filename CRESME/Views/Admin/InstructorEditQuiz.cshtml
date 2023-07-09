@@ -1,7 +1,7 @@
 ﻿@model CRESME.Data.UserQuizUnion
 @{
 
-    ViewData["Title"] = "Create CRESME";
+    ViewData["Title"] = "Edit CRESME";
     //list of of each students course column
     var courses = Model.users.Select(x => x.Course).Distinct().Where(x => x != null).ToList();
     var terms = Model.users.Select(x => x.Term).Distinct().Where(x => x != null).ToList();
@@ -76,10 +76,10 @@
 
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
+                <input class="col-4  input-field" type="text" name="PatientIntro" value="@Model.quiz.PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required style="background-color:#FCF5D8;">
+                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" value="@Model.quiz.AuthorNames" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-5 text-center" style="font-weight: bold;">Start Date</div>
@@ -97,13 +97,13 @@
 
                 @if (Model.quiz.Published == "Yes")
                 {
-                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <div class="col-3" style="font-weight: bold;">Published</div>
                     <input class="col-1" type="checkbox" id="Published" name="Published" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-2" style="font-weight: bold;">Published</div>
+                    <div class="col-3" style="font-weight: bold;">Published</div>
                     <input class="col-1" type="checkbox" id="Published" name="Published" value="1">
                     <div class="w-100"></div>
                 }
@@ -111,26 +111,26 @@
 
                 @if (Model.quiz.FeedBackEnabled == "Yes")
                 {
-                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <div class="col-3" style="font-weight: bold;">Feedback</div>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-2" style="font-weight: bold;">Feedback</div>
+                    <div class="col-3" style="font-weight: bold;">Feedback</div>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1">
                     <div class="w-100"></div>
                 }
 
                 @if (Model.quiz.ShuffleEnabled == "Yes")
                 {
-                <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                <div class="col-3" style="font-weight: bold;">ShuffleEnabled</div>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" checked>
                 <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-2" style="font-weight: bold;">ShuffleEnabled</div>
+                    <div class="col-3" style="font-weight: bold;">ShuffleEnabled</div>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
                 <div class="w-100"></div>
                 }
@@ -140,15 +140,34 @@
 
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
 
-                <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4" checked>
-                    <label class="form-check-label bg-light" for="NumColumns">4</label>
-                </div>
-                <div class="form-check form-check-inline col-1">
-                    <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5">
-                    <label class="form-check-label bg-light" for="NumColumns">5</label>
-                </div>
-                <div class="w-100"></div>
+
+                @if(Model.quiz.NumColumns == 4)
+                {
+                    <div class="form-check form-check-inline col-1">
+                        <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4" checked>
+                        <label class="form-check-label bg-light" for="NumColumns">4</label>
+                    </div>
+                    <div class="form-check form-check-inline col-1">
+                        <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5">
+                        <label class="form-check-label bg-light" for="NumColumns">5</label>
+                    </div>
+                    <div class="w-100"></div>
+                }
+                else
+                {
+                    <div class="form-check form-check-inline col-1">
+                        <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4" >
+                        <label class="form-check-label bg-light" for="NumColumns">4</label>
+                    </div>
+                    <div class="form-check form-check-inline col-1">
+                        <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5" checked>
+                        <label class="form-check-label bg-light" for="NumColumns">5</label>
+                    </div>
+                    <div class="w-100"></div>
+                }
+
+
+
 
                 <div class="col-10" style="height: 2px; background-color: black"></div>
                 <div class="w-100"></div>
@@ -157,6 +176,9 @@
                 <div class="w-100"></div>
 
                 @{string[] imagenames = {Model.quiz.Image0, Model.quiz.Image1, Model.quiz.Image2, Model.quiz.Image3, Model.quiz.Image4, Model.quiz.Image5, Model.quiz.Image6, Model.quiz.Image7, Model.quiz.Image8, Model.quiz.Image9};}
+                @{
+                    string[] alt = { Model.quiz.Image0Alt, Model.quiz.Image1Alt, Model.quiz.Image2Alt, Model.quiz.Image3Alt, Model.quiz.Image4Alt, Model.quiz.Image5Alt, Model.quiz.Image6Alt, Model.quiz.Image7Alt, Model.quiz.Image8Alt, Model.quiz.Image9Alt };
+                }
 
                 @{
                     string[] trueImageNames = new string[10];
@@ -230,7 +252,7 @@
                     string imageAlt = "Image" + i + "Alt";
                     string altText = "altText" + i;
 
-                    <input class="col-6  input-field" type="text" name=@imageAlt id=@altText placeholder="Enter Alt Text">
+                    <input class="col-6  input-field" type="text" name=@imageAlt id=@altText value=@alt[i] placeholder="Enter Alt Text">
 
                     string newBreak1 = "newBreak1" + i;
 
@@ -290,6 +312,10 @@
                 <label class="col-4 row justify-content-center border" id="excelLabel" for="excelButton" style="border-color: black !important;">
                     <i class="text-center fa-sharp fa-solid fa-upload"></i>
                 </label>
+
+                <i class="col-1 fa-solid fa-check" id="excelCheckMark"></i>
+                <div class="w-100"></div>
+                <div class="col-6 text-center" id="excelFileName" style="font-weight: bold;">@Model.quiz.ExcelName</div>
                 <div class="w-100"></div>
 
                 <div class="col-4 text-center" style="font-weight: bold;">Term</div>
@@ -299,26 +325,32 @@
                 <select id="Term" name="Term" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
                     <option value="N/A" selected>N\A</option>
                     @foreach (var term in UniqueTerms)
-                    {
-                        <option value=@term>@term</option>
+                    {   
+                        if(term == Model.quiz.Term)
+                        {
+                            <option value=@term selected>@term</option>
+                        }
+                        else
+                        {
+                            <option value=@term>@term</option>       
+                        }
                     }
                 </select>
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="B0" selected>N\A</option>
-                    <option value="B1">1</option>
-                    <option value="B2">2</option>
-                    <option value="B3">3</option>
-                    <option value="B4">4</option>
-                    <option value="B5">5</option>
-                    <option value="B6">6</option>
-                    <option value="B7">7</option>
-                    <option value="B8">8</option>
-                    <option value="B9">9</option>
-                    <option value="B10">10</option>
-                    <option value="B11">11</option>
-                    <option value="B12">12</option>
+                    @for(int i = 0; i<=12; i++)
+                    {
+                        if("B" + i == Model.quiz.Block)
+                        {
+                            <option value=@("B" + i) selected>@i</option>
+                        }
+                        else
+                        {
+                            <option value=@("B" + i)>@i</option>                            
+                        }
+
+                    }
                 </select>
                 <div class="col-1"></div>
 
@@ -326,7 +358,14 @@
                     <option value="N/A" selected>N\A</option>
                     @foreach (var course in UniqueCourses)
                     {
-                        <option value=@course>@course</option>
+                        if (course == Model.quiz.Course)
+                        {
+                            <option value=@course selected>@course</option>
+                        }
+                        else
+                        {
+                            <option value=@course>@course</option>
+                        }
                     }
                 </select>
                 <div class="w-100"></div>
@@ -337,13 +376,17 @@
                     <option value="N/A" selected>N\A</option>
                     @foreach (var item in instructors)
                     {
-                        <option value=@item>@item</option>
+                        if (item.UserName == Model.quiz.InstructorID)
+                        {
+                            <option value=@item selected>@item</option>
+                        }
+                        else
+                        {
+                            <option value=@item>@item</option>
+                        }
                     }
                 </select>
                 <div class="w-100"></div>
-
-
-
 
 
                 <button onclick="validate()" type="submit" class="btn custom_btn col-5">Edit CRESME</button>
