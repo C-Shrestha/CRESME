@@ -62,6 +62,8 @@ namespace CRESME.Data
 
         public string? CoverImage { get; set; }
 
+        public string? ExcelName { get; set; }
+
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
         public string? HistoryC { get; set; } = "";
@@ -105,6 +107,7 @@ namespace CRESME.Data
         public string? Image8 { get; set; } = "";
         public string? Image9 { get; set; } = "";
 
+        public int ImageCount { get; set; } = 0;
         
         public string? ImagePos0 { get; set; } = "";
         public string? ImagePos1 { get; set; } = "";
