@@ -67,11 +67,6 @@
                     TimeSpan averageDuration = TimeSpan.Zero;
 
 
-                    // if (!scoreList.Any())
-                    //{
-                    //throw new Exception("No quiz data. No Student has taken the quiz yet.");
-                    // }
-
                     if ((Model.Count() == 1) && (Model.FirstOrDefault().AttemptId == 0))
                     {
                         ;
@@ -104,7 +99,6 @@
 
                                 return 0;
                             }
-                            //throw new System.Exception("Median of empty array not defined.");
 
                             //make sure the list is sorted, but use a new array
 
@@ -125,15 +119,7 @@
                         medianValue = GetMedian(scores);
 
 
-
-                        // Calculate the average duration
-                        //TimeSpan averageDuration = TimeSpan.FromTicks(totalDuration.Ticks / durations.Count);
-
                         averageDuration = (durations.Count > 0) ? TimeSpan.FromTicks(totalDuration.Ticks / durations.Count) : TimeSpan.Zero;
-
-                        //total number of students eligible to take the quiz
-
-
 
                     }
 
@@ -211,7 +197,7 @@
                                     Name
                                 </th>
 
-                                <th scope="col" class="table-dark">
+                                @*<th scope="col" class="table-dark">
                                     @Html.DisplayNameFor(model => model.Block)
                                 </th>
 
@@ -221,10 +207,26 @@
 
                                 <th scope="col" class="table-dark">
                                     @Html.DisplayNameFor(model => model.Term)
+                                </th>*@
+
+                                <th scope="col" class="table-dark">
+                                    Total Score
                                 </th>
 
                                 <th scope="col" class="table-dark">
-                                    @Html.DisplayNameFor(model => model.Score)
+                                    Column A Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column B Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column C Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column D Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column E Score
                                 </th>
 
 
@@ -253,7 +255,7 @@
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </td>
 
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.Block)
                                     </td>
                                     <td>
@@ -262,12 +264,27 @@
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Term)
-                                    </td>
+                                    </td>*@
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Score)
                                     </td>
 
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnAGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnBGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnCGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnDGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnEGrade)
+                                    </td>
 
                                 </tr>
                             }

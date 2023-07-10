@@ -12,7 +12,12 @@
     List<string> UniqueTerms = terms.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
 
     // list of instructors
-    var instructors = Model.Where(x => x.Role == "Instructor");
+    var instructors = Model.Where(x => x.Role == "Instructor").ToList();
+
+    //list of instrucorNames
+    var instructorNames = Model.Where(x => x.Role == "Instructor").Select(x => x.Name).ToList();
+
+    var count = instructors.Count(); 
 
 }
 
@@ -197,10 +202,17 @@
 
                 <select id="Instructor" name="Instructor" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
                     <option value="N/A" selected>N\A</option>
-                    @foreach (var item in instructors)
+                    @*@foreach (var item in instructors)
                     {
                         <option value=@item>@item</option>
+                    }*@
+
+                    @for (int i = 0; i < count; i++)
+                    {
+                    <option value=@instructors[i]>@instructorNames[i]</option>
                     }
+
+
                 </select>
                 <div class="w-100"></div>
 
