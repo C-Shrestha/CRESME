@@ -2121,6 +2121,7 @@ namespace CRESME.Controllers
             var blockList = user.Block.Split(",");
             var courseList = user.Course.Split(",");
             var termList = user.Term.Split(",");
+            List<Quiz> removeList = new List<Quiz>();
 
 
             for (int i = 0; i < blockList.Count(); i++)
@@ -2129,6 +2130,34 @@ namespace CRESME.Controllers
                 var assignedQuizes = _context.Quiz
                             .FromSqlInterpolated($"select * from Quiz where Course = {courseList[i].Trim()} and Block = {blockList[i].Trim()} and Term = {termList[i].Trim()} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
                             .ToList();
+
+                // check if the assigned cresme's start time AND end time is already in the past
+                // if both are in the past, remove quiz
+                /*
+                 start         end 
+                 past          past
+                 future        future
+
+                  past-past     don't show
+                  past-future   show
+                  future-future show
+                  future-past   (cannot happen bc of previous checks)
+                 */
+                foreach (var quiz in assignedQuizes)
+                {
+                    if (quiz.StartDate < DateTime.Now && quiz.EndDate < DateTime.Now)
+                    {
+                        removeList.Add(quiz);
+                    }
+                }
+
+                // remove the list of quizes whose start time and end time has already passed
+                foreach(var quiz in removeList)
+                {
+                    assignedQuizes.Remove(quiz); 
+                }
+
+
                 // list of quizes already taken by the user
                 var takenQuizes = _context.Attempt
                             .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
@@ -2215,11 +2244,38 @@ namespace CRESME.Controllers
             //get the current studnets object
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
+            List<Quiz> removeList = new List<Quiz>();
 
             // list of practice CRESME assinged to the student that are published and feedback is enabled.
             var feedbackQuizes = _context.Quiz
                         .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
                         .ToList();
+
+            // check if the feedback cresme's start time AND end time is already in the past
+            // if both are in the past, remove quiz
+            /*
+             *start*         *end* 
+             past          past
+             future        future
+
+              past-past     don't show
+              past-future   show
+              future-future show
+              future-past   (cannot happen bc of previous checks)
+             */
+            foreach (var quiz in feedbackQuizes)
+            {
+                if (quiz.StartDate < DateTime.Now && quiz.EndDate < DateTime.Now)
+                {
+                    removeList.Add(quiz);
+                }
+            }
+
+            // remove the list of cresmes whose start time and end time has already passed
+            foreach (var quiz in removeList)
+            {
+                feedbackQuizes.Remove(quiz);
+            }
 
             return View(feedbackQuizes);
 
