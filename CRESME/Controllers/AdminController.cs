@@ -916,6 +916,12 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 39).Value = "NumLegendClicks";
                 worksheet.Cell(1, 40).Value = "NumLabValueClicks";
 
+                worksheet.Cell(1, 41).Value = "ColumnAGrade";
+                worksheet.Cell(1, 42).Value = "ColumnBGrade";
+                worksheet.Cell(1, 43).Value = "ColumnCGrade";
+                worksheet.Cell(1, 44).Value = "ColumnDGrade";
+                worksheet.Cell(1, 45).Value = "ColumnEGrade";
+
 
 
 
@@ -973,6 +979,12 @@ namespace CRESME.Controllers
 
                     worksheet.Cell(i + 2, 39).Value = userList[i].NumLegendClicks;
                     worksheet.Cell(i + 2, 40).Value = userList[i].NumLabValueClicks;
+
+                    worksheet.Cell(i + 2, 41).Value = userList[i].ColumnAGrade;
+                    worksheet.Cell(i + 2, 42).Value = userList[i].ColumnBGrade;
+                    worksheet.Cell(i + 2, 43).Value = userList[i].ColumnCGrade;
+                    worksheet.Cell(i + 2, 44).Value = userList[i].ColumnDGrade;
+                    worksheet.Cell(i + 2, 45).Value = userList[i].ColumnEGrade;
 
 
 
@@ -2840,6 +2852,13 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 39).Value = "NumLegendClicks";
                 worksheet.Cell(1, 40).Value = "NumLabValueClicks";
 
+                worksheet.Cell(1, 41).Value = "ColumnAGrade";
+                worksheet.Cell(1, 42).Value = "ColumnBGrade";
+                worksheet.Cell(1, 43).Value = "ColumnCGrade";
+                worksheet.Cell(1, 44).Value = "ColumnDGrade";
+                worksheet.Cell(1, 45).Value = "ColumnEGrade";
+
+
 
 
 
@@ -2898,6 +2917,11 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 39).Value = userList[i].NumLegendClicks;
                     worksheet.Cell(i + 2, 40).Value = userList[i].NumLabValueClicks;
 
+                    worksheet.Cell(i + 2, 41).Value = userList[i].ColumnAGrade;
+                    worksheet.Cell(i + 2, 42).Value = userList[i].ColumnBGrade;
+                    worksheet.Cell(i + 2, 43).Value = userList[i].ColumnCGrade;
+                    worksheet.Cell(i + 2, 44).Value = userList[i].ColumnDGrade;
+                    worksheet.Cell(i + 2, 45).Value = userList[i].ColumnEGrade;
 
 
                 }
@@ -2947,7 +2971,14 @@ namespace CRESME.Controllers
                 worksheet.Cell(1, 5).Value = "Block";
                 worksheet.Cell(1, 6).Value = "Term";
                 worksheet.Cell(1, 7).Value = "Course";
-                
+
+                worksheet.Cell(1, 8).Value = "ColumnAGrade";
+                worksheet.Cell(1, 9).Value = "ColumnBGrade";
+                worksheet.Cell(1, 10).Value = "ColumnCGrade";
+                worksheet.Cell(1, 11).Value = "ColumnDGrade";
+                worksheet.Cell(1, 12).Value = "ColumnEGrade";
+
+
 
 
                 // Set the row values
@@ -2965,7 +2996,14 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 5).Value = userList[i].Block;
                     worksheet.Cell(i + 2, 6).Value = userList[i].Term;
                     worksheet.Cell(i + 2, 7).Value = userList[i].Course;
-                    
+
+                    worksheet.Cell(i + 2, 8).Value = userList[i].ColumnAGrade;
+                    worksheet.Cell(i + 2, 9).Value = userList[i].ColumnBGrade;
+                    worksheet.Cell(i + 2, 10).Value = userList[i].ColumnCGrade;
+                    worksheet.Cell(i + 2, 11).Value = userList[i].ColumnDGrade;
+                    worksheet.Cell(i + 2, 12).Value = userList[i].ColumnEGrade;
+
+
 
 
                 }
