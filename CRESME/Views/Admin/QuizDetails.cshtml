@@ -197,7 +197,7 @@
                                     Name
                                 </th>
 
-                                <th scope="col" class="table-dark">
+                                @*<th scope="col" class="table-dark">
                                     @Html.DisplayNameFor(model => model.Block)
                                 </th>
 
@@ -207,10 +207,26 @@
 
                                 <th scope="col" class="table-dark">
                                     @Html.DisplayNameFor(model => model.Term)
+                                </th>*@
+
+                                <th scope="col" class="table-dark">
+                                    Total Score
                                 </th>
 
                                 <th scope="col" class="table-dark">
-                                    @Html.DisplayNameFor(model => model.Score)
+                                    Column A Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column B Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column C Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column D Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column E Score
                                 </th>
 
 
@@ -239,7 +255,7 @@
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </td>
 
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.Block)
                                     </td>
                                     <td>
@@ -248,12 +264,27 @@
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Term)
-                                    </td>
+                                    </td>*@
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Score)
                                     </td>
 
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnAGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnBGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnCGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnDGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnEGrade)
+                                    </td>
 
                                 </tr>
                             }
