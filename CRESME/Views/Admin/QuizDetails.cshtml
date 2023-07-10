@@ -67,11 +67,6 @@
                     TimeSpan averageDuration = TimeSpan.Zero;
 
 
-                    // if (!scoreList.Any())
-                    //{
-                    //throw new Exception("No quiz data. No Student has taken the quiz yet.");
-                    // }
-
                     if ((Model.Count() == 1) && (Model.FirstOrDefault().AttemptId == 0))
                     {
                         ;
@@ -104,7 +99,6 @@
 
                                 return 0;
                             }
-                            //throw new System.Exception("Median of empty array not defined.");
 
                             //make sure the list is sorted, but use a new array
 
@@ -125,15 +119,7 @@
                         medianValue = GetMedian(scores);
 
 
-
-                        // Calculate the average duration
-                        //TimeSpan averageDuration = TimeSpan.FromTicks(totalDuration.Ticks / durations.Count);
-
                         averageDuration = (durations.Count > 0) ? TimeSpan.FromTicks(totalDuration.Ticks / durations.Count) : TimeSpan.Zero;
-
-                        //total number of students eligible to take the quiz
-
-
 
                     }
 

@@ -74,95 +74,6 @@ namespace CRESME.Controllers
 
 
 
-        /*[HttpPost]
-        [Authorize(Roles = "Admin")]
-        [Route("/Admin/ImportExcel")]
-        *//*Takes in a properly formated Excel file and create a users (both instructors and studnets).
-         Since we used Identity, we opted to keep the UserName Column.
-         So, NID(excel upload) == Username (Database) == Email(Database). They are same value.
-         *//*
-        public async Task<IActionResult> ImportExcel(IFormFile file)
-
-        {
-            var list = new List<ApplicationUser>();
-            using (var stream = new MemoryStream())
-            {
-
-                await file.CopyToAsync(stream);
-
-                using (XLWorkbook workbook = new XLWorkbook(stream))
-
-                {
-                    IXLWorksheet worksheet = workbook.Worksheets.First();
-
-                    int rowCount = worksheet.RowsUsed().Count();
-
-                    for (int row = 2; row <= rowCount; row++)
-                    {
-                        //storing variables for password and for assigning roles later
-                        var PasswordHash = worksheet.Cell(row, 3).Value.ToString().Trim();
-                        var assignRole = worksheet.Cell(row, 4).Value.ToString().Trim();
-                        var nid = worksheet.Cell(row, 1).Value.ToString().Trim();
-
-
-                        //creating a new user object
-                        //columns created by Identity and not used in this app are labeled "false" or null or empty
-                        var user = new ApplicationUser
-                        {
-
-                            UserName = nid,
-                            NormalizedUserName = nid,
-                            Email = nid,
-                            NormalizedEmail = nid,
-                            EmailConfirmed = true,
-                            PhoneNumber = "",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            LockoutEnd = null,
-                            LockoutEnabled = true,
-                            AccessFailedCount = 0,
-                            Name = worksheet.Cell(row, 2).Value.ToString().Trim(),
-                            Role = assignRole,
-                            Block = worksheet.Cell(row, 5).Value.ToString().Trim(),
-                            Course = worksheet.Cell(row, 6).Value.ToString().Trim(),
-                            Term = worksheet.Cell(row, 7).Value.ToString().Trim()
-
-                        };
-
-                        //creating a new user
-                        var result = await _userManager.CreateAsync(user, PasswordHash);
-
-                        //assigning roles to the user
-                        if (assignRole == "Instructor")
-                        {
-                            await _userManager.AddToRoleAsync(user, Roles.Instructor.ToString());
-                        }
-
-                        if (assignRole == "Student")
-                        {
-                            await _userManager.AddToRoleAsync(user, Roles.Student.ToString());
-                        }
-
-
-
-                    }
-
-
-                }
-            }
-
-            _context.Users.AddRange(list);
-
-            _context.SaveChanges();
-
-            TempData["AlertMessage"] = "Users created sucessfully!";
-
-            return RedirectToAction("ListUsers");
-
-        } // importToExcel*/
-
-
-
         /*Returns the view for Editing a user*/
         [Authorize(Roles = "Admin")]
         public IActionResult EditUsers(String id)
@@ -381,16 +292,7 @@ namespace CRESME.Controllers
                         Problem("Entity set 'ApplicationDbContext.Test'  is null.");
         }
 
-        /*Located in ListAllQuizes.cshtml.Rerurns a view to edit a CRESME.*//*
-        [Authorize(Roles = "Admin, Instructor")]
-        public IActionResult EditQuiz(int QuizId)
-        {
-
-            return View(_context.Quiz.Find(QuizId));
-
-        }*/
-
-
+        
 
         /*Located in ListAllQuizes.cshtml. Delete a CRESME*/
         [HttpPost]
@@ -552,25 +454,7 @@ namespace CRESME.Controllers
 
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var user = await _userManager.FindByIdAsync(currentUserId);
-
-            /*// list of CRESMES created by the Admin + Instructor by CRESME name
-            //Here, some CRESMES might be created by Admin so will have Admin's InstructorID in Quiz. To find all CRESMES,
-            //we need to check for CRESMES created by instructors themselves also in second query on the bottom
-            var quizes1 = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course}")
-                        .ToList();
-
-            // list of CRESMES created by instructor themselves
-            var quizes2 = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where InstructorID = {user.UserName}")
-                        .ToList();
-
-            // adding the two CRESMES together. Final list contains CRESMES created by both Admin and Instructor themselves. 
-            quizes1.AddRange(quizes2);
-
-
-            return View(quizes1.Distinct());*/
+            var user = await _userManager.FindByIdAsync(currentUserId);  
 
             // find all the CRESMES assigned to the instructor
             var quizes = _context.Quiz
@@ -1218,12 +1102,6 @@ namespace CRESME.Controllers
 
         }
 
-        [Authorize(Roles = "Admin, Instructor")]
-        public static int StudentCount()
-        {
-            return 0; 
-        }
-
 
 
         //return view with a Term input box that will delete all students with specified Term
@@ -1503,22 +1381,6 @@ namespace CRESME.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //POST:Delete all attempts
         [HttpPost]
         public async Task<IActionResult> DeleteAllAttempts()
@@ -1655,118 +1517,6 @@ namespace CRESME.Controllers
 
             return result;
         }
-
-
-
-
-        /*Located in AssignedQuizes.cshtml. Returns a list of CRESMES assigned to a particular student which have not been taken yet.
-         CRESMES returned are also Published by the user. But Feedback is "No" i.e. not practice CRESMES. 
-         *//*
-        [Authorize(Roles = "Admin, Instructor,Student")]
-        public async Task<IActionResult> AssignedQuizes()
-        {
-            //get the current studnets object
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(currentUserId);
-            List<Quiz> quizes = new List<Quiz>();
-
-            // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
-            var assignedQuizes = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where Course = {user.Course} and Block = {user.Block} and Term = {user.Term} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
-                        .ToList();
-
-            // list of quizes already taken by the user
-            var takenQuizes = _context.Attempt
-                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
-                        .ToList();
-
-            // if no quizes have been assingend to the student yet, return an empty list of quizes 
-            if(assignedQuizes.Count() == 0)
-            {
-                return View(quizes); 
-            }
-            else
-            {
-                // if no quizes have been taken yet by the student, return the list with all quizes assigned to the student
-                if(takenQuizes.Count()  == 0)
-                {
-                    return View(assignedQuizes);
-                }
-                else
-                {
-                    // some quizes have been assigned and some quizes have been taken already by the studnet. 
-                    // look and find the quizes yet to be taken. 
-
-                    // Compare the lists
-                    List<Quiz> result = CompareLists(assignedQuizes, takenQuizes);
-
-                    // if result is empty, return an empty list of quizes
-                    if (result.Count() == 0) 
-                    {
-                        return View(new List<Quiz>());
-                    }
-                    else
-                    {
-                        return View(result.Distinct()); 
-                    }
-                }
-
-            }
-
-
-
-        } // end assigned quizes*/
-
-
-
-
-        /*Located in PracticeQuizes.cshtml. Returns a list of CRESMES assigned to student for practice.*//*
-        [Authorize(Roles = "Admin, Instructor,Student")]
-        public async Task<IActionResult> PracticeQuizes()
-        {
-          
-            //get the current studnets object
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(currentUserId);
-
-            // list of practice CRESME assinged to the student that are published and feedback is enabled.
-            var feedbackQuizes = _context.Quiz
-                        .FromSqlInterpolated($"select * from Quiz where FeedBackEnabled = {"Yes"} and Published = {"Yes"}")
-                        .ToList();
-
-            return View(feedbackQuizes);
-
-
-
-        }*/
-
-
-
-
-        /*Located in PastQuizes.cshtml.cshtml. Returns a list of quizes already completed by a particular student.*//*
-        [Authorize(Roles = "Admin, Instructor,Student")]
-        public async Task<IActionResult> PastQuizes()
-        {
-            
-
-            //get the current studnets object
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(currentUserId);
-
-            // list of quizes already taken by the user
-            var TakenQuizes = _context.Attempt
-                        .FromSqlInterpolated($"select * from Attempts where StudentID = {user.Id}")
-                        .ToList();
-
-            return View(TakenQuizes); 
-
-
-
-        } // end past quizes*/
-
-
-
-
 
 
 
@@ -2530,9 +2280,6 @@ namespace CRESME.Controllers
 
         }
 
-        
-
-
         public static string RemoveStringFromList(string inputString, string stringToRemove)
         {
             // Split the input string into an array of strings
@@ -3004,8 +2751,6 @@ namespace CRESME.Controllers
                     worksheet.Cell(i + 2, 12).Value = userList[i].ColumnEGrade;
 
 
-
-
                 }
 
                 using var stream = new MemoryStream();
@@ -3017,24 +2762,6 @@ namespace CRESME.Controllers
             }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
