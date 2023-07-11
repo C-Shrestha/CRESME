@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class datetime : Migration
+    public partial class orlandoorlando : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
