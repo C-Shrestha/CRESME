@@ -381,11 +381,11 @@
                     {
                         if (item.UserName == Model.quiz.InstructorID)
                         {
-                            <option value=@item selected>@item</option>
+                            <option value=@item selected>@item.Name</option>
                         }
                         else
                         {
-                            <option value=@item>@item</option>
+                            <option value=@item>@item.Name</option>
                         }
                     }
                 </select>
