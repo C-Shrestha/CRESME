@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230710212855_datetime")]
-    partial class datetime
+    [Migration("20230711130816_cresmeOfficial")]
+    partial class cresmeOfficial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
