@@ -904,7 +904,7 @@ namespace CRESME.Controllers
                     FileInfo fileInfo;
                     string path;
 
-                    if (quiz.Legend != null)
+                    if (quiz.Legend != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
                         fileInfo = new FileInfo(path);
@@ -918,7 +918,7 @@ namespace CRESME.Controllers
                     }
 
 
-                    if (quiz.Image0 != null)
+                    if (quiz.Image0 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
                         fileInfo = new FileInfo(path);
@@ -930,7 +930,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image1 != null)
+                    if (quiz.Image1 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
                         fileInfo = new FileInfo(path);
@@ -942,7 +942,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image2 != null)
+                    if (quiz.Image2 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
                         fileInfo = new FileInfo(path);
@@ -954,7 +954,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image3 != null)
+                    if (quiz.Image3 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
                         fileInfo = new FileInfo(path);
@@ -966,7 +966,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image4 != null)
+                    if (quiz.Image4 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
                         fileInfo = new FileInfo(path);
@@ -978,7 +978,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image5 != null)
+                    if (quiz.Image5 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
                         fileInfo = new FileInfo(path);
@@ -990,7 +990,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image6 != null)
+                    if (quiz.Image6 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
                         fileInfo = new FileInfo(path);
@@ -1002,7 +1002,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image7 != null)
+                    if (quiz.Image7 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
                         fileInfo = new FileInfo(path);
@@ -1014,7 +1014,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image8 != null)
+                    if (quiz.Image8 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
                         fileInfo = new FileInfo(path);
@@ -1026,7 +1026,7 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
-                    if (quiz.Image9 != null)
+                    if (quiz.Image9 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
                         fileInfo = new FileInfo(path);
