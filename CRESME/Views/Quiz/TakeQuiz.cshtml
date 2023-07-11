@@ -120,7 +120,7 @@
 
 
 
-<div id="startView" class="container-fluid flex-column" style="height: 84vh; width: 70%; position: relative; min-height: 780px; min-width: 1750px;">
+<div id="startView" class="container-fluid flex-column" style="height: 84vh; width: 70%; position: relative; min-height: 900px;">
     <div class="row">
         <h1 class="text-center mt-7" style="color: #4472c4; font-weight: bold; margin-top: 4vh;">
             @Model.QuizName
@@ -2364,10 +2364,10 @@
 </script>
 
 
-<div id="quizView1" class="container-fluid" style="height: calc(100vh - 165px); margin-top: 4px; margin-bottom: 8px; min-height: 780px; min-width: 1750px;">
+<div id="quizView1" class="container-fluid" style="height: calc(100vh - 165px); margin-top: 4px; margin-bottom: 8px; min-height: 800px;">
     <div class="container-fluid">
         <form id="Form1-quizView1" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
-            <div class="row bg-white" style="min-height: 780px; min-width: 1750px;">
+            <div class="row bg-white" style="min-height: 800px;">
                 <div class="col-4" style="height: 82vh; padding-left: 0px; margin-left:5px; min-height: 780px;">
                     <div class="row" style="height: 5%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
@@ -2378,9 +2378,9 @@
                         @if (answerCell1 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                    <div id="PhysicalButtons1-quizView1">
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -2393,7 +2393,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
                                     <div id="PhysicalButtons2-quizView1">
                                         <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -2407,7 +2407,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
                                     <div id="PhysicalButtons3-quizView1">
                                         <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -2421,7 +2421,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
                                     <div id="PhysicalButtons4-quizView1">
                                         <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -2434,9 +2434,9 @@
                         {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                    <div id="PhysicalButtons1-quizView1">
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -2449,7 +2449,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
                                     <div id="PhysicalButtons2-quizView1">
                                         <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -2463,7 +2463,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
                                     <div id="PhysicalButtons3-quizView1">
                                         <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -2477,7 +2477,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
                                     <div id="PhysicalButtons4-quizView1">
                                         <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -2490,9 +2490,9 @@
                         @if (answerCell3 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                    <div id="PhysicalButtons1-quizView1">
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -2505,7 +2505,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
                                     <div id="PhysicalButtons2-quizView1">
                                         <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -2519,7 +2519,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
                                     <div id="PhysicalButtons3-quizView1">
                                         <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -2533,7 +2533,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
                                     <div id="PhysicalButtons4-quizView1">
                                         <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -2545,9 +2545,9 @@
                         @if (answerCell4 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1" style="height: 39px;">
+                                    <div id="PhysicalButtons1-quizView1">
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -2560,7 +2560,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView1">
                                     <div id="PhysicalButtons2-quizView1">
                                         <div id="PhysicalBox2-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -2574,7 +2574,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView1">
                                     <div id="PhysicalButtons3-quizView1">
                                         <div id="PhysicalBox3-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -2588,7 +2588,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView1">
                                     <div id="PhysicalButtons4-quizView1">
                                         <div id="PhysicalBox4-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -2603,7 +2603,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
                                     <div id="DiagnosticButtonsA-quizView1">
                                         <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -2616,7 +2616,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
                                     <div id="DiagnosticButtonsB-quizView1">
                                         <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -2630,7 +2630,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
                                     <div id="DiagnosticButtonsC-quizView1">
                                         <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -2644,7 +2644,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
                                     <div id="DiagnosticButtonsD-quizView1">
                                         <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -2659,7 +2659,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
                                     <div id="DiagnosticButtonsA-quizView1">
                                         <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -2672,7 +2672,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
                                     <div id="DiagnosticButtonsB-quizView1">
                                         <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -2686,7 +2686,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
                                     <div id="DiagnosticButtonsC-quizView1">
                                         <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -2700,7 +2700,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
                                     <div id="DiagnosticButtonsD-quizView1">
                                         <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -2715,7 +2715,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
                                     <div id="DiagnosticButtonsA-quizView1">
                                         <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -2728,7 +2728,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
                                     <div id="DiagnosticButtonsB-quizView1">
                                         <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -2742,7 +2742,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
                                     <div id="DiagnosticButtonsC-quizView1">
                                         <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -2756,7 +2756,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
                                     <div id="DiagnosticButtonsD-quizView1">
                                         <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -2770,7 +2770,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
                                     <div id="DiagnosticButtonsA-quizView1">
                                         <div id="DiagnosticBoxA-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -2783,7 +2783,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView1">
                                     <div id="DiagnosticButtonsB-quizView1">
                                         <div id="DiagnosticBoxB-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -2797,7 +2797,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView1">
                                     <div id="DiagnosticButtonsC-quizView1">
                                         <div id="DiagnosticBoxC-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -2811,7 +2811,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView1">
                                     <div id="DiagnosticButtonsD-quizView1">
                                         <div id="DiagnosticBoxD-quizView1" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -3001,10 +3001,10 @@
 
 
 
-<div id="quizView2" class="container-fluid" style="height: calc(100vh - 165px);margin-top: 4px; margin-bottom: 8px; min-height: 780px; min-width: 1750px;">
+<div id="quizView2" class="container-fluid" style="height: calc(100vh - 165px);margin-top: 4px; margin-bottom: 8px; min-height: 800px;">
     <div class="container-fluid">
         <form id="Form1-quizView2" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
-            <div class="row bg-white" style="min-height: 780px; min-width: 1750px;">
+            <div class="row bg-white" style="min-height: 800px;">
                 <div class="col-4" style="height: 76vh; padding-left: 0px; margin-left:5px; min-height: 710px;">
                     <div class="row" style="height: 6%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
@@ -3017,7 +3017,7 @@
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
                                     <div id="PhysicalButtons1-quizView2">
                                         <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -3030,7 +3030,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
                                     <div id="PhysicalButtons2-quizView2">
                                         <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -3044,7 +3044,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
                                     <div id="PhysicalButtons3-quizView2">
                                         <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -3058,7 +3058,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
                                     <div id="PhysicalButtons4-quizView2">
                                         <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -3072,7 +3072,7 @@
                                 <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
                                     <div id="PhysicalButtons5-quizView2">
                                         <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
                                     </div>
@@ -3086,7 +3086,7 @@
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
                                     <div id="PhysicalButtons1-quizView2">
                                         <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -3099,7 +3099,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
                                     <div id="PhysicalButtons2-quizView2">
                                         <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -3113,7 +3113,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
                                     <div id="PhysicalButtons3-quizView2">
                                         <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -3127,7 +3127,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
                                     <div id="PhysicalButtons4-quizView2">
                                         <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -3141,7 +3141,7 @@
                                 <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
                                     <div id="PhysicalButtons5-quizView2">
                                         <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
                                     </div>
@@ -3157,7 +3157,7 @@
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
                                     <div id="PhysicalButtons1-quizView2">
                                         <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -3170,7 +3170,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
                                     <div id="PhysicalButtons2-quizView2">
                                         <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -3184,7 +3184,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
                                     <div id="PhysicalButtons3-quizView2">
                                         <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -3198,7 +3198,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
                                     <div id="PhysicalButtons4-quizView2">
                                         <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -3212,7 +3212,7 @@
                                 <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
                                     <div id="PhysicalButtons5-quizView2">
                                         <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
                                     </div>
@@ -3226,7 +3226,7 @@
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
                                     <div id="PhysicalButtons1-quizView2">
                                         <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -3239,7 +3239,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
                                     <div id="PhysicalButtons2-quizView2">
                                         <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -3253,7 +3253,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
                                     <div id="PhysicalButtons3-quizView2">
                                         <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -3267,7 +3267,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
                                     <div id="PhysicalButtons4-quizView2">
                                         <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -3281,7 +3281,7 @@
                                 <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
                                     <div id="PhysicalButtons5-quizView2">
                                         <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
                                     </div>
@@ -3296,7 +3296,7 @@
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
                                     <div id="PhysicalButtons1-quizView2">
                                         <div id="PhysicalBox1-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
                                     </div>
@@ -3309,7 +3309,7 @@
                                 <div name="2" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box2-quizView2" ;">
                                     <div id="PhysicalButtons2-quizView2">
                                         <div id="PhysicalBox2-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
                                     </div>
@@ -3323,7 +3323,7 @@
                                 <div name="3" class="background-yellow  product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box3-quizView2" ;">
                                     <div id="PhysicalButtons3-quizView2">
                                         <div id="PhysicalBox3-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
                                     </div>
@@ -3337,7 +3337,7 @@
                                 <div name="4" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box4-quizView2" ;">
                                     <div id="PhysicalButtons4-quizView2">
                                         <div id="PhysicalBox4-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
                                     </div>
@@ -3351,7 +3351,7 @@
                                 <div name="5" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box5-quizView2" ;">
                                     <div id="PhysicalButtons5-quizView2">
                                         <div id="PhysicalBox5-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
                                     </div>
@@ -3366,7 +3366,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
                                     <div id="DiagnosticButtonsA-quizView2">
                                         <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -3379,7 +3379,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
                                     <div id="DiagnosticButtonsB-quizView2">
                                         <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -3393,7 +3393,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
                                     <div id="DiagnosticButtonsC-quizView2">
                                         <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -3407,7 +3407,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
                                     <div id="DiagnosticButtonsD-quizView2">
                                         <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -3421,7 +3421,7 @@
                                 <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
                                     <div id="DiagnosticButtonsE-quizView2">
                                         <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
                                     </div>
@@ -3436,7 +3436,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
                                     <div id="DiagnosticButtonsA-quizView2">
                                         <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -3449,7 +3449,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
                                     <div id="DiagnosticButtonsB-quizView2">
                                         <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -3463,7 +3463,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
                                     <div id="DiagnosticButtonsC-quizView2">
                                         <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -3477,7 +3477,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
                                     <div id="DiagnosticButtonsD-quizView2">
                                         <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -3491,7 +3491,7 @@
                                 <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
                                     <div id="DiagnosticButtonsE-quizView2">
                                         <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
                                     </div>
@@ -3505,7 +3505,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
                                     <div id="DiagnosticButtonsA-quizView2">
                                         <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -3518,7 +3518,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
                                     <div id="DiagnosticButtonsB-quizView2">
                                         <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -3532,7 +3532,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
                                     <div id="DiagnosticButtonsC-quizView2">
                                         <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -3546,7 +3546,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
                                     <div id="DiagnosticButtonsD-quizView2">
                                         <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -3560,7 +3560,7 @@
                                 <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
                                     <div id="DiagnosticButtonsE-quizView2">
                                         <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
                                     </div>
@@ -3575,7 +3575,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
                                     <div id="DiagnosticButtonsA-quizView2">
                                         <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -3588,7 +3588,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
                                     <div id="DiagnosticButtonsB-quizView2">
                                         <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -3602,7 +3602,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
                                     <div id="DiagnosticButtonsC-quizView2">
                                         <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -3616,7 +3616,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
                                     <div id="DiagnosticButtonsD-quizView2">
                                         <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -3630,7 +3630,7 @@
                                 <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
                                     <div id="DiagnosticButtonsE-quizView2">
                                         <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
                                     </div>
@@ -3644,7 +3644,7 @@
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
                                     <div id="DiagnosticButtonsA-quizView2">
                                         <div id="DiagnosticBoxA-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
                                     </div>
@@ -3657,7 +3657,7 @@
                                 <div name="2" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box2-quizView2" ;">
                                     <div id="DiagnosticButtonsB-quizView2">
                                         <div id="DiagnosticBoxB-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
                                     </div>
@@ -3671,7 +3671,7 @@
                                 <div name="3" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box3-quizView2" ;">
                                     <div id="DiagnosticButtonsC-quizView2">
                                         <div id="DiagnosticBoxC-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
                                     </div>
@@ -3685,7 +3685,7 @@
                                 <div name="4" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box4-quizView2" ;">
                                     <div id="DiagnosticButtonsD-quizView2">
                                         <div id="DiagnosticBoxD-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
                                     </div>
@@ -3699,7 +3699,7 @@
                                 <div name="5" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box5-quizView2" ;">
                                     <div id="DiagnosticButtonsE-quizView2">
                                         <div id="DiagnosticBoxE-quizView2" style="white-space: pre-line; display: inline-block;"></div>
-                                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
+                                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
                                     </div>
@@ -4141,7 +4141,7 @@
 
 
 <!-- Feedback View 4 Column CRESME -->
-<div id="feedbackView1" class="container-fluid" style="height: calc(100vh - 165px); border: 10px solid black; border-radius: 20px; margin-top:6px; margin-bottom:6px; width:99%; min-height: 780px; min-width: 1750px;">
+<div id="feedbackView1" class="container-fluid" style="height: calc(100vh - 165px); border: 10px solid black; border-radius: 20px; margin-top:6px; margin-bottom:6px; width:99%; min-height: 800px;">
     <div class="container-fluid border rounded">
         <div class="col" style="height: 77vh; min-height: 720px;">
             <div class="row h-25">
@@ -4149,7 +4149,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
                             Expand
                         </button>
                     </div>
@@ -4165,7 +4165,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
                             Expand
                         </button>
                     </div>
@@ -4181,7 +4181,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
+                        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
                             Expand
                         </button>
                     </div>
@@ -4197,7 +4197,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
+                        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
                             Expand
                         </button>
                     </div>
@@ -4215,9 +4215,9 @@
             <div class="row h-25">
 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area1-feebackView1">
-                    <div id="PhysicalButtons1-feedbackView1" style="height: 39px;">
+                    <div id="PhysicalButtons1-feedbackView1">
                         <div id="PhysicalBox1-feedbackView1" style="display: inline-block;"></div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalA">
+                        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalA">
                             Expand
                         </button>
                         <div id="PhysicalAnswer1-feedbackView1" style="display: inline-block;"></div>
@@ -4233,9 +4233,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalD</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area2-feebackView1">
-                    <div id="PhysicalButtons2-feedbackView1" style="height: 39px;">
+                    <div id="PhysicalButtons2-feedbackView1">
                         <div id="PhysicalBox2-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalB">
                             Expand
                         </button>
                         <div id="PhysicalAnswer2-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4251,9 +4251,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalD</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area3-feebackView1">
-                    <div id="PhysicalButtons3-feedbackView1" style="height: 39px;">
+                    <div id="PhysicalButtons3-feedbackView1">
                         <div id="PhysicalBox3-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalC">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalC">
                             Expand
                         </button>
                         <div id="PhysicalAnswer3-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4269,9 +4269,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalD</span> }
                 </div> 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area4-feebackView1">
-                    <div id="PhysicalButtons4-feedbackView1" style="height: 39px;">
+                    <div id="PhysicalButtons4-feedbackView1">
                         <div id="PhysicalBox4-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalD">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalD">
                             Expand
                         </button>
                         <div id="PhysicalAnswer4-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4291,9 +4291,9 @@
             <div class="row h-25">
 
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area1-feebackView1">
-                    <div id="DiagnosticButtons1-feedbackView1" style="height: 39px;">
+                    <div id="DiagnosticButtons1-feedbackView1">
                         <div id="DiagnosticBox1-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticA">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticA">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer1-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4309,9 +4309,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticD</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area2-feebackView1">
-                    <div id="DiagnosticButtons2-feedbackView1" style="height: 39px;">
+                    <div id="DiagnosticButtons2-feedbackView1">
                         <div id="DiagnosticBox2-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticB">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer2-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4327,9 +4327,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticD</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area3-feebackView1">
-                    <div id="DiagnosticButtons3-feedbackView1" style="height: 39px;">
+                    <div id="DiagnosticButtons3-feedbackView1">
                         <div id="DiagnosticBox3-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticC">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticC">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer3-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4345,9 +4345,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticD</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area4-feebackView1">
-                    <div id="DiagnosticButtons4-feedbackView1" style="height: 39px;">
+                    <div id="DiagnosticButtons4-feedbackView1">
                         <div id="DiagnosticBox4-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticD">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticD">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer4-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
@@ -4367,9 +4367,9 @@
             <div class="row h-25">
 
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropA">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse1">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropA">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse1">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4383,9 +4383,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackD</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4399,9 +4399,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackD</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropC">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse3">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropC">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse3">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4415,9 +4415,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackD</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropD">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse4">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropD">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse4">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4441,7 +4441,7 @@
 
 
 <!-- Feedback View 5 Column CRESME -->
-<div id="feedbackView2" class="container-fluid" style="height: calc(100vh - 165px); border: 10px solid black; border-radius: 20px; margin-top:6px; margin-bottom:6px; width:99%; min-height: 780px; min-width: 1785px;">
+<div id="feedbackView2" class="container-fluid" style="height: calc(100vh - 165px); border: 10px solid black; border-radius: 20px; margin-top:6px; margin-bottom:6px; width:99%; min-height: 800px;">
     <div class="container-fluid">
         <div class="col" style="height: 77vh; min-height: 720px;">
             <div class="row h-25">
@@ -4449,7 +4449,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
                             Expand
                         </button>
                     </div>
@@ -4467,7 +4467,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
                             Expand
                         </button>
                     </div>
@@ -4485,7 +4485,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
                             Expand
                         </button>
                     </div>
@@ -4503,7 +4503,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
                             Expand
                         </button>
                     </div>
@@ -4521,7 +4521,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryE">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryE">
                             Expand
                         </button>
                     </div>
@@ -4541,9 +4541,9 @@
             <div class="row h-25">
 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area1-feebackView2">
-                    <div id="PhysicalButtons1-feedbackView2" style="height: 39px;">
+                    <div id="PhysicalButtons1-feedbackView2">
                         <div id="PhysicalBox1-feedbackView2" style="display: inline-block;"></div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalA">
+                        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalA">
                             Expand
                         </button>
                         <div id="PhysicalAnswer1-feedbackView2" style="display: inline-block;"></div>
@@ -4561,9 +4561,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area2-feebackView2">
-                    <div id="PhysicalButtons2-feedbackView2" style="height: 39px;">
+                    <div id="PhysicalButtons2-feedbackView2">
                         <div id="PhysicalBox2-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalB">
                             Expand
                         </button>
                         <div id="PhysicalAnswer2-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4581,9 +4581,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area3-feebackView2">
-                    <div id="PhysicalButtons3-feedbackView2" style="height: 39px;">
+                    <div id="PhysicalButtons3-feedbackView2">
                         <div id="PhysicalBox3-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalC">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalC">
                             Expand
                         </button>
                         <div id="PhysicalAnswer3-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4601,9 +4601,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area4-feebackView2">
-                    <div id="PhysicalButtons4-feedbackView2" style="height: 39px;">
+                    <div id="PhysicalButtons4-feedbackView2">
                         <div id="PhysicalBox4-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalD">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalD">
                             Expand
                         </button>
                         <div id="PhysicalAnswer4-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4621,9 +4621,9 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area5-feebackView2">
-                    <div id="PhysicalButtons5-feedbackView2" style="height: 39px;">
+                    <div id="PhysicalButtons5-feedbackView2">
                         <div id="PhysicalBox5-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalE">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalE">
                             Expand
                         </button>
                         <div id="PhysicalAnswer5-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4645,9 +4645,9 @@
             <div class="row h-25">
 
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area1-feebackView2">
-                    <div id="DiagnosticButtons1-feedbackView2" style="height: 39px;">
+                    <div id="DiagnosticButtons1-feedbackView2">
                         <div id="DiagnosticBox1-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticA">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticA">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer1-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4665,9 +4665,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area2-feebackView2">
-                    <div id="DiagnosticButtons2-feedbackView2" style="height: 39px;">
+                    <div id="DiagnosticButtons2-feedbackView2">
                         <div id="DiagnosticBox2-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticB">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer2-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4685,9 +4685,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area3-feebackView2">
-                    <div id="DiagnosticButtons3-feedbackView2" style="height: 39px;">
+                    <div id="DiagnosticButtons3-feedbackView2">
                         <div id="DiagnosticBox3-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticC">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticC">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer3-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4705,9 +4705,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area4-feebackView2">
-                    <div id="DiagnosticButtons4-feedbackView2" style="height: 39px;">
+                    <div id="DiagnosticButtons4-feedbackView2">
                         <div id="DiagnosticBox4-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticD">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticD">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer4-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4725,9 +4725,9 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area5-feebackView2">
-                    <div id="DiagnosticButtons5-feedbackView2" style="height: 39px;">
+                    <div id="DiagnosticButtons5-feedbackView2">
                         <div id="DiagnosticBox5-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticE">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticE">
                             Expand
                         </button>
                         <div id="DiagnosticAnswer5-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
@@ -4749,9 +4749,9 @@
             <div class="row h-25">
                 
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropA">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse1">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropA">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse1">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4767,9 +4767,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4785,9 +4785,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropC">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse3">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropC">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse3">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4803,9 +4803,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropD">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse4">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropD">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse4">
                             Your Diagnosis
                         </button>
                     </div>
@@ -4821,9 +4821,9 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div style="height: 39px;">
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropE">Expand</button>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse5">
+                    <div>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropE">Expand</button>
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse5">
                             Your Diagnosis
                         </button>
                     </div>
