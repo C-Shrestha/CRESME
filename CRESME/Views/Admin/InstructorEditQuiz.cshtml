@@ -14,6 +14,7 @@
     // list of instructors
     var instructors = Model.users.Where(x => x.Role == "Instructor");
 
+
 }
 
 
@@ -55,7 +56,7 @@
 
 
 
-<form id="Form1" asp-controller="Quiz" asp-action="InstructorEditQuiz" method="post" enctype="multipart/form-data">
+<form id="Form1" asp-controller="Admin" asp-action="InstructorUpdateQuiz" method="post" enctype="multipart/form-data">
     <div class="d-flex align-items-center min-vh-100" >
         <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
@@ -87,9 +88,11 @@
                 <div class="col-5 text-center" style="font-weight: bold;">End Date</div>
                 <div class="w-100"></div>
 
-                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" value="@Model.quiz.StartDate.ToLocalTime()" runat="server" required style="background-color:#FCF5D8;">
+               
+
+                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" value="@Model.quiz.StartDate.ToString("yyyy-MM-ddTHH:mm:ss")" required style="background-color:#FCF5D8;">
                 <div class="col-1 text-center">-</div>
-                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required style="background-color:#FCF5D8;">
+                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" value="@Model.quiz.EndDate.ToString("yyyy-MM-ddTHH:mm:ss")" runat="server" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
 
@@ -388,6 +391,8 @@
                 </select>
                 <div class="w-100"></div>
 
+
+                <input type="hidden" id="QuizId" name="QuizId" value="@Model.quiz.QuizId"  />
 
                 <button onclick="validate()" type="submit" class="btn custom_btn col-5">Edit CRESME</button>
                 <div class="w-100"></div>

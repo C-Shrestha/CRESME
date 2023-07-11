@@ -1581,11 +1581,11 @@ namespace CRESME.Controllers
         /*Located in EditQuiz.cshtml. Updates a CRESME*/
         [HttpPost]    
         [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> InstructorUpdateQuiz(Quiz formQuiz)
+        public async Task<IActionResult> InstructorUpdateQuiz()
         {
 
             // find the quiz to be updated
-            var quiz = await _context.Quiz.FindAsync(formQuiz.QuizId);
+            var quiz = await _context.Quiz.FindAsync(Int32.Parse(Request.Form["QuizId"]));
             //find current user
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(currentUserId);
@@ -1593,23 +1593,34 @@ namespace CRESME.Controllers
             //update based on the new values
             if (quiz != null)
             {
-                quiz.QuizName = formQuiz.QuizName.Trim();
-                quiz.Block = formQuiz.Block.Trim();
-                quiz.Course = formQuiz.Course.Trim();
-                quiz.Term = formQuiz.Term.Trim();
-                quiz.DateCreated = formQuiz.DateCreated;
-                quiz.StartDate = formQuiz.StartDate;
-                quiz.EndDate = formQuiz.EndDate;
-                quiz.PatientIntro = formQuiz.PatientIntro.Trim();
-                quiz.AuthorNames = formQuiz.AuthorNames.Trim();
-                if (formQuiz.InstructorID != null)
+                quiz.QuizName = Request.Form["QuizName"][0].Trim();
+                quiz.Block = Request.Form["Block"][0].Trim();
+                quiz.Course = Request.Form["Course"][0].Trim();
+                quiz.Term = Request.Form["Term"][0].Trim();
+
+                var hello = Request.Form["StartDate"][0];
+
+                quiz.StartDate = DateTime.Parse(Request.Form["StartDate"][0]);
+                quiz.EndDate = DateTime.Parse(Request.Form["EndDate"][0]);
+                quiz.PatientIntro = Request.Form["PatientIntro"][0].Trim();
+                quiz.AuthorNames = Request.Form["AuthorNames"][0].Trim();
+                if (Request.Form["InstructorID"].Count > 0)
                 {
-                    quiz.InstructorID = formQuiz.InstructorID.Trim();
+                    quiz.InstructorID = Request.Form["InstructorID"][0].Trim();
                 }
-                
+
+                if (Request.Form["NumColumns"][0] == "4")
+                {
+                    quiz.NumColumns = 4;
+                }
+                else {
+                    quiz.NumColumns = 5;
+                }
+
+
 
                 //checkboxes is checked and changed to correct format for database entry
-                if (formQuiz.FeedBackEnabled == "1")
+                if (Request.Form["FeedBackEnabled"] == "1")
                 {
                     quiz.FeedBackEnabled = "Yes";
                 }
@@ -1618,7 +1629,7 @@ namespace CRESME.Controllers
                     quiz.FeedBackEnabled = "No";
                 }
 
-                if (formQuiz.Published == "1")
+                if (Request.Form["Published"] == "1")
                 {
                     quiz.Published = "Yes";
                 }
@@ -1627,7 +1638,7 @@ namespace CRESME.Controllers
                     quiz.Published = "No";
                 }
 
-                if (formQuiz.ShuffleEnabled == "1")
+                if (Request.Form["ShuffleEnabled"] == "1")
                 {
                     quiz.ShuffleEnabled = "Yes";
                 }
@@ -1636,11 +1647,156 @@ namespace CRESME.Controllers
                     quiz.ShuffleEnabled = "No";
                 }
 
+                if (Request.Form.Files["CoverImage"] != null)
+                {
+                    quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
+                }
+                
+
+                if (Request.Form.Files["Legend"] != null)
+                {
+                    quiz.Legend = UploadImagetoFile(Request.Form.Files["Legend"]);
+                }
+
+
+                quiz.ImageCount = 0;
+
+                if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count > 0)
+                {
+                    quiz.Image0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
+                    quiz.ImagePos0 = Request.Form["ImagePos0"];
+                    quiz.ImageCount++;
+                }
+
+
+                if (Request.Form.Files["imageFile1"] != null & Request.Form["ImagePos1"].Count > 0)
+                {
+                    quiz.Image1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
+                    quiz.ImagePos1 = Request.Form["ImagePos1"];
+                    quiz.ImageCount++;
+                }
+
+
+                if (Request.Form.Files["imageFile2"] != null & Request.Form["ImagePos2"].Count > 0)
+                {
+                    quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
+                    quiz.ImagePos2 = Request.Form["ImagePos2"];
+                    quiz.ImageCount++;
+                }
+
+                if (Request.Form.Files["imageFile3"] != null & Request.Form["ImagePos3"].Count > 0)
+                {
+                    quiz.Image3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
+                    quiz.ImagePos3 = Request.Form["ImagePos3"];
+                    quiz.ImageCount++;
+                }
+
+                if (Request.Form.Files["imageFile4"] != null & Request.Form["ImagePos4"].Count > 0)
+                {
+                    quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
+                    quiz.ImagePos4 = Request.Form["ImagePos4"];
+                    quiz.ImageCount++;
+                }
+
+                if (Request.Form.Files["imageFile5"] != null & Request.Form["ImagePos5"].Count > 0)
+                {
+                    quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
+                    quiz.ImagePos5 = Request.Form["ImagePos5"];
+                    quiz.ImageCount++;
+                }
+
+                if (Request.Form.Files["imageFile6"] != null & Request.Form["ImagePos6"].Count > 0)
+                {
+                    quiz.Image6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
+                    quiz.ImagePos6 = Request.Form["ImagePos6"];
+                    quiz.ImageCount++;
+                }
+
+                if (Request.Form.Files["imageFile7"] != null & Request.Form["ImagePos7"].Count > 0)
+                {
+                    quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
+                    quiz.ImagePos7 = Request.Form["ImagePos7"];
+                    quiz.ImageCount++;
+                }
+
+                if (Request.Form.Files["imageFile8"] != null & Request.Form["ImagePos8"].Count > 0)
+                {
+                    quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
+                    quiz.ImagePos8 = Request.Form["ImagePos8"];
+                    quiz.ImageCount++;
+                }
+
+
+                if (Request.Form.Files["imageFile9"] != null & Request.Form["ImagePos9"].Count > 0)
+                {
+                    quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
+                    quiz.ImagePos9 = Request.Form["ImagePos9"];
+                    quiz.ImageCount++;
+                }
+
+                //Reading Excel File upload for quiz info
+                if (Request.Form.Files["ExcelFileUpload"] != null)
+                {
+                    quiz.ExcelName = Request.Form.Files["ExcelFileUpload"].FileName;
+                    try
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            Request.Form.Files["ExcelFileUpload"].CopyToAsync(stream);
+                            using (XLWorkbook package = new XLWorkbook(stream))
+                            {
+                                IXLWorksheet worksheet = package.Worksheets.First();
+                                int rowcount = worksheet.RowsUsed().Count();
+                                quiz.HistoryA = worksheet.Cell(1, 1).Value.ToString().Trim();
+                                quiz.HistoryB = worksheet.Cell(1, 2).Value.ToString().Trim();
+                                quiz.HistoryC = worksheet.Cell(1, 3).Value.ToString().Trim();
+                                quiz.HistoryD = worksheet.Cell(1, 4).Value.ToString().Trim();
+
+                                quiz.PhysicalA = worksheet.Cell(2, 1).Value.ToString().Trim();
+                                quiz.PhysicalB = worksheet.Cell(2, 2).Value.ToString().Trim();
+                                quiz.PhysicalC = worksheet.Cell(2, 3).Value.ToString().Trim();
+                                quiz.PhysicalD = worksheet.Cell(2, 4).Value.ToString().Trim();
+
+                                quiz.DiagnosticA = worksheet.Cell(3, 1).Value.ToString().Trim();
+                                quiz.DiagnosticB = worksheet.Cell(3, 2).Value.ToString().Trim();
+                                quiz.DiagnosticC = worksheet.Cell(3, 3).Value.ToString().Trim();
+                                quiz.DiagnosticD = worksheet.Cell(3, 4).Value.ToString().Trim();
+
+                                quiz.DiagnosisKeyWordsA = worksheet.Cell(4, 1).Value.ToString().Trim();
+                                quiz.DiagnosisKeyWordsB = worksheet.Cell(4, 2).Value.ToString().Trim();
+                                quiz.DiagnosisKeyWordsC = worksheet.Cell(4, 3).Value.ToString().Trim();
+                                quiz.DiagnosisKeyWordsD = worksheet.Cell(4, 4).Value.ToString().Trim();
+                                if (quiz.FeedBackEnabled == "Yes")
+                                {
+                                    quiz.FeedBackA = worksheet.Cell(5, 1).Value.ToString().Trim();
+                                    quiz.FeedBackB = worksheet.Cell(5, 2).Value.ToString().Trim();
+                                    quiz.FeedBackC = worksheet.Cell(5, 3).Value.ToString().Trim();
+                                    quiz.FeedBackD = worksheet.Cell(5, 4).Value.ToString().Trim();
+                                }
+                                if (quiz.NumColumns == 5)
+                                {
+                                    quiz.HistoryE = worksheet.Cell(1, 5).Value.ToString().Trim();
+                                    quiz.PhysicalE = worksheet.Cell(2, 5).Value.ToString().Trim();
+                                    quiz.DiagnosticE = worksheet.Cell(3, 5).Value.ToString().Trim();
+                                    quiz.DiagnosisKeyWordsE = worksheet.Cell(4, 5).Value.ToString().Trim();
+                                    if (quiz.FeedBackEnabled == "Yes")
+                                    {
+                                        quiz.FeedBackE = worksheet.Cell(5, 5).Value.ToString().Trim();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception error)
+                    {
+                        throw new Exception("Could not read Excel File.");
+                    }
+                }
 
 
                 _context.SaveChanges();
 
-                TempData["AlertMessage"] = "CRESME updated sucessfully!";
+                TempData["Success"] = "CRESME updated sucessfully!";
                 if (user.Role == "Admin")
                 {
                     return RedirectToAction("ListAllQuizes");
@@ -1669,6 +1825,30 @@ namespace CRESME.Controllers
             
         }
 
+        //uploads image to wwwroot+/uploadedImages/ and returns static folder path to saved image
+        public string UploadImagetoFile(IFormFile ImageUpload)
+        {
+            try
+            {
+                string RootPath = this._environment.WebRootPath;
+                string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
+                string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
+                string newImageName = ImageName + ImageGuidExtension;
+
+                System.IO.Directory.CreateDirectory(RootPath + "/uploadedImages/"); //will create uploadedImages folder if doesnt exist, doesnt do anything if folder exists
+                string savepath = Path.Combine(RootPath + "/uploadedImages/", newImageName);
+                using (var filestream = new FileStream(savepath, FileMode.Create))
+                {
+                    ImageUpload.CopyTo(filestream);
+                }
+
+                return "/uploadedImages/" + newImageName;
+            }
+            catch (Exception error)
+            {
+                throw new Exception("could not upload image successfully");
+            }
+        }
 
 
         /*Located in InstructorQuizView.cshtml. Delete a CRESME*/
