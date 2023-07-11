@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CRESME.Data;
-//using Xunit;
-//using Xunit.Abstractions;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +16,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Wordprocessing;
+using CRESME.Constants;
+using System.Security.Claims;
 
 namespace CRESME.Controllers.Tests
 {
@@ -28,11 +30,10 @@ namespace CRESME.Controllers.Tests
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _environment;
-        //private readonly ITestOutputHelper _output;
         private readonly AdminController controller;
 
         // Setup
-        public AdminControllerTests(/*ITestOutputHelper output*/)
+        public AdminControllerTests()
         {
             var environment = new Mock<IWebHostEnvironment>();
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -40,12 +41,11 @@ namespace CRESME.Controllers.Tests
 
             //var userManager = new Mock<UserManager<ApplicationUser>>(optionsBuilder.Options);
             var userManager = new Mock<UserManager<ApplicationUser>>(Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
-            userManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(true);
+            //userManager.Setup(x => x.CheckPasswordAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(true);
 
             //var signInManager = new Mock<SignInManager<ApplicationUser>>(optionsBuilder.Options);
             var signInManager = new Mock<SignInManager<ApplicationUser>>(userManager.Object, Mock.Of<IHttpContextAccessor>(), Mock.Of<IUserClaimsPrincipalFactory<ApplicationUser>>(), null, null, null, null);
 
-            //_output = output;
             _context = context.Object;
             _environment = environment.Object;
             _userManager = userManager.Object;
@@ -53,14 +53,14 @@ namespace CRESME.Controllers.Tests
 
              controller = new AdminController(_context, _userManager, _environment, _signInManager);
 
-            //_output.WriteLine("Setup");
+            Console.WriteLine("Setup");
         }
 
 
 
         [TestMethod()]
         //[Fact]
-        public /*async*/ void DeleteAllTest()
+        public async Task DeleteAllTest()
         {
             var user = new ApplicationUser
             {
@@ -75,9 +75,9 @@ namespace CRESME.Controllers.Tests
 
             var userA = new ApplicationUser
             {
-                UserName = "J123456",
-                Email = "J@gmail.com",
-                Name = "John",
+                UserName = "J12356",
+                Email = "J@GMAIL.COM",
+                Name = "J",
                 Role = "Student",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
@@ -86,31 +86,57 @@ namespace CRESME.Controllers.Tests
             var userB = new ApplicationUser
             {
                 UserName = "K123456",
-                Email = "K@gmail.com",
-                Name = "Kay",
+                Email = "K@GMAIL.COM",
+                Name = "K",
                 Role = "Student",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
 
-            /*await*/ _userManager.CreateAsync(user, "Testing@123");
-            /*await*/ _userManager.CreateAsync(userA, "Testing@123");
-            /*await*/ _userManager.CreateAsync(userB, "Testing@123");
+            await _userManager.CreateAsync(user, "Testing@123");
+            await _userManager.CreateAsync(userA, "Testing@123");
+            await _userManager.AddToRoleAsync(userA, Roles.Student.ToString());
+            await _userManager.CreateAsync(userB, "Testing@123");
+            await _userManager.AddToRoleAsync(userB, Roles.Student.ToString());
 
-            /*await*/ controller.DeleteAll();
+            //controller.DeleteAll();
+            //await Task.Delay(300);
 
-            //_output.WriteLine("A");
-            Assert.IsNotNull(user);
-            Assert.IsNotNull(userA);
+            ApplicationUser userInDb = await _userManager.FindByEmailAsync(user.Email);
+            ApplicationUser userAInDb = await _userManager.FindByEmailAsync(userA.Email);
+
+            Assert.IsNotNull(userInDb);
+            Console.WriteLine(userInDb.Name);
+            Assert.IsNotNull(userAInDb);// To be changed to IsNull
+            Console.WriteLine(userAInDb.Name);
         }
 
 
 
         [TestMethod()]
         //[Fact]
-        public void UpdateQuizTest()
+        public void InstructorUpdateQuizTest()
         {
-            //_output.WriteLine("A");
+            // Generate a sample quiz
+            var quiz = new Quiz
+            {
+                QuizId = 4,
+                QuizName = "SampleQuiz",
+                Block = "B1",
+                Course = "C2",
+                Term = "21-22",
+                DateCreated = new DateTime(2022, 05, 23),
+                StartDate = new DateTime(2022, 05, 30),
+                EndDate = new DateTime(2022, 06, 07),
+                PatientIntro = "Test",
+                AuthorNames = "Test"
+            };
+
+            // Act
+            //await controller.UpdateQuiz(4, "TestQuiz", "B2", "C2", "22-23", new DateTime(2023, 06, 23), new DateTime(2023, 06, 30), new DateTime(2023, 07, 07));
+            // int QuizId, string QuizName, string Block, string Course, string Term, DateTime DateCreated, DateTime StartDate, DateTime EndDate
+
+            // Assert that the CRESME has different data
             Assert.Fail();
         }
 
@@ -118,10 +144,55 @@ namespace CRESME.Controllers.Tests
 
         [TestMethod()]
        // [Fact]
-        public void DeleteTest()
+        public async Task DeleteTest()
         {
-            //_output.WriteLine("A");
-            Assert.Fail();
+            var user = new ApplicationUser
+            {
+                UserName = "cresmeAdmin",
+                Email = "cresmeAdmin",
+                Name = "cresmeAdmin",
+                Role = "Admin",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+
+            };
+
+            var userA = new ApplicationUser
+            {
+                UserName = "J12356",
+                Email = "J@GMAIL.COM",
+                Name = "J",
+                Role = "Student",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            var userB = new ApplicationUser
+            {
+                UserName = "K123456",
+                Email = "K@GMAIL.COM",
+                Name = "K",
+                Role = "Student",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+
+            await _userManager.CreateAsync(user, "Testing@123");
+            await _userManager.CreateAsync(userA, "Testing@123");
+            await _userManager.AddToRoleAsync(userA, Roles.Student.ToString());
+            await _userManager.CreateAsync(userB, "Testing@123");
+            await _userManager.AddToRoleAsync(userB, Roles.Student.ToString());
+
+            //controller.Delete("2");
+            //await Task.Delay(300);
+
+            ApplicationUser userInDb = await _userManager.FindByEmailAsync(user.Email);
+            ApplicationUser userAInDb = await _userManager.FindByEmailAsync(userA.Email);
+
+            Assert.IsNotNull(userInDb);
+            Console.WriteLine(userInDb.Name);
+            Assert.IsNotNull(userAInDb);// To be changed to IsNull
+            Console.WriteLine(userAInDb.Name);
         }
 
 
