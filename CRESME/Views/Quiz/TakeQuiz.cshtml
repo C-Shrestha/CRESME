@@ -120,7 +120,9 @@
 
 
 
-<div id="startView" class="container-fluid flex-column" style="height: 84vh; width: 70%; position: relative; min-height: 900px;">
+
+<div id="startView" class="container-fluid flex-column" style="height: 84vh; width: 70%; position: relative; min-height: 900px; min-width: 900px;">
+
     <div class="row">
         <h1 class="text-center mt-7" style="color: #4472c4; font-weight: bold; margin-top: 4vh;">
             @Model.QuizName
@@ -385,13 +387,6 @@
         width: 100%;
       }
     }
-    /*
-    [class*="col"] {
-        padding: 1rem;
-        background-color: #224163;
-        border: 2px solid #fff;
-        color: #fff;
-    }*/
 </style>
 
 <script>
@@ -399,14 +394,17 @@
     var multiples = false;
     var data;
     var flag = 1;
-    var quizViewNum = "@Model.NumColumns"
-    var correctPhysicalA = correctPhysicalB = correctPhysicalC = correctPhysicalD = correctPhysicalE = 0
-    var correctDiagnosticA = correctDiagnosticB = correctDiagnosticC = correctDiagnosticD = correctDiagnosticE = 0
+    var movePhysicalBoxesButtonsFilled = 0;
+    var quizViewNum = "@Model.NumColumns";
+    var correctPhysicalA = correctPhysicalB = correctPhysicalC = correctPhysicalD = correctPhysicalE = 0;
+    var correctDiagnosticA = correctDiagnosticB = correctDiagnosticC = correctDiagnosticD = correctDiagnosticE = 0;
+
+    const moveButtonsCreated = [];
 
     if (@Model.NumColumns == 4) 
-        quizViewNum = "1"
+        quizViewNum = "1";
     else if (@Model.NumColumns == 5) 
-        quizViewNum = "2"
+        quizViewNum = "2";
 
 
     if (@column1 == 1){
@@ -499,40 +497,23 @@
 
         var box = event.target;
 
-        console.log("Zone: " + box.id);
         zone = box.parentNode;
         
         
         if (data.substring(1, 7) == "yellow") {
             if (zone.id.substring(21, 22) != "") {
-                console.log("Zone: " + zone.id.substring(21, 22));
 
                 if (zone.id.substring(21, 22) != "-") {
-                    console.log("BEEP: PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum)
                     document.getElementById("PhysicalAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0
                 }
-                console.log("TABLE")
-                console.log(document.getElementById("PhysicalAnswer+yellow-box1-quizView"+quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box2-quizView"+quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box3-quizView"+quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box4-quizView"+quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box5-quizView" + quizViewNum).value)
             }
         } 
         else if (data.substring(1, 7) == "purple") {
             if (zone.id.substring(21, 22) != "") {
-                console.log("Zone: " + zone.id.substring(21, 22));
                 
                 if (zone.id.substring(21, 22) != "-"){
-                    console.log("BEEP: DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum)
                     document.getElementById("DiagnostAnswer" + box.id.substring(0, 11) + zone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0
                 }
-                console.log("TABLE")
-                console.log(document.getElementById("DiagnostAnswer+purple-box1-quizView"+quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box2-quizView"+quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box3-quizView"+quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box4-quizView"+quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box5-quizView"+quizViewNum).value)
             }
         }
     }
@@ -545,47 +526,23 @@
         }
 
         var dropzone = event.target;
-
-        console.log("Drop")
-        console.log(data)
-
         data = event.dataTransfer.getData('Object');
-        console.log(data)
 
         while (dropzone.id.substring(0, 9) !== 'drop-zone') {
             dropzone = dropzone.parentNode;
         }
-
-        console.log(dropzone);
-        console.log(dropzone.id)
         
         if (dropzone.childElementCount == false && (dropzone.id.substring(17, 20) == data.substring(8, 11) || dropzone.id.substring(9, 16) == data.substring(0, 7))) {
             dropzone.appendChild(document.getElementById(data));
             if (data.substring(1, 7) == "yellow") {
-                console.log("ZEBRA: " + document.getElementById(data).getAttribute("name"))
-                
                 if (dropzone.id.substring(21, 22) != "-") {
-                    console.log("TIGER: " + "PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum)
                     document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
-                    console.log("SHEEP: " + document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value)
                 }
-                console.log("BABLE")
-                console.log(document.getElementById("PhysicalAnswer+yellow-box1-quizView" + quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box2-quizView" + quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box3-quizView" + quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box4-quizView" + quizViewNum).value)
-                console.log(document.getElementById("PhysicalAnswer+yellow-box5-quizView" + quizViewNum).value)
             } 
             else if (data.substring(1, 7) == "purple") {
                 if (dropzone.id.substring(21, 22) != "-") {
                     document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
                 }
-                console.log("BABLE")
-                console.log(document.getElementById("DiagnostAnswer+purple-box1-quizView" + quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box2-quizView" + quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box3-quizView" + quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box4-quizView" + quizViewNum).value)
-                console.log(document.getElementById("DiagnostAnswer+purple-box5-quizView" + quizViewNum).value)
             }
         }
         document.getElementById(data).selectedIndex = -1;
@@ -634,8 +591,6 @@
         if (quizViewNum == "2")
             PhysicalAnswerE = document.getElementById("PhysicalAnswer+yellow-box5-quizView" + quizViewNum).value
 
-        console.log("Physical: " + PhysicalAnswerA + PhysicalAnswerB + PhysicalAnswerC + PhysicalAnswerD + PhysicalAnswerE)
-
         DiagnosticAnswerA = document.getElementById("DiagnostAnswer+purple-box1-quizView" + quizViewNum).value
         DiagnosticAnswerB = document.getElementById("DiagnostAnswer+purple-box2-quizView" + quizViewNum).value
         DiagnosticAnswerC = document.getElementById("DiagnostAnswer+purple-box3-quizView" + quizViewNum).value
@@ -676,7 +631,6 @@
         feedbackAnswerColumn1.classList.add("btn-primary");
 
         if (PhysicalAnswerA == "0") { 
-            console.log("not answered");
             feedbackAnswerColumn1.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementA = document.getElementById("PhysicalButtons1" + "-feedbackView" + quizViewNum);
             feedbackChildA = document.getElementById("PhysicalAnswer1" + "-feedbackView" + quizViewNum);
@@ -730,8 +684,7 @@
         feedbackAnswerColumn2.classList.add("btn");
         feedbackAnswerColumn2.classList.add("btn-primary");
 
-        if (PhysicalAnswerB == "0") { 
-            console.log("not answered");
+        if (PhysicalAnswerB == "0") {
             feedbackAnswerColumn2.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementB = document.getElementById("PhysicalButtons2" + "-feedbackView" + quizViewNum);
             feedbackChildB = document.getElementById("PhysicalAnswer2" + "-feedbackView" + quizViewNum);
@@ -786,7 +739,6 @@
         feedbackAnswerColumn3.classList.add("btn-primary");
 
         if (PhysicalAnswerC == "0") { 
-            console.log("not answered");
             feedbackAnswerColumn3.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementC = document.getElementById("PhysicalButtons3" + "-feedbackView" + quizViewNum);
             feedbackChildC = document.getElementById("PhysicalAnswer3" + "-feedbackView" + quizViewNum);
@@ -841,7 +793,6 @@
         feedbackAnswerColumn4.classList.add("btn-primary");
 
         if (PhysicalAnswerD == "0") { 
-            console.log("not answered");
             feedbackAnswerColumn4.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementD = document.getElementById("PhysicalButtons4" + "-feedbackView" + quizViewNum);
             feedbackChildD = document.getElementById("PhysicalAnswer4" + "-feedbackView" + quizViewNum);
@@ -897,7 +848,6 @@
 
         if (@Model.NumColumns == 5) {
             if (PhysicalAnswerE == "0") { 
-                console.log("not answered");
                 feedbackAnswerColumn5.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
                 feedbackElementE = document.getElementById("PhysicalButtons5" + "-feedbackView" + quizViewNum);
                 feedbackChildE = document.getElementById("PhysicalAnswer5" + "-feedbackView" + quizViewNum);
@@ -954,7 +904,6 @@
         feedbackAnswerColumnA.classList.add("btn-primary");
 
         if (DiagnosticAnswerA == "0") { 
-            console.log("not answered");
             feedbackAnswerColumnA.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementA = document.getElementById("DiagnosticButtons1" + "-feedbackView" + quizViewNum);
             feedbackChildA = document.getElementById("DiagnosticAnswer1" + "-feedbackView" + quizViewNum);
@@ -1009,7 +958,6 @@
         feedbackAnswerColumnB.classList.add("btn-primary");
 
         if (DiagnosticAnswerB == "0") { 
-            console.log("not answered");
             feedbackAnswerColumnB.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementB = document.getElementById("DiagnosticButtons2" + "-feedbackView" + quizViewNum);
             feedbackChildB = document.getElementById("DiagnosticAnswer2" + "-feedbackView" + quizViewNum);
@@ -1064,7 +1012,6 @@
         feedbackAnswerColumnC.classList.add("btn-primary");
 
         if (DiagnosticAnswerC == "0") { 
-            console.log("not answered");
             feedbackAnswerColumnC.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementC = document.getElementById("DiagnosticButtons3" + "-feedbackView" + quizViewNum);
             feedbackChildC = document.getElementById("DiagnosticAnswer3" + "-feedbackView" + quizViewNum);
@@ -1119,7 +1066,6 @@
         feedbackAnswerColumnD.classList.add("btn-primary");
 
         if (DiagnosticAnswerD == "0") { 
-            console.log("not answered");
             feedbackAnswerColumnD.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
             feedbackElementD = document.getElementById("DiagnosticButtons4" + "-feedbackView" + quizViewNum);
             feedbackChildD = document.getElementById("DiagnosticAnswer4" + "-feedbackView" + quizViewNum);
@@ -1175,7 +1121,6 @@
 
         if (@Model.NumColumns == 5) {
             if (DiagnosticAnswerE == "0") { 
-                console.log("not answered");
                 feedbackAnswerColumnE.addEventListener('click', () => { $("#staticBackdropNoAnswer").modal('show'); })
                 feedbackElementE = document.getElementById("DiagnosticButtons5" + "-feedbackView" + quizViewNum);
                 feedbackChildE = document.getElementById("DiagnosticAnswer5" + "-feedbackView" + quizViewNum);
@@ -1252,7 +1197,6 @@
             document.querySelectorAll('.background-green').forEach(item => {
                 item.style.backgroundColor = '#a5e9aa';
             });
-            console.log("Color Blind")
             flag = 1;
         }
     }
@@ -1286,12 +1230,10 @@
 
     function show(shown, hidden) {
         if (@Model.NumColumns == 4) {
-            console.log(shown + "1")
             document.getElementById(shown+"1").style.display = 'block';
             document.getElementById(hidden).style.display = 'none';
         } 
         else if (@Model.NumColumns == 5) {
-            console.log(shown+"2")
             document.getElementById(shown+"2").style.display = 'block';
             document.getElementById(hidden).style.display = 'none';
         }
@@ -1327,9 +1269,7 @@
         document.getElementById("StartTime-quizView" + quizViewNum).value = getCookie("@User.Identity.Name" + "StartTimeQuizID-" + "@Model.QuizId")
         
 
-        console.log(document.getElementById("StartTime-quizView" + quizViewNum).value);
         if (document.getElementById("StartTime-quizView" + quizViewNum).value == ""){
-            console.log("Start Time" + startTime);
             setCookie("@User.Identity.Name" + "StartTimeQuizID-" + "@Model.QuizId", startTime(), 3);
         }
 
@@ -1341,7 +1281,6 @@
             modal.style.display = "none";
         }
         if ("@Model.ImagePos0" != "") {
-            console.log("@Model.ImagePos0")
             const button0 = document.createElement("button");
             const feedbackButton0 = document.createElement("button");
 
@@ -1358,7 +1297,6 @@
                 modalImg0.src = "@Model.Image0";
                 $("#image-modal" + "@Model.ImagePos0").modal('show');
                 document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage0ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage0Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -1443,7 +1381,6 @@
             
         }
         if ("@Model.ImagePos1" != "") {
-            console.log("@Model.ImagePos1")
             const button1 = document.createElement("button");
             const feedbackButton1 = document.createElement("button");
 
@@ -1460,7 +1397,6 @@
                 modalImg1.src = "@Model.Image1";
                 $("#image-modal" + "@Model.ImagePos1").modal('show');
                 document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage1ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage1Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -1541,7 +1477,6 @@
             }
         }
         if ("@Model.ImagePos2" != "") {
-            console.log("@Model.ImagePos2")
             const button2 = document.createElement("button");
             const feedbackButton2 = document.createElement("button");
 
@@ -1558,7 +1493,6 @@
                 modalImg2.src = "@Model.Image2";
                 $("#image-modal" + "@Model.ImagePos2").modal('show');
                 document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage2ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage2Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -1639,7 +1573,6 @@
             }
         }
         if ("@Model.ImagePos3" != "") {
-            console.log("@Model.ImagePos3")
             const button3 = document.createElement("button");
             const feedbackButton3 = document.createElement("button");
 
@@ -1656,7 +1589,6 @@
                 modalImg3.src = "@Model.Image3";
                 $("#image-modal" + "@Model.ImagePos3").modal('show');
                 document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage3ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage3Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -1740,7 +1672,6 @@
         }
 
         if ("@Model.ImagePos4" != "") {
-            console.log("@Model.ImagePos4")
             const button4 = document.createElement("button");
             const feedbackButton4 = document.createElement("button");
 
@@ -1757,7 +1688,6 @@
                 modalImg4.src = "@Model.Image4";
                 $("#image-modal" + "@Model.ImagePos4").modal('show');
                 document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage4ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage4Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -1840,7 +1770,6 @@
             }
         }
         if ("@Model.ImagePos5" != "") {
-            console.log("@Model.ImagePos5")
             const button5 = document.createElement("button");
             const feedbackButton5 = document.createElement("button");
 
@@ -1857,7 +1786,6 @@
                 modalImg5.src = "@Model.Image5";
                 $("#image-modal" + "@Model.ImagePos5").modal('show');
                 document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage5ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage5Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -1940,7 +1868,6 @@
             }
         }
         if ("@Model.ImagePos6" != "") {
-            console.log("@Model.ImagePos6")
             const button6 = document.createElement("button");
             const feedbackButton6 = document.createElement("button");
 
@@ -1957,7 +1884,6 @@
                 modalImg6.src = "@Model.Image6";
                 $("#image-modal" + "@Model.ImagePos6").modal('show');
                 document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage6ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage6Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -2040,7 +1966,6 @@
             }
         }
         if ("@Model.ImagePos7" != "") {
-            console.log("@Model.ImagePos7")
             const button7 = document.createElement("button");
             const feedbackButton7 = document.createElement("button");
 
@@ -2057,7 +1982,6 @@
                 modalImg7.src = "@Model.Image7";
                 $("#image-modal" + "@Model.ImagePos7").modal('show');
                 document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage7ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage7Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -2140,7 +2064,6 @@
             }
         }
         if ("@Model.ImagePos8" != "") {
-            console.log("@Model.ImagePos8")
             const button8 = document.createElement("button");
             const feedbackButton8 = document.createElement("button");
 
@@ -2157,7 +2080,6 @@
                 modalImg8.src = "@Model.Image8";
                 $("#image-modal" + "@Model.ImagePos8").modal('show');
                 document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage8ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage8Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -2215,23 +2137,23 @@
                 var feedbackChild8 = null;
 
 
-                if ("@Model.ImagePos8" == "A"){
+                if ("@Model.ImagePos8" == "A") {
                     feedbackElement8 = document.getElementById("DiagnosticButtons" + correctDiagnosticA + "-feedbackView" + quizViewNum);
                     feedbackChild8 = document.getElementById("DiagnosticBox" + correctDiagnosticA + "-feedbackView" + quizViewNum);
                 }
-                else if ("@Model.ImagePos8" == "B"){
+                else if ("@Model.ImagePos8" == "B") {
                     feedbackElement8 = document.getElementById("DiagnosticButtons" + correctDiagnosticB + "-feedbackView" + quizViewNum);
                     feedbackChild8 = document.getElementById("DiagnosticBox" + correctDiagnosticB + "-feedbackView" + quizViewNum);
                 }
-                else if ("@Model.ImagePos8" == "C"){
+                else if ("@Model.ImagePos8" == "C") {
                     feedbackElement8 = document.getElementById("DiagnosticButtons" + correctDiagnosticC + "-feedbackView" + quizViewNum);
                     feedbackChild8 = document.getElementById("DiagnosticBox" + correctDiagnosticC + "-feedbackView" + quizViewNum);
                 }
-                else if ("@Model.ImagePos8" == "D"){
+                else if ("@Model.ImagePos8" == "D") {
                     feedbackElement8 = document.getElementById("DiagnosticButtons" + correctDiagnosticD + "-feedbackView" + quizViewNum);
                     feedbackChild8 = document.getElementById("DiagnosticBox" + correctDiagnosticD + "-feedbackView" + quizViewNum);
                 }
-                else if ("@Model.ImagePos8" == "E"){
+                else if ("@Model.ImagePos8" == "E") {
                     feedbackElement8 = document.getElementById("DiagnosticButtons" + correctDiagnosticE + "-feedbackView" + quizViewNum);
                     feedbackChild8 = document.getElementById("DiagnosticBox" + correctDiagnosticE + "-feedbackView" + quizViewNum);
                 }
@@ -2240,7 +2162,6 @@
             }
         }
         if ("@Model.ImagePos9" != "") {
-            console.log("@Model.ImagePos9")
             const button9 = document.createElement("button");
             const feedbackButton9 = document.createElement("button");
 
@@ -2257,7 +2178,6 @@
                 modalImg9.src = "@Model.Image9";
                 $("#image-modal" + "@Model.ImagePos9").modal('show');
                 document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value = Number(document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value) + 1;
-                console.log(document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value)
                 setCookie("@User.Identity.Name" + "NumImage9ClicksQuizID-" + "@Model.QuizId", document.getElementById("NumImage9Clicks-quizView" + quizViewNum).value, 3);
             })
 
@@ -2361,6 +2281,406 @@
         setCookie("@User.Identity.Name" + "LabImageClicksQuizID-" + "@Model.QuizId", document.getElementById("LabImageClicks-quizView" + quizViewNum).value, 3);
         checkCookie("@User.Identity.Name" + "LabImageClicksQuizID-" + "@Model.QuizId");
     }
+
+    //choosePhysicalColumns
+    function movePhysicalBoxes(data, modal, moveIndex) {
+        $("#" + modal).modal('show');
+
+        var elementA = null;
+        var elementB = null;
+        var elementC = null;
+        var elementD = null;
+        var elementE = null;
+
+        var childA = null;
+        var childB = null;
+        var childC = null;
+        var childD = null;
+        var childE = null;
+        
+        var box = null;
+        var pickupzone = null;
+        var dropzone = null;
+        var tempBox = null;
+
+
+        if ( !moveButtonsCreated.includes(moveIndex) ) {
+            /* Physical Answer Choices */
+            //drop-zone+yellow-area1-quizView1
+            const physicalColumn1 = document.createElement("button");
+            const textNode1 = document.createTextNode("Column 1");
+            physicalColumn1.appendChild(textNode1);
+            physicalColumn1.type = "button";
+            physicalColumn1.classList.add("btn");
+            physicalColumn1.classList.add("mb-1");
+            physicalColumn1.classList.add("btn-primary");
+            physicalColumn1.addEventListener('click', () => {
+                box = document.getElementById(data);
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+yellow-area1-quizView" + quizViewNum);
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementA = document.getElementById("choosePhysical" + moveIndex + "Columns");
+            childA = document.getElementById("physical" + moveIndex + "Column1");
+            elementA.insertBefore(physicalColumn1, childA);
+
+            const physicalColumn2 = document.createElement("button");
+            const textNode2 = document.createTextNode("Column 2");
+            physicalColumn2.appendChild(textNode2);
+            physicalColumn2.type = "button";
+            physicalColumn2.classList.add("btn");
+            physicalColumn2.classList.add("mb-1");
+            physicalColumn2.classList.add("btn-primary");
+            physicalColumn2.addEventListener('click', () => {
+                box = document.getElementById(data)
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+yellow-area2-quizView" + quizViewNum)
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementB = document.getElementById("choosePhysical" + moveIndex + "Columns");
+            childB = document.getElementById("physical" + moveIndex + "Column2");
+            elementB.insertBefore(physicalColumn2, childB);
+
+            const physicalColumn3 = document.createElement("button");
+            const textNode3 = document.createTextNode("Column 3");
+            physicalColumn3.appendChild(textNode3);
+            physicalColumn3.type = "button";
+            physicalColumn3.classList.add("btn");
+            physicalColumn3.classList.add("mb-1");
+            physicalColumn3.classList.add("btn-primary");
+            physicalColumn3.addEventListener('click', () => {
+                box = document.getElementById(data)
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+yellow-area3-quizView" + quizViewNum)
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementC = document.getElementById("choosePhysical" + moveIndex + "Columns");
+            childC = document.getElementById("physical" + moveIndex + "Column3");
+            elementC.insertBefore(physicalColumn3, childC);
+
+            const physicalColumn4 = document.createElement("button");
+            const textNode4 = document.createTextNode("Column 4");
+            physicalColumn4.appendChild(textNode4);
+            physicalColumn4.type = "button";
+            physicalColumn4.classList.add("btn");
+            physicalColumn4.classList.add("mb-1");
+            physicalColumn4.classList.add("btn-primary");
+            physicalColumn4.addEventListener('click', () => {
+                box = document.getElementById(data)
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+yellow-area4-quizView" + quizViewNum)
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementD = document.getElementById("choosePhysical" + moveIndex + "Columns");
+            childD = document.getElementById("physical" + moveIndex + "Column4");
+            elementD.insertBefore(physicalColumn4, childD);
+
+            if (quizViewNum == "2") {
+                const physicalColumn5 = document.createElement("button");
+                const textNode5 = document.createTextNode("Column 5");
+                physicalColumn5.appendChild(textNode5);
+                physicalColumn5.type = "button";
+                physicalColumn5.classList.add("btn");
+                physicalColumn5.classList.add("mb-1");
+                physicalColumn5.classList.add("btn-primary");
+                physicalColumn5.addEventListener('click', () => {
+                    box = document.getElementById(data)
+                    pickupzone = box.parentNode;
+                    dropzone = document.getElementById("drop-zone+yellow-area5-quizView" + quizViewNum)
+
+                    if (dropzone.childElementCount == false) {
+                        dropzone.appendChild(box);
+                        if (pickupzone.id.substring(21, 22) != "-") {
+                            document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                        }
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                    }
+                    else {
+                        tempBox = dropzone.firstChild;
+                        dropzone.appendChild(box);
+                        pickupzone.appendChild(tempBox);
+                        if (pickupzone.id.substring(21, 22) != "-") {
+                            document.getElementById("PhysicalAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                        }
+                        document.getElementById("PhysicalAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                    }
+                    $("#" + modal).modal('hide');
+                })
+                elementE = document.getElementById("choosePhysical" + moveIndex + "Columns");
+                childE = document.getElementById("physical" + moveIndex + "Column5");
+                elementE.insertBefore(physicalColumn5, childE);
+            }
+
+            moveButtonsCreated.push(moveIndex);
+        }
+    }
+
+    function moveDiagnosticBoxes(data, modal, moveIndex) {
+        $("#" + modal).modal('show');
+
+        var elementA = null;
+        var elementB = null;
+        var elementC = null;
+        var elementD = null;
+        var elementE = null;
+
+        var childA = null;
+        var childB = null;
+        var childC = null;
+        var childD = null;
+        var childE = null;
+        
+        var box = null;
+        var pickupzone = null;
+        var dropzone = null;
+        var tempBox = null;
+
+
+        if ( !moveButtonsCreated.includes(moveIndex) ) {
+            /* diagnostic Answer Choices */
+            const diagnosticColumn1 = document.createElement("button");
+            const textNode1 = document.createTextNode("Column 1");
+            diagnosticColumn1.appendChild(textNode1);
+            diagnosticColumn1.type = "button";
+            diagnosticColumn1.classList.add("btn");
+            diagnosticColumn1.classList.add("mb-1");
+            diagnosticColumn1.classList.add("btn-primary");
+            diagnosticColumn1.addEventListener('click', () => {
+                box = document.getElementById(data);
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+purple-area1-quizView" + quizViewNum);
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementA = document.getElementById("chooseDiagnostic" + moveIndex + "Columns");
+            childA = document.getElementById("diagnostic" + moveIndex + "Column1");
+            elementA.insertBefore(diagnosticColumn1, childA);
+
+            const diagnosticColumn2 = document.createElement("button");
+            const textNode2 = document.createTextNode("Column 2");
+            diagnosticColumn2.appendChild(textNode2);
+            diagnosticColumn2.type = "button";
+            diagnosticColumn2.classList.add("btn");
+            diagnosticColumn2.classList.add("mb-1");
+            diagnosticColumn2.classList.add("btn-primary");
+            diagnosticColumn2.addEventListener('click', () => {
+                box = document.getElementById(data)
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+purple-area2-quizView" + quizViewNum)
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementB = document.getElementById("chooseDiagnostic" + moveIndex + "Columns");
+            childB = document.getElementById("diagnostic" + moveIndex + "Column2");
+            elementB.insertBefore(diagnosticColumn2, childB);
+
+            const diagnosticColumn3 = document.createElement("button");
+            const textNode3 = document.createTextNode("Column 3");
+            diagnosticColumn3.appendChild(textNode3);
+            diagnosticColumn3.type = "button";
+            diagnosticColumn3.classList.add("btn");
+            diagnosticColumn3.classList.add("mb-1");
+            diagnosticColumn3.classList.add("btn-primary");
+            diagnosticColumn3.addEventListener('click', () => {
+                box = document.getElementById(data)
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+purple-area3-quizView" + quizViewNum)
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementC = document.getElementById("chooseDiagnostic" + moveIndex + "Columns");
+            childC = document.getElementById("diagnostic" + moveIndex + "Column3");
+            elementC.insertBefore(diagnosticColumn3, childC);
+
+            const diagnosticColumn4 = document.createElement("button");
+            const textNode4 = document.createTextNode("Column 4");
+            diagnosticColumn4.appendChild(textNode4);
+            diagnosticColumn4.type = "button";
+            diagnosticColumn4.classList.add("btn");
+            diagnosticColumn4.classList.add("mb-1");
+            diagnosticColumn4.classList.add("btn-primary");
+            diagnosticColumn4.addEventListener('click', () => {
+                box = document.getElementById(data)
+                pickupzone = box.parentNode;
+                dropzone = document.getElementById("drop-zone+purple-area4-quizView" + quizViewNum)
+
+                if (dropzone.childElementCount == false) {
+                    dropzone.appendChild(box);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                else {
+                    tempBox = dropzone.firstChild;
+                    dropzone.appendChild(box);
+                    pickupzone.appendChild(tempBox);
+                    if (pickupzone.id.substring(21, 22) != "-") {
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                    }
+                    document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                }
+                $("#" + modal).modal('hide');
+            })
+            elementD = document.getElementById("chooseDiagnostic" + moveIndex + "Columns");
+            childD = document.getElementById("diagnostic" + moveIndex + "Column4");
+            elementD.insertBefore(diagnosticColumn4, childD);
+
+            if (quizViewNum == "2") {
+                const diagnosticColumn5 = document.createElement("button");
+                const textNode5 = document.createTextNode("Column 5");
+                diagnosticColumn5.appendChild(textNode5);
+                diagnosticColumn5.type = "button";
+                diagnosticColumn5.classList.add("btn");
+                diagnosticColumn5.classList.add("mb-1");
+                diagnosticColumn5.classList.add("btn-primary");
+                diagnosticColumn5.addEventListener('click', () => {
+                    box = document.getElementById(data)
+                    pickupzone = box.parentNode;
+                    dropzone = document.getElementById("drop-zone+purple-area5-quizView" + quizViewNum)
+
+                    if (dropzone.childElementCount == false) {
+                        dropzone.appendChild(box);
+                        if (pickupzone.id.substring(21, 22) != "-") {
+                            document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = 0;
+                        }
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                    }
+                    else {
+                        tempBox = dropzone.firstChild;
+                        dropzone.appendChild(box);
+                        pickupzone.appendChild(tempBox);
+                        if (pickupzone.id.substring(21, 22) != "-") {
+                            document.getElementById("DiagnostAnswer" + data.substring(0, 11) + pickupzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(tempBox.id).getAttribute("name");
+                        }
+                        document.getElementById("DiagnostAnswer" + data.substring(0, 11) + dropzone.id.substring(21, 22) + "-quizView" + quizViewNum).value = document.getElementById(data).getAttribute("name");
+                    }
+                    $("#" + modal).modal('hide');
+                })
+                elementE = document.getElementById("chooseDiagnostic" + moveIndex + "Columns");
+                childE = document.getElementById("diagnostic" + moveIndex + "Column5");
+                elementE.insertBefore(diagnosticColumn5, childE);
+            }
+
+            moveButtonsCreated.push(moveIndex);
+        }
+    }
 </script>
 
 
@@ -2368,7 +2688,9 @@
     <div class="container-fluid">
         <form id="Form1-quizView1" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
             <div class="row bg-white" style="min-height: 800px;">
-                <div class="col-4" style="height: 82vh; padding-left: 0px; margin-left:5px; min-height: 780px;">
+
+                <div class="col-4" style="height: 81vh; padding-left: 0px; margin-left:5px; min-height: 800px;">
+
                     <div class="row" style="height: 5%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
                             Drag and Drop
@@ -2378,11 +2700,12 @@
                         @if (answerCell1 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" >
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView1', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                                 </div>
@@ -2396,6 +2719,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView1', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                                 </div>
@@ -2410,6 +2734,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView1', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
                                 </div>
@@ -2424,6 +2749,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView1', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -2434,11 +2760,12 @@
                         {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" >
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView1', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                                 </div>
@@ -2452,6 +2779,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView1', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                                 </div>
@@ -2466,6 +2794,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView1', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
                                 </div>
@@ -2480,6 +2809,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView1', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -2490,11 +2820,12 @@
                         @if (answerCell3 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" >
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView1', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                                 </div>
@@ -2508,6 +2839,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView1', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                                 </div>
@@ -2522,6 +2854,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView1', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
                                 </div>
@@ -2536,6 +2869,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView1', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -2545,11 +2879,12 @@
                         @if (answerCell4 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
-                                    <div id="PhysicalButtons1-quizView1">
+                                    <div id="PhysicalButtons1-quizView1" >
                                         <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView1', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalA</span>
                                 </div>
@@ -2563,6 +2898,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView1', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalB</span>
                                 </div>
@@ -2577,6 +2913,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView1', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalC</span>
                                 </div>
@@ -2591,6 +2928,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView1', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -2606,6 +2944,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView1', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -2619,6 +2958,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView1', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -2633,6 +2973,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView1', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -2647,6 +2988,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView1', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -2662,6 +3004,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView1', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -2675,6 +3018,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView1', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -2689,6 +3033,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView1', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -2703,6 +3048,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView1', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -2718,6 +3064,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView1', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -2731,6 +3078,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView1', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -2745,6 +3093,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView1', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -2759,6 +3108,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView1', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -2773,6 +3123,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView1', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -2786,6 +3137,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView1', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -2800,6 +3152,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView1', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -2814,6 +3167,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView1', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -3001,11 +3355,12 @@
 
 
 
-<div id="quizView2" class="container-fluid" style="height: calc(100vh - 165px);margin-top: 4px; margin-bottom: 8px; min-height: 800px;">
+
+<div id="quizView2" class="container-fluid" style="height: calc(100vh - 165px);margin-top: 4px; margin-bottom: 8px; min-height: 750px;">
     <div class="container-fluid">
         <form id="Form1-quizView2" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
-            <div class="row bg-white" style="min-height: 800px;">
-                <div class="col-4" style="height: 76vh; padding-left: 0px; margin-left:5px; min-height: 710px;">
+            <div class="row bg-white" style="min-height: 750px;">
+                <div class="col-4" style="height: 75vh; padding-left: 0px; margin-left:5px; min-height: 750px;">
                     <div class="row" style="height: 6%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
                             Drag and Drop
@@ -3020,6 +3375,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView2', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
@@ -3033,6 +3389,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView2', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
@@ -3047,6 +3404,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView2', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
                                 </div>
@@ -3061,6 +3419,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView2', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -3075,6 +3434,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box5-quizView2', 'movePhysicalAnswerBox1', '1')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
                                 </div>
@@ -3089,6 +3449,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView2', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
@@ -3102,6 +3463,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView2', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
@@ -3116,6 +3478,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView2', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
                                 </div>
@@ -3130,6 +3493,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView2', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -3144,6 +3508,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box5-quizView2', 'movePhysicalAnswerBox2', '2')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
                                 </div>
@@ -3160,6 +3525,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView2', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
@@ -3173,6 +3539,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView2', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
@@ -3187,6 +3554,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView2', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
                                 </div>
@@ -3201,6 +3569,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView2', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -3215,6 +3584,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box5-quizView2', 'movePhysicalAnswerBox3', '3')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
                                 </div>
@@ -3229,6 +3599,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView2', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
@@ -3242,6 +3613,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView2', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
@@ -3256,6 +3628,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView2', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
                                 </div>
@@ -3270,6 +3643,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView2', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -3284,6 +3658,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box5-quizView2', 'movePhysicalAnswerBox4', '4')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
                                 </div>
@@ -3299,6 +3674,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box1-quizView2', 'movePhysicalAnswerBox5', '5')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalA</span>
                                 </div>
@@ -3312,6 +3688,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box2-quizView2', 'movePhysicalAnswerBox5', '5')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalB</span>
                                 </div>
@@ -3326,6 +3703,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box3-quizView2', 'movePhysicalAnswerBox5', '5')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line;">@Model.PhysicalC</span>
                                 </div>
@@ -3340,6 +3718,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box4-quizView2', 'movePhysicalAnswerBox5', '5')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalD</span>
                                 </div>
@@ -3354,6 +3733,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="movePhysicalBoxes('+yellow-box5-quizView2', 'movePhysicalAnswerBox5', '5')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.PhysicalE</span>
                                 </div>
@@ -3369,6 +3749,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView2', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -3382,6 +3763,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView2', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -3396,6 +3778,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView2', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -3410,6 +3793,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView2', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -3424,6 +3808,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box5-quizView2', 'moveDiagnosticAnswerBoxA', 'A')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
                                 </div>
@@ -3439,6 +3824,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView2', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -3452,6 +3838,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView2', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -3466,6 +3853,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView2', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -3480,6 +3868,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView2', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -3494,6 +3883,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box5-quizView2', 'moveDiagnosticAnswerBoxB', 'B')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
                                 </div>
@@ -3508,6 +3898,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView2', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -3521,6 +3912,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView2', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -3535,6 +3927,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView2', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -3549,6 +3942,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView2', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -3563,6 +3957,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box5-quizView2', 'moveDiagnosticAnswerBoxC', 'C')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
                                 </div>
@@ -3578,6 +3973,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView2', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -3591,6 +3987,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView2', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -3605,6 +4002,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView2', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -3619,6 +4017,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView2', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -3633,6 +4032,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box5-quizView2', 'moveDiagnosticAnswerBoxD', 'D')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
                                 </div>
@@ -3647,6 +4047,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticA">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box1-quizView2', 'moveDiagnosticAnswerBoxE', 'E')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticA</span>
                                 </div>
@@ -3660,6 +4061,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticB">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box2-quizView2', 'moveDiagnosticAnswerBoxE', 'E')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticB</span>
                                 </div>
@@ -3674,6 +4076,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticC">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box3-quizView2', 'moveDiagnosticAnswerBoxE', 'E')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticC</span>
                                 </div>
@@ -3688,6 +4091,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticD">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box4-quizView2', 'moveDiagnosticAnswerBoxE', 'E')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticD</span>
                                 </div>
@@ -3702,6 +4106,7 @@
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropDiagnosticE">
                                             Expand
                                         </button>
+                                        <button type="button" class="format btn btn-primary m-1" onclick="moveDiagnosticBoxes('+purple-box5-quizView2', 'moveDiagnosticAnswerBoxE', 'E')">Move</button>
                                     </div>
                                     <span class="text-center" style="white-space: pre-line">@Model.DiagnosticE</span>
                                 </div>
@@ -3903,6 +4308,187 @@
     </div>
 </div>
 
+
+<!-- Move Physical Answer 1 -->
+<div id="movePhysicalAnswerBox1" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="choosePhysical1Columns" class="modal-body text-center">
+                <div id="physical1Column1"></div>
+                <div id="physical1Column2"></div>
+                <div id="physical1Column3"></div>
+                <div id="physical1Column4"></div>
+                <div id="physical1Column5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Physical Answer 2 -->
+<div id="movePhysicalAnswerBox2" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="choosePhysical2Columns" class="modal-body text-center">
+                <div id="physical2Column1"></div>
+                <div id="physical2Column2"></div>
+                <div id="physical2Column3"></div>
+                <div id="physical2Column4"></div>
+                <div id="physical2Column5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Physical Answer 3 -->
+<div id="movePhysicalAnswerBox3" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="choosePhysical3Columns" class="modal-body text-center">
+                <div id="physical3Column1"></div>
+                <div id="physical3Column2"></div>
+                <div id="physical3Column3"></div>
+                <div id="physical3Column4"></div>
+                <div id="physical3Column5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Physical Answer 4 -->
+<div id="movePhysicalAnswerBox4" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="choosePhysical4Columns" class="modal-body text-center">
+                <div id="physical4Column1"></div>
+                <div id="physical4Column2"></div>
+                <div id="physical4Column3"></div>
+                <div id="physical4Column4"></div>
+                <div id="physical4Column5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Physical Answer 5 -->
+<div id="movePhysicalAnswerBox5" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="choosePhysical5Columns" class="modal-body text-center">
+                <div id="physical5Column1"></div>
+                <div id="physical5Column2"></div>
+                <div id="physical5Column3"></div>
+                <div id="physical5Column4"></div>
+                <div id="physical5Column5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Move Diagnostic Answer 1 -->
+<div id="moveDiagnosticAnswerBoxA" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="chooseDiagnosticAColumns" class="modal-body text-center">
+                <div id="diagnosticAColumn1"></div>
+                <div id="diagnosticAColumn2"></div>
+                <div id="diagnosticAColumn3"></div>
+                <div id="diagnosticAColumn4"></div>
+                <div id="diagnosticAColumn5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Diagnostic Answer 2 -->
+<div id="moveDiagnosticAnswerBoxB" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="chooseDiagnosticBColumns" class="modal-body text-center">
+                <div id="diagnosticBColumn1"></div>
+                <div id="diagnosticBColumn2"></div>
+                <div id="diagnosticBColumn3"></div>
+                <div id="diagnosticBColumn4"></div>
+                <div id="diagnosticBColumn5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Diagnostic Answer 3 -->
+<div id="moveDiagnosticAnswerBoxC" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="chooseDiagnosticCColumns" class="modal-body text-center">
+                <div id="diagnosticCColumn1"></div>
+                <div id="diagnosticCColumn2"></div>
+                <div id="diagnosticCColumn3"></div>
+                <div id="diagnosticCColumn4"></div>
+                <div id="diagnosticCColumn5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Diagnostic Answer 4 -->
+<div id="moveDiagnosticAnswerBoxD" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="chooseDiagnosticDColumns" class="modal-body text-center">
+                <div id="diagnosticDColumn1"></div>
+                <div id="diagnosticDColumn2"></div>
+                <div id="diagnosticDColumn3"></div>
+                <div id="diagnosticDColumn4"></div>
+                <div id="diagnosticDColumn5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Move Diagnostic Answer 5 -->
+<div id="moveDiagnosticAnswerBoxE" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center;">
+                <h5 class="modal-title text-center">Select a column to move to</h5>
+            </div>
+            <div id="chooseDiagnosticEColumns" class="modal-body text-center">
+                <div id="diagnosticEColumn1"></div>
+                <div id="diagnosticEColumn2"></div>
+                <div id="diagnosticEColumn3"></div>
+                <div id="diagnosticEColumn4"></div>
+                <div id="diagnosticEColumn5"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Not Answered -->
 <div class="modal fade" id="staticBackdropNoAnswer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -4215,7 +4801,7 @@
             <div class="row h-25">
 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area1-feebackView1">
-                    <div id="PhysicalButtons1-feedbackView1">
+                    <div id="PhysicalButtons1-feedbackView1" >
                         <div id="PhysicalBox1-feedbackView1" style="display: inline-block;"></div>
                         <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalA">
                             Expand
@@ -4233,7 +4819,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalD</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area2-feebackView1">
-                    <div id="PhysicalButtons2-feedbackView1">
+                    <div id="PhysicalButtons2-feedbackView1" >
                         <div id="PhysicalBox2-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalB">
                             Expand
@@ -4251,7 +4837,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalD</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area3-feebackView1">
-                    <div id="PhysicalButtons3-feedbackView1">
+                    <div id="PhysicalButtons3-feedbackView1" >
                         <div id="PhysicalBox3-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalC">
                             Expand
@@ -4269,7 +4855,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalD</span> }
                 </div> 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area4-feebackView1">
-                    <div id="PhysicalButtons4-feedbackView1">
+                    <div id="PhysicalButtons4-feedbackView1" >
                         <div id="PhysicalBox4-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalD">
                             Expand
@@ -4291,7 +4877,7 @@
             <div class="row h-25">
 
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area1-feebackView1">
-                    <div id="DiagnosticButtons1-feedbackView1">
+                    <div id="DiagnosticButtons1-feedbackView1" >
                         <div id="DiagnosticBox1-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticA">
                             Expand
@@ -4309,7 +4895,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticD</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area2-feebackView1">
-                    <div id="DiagnosticButtons2-feedbackView1">
+                    <div id="DiagnosticButtons2-feedbackView1" >
                         <div id="DiagnosticBox2-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticB">
                             Expand
@@ -4327,7 +4913,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticD</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area3-feebackView1">
-                    <div id="DiagnosticButtons3-feedbackView1">
+                    <div id="DiagnosticButtons3-feedbackView1" >
                         <div id="DiagnosticBox3-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticC">
                             Expand
@@ -4345,7 +4931,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticD</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area4-feebackView1">
-                    <div id="DiagnosticButtons4-feedbackView1">
+                    <div id="DiagnosticButtons4-feedbackView1" >
                         <div id="DiagnosticBox4-feedbackView1" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticD">
                             Expand
@@ -4367,7 +4953,7 @@
             <div class="row h-25">
 
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropA">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse1">
                             Your Diagnosis
@@ -4383,7 +4969,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackD</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
                             Your Diagnosis
@@ -4399,7 +4985,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackD</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropC">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse3">
                             Your Diagnosis
@@ -4415,7 +5001,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackD</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropD">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse4">
                             Your Diagnosis
@@ -4541,7 +5127,7 @@
             <div class="row h-25">
 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area1-feebackView2">
-                    <div id="PhysicalButtons1-feedbackView2">
+                    <div id="PhysicalButtons1-feedbackView2" >
                         <div id="PhysicalBox1-feedbackView2" style="display: inline-block;"></div>
                         <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalA">
                             Expand
@@ -4561,7 +5147,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area2-feebackView2">
-                    <div id="PhysicalButtons2-feedbackView2">
+                    <div id="PhysicalButtons2-feedbackView2" >
                         <div id="PhysicalBox2-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalB">
                             Expand
@@ -4581,7 +5167,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area3-feebackView2">
-                    <div id="PhysicalButtons3-feedbackView2">
+                    <div id="PhysicalButtons3-feedbackView2" >
                         <div id="PhysicalBox3-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalC">
                             Expand
@@ -4601,7 +5187,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area4-feebackView2">
-                    <div id="PhysicalButtons4-feedbackView2">
+                    <div id="PhysicalButtons4-feedbackView2" >
                         <div id="PhysicalBox4-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalD">
                             Expand
@@ -4621,7 +5207,7 @@
                         <span style="white-space: pre-line">@Model.PhysicalE</span> }
                 </div>
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area5-feebackView2">
-                    <div id="PhysicalButtons5-feedbackView2">
+                    <div id="PhysicalButtons5-feedbackView2" >
                         <div id="PhysicalBox5-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropPhysicalE">
                             Expand
@@ -4645,7 +5231,7 @@
             <div class="row h-25">
 
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area1-feebackView2">
-                    <div id="DiagnosticButtons1-feedbackView2">
+                    <div id="DiagnosticButtons1-feedbackView2" >
                         <div id="DiagnosticBox1-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticA">
                             Expand
@@ -4665,7 +5251,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area2-feebackView2">
-                    <div id="DiagnosticButtons2-feedbackView2">
+                    <div id="DiagnosticButtons2-feedbackView2" >
                         <div id="DiagnosticBox2-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticB">
                             Expand
@@ -4685,7 +5271,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area3-feebackView2">
-                    <div id="DiagnosticButtons3-feedbackView2">
+                    <div id="DiagnosticButtons3-feedbackView2" >
                         <div id="DiagnosticBox3-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticC">
                             Expand
@@ -4705,7 +5291,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area4-feebackView2">
-                    <div id="DiagnosticButtons4-feedbackView2">
+                    <div id="DiagnosticButtons4-feedbackView2" >
                         <div id="DiagnosticBox4-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticD">
                             Expand
@@ -4725,7 +5311,7 @@
                         <span style="white-space: pre-line">@Model.DiagnosticE</span> }
                 </div>
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area5-feebackView2">
-                    <div id="DiagnosticButtons5-feedbackView2">
+                    <div id="DiagnosticButtons5-feedbackView2" >
                         <div id="DiagnosticBox5-feedbackView2" style="white-space: pre-line; display: inline-block;"></div>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropDiagnosticE">
                             Expand
@@ -4749,7 +5335,7 @@
             <div class="row h-25">
                 
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropA">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse1">
                             Your Diagnosis
@@ -4767,7 +5353,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
                             Your Diagnosis
@@ -4785,7 +5371,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropC">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse3">
                             Your Diagnosis
@@ -4803,7 +5389,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropD">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse4">
                             Your Diagnosis
@@ -4821,7 +5407,7 @@
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
-                    <div>
+                    <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropE">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse5">
                             Your Diagnosis
