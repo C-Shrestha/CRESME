@@ -373,24 +373,25 @@
                 </select>
                 <div class="w-100"></div>
 
-                <div class="text-center" style="font-weight: bold;">Instructor</div>
+                @if (User.IsInRole("Admin")) {
+                    <div class="text-center" style="font-weight: bold;">Instructor</div>
 
-                <select id="Instructor" name="InstructorID" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    <option value="N/A" selected>N\A</option>
-                    @foreach (var item in instructors)
-                    {
-                        if (item.UserName == Model.quiz.InstructorID)
+                    <select id="Instructor" name="InstructorID" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                        <option value="N/A" selected>N\A</option>
+                        @foreach (var item in instructors)
                         {
-                            <option value=@item selected>@item.Name</option>
+                            if (item.UserName == Model.quiz.InstructorID)
+                            {
+                                <option value=@item selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value=@item>@item.Name</option>
+                            }
                         }
-                        else
-                        {
-                            <option value=@item>@item.Name</option>
-                        }
-                    }
-                </select>
-                <div class="w-100"></div>
-
+                    </select>
+                    <div class="w-100"></div>
+                }
 
                 <input type="hidden" id="QuizId" name="QuizId" value="@Model.quiz.QuizId"  />
 
