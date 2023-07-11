@@ -57,6 +57,7 @@ namespace CRESME.Controllers
         {
 
             quiz.DateCreated = DateTime.Now;
+           
             if (quiz.EndDate < quiz.StartDate)
             {
                 TempData["AlertMessage"] = "Start time cannot be after End time.";

@@ -284,42 +284,42 @@ namespace CRESME.Controllers
 
             
             //CRESME meta data
-            if (ParentQuiz.Image0 != null) {
+            if (ParentQuiz.Image0 != "") {
                 attempt.Image0Name = ParentQuiz.Image0[16..^40];
             }
-            if (ParentQuiz.Image1 != null)
+            if (ParentQuiz.Image1 != "")
             {
                 attempt.Image1Name = ParentQuiz.Image1[16..^40];
             }
-            if (ParentQuiz.Image2 != null)
+            if (ParentQuiz.Image2 != "")
             {
                 attempt.Image2Name = ParentQuiz.Image2[16..^40];
             }
-            if (ParentQuiz.Image3 != null)
+            if (ParentQuiz.Image3 != "")
             {
                 attempt.Image3Name = ParentQuiz.Image3[16..^40];
             }
-            if (ParentQuiz.Image4 != null)
+            if (ParentQuiz.Image4 != "")
             {
                 attempt.Image4Name = ParentQuiz.Image4[16..^40];
             }
-            if (ParentQuiz.Image5 != null)
+            if (ParentQuiz.Image5 != "")
             {
                 attempt.Image5Name = ParentQuiz.Image5[16..^40];
             }
-            if (ParentQuiz.Image6 != null)
+            if (ParentQuiz.Image6 != "")
             {
                 attempt.Image6Name = ParentQuiz.Image6[16..^40];
             }
-            if (ParentQuiz.Image7 != null)
+            if (ParentQuiz.Image7 != "")
             {
                 attempt.Image7Name = ParentQuiz.Image7[16..^40];
             }
-            if (ParentQuiz.Image8 != null)
+            if (ParentQuiz.Image8 != "")
             {
                 attempt.Image8Name = ParentQuiz.Image8[16..^40];
             }
-            if (ParentQuiz.Image9 != null)
+            if (ParentQuiz.Image9 != "")
             {
                 attempt.Image9Name = ParentQuiz.Image9[16..^40];
             }

@@ -22,14 +22,14 @@ namespace CRESME.Data
         [BindProperty]
         public int NumColumns { get; set; } = 4;
 
-        [DataType(DataType.Date)]
+        
         public DateTime DateCreated { get; set; }
 
-        [DataType(DataType.Date)]
+        
         [BindProperty]
         public DateTime StartDate { get; set; }
 
-        [DataType(DataType.Date)]
+        
         [BindProperty]
         public DateTime EndDate { get; set; }
 

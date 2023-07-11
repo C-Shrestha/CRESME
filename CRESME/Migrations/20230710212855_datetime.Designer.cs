@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRESME.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230710153810_newColumns9")]
-    partial class newColumns9
+    [Migration("20230710212855_datetime")]
+    partial class datetime
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
