@@ -173,7 +173,7 @@
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="B0" selected>N\A</option>
+                    <option value="B0" selected>0</option>
                     <option value="B1">1</option>
                     <option value="B2">2</option>
                     <option value="B3">3</option>
@@ -198,24 +198,26 @@
                 </select>
                 <div class="w-100"></div>
 
-                <div class="text-center" style="font-weight: bold;">Instructor</div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="text-center" style="font-weight: bold;">Instructor</div>
 
-                <select id="Instructor" name="Instructor" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
-                    <option value="N/A" selected>N\A</option>
-                    @*@foreach (var item in instructors)
+                    <select id="Instructor" name="Instructor" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                        <option value="N/A" selected>N\A</option>
+                        @*@foreach (var item in instructors)
                     {
                         <option value=@item>@item</option>
                     }*@
 
-                    @for (int i = 0; i < count; i++)
-                    {
-                    <option value=@instructors[i]>@instructorNames[i]</option>
-                    }
+                        @for (int i = 0; i < count; i++)
+                        {
+                            <option value=@instructors[i]>@instructorNames[i]</option>
+                        }
 
 
-                </select>
-                <div class="w-100"></div>
-
+                    </select>
+                    <div class="w-100"></div>
+                }
 
 
 
@@ -633,6 +635,7 @@
         newfile.setAttribute("type", 'file');
         newfile.setAttribute("name", 'imageFile' + i);
         newfile.setAttribute("id", 'imageFile' + i);
+        
         newfile.setAttribute("accept", 'image/*');
         newfile.setAttribute("onchange", 'checkForImage(this.id)');
         newfile.style.display = "none";

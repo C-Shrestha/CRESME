@@ -217,7 +217,7 @@ namespace CRESME.Controllers
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                    TempData["AlertMessage"] = "User deleted sucessfully!";
+                    TempData["Success"] = "User deleted sucessfully!";
                     return RedirectToAction("ListUsers");
                 }
 
@@ -412,7 +412,7 @@ namespace CRESME.Controllers
 
                 _context.Remove(quiz);
                 _context.SaveChanges();
-                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
+                TempData["Success"] = "CRESME deleted sucessfully!";
                 return RedirectToAction("ListAllQuizes");
 
             }
@@ -1593,13 +1593,13 @@ namespace CRESME.Controllers
             //update based on the new values
             if (quiz != null)
             {
+
+             
+
                 quiz.QuizName = Request.Form["QuizName"][0].Trim();
                 quiz.Block = Request.Form["Block"][0].Trim();
                 quiz.Course = Request.Form["Course"][0].Trim();
                 quiz.Term = Request.Form["Term"][0].Trim();
-
-                var hello = Request.Form["StartDate"][0];
-
                 quiz.StartDate = DateTime.Parse(Request.Form["StartDate"][0]);
                 quiz.EndDate = DateTime.Parse(Request.Form["EndDate"][0]);
                 quiz.PatientIntro = Request.Form["PatientIntro"][0].Trim();
@@ -1659,12 +1659,18 @@ namespace CRESME.Controllers
                 }
 
 
-                quiz.ImageCount = 0;
+                int previousCount = quiz.ImageCount;
 
                 if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count > 0)
                 {
                     quiz.Image0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
                     quiz.ImagePos0 = Request.Form["ImagePos0"];
+                    quiz.Image0Alt = Request.Form["Image0Alt"];
+                    quiz.ImageCount++;
+                }
+                else if(1 <= previousCount){ //image is already in database
+                    quiz.ImagePos0 = Request.Form["ImagePos0"];
+                    quiz.Image0Alt = Request.Form["Image0Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1673,6 +1679,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
                     quiz.ImagePos1 = Request.Form["ImagePos1"];
+                    quiz.Image1Alt = Request.Form["Image1Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (2 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos1 = Request.Form["ImagePos1"];
+                    quiz.Image1Alt = Request.Form["Image1Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1681,6 +1694,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
                     quiz.ImagePos2 = Request.Form["ImagePos2"];
+                    quiz.Image2Alt = Request.Form["Image2Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (3 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos2 = Request.Form["ImagePos2"];
+                    quiz.Image2Alt = Request.Form["Image2Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1688,6 +1708,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
                     quiz.ImagePos3 = Request.Form["ImagePos3"];
+                    quiz.Image3Alt = Request.Form["Image3Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (4 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos3 = Request.Form["ImagePos3"];
+                    quiz.Image3Alt = Request.Form["Image3Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1695,6 +1722,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
                     quiz.ImagePos4 = Request.Form["ImagePos4"];
+                    quiz.Image4Alt = Request.Form["Image4Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (5 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos4 = Request.Form["ImagePos4"];
+                    quiz.Image4Alt = Request.Form["Image4Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1702,6 +1736,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
                     quiz.ImagePos5 = Request.Form["ImagePos5"];
+                    quiz.Image5Alt = Request.Form["Image5Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (6 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos5 = Request.Form["ImagePos5"];
+                    quiz.Image5Alt = Request.Form["Image5Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1709,6 +1750,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
                     quiz.ImagePos6 = Request.Form["ImagePos6"];
+                    quiz.Image6Alt = Request.Form["Image6Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (7 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos6 = Request.Form["ImagePos6"];
+                    quiz.Image6Alt = Request.Form["Image6Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1716,6 +1764,13 @@ namespace CRESME.Controllers
                 {
                     quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
                     quiz.ImagePos7 = Request.Form["ImagePos7"];
+                    quiz.Image7Alt = Request.Form["Image7Alt"];
+                    quiz.ImageCount++;
+                }
+                else if (8 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos7 = Request.Form["ImagePos7"];
+                    quiz.Image7Alt = Request.Form["Image7Alt"];
                     quiz.ImageCount++;
                 }
 
@@ -1723,16 +1778,31 @@ namespace CRESME.Controllers
                 {
                     quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
                     quiz.ImagePos8 = Request.Form["ImagePos8"];
+                    quiz.Image8Alt = Request.Form["Image8Alt"];
                     quiz.ImageCount++;
                 }
-
+                else if (9 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos8 = Request.Form["ImagePos8"];
+                    quiz.Image8Alt = Request.Form["Image8Alt"];
+                    quiz.ImageCount++;
+                }
 
                 if (Request.Form.Files["imageFile9"] != null & Request.Form["ImagePos9"].Count > 0)
                 {
                     quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
                     quiz.ImagePos9 = Request.Form["ImagePos9"];
+                    quiz.Image9Alt = Request.Form["Image9Alt"];
                     quiz.ImageCount++;
                 }
+                else if (10 <= previousCount)
+                { //image is already in database
+                    quiz.ImagePos9 = Request.Form["ImagePos9"];
+                    quiz.Image9Alt = Request.Form["Image9Alt"];
+                    quiz.ImageCount++;
+                }
+
+                quiz.ImageCount = quiz.ImageCount - previousCount;
 
                 //Reading Excel File upload for quiz info
                 if (Request.Form.Files["ExcelFileUpload"] != null)
@@ -1968,7 +2038,7 @@ namespace CRESME.Controllers
 
                 _context.Remove(quiz);
                 _context.SaveChanges();
-                TempData["AlertMessage"] = "CRESME deleted sucessfully!";
+                TempData["Success"] = "CRESME deleted sucessfully!";
                 return RedirectToAction("InstructorQuizesView");
 
             }
