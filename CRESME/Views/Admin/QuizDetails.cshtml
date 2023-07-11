@@ -42,7 +42,7 @@
 
         <div class="card-header bg-light text-center" id="headingOne">
             <h5 class="mb-0">
-
+                <button class="btn  custom_btn  btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                     CRESME Statistics
                 </button>
             </h5>
@@ -66,11 +66,6 @@
                     TimeSpan totalDuration = TimeSpan.Zero;
                     TimeSpan averageDuration = TimeSpan.Zero;
 
-
-                    // if (!scoreList.Any())
-                    //{
-                    //throw new Exception("No quiz data. No Student has taken the quiz yet.");
-                    // }
 
                     if ((Model.Count() == 1) && (Model.FirstOrDefault().AttemptId == 0))
                     {
@@ -104,7 +99,6 @@
 
                                 return 0;
                             }
-                            //throw new System.Exception("Median of empty array not defined.");
 
                             //make sure the list is sorted, but use a new array
 
@@ -125,15 +119,7 @@
                         medianValue = GetMedian(scores);
 
 
-
-                        // Calculate the average duration
-                        //TimeSpan averageDuration = TimeSpan.FromTicks(totalDuration.Ticks / durations.Count);
-
                         averageDuration = (durations.Count > 0) ? TimeSpan.FromTicks(totalDuration.Ticks / durations.Count) : TimeSpan.Zero;
-
-                        //total number of students eligible to take the quiz
-
-
 
                     }
 
@@ -175,11 +161,10 @@
 
     <div class="card">
 
-        <div class="card-header" id="studentData">
+        <div class="card-header text-center" id="studentData">
             <h5 class="mb-0">
 
-                <button class="btn custom_btn  btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseStudentData" aria-expanded="false" aria-controls="collapseStudentData">
-
+                <button class="btn  custom_btn  btn-outline-success collapsed" data-bs-toggle="collapse" data-bs-target="#collapseStudentData" aria-expanded="false" aria-controls="collapseStudentData">
                     CRESME Data
                 </button>
             </h5>
@@ -212,7 +197,7 @@
                                     Name
                                 </th>
 
-                                <th scope="col" class="table-dark">
+                                @*<th scope="col" class="table-dark">
                                     @Html.DisplayNameFor(model => model.Block)
                                 </th>
 
@@ -222,10 +207,26 @@
 
                                 <th scope="col" class="table-dark">
                                     @Html.DisplayNameFor(model => model.Term)
+                                </th>*@
+
+                                <th scope="col" class="table-dark">
+                                    Total Score
                                 </th>
 
                                 <th scope="col" class="table-dark">
-                                    @Html.DisplayNameFor(model => model.Score)
+                                    Column A Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column B Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column C Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column D Score
+                                </th>
+                                <th scope="col" class="table-dark">
+                                    Column E Score
                                 </th>
 
 
@@ -254,7 +255,7 @@
                                         @Html.DisplayFor(modelItem => item.StudentName)
                                     </td>
 
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.Block)
                                     </td>
                                     <td>
@@ -263,12 +264,27 @@
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Term)
-                                    </td>
+                                    </td>*@
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Score)
                                     </td>
 
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnAGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnBGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnCGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnDGrade)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ColumnEGrade)
+                                    </td>
 
                                 </tr>
                             }
@@ -310,6 +326,16 @@
                     <button type="submit" class="btn btn-md btn-primary">
                         <i class="fa-solid fa-file-arrow-down"></i>
                         Export CRESME Data
+                    </button>
+                </form>
+                <br />
+
+                <form asp-controller="Admin" asp-action="ExportForGrading">
+
+                    <input type="hidden" id="name" name="QuizName" value="@Model.FirstOrDefault().QuizName" />
+                    <button type="submit" class="btn btn-md btn-primary">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Export for Grading
                     </button>
                 </form>
                 <br />

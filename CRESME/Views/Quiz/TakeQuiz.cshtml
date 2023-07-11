@@ -120,7 +120,9 @@
 
 
 
-<div id="startView" class="container-fluid flex-column" style="height: 84vh; width: 70%; position: relative; min-height: 780px; min-width: 900px;">
+
+<div id="startView" class="container-fluid flex-column" style="height: 84vh; width: 70%; position: relative; min-height: 900px; min-width: 900px;">
+
     <div class="row">
         <h1 class="text-center mt-7" style="color: #4472c4; font-weight: bold; margin-top: 4vh;">
             @Model.QuizName
@@ -166,30 +168,6 @@
 
 
 <style>
-    ul#menu {
-    list-style: none;
-    position: relative;
-    .. // other styling you want like color, font spacing etc.
-    }
-    ul#menu li {
-    float: left;
-    .. // other styling like border, text color, etc.
-    }
-
-    ul#menu li a {
-    display: inline;  // you have the menu running horiz on your page
-    .. // other stylings
-    }
-
-    ul#menu li span {
-    float: left;
-    position: absolute;
-    display: none;
-    }
-
-    ul#menu li:hover span {
-    display: block; // list submenu vertically
-    }
     #quizView1 {
         display: none;
     }
@@ -409,13 +387,6 @@
         width: 100%;
       }
     }
-    /*
-    [class*="col"] {
-        padding: 1rem;
-        background-color: #224163;
-        border: 2px solid #fff;
-        color: #fff;
-    }*/
 </style>
 
 <script>
@@ -2717,7 +2688,9 @@
     <div class="container-fluid">
         <form id="Form1-quizView1" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
             <div class="row bg-white" style="min-height: 800px;">
+
                 <div class="col-4" style="height: 81vh; padding-left: 0px; margin-left:5px; min-height: 800px;">
+
                     <div class="row" style="height: 5%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
                             Drag and Drop
@@ -3379,6 +3352,7 @@
         </form>
     </div>
 </div>
+
 
 
 
@@ -4761,7 +4735,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
                             Expand
                         </button>
                     </div>
@@ -4777,7 +4751,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
                             Expand
                         </button>
                     </div>
@@ -4793,7 +4767,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
+                        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
                             Expand
                         </button>
                     </div>
@@ -4809,7 +4783,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line; display: inline-block;"></div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
+                        <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
                             Expand
                         </button>
                     </div>
@@ -5061,7 +5035,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
                             Expand
                         </button>
                     </div>
@@ -5079,7 +5053,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryB">
                             Expand
                         </button>
                     </div>
@@ -5097,7 +5071,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryC">
                             Expand
                         </button>
                     </div>
@@ -5115,7 +5089,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryD">
                             Expand
                         </button>
                     </div>
@@ -5133,7 +5107,7 @@
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
                         <div style="white-space: pre-line"></div>
-                        <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryE">
+                        <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryE">
                             Expand
                         </button>
                     </div>

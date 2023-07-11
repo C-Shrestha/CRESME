@@ -2,8 +2,23 @@
 @{
 
     ViewData["Title"] = "Create CRESME";
-    IEnumerable<string> UniqueCourses = Model.Select(x => x.Course).Distinct().Where(x => x != null);
-    IEnumerable<string> UniqueTerms = Model.Select(x => x.Term).Distinct().Where(x => x != null);
+    //list of of each students course column
+    var courses = Model.Select(x => x.Course).Distinct().Where(x => x != null).ToList();
+    var terms = Model.Select(x => x.Term).Distinct().Where(x => x != null).ToList();
+
+    //parse each string in courses/term separated by comma into individual strings 
+    //trim and return only unique elements 
+    List<string> UniqueCourses = courses.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
+    List<string> UniqueTerms = terms.SelectMany(s => s.Split(',')).Select(e => e.Trim()).Distinct().ToList();
+
+    // list of instructors
+    var instructors = Model.Where(x => x.Role == "Instructor").ToList();
+
+    //list of instrucorNames
+    var instructorNames = Model.Where(x => x.Role == "Instructor").Select(x => x.Name).ToList();
+
+    var count = instructors.Count(); 
+
 }
 
 
@@ -50,24 +65,24 @@
         <div class="container border bg-light rounded" style="width: 50%;">
             <div class="row gx-5 justify-content-center gy-2">
 
-             
-
 
                 <div class="w-100"></div>
                 <h4 class="col-6 text-center" style="font-weight: bold;">Create CRESME Form</h4>
 
+
                 <div class="w-100"></div>
+
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
                 <div class="w-100"></div>
-                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter CRESME Name" required>
+                <input class="col-4  input-field" type="text" name="QuizName" placeholder="Enter CRESME Name" required style="background-color:#FCF5D8;">
 
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required>
+                <input class="col-4  input-field" type="text" name="PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required>
+                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-5 text-center" style="font-weight: bold;">Start Date</div>
@@ -75,22 +90,22 @@
                 <div class="col-5 text-center" style="font-weight: bold;">End Date</div>
                 <div class="w-100"></div>
 
-                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required>
+                <input type="datetime-local" class="col-5 input-field" id="startDate" name="StartDate" runat="server" required style="background-color:#FCF5D8;">
                 <div class="col-1 text-center">-</div>
-                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required>
+                <input type="datetime-local" class="col-5 input-field" id="endDate" name="EndDate" runat="server" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
 
-                <div class="col-2" style="font-weight: bold;">Publish</div>
-                <input class="col-1" type="checkbox" id="publish" name="Publish" value="1">
+                <div class="col-3" style="font-weight: bold; ">Publish</div>
+                <input class="col-1" type="checkbox" id="publish" name="Publish" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <div class="col-2" style="font-weight: bold;">Feedback</div>
-                <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1">
+                <div class="col-3" style="font-weight: bold;">Practice</div>
+                <input class="col-1" type="checkbox" id="feedback" name="Feedback" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <div class="col-2" style="font-weight: bold;">Shuffle</div>
-                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
+                <div class="col-3" style="font-weight: bold;">Shuffle</div>
+                <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
                 <div class="col-4" style="font-weight: bold;">Number of Columns:</div>
@@ -117,7 +132,9 @@
                 <div class="col-4 text-center" style="font-weight: bold;">Upload Cover Image</div>
                 <div class="w-100"></div>
 
-                <input type="file" name="CoverImage" id="CoverImage" accept="image/*" style="display: none;" required />
+
+                <input type="file" name="CoverImage" id="CoverImage" accept="image/*" style="display: none;"/>
+
                 <label  class="col-4 row justify-content-center border" id="coverLabel" for="CoverImage" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-panorama"></i>
                 </label>
@@ -156,7 +173,7 @@
                 <div class="col-1"></div>
 
                 <select id="Block" name="Block" class="form-select col-3" multiple aria-label="Default select example" style="text-align-last: center; width:25%;" required>
-                    <option value="B0" selected>N\A</option>
+                    <option value="B0" selected>0</option>
                     <option value="B1">1</option>
                     <option value="B2">2</option>
                     <option value="B3">3</option>
@@ -181,6 +198,30 @@
                 </select>
                 <div class="w-100"></div>
 
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="text-center" style="font-weight: bold;">Instructor</div>
+
+                    <select id="Instructor" name="Instructor" class="form-select col-3" aria-label="Default select example" style="text-align-last: center; width:25%; height: 15%" required>
+                        <option value="N/A" selected>N\A</option>
+                        @*@foreach (var item in instructors)
+                    {
+                        <option value=@item>@item</option>
+                    }*@
+
+                        @for (int i = 0; i < count; i++)
+                        {
+                            <option value=@instructors[i]>@instructorNames[i]</option>
+                        }
+
+
+                    </select>
+                    <div class="w-100"></div>
+                }
+
+
+
+
                 <button onclick="validate()" type="submit" class="btn custom_btn col-5">Create CRESME</button>
                 <div class="w-100"></div>
 
@@ -189,7 +230,8 @@
     </div>
 </form>
 
-
+<br />
+<br />
 
 <style>
 
@@ -232,17 +274,6 @@
     var legendButton = document.getElementById("Legend");
     var coverButton = document.getElementById("CoverImage");
 
-    window.onload = function () {
-        // your code here
-        $('.toast').toast('show');
-    };
-
-    function showToast(toast)
-    {
-        var showToast = new bootstrap.Toast(toast);
-        showToast.show();
-
-    }
     
 
     function CheckCoverImage()
@@ -256,7 +287,7 @@
 
     function validate(){
 
-        if (coverButton.value == "")
+        /*if (coverButton.value == "")
         {
             var toast = document.createElement("div");
             toast.setAttribute("aria-live", 'assertive');
@@ -302,8 +333,8 @@
 
 
             showToast(toast);
-        }
-        else if (legendButton.value == "") {
+        }*/
+        if (legendButton.value == "") {
 
             var toast = document.createElement("div");
             toast.setAttribute("aria-live", 'assertive');
@@ -475,6 +506,7 @@
         var break1 = document.getElementById('newBreak1' + k);
         var break2 = document.getElementById('newBreak2' + k);
         var vrDiv1 = document.getElementById('vrDiv1' + k);
+        var breakPoint = document.getElementById('breakPoint' + k);
         
 
         deleteButton.remove();
@@ -496,6 +528,79 @@
 
         }
 
+        breakPoint.remove();
+
+        k++;
+
+        while(k < i)
+        {
+            var deleteButton = document.getElementById('' + k);
+            deleteButton.setAttribute("id", '' + (k-1));
+
+
+            var newDiv = document.getElementById('vrDiv' + k);
+            newDiv.setAttribute("id", 'vrDiv' + (k - 1));
+
+
+            var hrDiv1 = document.getElementById('hrDiv1' + k);
+            hrDiv1.setAttribute("id", 'hrDiv1' + (k-1));
+
+            var hrDiv2 = document.getElementById('hrDiv2' + k);
+            hrDiv2.setAttribute("id", 'hrDiv2' + (k-1));
+
+
+
+            var newfile = document.getElementById('imageFile' + k);
+            newfile.setAttribute("name", 'imageFile' + (k-1));
+            newfile.setAttribute("id", 'imageFile' + (k-1));
+
+
+
+            var select = document.getElementById('ImagePos' + k);
+            select.setAttribute("id", 'ImagePos' + (k-1));
+            select.setAttribute("name", 'ImagePos' + (k-1));
+
+
+
+            var altText = document.getElementById('altText' + k);
+            altText.setAttribute("name", 'Image' + (k-1) + 'Alt');
+            altText.setAttribute("id", 'altText' + (k-1));
+
+
+            var newlabel = document.getElementById('imageLabel' + k);
+            newlabel.setAttribute("for", 'imageFile' + (k-1));
+            newlabel.setAttribute("id", 'imageLabel' + (k-1));
+
+
+            var newDiv1 = document.getElementById('vrDiv1' + k);
+            newDiv1.setAttribute("id", 'vrDiv1' + (k-1));
+
+            var checkForI = document.getElementById("imgCheckMark" + k);
+
+            if (checkForI != null) {
+
+                var newi = document.getElementById("imgCheckMark" + k);
+                newi.setAttribute("id", "imgCheckMark" + (k-1));
+
+                var newBreak = document.getElementById('newBreak1' + k);
+                newBreak.setAttribute("id", 'newBreak1' + (k-1));
+
+                var newdiv = document.getElementById('imageName' + k);
+                newdiv.setAttribute("id", 'imageName' + (k-1));
+
+                newBreak.after(newdiv);
+
+                var newBreak1 = document.getElementById('newBreak2' + k);
+                newBreak1.setAttribute("id", 'newBreak2' + (k-1));
+
+
+            }
+
+            var breakPoint = document.getElementById('breakPoint' + k);
+            breakPoint.setAttribute("id", 'breakPoint' + (k - 1));
+
+            k++;
+        }
 
         i--;
     }
@@ -530,6 +635,7 @@
         newfile.setAttribute("type", 'file');
         newfile.setAttribute("name", 'imageFile' + i);
         newfile.setAttribute("id", 'imageFile' + i);
+        
         newfile.setAttribute("accept", 'image/*');
         newfile.setAttribute("onchange", 'checkForImage(this.id)');
         newfile.style.display = "none";
@@ -550,12 +656,18 @@
         select.style.height = "10%";
         select.style.textAlignLast = "center"
 
-        const options = ["A", "B", "C", "D", "E", "1", "2", "3", "4", "5"];
+        var options = ["PE 1", "PE 2", "PE 3", "PE 4", "PE 5", "Data A", "Data B", "Data C", "Data D", "Data E"];
 
         options.forEach((element, key) => {
             select[key] = new Option(element, key);
             select[key].setAttribute("value", element);
             select[key].setAttribute("name", 'Image' + key + 'Pos');
+        });
+
+        options = ["1", "2", "3", "4", "5", "A", "B", "C", "D", "E"];
+
+        options.forEach((element, key) => {
+            select[key].setAttribute("value", element);
         });
 
         hrDiv2.after(select);
@@ -588,6 +700,14 @@
 
         select.after(newDiv1);
         newDiv1.after(altText);
+
+        var breakPoint = document.createElement("div");
+        breakPoint.setAttribute("class", 'col-8');
+        breakPoint.setAttribute("id", "breakPoint" + i);
+        breakPoint.style.height = "5px";
+        breakPoint.style.backgroundColor = "#f1c400";
+
+        altText.after(breakPoint); 
 
 
             i++;
@@ -667,7 +787,7 @@
             newdiv.setAttribute("class", "col-6 text-center");
             newdiv.setAttribute("id", "coverName");
             newdiv.style.fontWeight = "bold";
-            newdiv.innerHTML = coverButton.value.substr(coverButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = coverButton.value.split("\\").pop();
 
             newBreak.after(newdiv);
 
@@ -680,7 +800,7 @@
         else if (checkForI != null) {
 
             var newdiv = document.getElementById("coverName");
-            newdiv.innerHTML = coverButton.value.substr(coverButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = coverButton.value.split("\\").pop();
 
         }
 
@@ -707,7 +827,7 @@
         newdiv.setAttribute("class", "col-6 text-center");
         newdiv.setAttribute("id", "legendName");
         newdiv.style.fontWeight = "bold";
-        newdiv.innerHTML = legendButton.value.substr(legendButton.value.lastIndexOf('\\') + 1).split('.')[0];
+        newdiv.innerHTML = legendButton.value.split("\\").pop();
 
         newBreak.after(newdiv);
 
@@ -720,7 +840,7 @@
     else if (checkForI != null) {
 
         var newdiv = document.getElementById("legendName");
-        newdiv.innerHTML = legendButton.value.substr(legendButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = legendButton.value.split("\\").pop();
 
     }
 
@@ -750,7 +870,7 @@
         newdiv.setAttribute("class", "col-6 text-center");
         newdiv.setAttribute("id", "excelFileName");
         newdiv.style.fontWeight = "bold";
-        newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+        newdiv.innerHTML = fileButton.value.split("\\").pop();
 
         newBreak.after(newdiv);
 
@@ -763,7 +883,7 @@
     else if (checkForI != null)
     {
         var newdiv = document.getElementById("excelFileName");
-        newdiv.innerHTML = fileButton.value.substr(fileButton.value.lastIndexOf('\\') + 1).split('.')[0];
+            newdiv.innerHTML = fileButton.value.split("\\").pop();
 
     }
 

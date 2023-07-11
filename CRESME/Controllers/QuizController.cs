@@ -57,6 +57,7 @@ namespace CRESME.Controllers
         {
 
             quiz.DateCreated = DateTime.Now;
+           
             if (quiz.EndDate < quiz.StartDate)
             {
                 TempData["AlertMessage"] = "Start time cannot be after End time.";
@@ -77,7 +78,13 @@ namespace CRESME.Controllers
             var CurrentInstructor = _context.Users.SingleOrDefault(user => user.UserName == User.Identity.Name);
 
             // NID == UserName == Email in Database.
-            quiz.InstructorID = CurrentInstructor.UserName;
+            if (Request.Form["Instructor"].Count > 0)
+            {
+                quiz.InstructorID = Request.Form["Instructor"][0].Trim();
+            }
+            else {
+                quiz.InstructorID = CurrentInstructor.UserName;
+            }
 
             //checkboxes only send output if they are checked(default is "on"), otherwise null
             if (Request.Form["Feedback"] == "1")
@@ -100,11 +107,11 @@ namespace CRESME.Controllers
 
             if (Request.Form["ShuffleEnabled"] == "1")
             {
-                quiz.Published = "Yes";
+                quiz.ShuffleEnabled = "Yes";
             }
             else
             {
-                quiz.Published = "No";
+                quiz.ShuffleEnabled = "No";
             }
 
             quiz.DateCreated = DateTime.Now;
@@ -113,6 +120,7 @@ namespace CRESME.Controllers
             //Reading Excel File upload for quiz info
             if (Request.Form.Files["ExcelFileUpload"] != null)
             {
+                quiz.ExcelName = Request.Form.Files["ExcelFileUpload"].FileName;
                 try
                 {
                     using (var stream = new MemoryStream())
@@ -184,112 +192,75 @@ namespace CRESME.Controllers
             {
                 quiz.Image0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
                 quiz.ImagePos0 = Request.Form["ImagePos0"];
-
+                quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image0 = null;
-                quiz.ImagePos0 = null;
-            }
+          
 
             if (Request.Form.Files["imageFile1"] != null & Request.Form["ImagePos1"].Count > 0)
             {
                 quiz.Image1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
                 quiz.ImagePos1 = Request.Form["ImagePos1"];
+                quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image1 = null;
-                quiz.ImagePos1 = null;
-            }
+         
 
             if (Request.Form.Files["imageFile2"] != null & Request.Form["ImagePos2"].Count > 0)
             {
                 quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
                 quiz.ImagePos2 = Request.Form["ImagePos2"];
-            }
-            else
-            {
-                quiz.Image2 = null;
-                quiz.ImagePos2 = null;
+                quiz.ImageCount++;
             }
 
             if (Request.Form.Files["imageFile3"] != null & Request.Form["ImagePos3"].Count > 0)
             {
                 quiz.Image3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
                 quiz.ImagePos3 = Request.Form["ImagePos3"];
-            }
-            else
-            {
-                quiz.Image3 = null;
-                quiz.ImagePos3 = null;
+                quiz.ImageCount++;
             }
 
             if (Request.Form.Files["imageFile4"] != null & Request.Form["ImagePos4"].Count > 0)
             {
                 quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
                 quiz.ImagePos4 = Request.Form["ImagePos4"];
-            }
-            else
-            {
-                quiz.Image4 = null;
-                quiz.ImagePos4 = null;
+                quiz.ImageCount++;
             }
 
             if (Request.Form.Files["imageFile5"] != null & Request.Form["ImagePos5"].Count > 0)
             {
                 quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
                 quiz.ImagePos5 = Request.Form["ImagePos5"];
-            }
-            else
-            {
-                quiz.Image5 = null;
-                quiz.ImagePos5 = null;
-            }
+                quiz.ImageCount++;
+            }   
 
             if (Request.Form.Files["imageFile6"] != null & Request.Form["ImagePos6"].Count > 0)
             {
                 quiz.Image6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
                 quiz.ImagePos6 = Request.Form["ImagePos6"];
-            }
-            else
-            {
-                quiz.Image6 = null;
-                quiz.ImagePos6 = null;
+                quiz.ImageCount++;
             }
 
             if (Request.Form.Files["imageFile7"] != null & Request.Form["ImagePos7"].Count > 0)
             {
                 quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
                 quiz.ImagePos7 = Request.Form["ImagePos7"];
-            }
-            else
-            {
-                quiz.Image7 = null;
-                quiz.ImagePos7 = null;
+                quiz.ImageCount++;
             }
 
             if (Request.Form.Files["imageFile8"] != null & Request.Form["ImagePos8"].Count > 0)
             {
                 quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
                 quiz.ImagePos8 = Request.Form["ImagePos8"];
+                quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image8 = null;
-                quiz.ImagePos8 = null;
-            }
+            
 
             if (Request.Form.Files["imageFile9"] != null & Request.Form["ImagePos9"].Count > 0)
             {
                 quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
                 quiz.ImagePos9 = Request.Form["ImagePos9"];
+                quiz.ImageCount++;
             }
-            else
-            {
-                quiz.Image9 = null;
-                quiz.ImagePos9 = null;
-            }
+            
 
 
             if (ModelState.IsValid)

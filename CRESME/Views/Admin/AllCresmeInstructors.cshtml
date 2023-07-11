@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CRESME.Data.Quiz>
 
 @{
-    ViewData["Title"] = "All CRESMES";
+    ViewData["Title"] = "List All CRESMES";
 }
 
 
@@ -32,7 +32,7 @@
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body bg-success"  style="color:white">
+                <div class="toast-body bg-success"  style="color:white">
                 @TempData["Success"]
             </div>
         </div>
@@ -83,6 +83,10 @@
 
                     <th class="table-dark">
                         @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+
+                    <th class="table-dark">
+                        @Html.DisplayNameFor(model => model.ShuffleEnabled)
                     </th>
 
                     <th class="table-dark">
@@ -146,15 +150,17 @@
                             @Html.DisplayFor(modelItem => item.EndDate).
                         </td>
 
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.Published)
-                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShuffleEnabled)
+                        </td>
+
+                        
 
                         <td>
                         
                         @if (item.Published == "Yes")
                             {
-                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #03ba00;"></i>
                             }
                             else
                             {
@@ -166,7 +172,7 @@
 
                         @if (item.FeedBackEnabled == "Yes")
                         {
-                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #03ba00;"></i>
                         }
                         else
                         {

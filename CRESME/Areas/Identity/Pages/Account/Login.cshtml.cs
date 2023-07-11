@@ -113,13 +113,10 @@ namespace CRESME.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    TempData["AlertMessage"] = "Login sucessful!";
+                    TempData["Success"] = "Login sucessful!";
                     return LocalRedirect(returnUrl);
 
                 }
-
-
-
 
                 if (result.RequiresTwoFactor)
                 {

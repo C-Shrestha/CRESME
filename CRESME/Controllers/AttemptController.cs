@@ -6,6 +6,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NuGet.DependencyResolver;
 using System.Security.Claims;
 using System.Globalization;
+using iText.Html2pdf;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using System;
 
 namespace CRESME.Controllers
 {
@@ -13,12 +19,76 @@ namespace CRESME.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IWebHostEnvironment _environment;
+        ICompositeViewEngine _compositeViewEngine;
 
-        public AttemptController(ApplicationDbContext context, IWebHostEnvironment environment = null)
+        public AttemptController(ApplicationDbContext context, ICompositeViewEngine compositeViewEngine, IWebHostEnvironment environment = null)
         {
             _context = context;
             _environment = environment;
+            _compositeViewEngine = compositeViewEngine;
         }
+
+
+        /*Returns a view with a PDF template format that will be submitted to webcourses.*/
+        [Authorize(Roles = "Student, Admin, Instructor")]
+        public IActionResult TestAttempt(Attempt attempt)
+        {
+            return View(attempt);
+        }
+
+        /*Generated a PDF based on "PrintAttempt.cshtml view with student CRESME data to be submited to webcourses
+         * The "TestAttempt.csthml and PrintAttempt.cshtml are similar only differnce being PrintAtempt.cshtml does not have the "Create PDF" button.
+         * TestAttempt -> Create PDF -> PrintAttempt -> PDF Download "*/
+        [Authorize(Roles = "Admin, Instructor, Student")]
+        public async Task<IActionResult> GenerateAttemptPDF(Attempt attempt)
+        {
+            // using string Swriter to convert view with Model data into HTML string. 
+            using (var stringWriter = new StringWriter())
+            {
+                // finds the view, PrintAttempt.cshtml, that will be used to generate PDF. 
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, "PrintAttempt", false);
+                if (viewResult == null)
+                {
+                    throw new ArgumentException("View Cannot be Found");
+
+                }
+                var model = attempt;
+
+                // Dictionary is created with the Attempt model data added to the view
+                var viewDictionary = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+                { Model = model };
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    viewDictionary,
+                    TempData,
+                    stringWriter,
+                    new HtmlHelperOptions()
+                    );
+
+                await viewResult.View.RenderAsync(viewContext);
+
+
+                // using the conver to PDF function to create a PDF stream
+                byte[] pdfBytes;
+                using (MemoryStream outputStream = new MemoryStream())
+                {
+                    HtmlConverter.ConvertToPdf(stringWriter.ToString(), outputStream);
+                    pdfBytes = outputStream.ToArray();
+                }
+
+
+                string filename = $"{attempt.QuizName} {DateTime.Now:MM/dd/yyy}.pdf";
+
+                // return PDF for as download file
+                return File(pdfBytes, "application/pdf", filename);
+
+
+            }
+
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -92,16 +162,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey1)
                 {
-                    if (attempt.FreeResponseA.Contains(key) && (attempt.PhysicalAnswerA == PhysicalAnswer1 || attempt.DiagnosticAnswerA == DiagnosticAnswer1))
+                    if (attempt.FreeResponseA.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnAGrade += 3;
                         if (attempt.PhysicalAnswerA == PhysicalAnswer1)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnAGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerA == DiagnosticAnswer1)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnAGrade += 1;
                         }
                         break;
                     }
@@ -112,16 +182,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey2)
                 {
-                    if (attempt.FreeResponseB.Contains(key) && (attempt.PhysicalAnswerB == PhysicalAnswer2 || attempt.DiagnosticAnswerB == DiagnosticAnswer2))
+                    if (attempt.FreeResponseB.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnBGrade += 3;
                         if (attempt.PhysicalAnswerB == PhysicalAnswer2)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnBGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerB == DiagnosticAnswer2)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnBGrade += 1;
                         }
 
                         break;
@@ -133,16 +203,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey3)
                 {
-                    if (attempt.FreeResponseC.Contains(key) && (attempt.PhysicalAnswerC == PhysicalAnswer3 || attempt.DiagnosticAnswerC == DiagnosticAnswer3))
+                    if (attempt.FreeResponseC.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnCGrade += 3;
                         if (attempt.PhysicalAnswerC == PhysicalAnswer3)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnCGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerC == DiagnosticAnswer3)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnCGrade += 1;
                         }
 
                         break;
@@ -154,16 +224,16 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey4)
                 {
-                    if (attempt.FreeResponseD.Contains(key) && (attempt.PhysicalAnswerD == PhysicalAnswer4 || attempt.DiagnosticAnswerD == DiagnosticAnswer4))
+                    if (attempt.FreeResponseD.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnDGrade += 3;
                         if (attempt.PhysicalAnswerD == PhysicalAnswer4)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnDGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerD == DiagnosticAnswer4)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnDGrade += 1;
                         }
 
                         break;
@@ -175,22 +245,24 @@ namespace CRESME.Controllers
             {
                 foreach (string key in DiagnosisAnswerKey5)
                 {
-                    if (attempt.FreeResponseE.Contains(key) && (attempt.PhysicalAnswerE == PhysicalAnswer5 || attempt.DiagnosticAnswerE == DiagnosticAnswer5))
+                    if (attempt.FreeResponseE.Contains(key))
                     {
-                        attempt.Score += 3;
+                        attempt.ColumnEGrade += 3;
                         if (attempt.PhysicalAnswerE == PhysicalAnswer5)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnEGrade += 1;
                         }
                         if (attempt.DiagnosticAnswerE == DiagnosticAnswer5)
                         {
-                            attempt.Score += 1;
+                            attempt.ColumnEGrade += 1;
                         }
 
                         break;
                     }
                 }
             }
+
+            attempt.Score = attempt.ColumnAGrade + attempt.ColumnBGrade + attempt.ColumnCGrade + attempt.ColumnDGrade + attempt.ColumnEGrade;
 
             //  UNSHUFFLING COLUMNS
             string[] OriginalAttemptAnswers = { attempt.PhysicalAnswerA, attempt.PhysicalAnswerB, attempt.PhysicalAnswerC, attempt.PhysicalAnswerD, attempt.PhysicalAnswerE,
@@ -212,42 +284,42 @@ namespace CRESME.Controllers
 
             
             //CRESME meta data
-            if (ParentQuiz.Image0 != null) {
+            if (ParentQuiz.Image0 != "") {
                 attempt.Image0Name = ParentQuiz.Image0[16..^40];
             }
-            if (ParentQuiz.Image1 != null)
+            if (ParentQuiz.Image1 != "")
             {
                 attempt.Image1Name = ParentQuiz.Image1[16..^40];
             }
-            if (ParentQuiz.Image2 != null)
+            if (ParentQuiz.Image2 != "")
             {
                 attempt.Image2Name = ParentQuiz.Image2[16..^40];
             }
-            if (ParentQuiz.Image3 != null)
+            if (ParentQuiz.Image3 != "")
             {
                 attempt.Image3Name = ParentQuiz.Image3[16..^40];
             }
-            if (ParentQuiz.Image4 != null)
+            if (ParentQuiz.Image4 != "")
             {
                 attempt.Image4Name = ParentQuiz.Image4[16..^40];
             }
-            if (ParentQuiz.Image5 != null)
+            if (ParentQuiz.Image5 != "")
             {
                 attempt.Image5Name = ParentQuiz.Image5[16..^40];
             }
-            if (ParentQuiz.Image6 != null)
+            if (ParentQuiz.Image6 != "")
             {
                 attempt.Image6Name = ParentQuiz.Image6[16..^40];
             }
-            if (ParentQuiz.Image7 != null)
+            if (ParentQuiz.Image7 != "")
             {
                 attempt.Image7Name = ParentQuiz.Image7[16..^40];
             }
-            if (ParentQuiz.Image8 != null)
+            if (ParentQuiz.Image8 != "")
             {
                 attempt.Image8Name = ParentQuiz.Image8[16..^40];
             }
-            if (ParentQuiz.Image9 != null)
+            if (ParentQuiz.Image9 != "")
             {
                 attempt.Image9Name = ParentQuiz.Image9[16..^40];
             }
@@ -263,7 +335,8 @@ namespace CRESME.Controllers
                 _context.Add(attempt);
                 _context.SaveChanges();
             }
-           return View("_LoginPartial");
+            //TempData["Success"] = "CRESME submitted sucessfully!";
+            return RedirectToAction("TestAttempt", attempt);
         }
 
 

@@ -22,14 +22,14 @@ namespace CRESME.Data
         [BindProperty]
         public int NumColumns { get; set; } = 4;
 
-        [DataType(DataType.Date)]
+        
         public DateTime DateCreated { get; set; }
 
-        [DataType(DataType.Date)]
+        
         [BindProperty]
         public DateTime StartDate { get; set; }
 
-        [DataType(DataType.Date)]
+        
         [BindProperty]
         public DateTime EndDate { get; set; }
 
@@ -61,6 +61,8 @@ namespace CRESME.Data
         public string? Legend { get; set; } = "";
 
         public string? CoverImage { get; set; }
+
+        public string? ExcelName { get; set; }
 
         public string? HistoryA { get; set; } = "";
         public string? HistoryB { get; set; } = "";
@@ -105,6 +107,7 @@ namespace CRESME.Data
         public string? Image8 { get; set; } = "";
         public string? Image9 { get; set; } = "";
 
+        public int ImageCount { get; set; } = 0;
         
         public string? ImagePos0 { get; set; } = "";
         public string? ImagePos1 { get; set; } = "";

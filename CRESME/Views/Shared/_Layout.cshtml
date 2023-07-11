@@ -38,69 +38,70 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                        
+
+                            
 
 
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateAccounts">Create Accounts</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateAccounts">Accounts</a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListUsers">Users</a>
                                 </li>
 
-                                @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="DisplayQuizzes">Display Quizzes</a>
-                                </li>*@
+                                
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" href="/swagger/index.html">SwaggerHub</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">List All CRESMES</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ListAllQuizes">CRESMES</a>
                                 </li>
-                            }
-
-                            @if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
-                            {
-                                @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Inventory" asp-action="GetAll">Inventory</a>
-                                </li>*@
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz">Create CRESME</a>
                                 </li>
-                                
 
-                                @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="Grades">PDF</a>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ChangePassword">Change Password</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="GetAll">PDF Print</a>
-                                </li>*@
-
-                                
-
-                                
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pdf" asp-action="TestAttempt">AttemptPDF</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ForgotPassword">Forgot Password</a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="GeneratePasswordView">Generate Password</a>
+                                </li>
+
+
+
+                                
                             }
+
+                            
 
                             @if (User.IsInRole("Instructor"))
                             {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="CreateQuiz">Create CRESME</a>
+                                </li>
+
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="InstructorQuizesView">Your CRESMES</a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AllCresmeInstructors">All CRESMES</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ChangePassword">Change Password</a>
                                 </li>
                                 
                             }
@@ -120,14 +121,17 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="PracticeQuizes">Practice CRESMES</a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ChangePassword">Change Password</a>
+                                </li>
+
 
                             }
 
-                            
 
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Quiz" asp-action="TakeQuiz">Take CRESME</a>
-                            </li>
+                            </li>*@
 
                             
 
@@ -173,6 +177,13 @@
 
     <script>
 
+        function showToast(toast) {
+
+            var showToast = new bootstrap.Toast(toast);
+            showToast.show();
+
+        }
+
         window.onload = function () {
 
             var links = document.getElementsByClassName("nav-link");
@@ -183,9 +194,24 @@
                 if (links[i].innerHTML == "@ViewData["Title"]")
                     links[i].classList.add("active");
 
-                console.log("@ViewData["Title"]");
+                
             }
+
+            var toasts = document.getElementsByClassName("toast")
+
+            if (toasts != null) {
+                var length = toasts.length;
+
+                console.log("length:" + length);
+
+                for (let i = 0; i < length; i++)
+                    showToast(toasts[i]);
+            }
+
         };
+
+
+      
 
     </script>
 

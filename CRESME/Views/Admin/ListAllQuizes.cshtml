@@ -1,7 +1,7 @@
 @model IEnumerable<CRESME.Data.Quiz>
 
 @{
-    ViewData["Title"] = "List All CRESMES";
+    ViewData["Title"] = "CRESMES";
 }
 
 
@@ -50,17 +50,6 @@
 <div class="container-fluid">
     <div class="row justify-content-start">
 
-
-
-
-
-    @*<form class="col-2"  asp-controller="Admin" asp-action="ExportAllQuiz">
-        <button type="submit" class="btn btn-md btn-primary">
-            <i class="fa-solid fa-file-arrow-down"></i>
-            Export List of Quizes
-        </button>
-    </form>*@
-
         <div class="dropdown col-6">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Choose Action
@@ -78,10 +67,21 @@
                     <form class="dropdown-item" asp-controller="Admin" asp-action="ExportQuizesToExcel">
                         <button type="submit" class="btn btn-md btn-primary">
                             <i class="fa-solid fa-file-arrow-down"></i>
-                            New Export Quizes to Excel
+                           Export All CRESMES
                         </button>
                     </form>
                 </li>
+
+                <li>
+                    <form class="dropdown-item" asp-controller="Admin" asp-action="ExportAllAttempts">
+                        <button type="submit" class="btn btn-md btn-primary">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            Export All Attempts
+                        </button>
+                    </form>
+                </li>
+
+
                 <li>
                     <form class="dropdown-item" asp-controller="Admin" asp-action="DeleteAllQuizes">
                         <button onclick="return confirm('Are you sure you want to DELETE ALL the quizes PERMANENTLY?')" type="submit" class="btn btn-md btn-danger">
@@ -90,6 +90,11 @@
                         </button>
                     </form>
                 </li>
+
+                
+
+
+
             </ul>
         </div>
        
@@ -136,6 +141,10 @@
 
                     <th scope="col" class="table-dark">
                         @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+
+                    <th scope="col" class="table-dark">
+                        @Html.DisplayNameFor(model => model.ShuffleEnabled)
                     </th>
 
                     <th scope="col" class="table-dark">
@@ -208,13 +217,16 @@
                             @Html.DisplayFor(modelItem => item.EndDate)
                         </td>
 
+                        <td class="table-secondary">
+                            @Html.DisplayFor(modelItem => item.ShuffleEnabled)
+                        </td>
                         
 
                         <td class="table-secondary">
                         
                         @if (item.Published == "Yes")
                             {
-                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #03ba00;"></i>
                             }
                             else
                             {
@@ -226,7 +238,7 @@
 
                         @if (item.FeedBackEnabled == "Yes")
                         {
-                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #03ba00;"></i>
                         }
                         else
                         {
@@ -238,9 +250,9 @@
 
                     <td class="table-secondary">
 
-                        @if (item.InstructorID != "")
+                        @if (item.InstructorID != "N/A")
                         {
-                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #00ff00;"></i>
+                            <i class="fa-solid fa-circle-check fa-2xl" style="color: #03ba00;"></i>
                         }
                         else
                         {
@@ -266,7 +278,7 @@
 
 
                     <td class="table-secondary">
-                        <form asp-controller="Admin" asp-action="EditQuiz" asp-route-QuizId="@item.QuizId">
+                        <form asp-controller="Admin" asp-action="InstructorEditQuiz" asp-route-QuizId="@item.QuizId">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa-solid fa-user-pen"></i>
                                     Edit

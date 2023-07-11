@@ -57,7 +57,7 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="col-6 text-center"><strong>Help Page</strong></div>
+                
             }
             else
             {
@@ -65,29 +65,7 @@
             }
 
 
-            @*<div class="w-100"></div>
-            <i class="col-lg-1 col-2 fa-solid fa-user"></i>
-            <input asp-for="Input.Email" class="col-4 shadow-none input-field" autocomplete="NID" placeholder="Enter user NID" aria-required="true" />
-            <label asp-for="Input.Email" style="display: none;"></label>
-            <span asp-validation-for="Input.Email" class="text-danger"></span>
-
-            <div class="w-100"></div>
-            <i class="col-lg-1 col-2 fa-solid fa-lock"></i>
-            <input asp-for="Input.Password" class="col-4 input-field" autocomplete="current-password" placeholder="Enter user password" aria-required="true" />
-            <label asp-for="Input.Password" style="display: none;"></label>
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
-
-            <div class="w-100"></div>
-            <label asp-for="Input.RememberMe" class="col-4">
-                <input class="form-check-input" asp-for="Input.RememberMe" />
-                @Html.DisplayNameFor(m => m.Input.RememberMe)
-            </label>
-
-            <div class="w-100"></div>
-            <button class="btn custom-btn col-5">Log In</button>
-            <div class="w-100"></div>
-
-            <a id="forgot-password" asp-page="./ForgotPassword" class="col-lg-5 col-8">Forgot your password?</a>*@
+           
         </div>
     </div>
 </div>
@@ -126,11 +104,13 @@
             // your code here
             $('.toast').toast('show');
 
-            var reloading = sessionStorage.getItem("reloading");
-
-            if (reloading) 
-                sessionStorage.removeItem("reloading");
+           
         };
+
+        var reloading = sessionStorage.getItem("reloading");
+
+        if (reloading)
+            sessionStorage.removeItem("reloading");
     </script>
 }
 

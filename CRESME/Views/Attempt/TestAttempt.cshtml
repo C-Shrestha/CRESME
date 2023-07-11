@@ -1,0 +1,599 @@
+﻿@model CRESME.Data.Attempt
+
+@{
+    ViewData["Title"] = "AttemptPDF";
+}
+
+
+<hr />
+
+
+<form asp-action="GenerateAttemptPDF" asp-controller="Attempt">
+
+    <input type="hidden" name="AttemptId" value="@Model.AttemptId " />
+    <input type="hidden" name="StudentNID" value="@Model.StudentNID " />
+    <input type="hidden" name="StudentName" value="@Model.StudentName " />
+    <input type="hidden" name="QuizName" value="@Model.QuizName " />
+    <input type="hidden" name="Score" value="@Model.Score " />
+    <input type="hidden" name="NumColumns" value="@Model.NumColumns " />
+    <input type="hidden" name="StartTime" value="@Model.StartTime " />
+    <input type="hidden" name="EndTime" value="@Model.EndTime " />
+    <input type="hidden" name="Term" value="@Model.Term " />
+    <input type="hidden" name="Course" value="@Model.Course " />
+    <input type="hidden" name="Block" value="@Model.Block " />
+    <input type="hidden" name="PatientIntro" value="@Model.PatientIntro " />
+    <input type="hidden" name="PhysicalAnswerA" value="@Model.PhysicalAnswerA " />
+    <input type="hidden" name="PhysicalAnswerB" value="@Model.PhysicalAnswerB " />
+    <input type="hidden" name="PhysicalAnswerC" value="@Model.PhysicalAnswerC " />
+    <input type="hidden" name="PhysicalAnswerD" value="@Model.PhysicalAnswerD " />
+    <input type="hidden" name="PhysicalAnswerE" value="@Model.PhysicalAnswerE " />
+    <input type="hidden" name="DiagnosticAnswerA" value="@Model.DiagnosticAnswerA " />
+    <input type="hidden" name="DiagnosticAnswerB" value="@Model.DiagnosticAnswerB " />
+    <input type="hidden" name="DiagnosticAnswerC" value="@Model.DiagnosticAnswerC " />
+    <input type="hidden" name="DiagnosticAnswerD" value="@Model.DiagnosticAnswerD " />
+    <input type="hidden" name="DiagnosticAnswerE" value="@Model.DiagnosticAnswerE " />
+    <input type="hidden" name="FreeResponseA" value="@Model.FreeResponseA " />
+    <input type="hidden" name="FreeResponseB" value="@Model.FreeResponseB " />
+    <input type="hidden" name="FreeResponseC" value="@Model.FreeResponseC " />
+    <input type="hidden" name="FreeResponseD" value="@Model.FreeResponseD " />
+    <input type="hidden" name="FreeResponseE" value="@Model.FreeResponseE " />
+    <input type="hidden" name="NumImage0Clicks" value="@Model.NumImage0Clicks " />
+    <input type="hidden" name="NumImage1Clicks" value="@Model.NumImage1Clicks " />
+    <input type="hidden" name="NumImage2Clicks" value="@Model.NumImage2Clicks " />
+    <input type="hidden" name="NumImage3Clicks" value="@Model.NumImage3Clicks " />
+    <input type="hidden" name="NumImage4Clicks" value="@Model.NumImage4Clicks " />
+    <input type="hidden" name="NumImage5Clicks" value="@Model.NumImage5Clicks " />
+    <input type="hidden" name="NumImage6Clicks" value="@Model.NumImage6Clicks " />
+    <input type="hidden" name="NumImage7Clicks" value="@Model.NumImage7Clicks " />
+    <input type="hidden" name="NumImage8Clicks" value="@Model.NumImage8Clicks " />
+    <input type="hidden" name="NumImage9Clicks" value="@Model.NumImage9Clicks " />
+    <input type="hidden" name="Image0Name" value="@Model.Image0Name " />
+    <input type="hidden" name="Image1Name" value="@Model.Image1Name " />
+    <input type="hidden" name="Image2Name" value="@Model.Image2Name " />
+    <input type="hidden" name="Image3Name" value="@Model.Image3Name " />
+    <input type="hidden" name="Image4Name" value="@Model.Image4Name " />
+    <input type="hidden" name="Image5Name" value="@Model.Image5Name " />
+    <input type="hidden" name="Image6Name" value="@Model.Image6Name " />
+    <input type="hidden" name="Image7Name" value="@Model.Image7Name " />
+    <input type="hidden" name="Image8Name" value="@Model.Image8Name " />
+    <input type="hidden" name="Image9Name" value="@Model.Image9Name " />
+    <input type="hidden" name="NumImage0Clicks" value="@Model.NumImage0Clicks " />
+    <input type="hidden" name="NumImage1Clicks" value="@Model.NumImage1Clicks " />
+    <input type="hidden" name="NumImage2Clicks" value="@Model.NumImage2Clicks " />
+    <input type="hidden" name="NumImage3Clicks" value="@Model.NumImage3Clicks " />
+    <input type="hidden" name="NumImage4Clicks" value="@Model.NumImage4Clicks " />
+    <input type="hidden" name="NumImage5Clicks" value="@Model.NumImage5Clicks " />
+    <input type="hidden" name="NumImage6Clicks" value="@Model.NumImage6Clicks " />
+    <input type="hidden" name="NumImage7Clicks" value="@Model.NumImage7Clicks " />
+    <input type="hidden" name="NumImage8Clicks" value="@Model.NumImage8Clicks " />
+    <input type="hidden" name="NumImage9Clicks" value="@Model.NumImage9Clicks " />
+    <input type="hidden" name="NumLabValueClicks" value="@Model.NumLabValueClicks " />
+    <input type="hidden" name="NumLegendClicks" value="@Model.NumLegendClicks " />
+    <button type="submit" class="btn btn-md btn-primary">
+        <i class="fa-solid fa-file-pdf"></i>
+        Create PDF
+    </button>
+</form>
+
+<br />
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>CRESME Report</title>
+    <style type="text/css">
+
+
+        .main-body {
+            padding: 0;
+            text-indent: 0;
+            margin-top: 5pt;
+            margin-left: 5pt
+        }
+
+        h1 {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16pt;
+        }
+
+        h2 {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13pt;
+        }
+
+        .s1 {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 13pt;
+        }
+
+        .p,
+        p {
+            color: black;
+            font-family: "Arial", serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 13pt;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-body">
+        <h1 style="
+        padding-top: 3pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+            @Model.QuizName
+        </h1>
+
+
+
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+            Directions:
+            <span class="s1">
+                Save your report as PDF by clicking the "Create PDF" button. Upload the saved report PDF
+                to the assignment in Webcourses.
+            </span>
+        </h2>
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+            Date: <span class="s1">  @DateTime.Now  </span>
+        </h2>
+
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+            Start Time: <span class="s1">  @Model.StartTime </span>
+            &nbsp;
+            &nbsp;
+            End Time:
+            <span class="s1">  @Model.EndTime  </span>
+        </h2>
+
+        <br />
+        @*<p style="text-indent: 0pt; text-align: left"><br /></p>*@
+        @*<h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Student&#39;s Name:
+        </h2>*@
+        @*<p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        @Model.StudentName
+        </p>*@
+
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+            Student Name: <span class="s1">  @Model.StudentName  </span>
+        </h2>
+
+
+        @*<p style="text-indent: 0pt; text-align: left"><br /></p>
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        CASE 1
+        </h2>*@
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+            CC:
+            <span class="s1"> @Model.PatientIntro </span>
+        </h2>
+
+
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+            PE
+        </h2>
+
+
+        <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+            PE (A) = @Model.PhysicalAnswerA
+            <br />
+            PE (B) = @Model.PhysicalAnswerB
+            <br />
+            PE (C) = @Model.PhysicalAnswerC
+            <br />
+            PE (D) = @Model.PhysicalAnswerD
+            <br />
+            @if (Model.NumColumns == 5)
+            {
+                string htmlContent = "PE (E) = ";
+
+                @Html.Raw(htmlContent) @Model.PhysicalAnswerE
+
+            }
+
+        </p>
+
+
+
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+            Data
+        </h2>
+
+        <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+      ">
+            Data (A) = @Model.DiagnosticAnswerA
+            <br />
+            Data (B) = @Model.DiagnosticAnswerB
+            <br />
+            Data (C) = @Model.DiagnosticAnswerC
+            <br />
+            Data (D) = @Model.DiagnosticAnswerD
+            <br />
+            @if (Model.NumColumns == 5)
+            {
+                string htmlContent = "Data (E) = ";
+
+                @Html.Raw(htmlContent) @Model.DiagnosticAnswerE
+
+            }
+        </p>
+
+
+
+        <h2 style="
+        padding-top: 3pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+            Diagnosis
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+      ">
+            Scenario 1: @Model.FreeResponseA
+            <br />
+            Scenario 2: @Model.FreeResponseB
+            <br />
+            Scenario 3: @Model.FreeResponseC
+            <br />
+            Scenario 4: @Model.FreeResponseD
+            <br />
+            @if (Model.NumColumns == 5)
+            {
+                string htmlContent = "Scenario 5: ";
+
+                @Html.Raw(htmlContent) @Model.FreeResponseE
+
+            }
+        </p>
+
+
+
+
+        @*<p style="text-indent: 0pt; text-align: left"><br /></p>
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: justify">
+        CASE 2
+        </h2>
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        CC:
+        <span class="s1">40 yo female presenting with fatigue and abnormal labs.</span>
+        </h2>
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Data
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+        ">
+        Data (E) = 1 Data (F) = 4 Data (G) = 3 Data (H) = 2
+        </p>
+        <h2 style="
+        padding-top: 3pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Diagnosis
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Scenario 1: Iron deficiency anemia
+        </p>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 6pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+        ">
+        Scenario 2: Aplastic Anemia (from methimazole) Scenario 3: Pernicious
+        Anemia (low B12)
+        </p>
+        <p style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+        Scenario 4: Sickle Cell Disease causing anemia and vaso-occlusive pain
+        </p>
+        <h2 style="
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 15pt;
+        text-align: left;
+        ">
+        CASE 3
+        </h2>
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        CC:
+        <span class="s1">
+        55 yo male presenting with chest pain (discomfort) and abnormal
+        ECG.
+        </span>
+        </h2>
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Data
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+        ">
+        Data (J) = 2 Data (K) = 3 Data (L) = 1 Data (M) = 4
+        </p>
+        <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+        ">
+        Images Viewed
+        <span class="p">
+        Image (J): 4 time(s) Image (K): 2 time(s) Image (L): 3 time(s) Image
+        (M): 3 time(s)
+        </span>
+        </h2>
+        <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Diagnosis
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Scenario 1: STEMI
+        </p>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+        ">
+        Scenario 2: hyperkalemia (diet + underlying CKD + meds) Scenario 3: A-fib
+        </p>
+        <p style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+        Scenario 4: Pericarditis
+        </p>
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+        CASE 4
+        </h2>
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        CC: <span class="s1">40 yo male presenting with an abnormal CXR</span>
+        </h2>
+        <h2 style="
+        padding-top: 7pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Data
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: justify;
+        ">
+        Data (P) = 4 Data (Q) = 1 Data (R) = 2 Data (S) = 3
+        </p>
+        <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+        ">
+        Images Viewed
+        <span class="p">
+        Image (P): 2 time(s) Image (Q): 7 time(s) Image (R): 4 time(s) Image
+        (S): 7 time(s)
+        </span>
+        </h2>
+        <h2 style="
+        padding-top: 3pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+        ">
+        Diagnosis
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 130%;
+        text-align: left;
+        ">
+        Scenario 1: Pulmonary Embolism Scenario 2: Pneumothorax (PTX) Scenario 3:
+        Pneumonia with atelectasis Scenario 4: ulcer (PUD - perforated)
+        </p>*@
+
+
+        @if (@Model.Image0Name != null)
+        {
+            <p>@Model.Image0Name: @Model.NumImage0Clicks clicks</p>
+        }
+
+        @if (@Model.Image1Name != null)
+        {
+            <p>@Model.Image1Name: @Model.NumImage1Clicks clicks</p>
+        }
+
+        @if (@Model.Image2Name != null)
+        {
+            <p>@Model.Image2Name: @Model.NumImage2Clicks clicks</p>
+        }
+
+        @if (@Model.Image3Name != null)
+        {
+            <p>@Model.Image3Name: @Model.NumImage3Clicks clicks</p>
+        }
+
+        @if (@Model.Image4Name != null)
+        {
+            <p>@Model.Image4Name: @Model.NumImage4Clicks clicks</p>
+        }
+
+        @if (@Model.Image5Name != null)
+        {
+            <p>@Model.Image5Name: @Model.NumImage5Clicks clicks</p>
+        }
+
+        @if (@Model.Image6Name != null)
+        {
+            <p>@Model.Image6Name: @Model.NumImage6Clicks clicks</p>
+        }
+
+        @if (@Model.Image7Name != null)
+        {
+            <p>@Model.Image7Name: @Model.NumImage7Clicks clicks</p>
+        }
+
+        @if (@Model.Image8Name != null)
+        {
+            <p>@Model.Image8Name: @Model.NumImage8Clicks clicks</p>
+        }
+
+        @if (@Model.Image9Name != null)
+        {
+            <p>@Model.Image9Name: @Model.NumImage9Clicks clicks</p>
+        }
+
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+            Lab Values Viewed
+        </h2>
+        <p style="
+        padding-top: 4pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      ">
+            Labs: @Model.NumLabValueClicks time(s)
+
+            <br />
+
+            Legend: @Model.NumLegendClicks time(s)
+
+
+
+
+
+
+        </p>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/datatable_file.js"></script>
+}
