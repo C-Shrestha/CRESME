@@ -1658,151 +1658,150 @@ namespace CRESME.Controllers
                     quiz.Legend = UploadImagetoFile(Request.Form.Files["Legend"]);
                 }
 
+              
+                 
+                
 
-                int previousCount = quiz.ImageCount;
+             
+                
 
-                if (Request.Form.Files["imageFile0"] != null & Request.Form["ImagePos0"].Count > 0)
+
+                quiz.ImageCount = 0;
+                List<string> ImagesToDelete = new List<string>();
+                List<string> newPath = new List<string>();
+                for (int i = 0; i<10; i++) {
+                    string formpath = "HiddenPath" + i;
+                    if (Request.Form[formpath].Count>0) {
+                        newPath.Add(Request.Form[formpath]);
+                    }
+                }
+                int previousCount = newPath.Count;
+                string[] imagenames = {quiz.Image0, quiz.Image1, quiz.Image2, quiz.Image3, quiz.Image4, quiz.Image5, quiz.Image6, quiz.Image7, quiz.Image8, quiz.Image9};
+                int currentImage = 0;
+
+                //image0
+                string currentalt = "Image" + currentImage + "Alt";
+                string currentpos = "ImagePos" + currentImage;
+                string currentrequest = "imageFile" + currentImage;         
+                (quiz.Image0, quiz.Image0Alt, quiz.ImagePos0) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image0!="") {
+                    quiz.ImageCount++;
+                }
+
+                //image1
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image1, quiz.Image1Alt, quiz.ImagePos1) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image1 != "")
                 {
-                    quiz.Image0 = UploadImagetoFile(Request.Form.Files["imageFile0"]);
-                    quiz.ImagePos0 = Request.Form["ImagePos0"];
-                    quiz.Image0Alt = Request.Form["Image0Alt"];
-                    quiz.ImageCount++;
-                }
-                else if(1 <= previousCount){ //image is already in database
-                    quiz.ImagePos0 = Request.Form["ImagePos0"];
-                    quiz.Image0Alt = Request.Form["Image0Alt"];
                     quiz.ImageCount++;
                 }
 
-
-                if (Request.Form.Files["imageFile1"] != null & Request.Form["ImagePos1"].Count > 0)
+                //image2
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image2, quiz.Image2Alt, quiz.ImagePos2) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image2 != "")
                 {
-                    quiz.Image1 = UploadImagetoFile(Request.Form.Files["imageFile1"]);
-                    quiz.ImagePos1 = Request.Form["ImagePos1"];
-                    quiz.Image1Alt = Request.Form["Image1Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (2 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos1 = Request.Form["ImagePos1"];
-                    quiz.Image1Alt = Request.Form["Image1Alt"];
                     quiz.ImageCount++;
                 }
 
-
-                if (Request.Form.Files["imageFile2"] != null & Request.Form["ImagePos2"].Count > 0)
+                //image3
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image3, quiz.Image3Alt, quiz.ImagePos3) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image3 != "")
                 {
-                    quiz.Image2 = UploadImagetoFile(Request.Form.Files["imageFile2"]);
-                    quiz.ImagePos2 = Request.Form["ImagePos2"];
-                    quiz.Image2Alt = Request.Form["Image2Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (3 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos2 = Request.Form["ImagePos2"];
-                    quiz.Image2Alt = Request.Form["Image2Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile3"] != null & Request.Form["ImagePos3"].Count > 0)
+                //image4
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image4, quiz.Image4Alt, quiz.ImagePos4) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image4 != "")
                 {
-                    quiz.Image3 = UploadImagetoFile(Request.Form.Files["imageFile3"]);
-                    quiz.ImagePos3 = Request.Form["ImagePos3"];
-                    quiz.Image3Alt = Request.Form["Image3Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (4 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos3 = Request.Form["ImagePos3"];
-                    quiz.Image3Alt = Request.Form["Image3Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile4"] != null & Request.Form["ImagePos4"].Count > 0)
+                //image5
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image5, quiz.Image5Alt, quiz.ImagePos5) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image5 != "")
                 {
-                    quiz.Image4 = UploadImagetoFile(Request.Form.Files["imageFile4"]);
-                    quiz.ImagePos4 = Request.Form["ImagePos4"];
-                    quiz.Image4Alt = Request.Form["Image4Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (5 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos4 = Request.Form["ImagePos4"];
-                    quiz.Image4Alt = Request.Form["Image4Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile5"] != null & Request.Form["ImagePos5"].Count > 0)
+                //image6
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image6, quiz.Image6Alt, quiz.ImagePos6) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image6 != "")
                 {
-                    quiz.Image5 = UploadImagetoFile(Request.Form.Files["imageFile5"]);
-                    quiz.ImagePos5 = Request.Form["ImagePos5"];
-                    quiz.Image5Alt = Request.Form["Image5Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (6 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos5 = Request.Form["ImagePos5"];
-                    quiz.Image5Alt = Request.Form["Image5Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile6"] != null & Request.Form["ImagePos6"].Count > 0)
+                //image7
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image7, quiz.Image7Alt, quiz.ImagePos7) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image7 != "")
                 {
-                    quiz.Image6 = UploadImagetoFile(Request.Form.Files["imageFile6"]);
-                    quiz.ImagePos6 = Request.Form["ImagePos6"];
-                    quiz.Image6Alt = Request.Form["Image6Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (7 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos6 = Request.Form["ImagePos6"];
-                    quiz.Image6Alt = Request.Form["Image6Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile7"] != null & Request.Form["ImagePos7"].Count > 0)
+                //image8
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image8, quiz.Image8Alt, quiz.ImagePos8) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image8 != "")
                 {
-                    quiz.Image7 = UploadImagetoFile(Request.Form.Files["imageFile7"]);
-                    quiz.ImagePos7 = Request.Form["ImagePos7"];
-                    quiz.Image7Alt = Request.Form["Image7Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (8 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos7 = Request.Form["ImagePos7"];
-                    quiz.Image7Alt = Request.Form["Image7Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile8"] != null & Request.Form["ImagePos8"].Count > 0)
+                //image9
+                currentalt = "Image" + currentImage + "Alt";
+                currentpos = "ImagePos" + currentImage;
+                currentrequest = "imageFile" + currentImage;
+                (quiz.Image9, quiz.Image9Alt, quiz.ImagePos9) = EditImage(currentrequest, currentpos, currentalt, currentImage, previousCount, newPath, imagenames, ref ImagesToDelete);
+                currentImage++;
+                if (quiz.Image9 != "")
                 {
-                    quiz.Image8 = UploadImagetoFile(Request.Form.Files["imageFile8"]);
-                    quiz.ImagePos8 = Request.Form["ImagePos8"];
-                    quiz.Image8Alt = Request.Form["Image8Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (9 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos8 = Request.Form["ImagePos8"];
-                    quiz.Image8Alt = Request.Form["Image8Alt"];
                     quiz.ImageCount++;
                 }
 
-                if (Request.Form.Files["imageFile9"] != null & Request.Form["ImagePos9"].Count > 0)
-                {
-                    quiz.Image9 = UploadImagetoFile(Request.Form.Files["imageFile9"]);
-                    quiz.ImagePos9 = Request.Form["ImagePos9"];
-                    quiz.Image9Alt = Request.Form["Image9Alt"];
-                    quiz.ImageCount++;
-                }
-                else if (10 <= previousCount)
-                { //image is already in database
-                    quiz.ImagePos9 = Request.Form["ImagePos9"];
-                    quiz.Image9Alt = Request.Form["Image9Alt"];
-                    quiz.ImageCount++;
-                }
 
-                quiz.ImageCount = quiz.ImageCount - previousCount;
+                string path;
+                FileInfo imagefile;
+                foreach (string deletedimage in ImagesToDelete) {
+                    if (deletedimage != "")
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + deletedimage);
+                        imagefile = new FileInfo(path);
+                        if (imagefile.Exists)
+                        {
+                            imagefile.Delete();
+                        }
+                    }
+                }
 
                 //Reading Excel File upload for quiz info
                 if (Request.Form.Files["ExcelFileUpload"] != null)
@@ -1893,6 +1892,43 @@ namespace CRESME.Controllers
                 
 
             
+        }
+
+        //Edits image in case of empty image inputs
+        public (string, string, string) EditImage(string currentrequest, string currentpos, string currentalt, int currentImage, int previousCount, List<string> newPath, string[] imagenames, ref List<string> ImagesToDelete) {
+            string ImagePos = "";
+            string ImageAlt = "";
+            string Image = "";
+            if (Request.Form.Files[currentrequest] != null)
+            {
+                ImagePos = Request.Form[currentpos];
+                ImageAlt = Request.Form[currentalt];
+                Image = UploadImagetoFile(Request.Form.Files[currentrequest]);
+            }
+            else if (currentImage + 1 <= previousCount)
+            { //image is already in database
+                ImagePos = Request.Form[currentpos];
+                ImageAlt = Request.Form[currentalt];
+                if (newPath[currentImage] != imagenames[currentImage])
+                {
+                    ImagesToDelete.Add(imagenames[currentImage]);
+                    for (int i = currentImage; i < 10; i++)
+                    {
+                        if (newPath[currentImage] == imagenames[i])
+                        {
+                            Image = imagenames[i];
+                            break;
+                        }
+                    }
+                }
+                else {
+                    Image = newPath[currentImage];
+                }
+            }
+            else {
+                ImagesToDelete.Add(imagenames[currentImage]);
+            }
+            return (Image, ImageAlt, ImagePos);
         }
 
         //uploads image to wwwroot+/uploadedImages/ and returns static folder path to saved image

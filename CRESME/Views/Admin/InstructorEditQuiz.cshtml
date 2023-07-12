@@ -204,7 +204,7 @@
 
                     string deletestring = "" + i;
 
-                    //<button class="custom_btn col-2" onclick="deleteButton(this.id)" id=@deletestring>Delete</button>
+                    <button class="custom_btn col-2" onclick="deleteButton(this.id)" id=@deletestring>Delete</button>
 
                     string hrdiv1string = "hrDiv1" + i;
 
@@ -212,7 +212,10 @@
 
                     string imagestring = "imageFile" + i;
                     string labelstring = "imageLabel" + i;
+                    
+                    string hiddenid = "HiddenPath" + i;
 
+                        <input type="hidden" id=@hiddenid  value=@imagenames[i] name=@hiddenid>
                     <input type="file" name=@imagestring  id=@imagestring accept="image/*" onchange="checkForImage(this.id)" style="display: none;">
                     <label class="col-4 row justify-content-center border" for=@imagestring id=@labelstring style="border-color: black !important;"><i class="text-center fa-solid fa-image"></i></label>
 
@@ -230,15 +233,15 @@
                     <select id=@ImagePos class="form-select col-1" aria-label="Default select example" name=@ImagePos style="width: 15%; height: 10%; text-align-last:center;">
                         @for(int j = 0; j<9; j++)
                         {
-                            string imagePos = "Image" + j + "Pos";
+                            string imagePos = "Image" + "Pos" + j;
 
                             Console.Write(position[j]);
                             Console.Write(values[j]);
 
                             if (position[i] == values[j]) {
-                                <option value=@values[j] name=@imagePos selected>@names[j]</option>}
+                                <option value="@values[j]" name=@imagePos selected>@names[j]</option>}
                             else{
-                                <option value=@values[j] name=@imagePos>@names[j]</option>};
+                                <option value="@values[j]" name=@imagePos>@names[j]</option>};
 
                         }      
                     </select>
@@ -255,7 +258,7 @@
                     string imageAlt = "Image" + i + "Alt";
                     string altText = "altText" + i;
 
-                    <input class="col-6  input-field" type="text" name=@imageAlt id=@altText value=@alt[i] placeholder="Enter Alt Text">
+                    <input class="col-6  input-field" type="text" name=@imageAlt id=@altText value="@alt[i]" placeholder="Enter Alt Text">
 
                     string newBreak1 = "newBreak1" + i;
 
@@ -291,7 +294,19 @@
                 </label>
                 <i class="col-1 fa-solid fa-check" id="coverCheckMark"></i>
                 <div class="w-100"></div>
-                <div class="col-6 text-center" id="coverName" style="font-weight: bold;">@Model.quiz.CoverImage[16..^40]</div>
+                @{
+                    int coverdot = Model.quiz.CoverImage.IndexOf(".");
+                    coverdot = Model.quiz.CoverImage.Length - coverdot -1;
+                    if (Model.quiz.CoverImage != "/images/CoverImage.png")
+                    {
+                        string coverpath = Model.quiz.CoverImage[16..^(36 + coverdot)];
+                    }
+                    else {
+                        coverpath = "DefaultCoverImage"
+                                    }
+
+                }
+                <div class="col-6 text-center" id="coverName" style="font-weight: bold;">@coverpath</div>
                 <div class="w-100"></div>
 
                 
@@ -478,8 +493,11 @@
         var break2 = document.getElementById('newBreak2' + k);
         var vrDiv1 = document.getElementById('vrDiv1' + k);
         var breakPoint = document.getElementById('breakPoint' + k);
-        
+        var hiddenInput = document.getElementById('HiddenPath' + k);
 
+        if(hiddenInput != null){
+            hiddenInput.remove();
+        }
         deleteButton.remove();
         inputButton.remove();
         inputLabel.remove();
@@ -563,8 +581,12 @@
 
                 var newBreak1 = document.getElementById('newBreak2' + k);
                 newBreak1.setAttribute("id", 'newBreak2' + (k-1));
-
-
+                "HiddenPath" + i
+                var hiddenInput = document.getElementById('HiddenPath' + k);
+                if(hiddenInput !== null){
+                    hiddenInput.setAttribute("id", 'HiddenPath' + (k - 1));
+                    hiddenInput.setAttribute("name", 'HiddenPath' + (k - 1));
+                }
             }
 
             var breakPoint = document.getElementById('breakPoint' + k);

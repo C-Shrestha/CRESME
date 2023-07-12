@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
+using DocumentFormat.OpenXml.EMMA;
+using System.Collections.Generic;
 
 namespace CRESME.Controllers
 {
@@ -96,18 +98,6 @@ namespace CRESME.Controllers
 
             Quiz ParentQuiz = new Quiz();
 
-            string PhysicalAnswer1 = "";
-            string PhysicalAnswer2 = "";
-            string PhysicalAnswer3 = "";
-            string PhysicalAnswer4 = "";
-            string PhysicalAnswer5 = "";
-
-            string DiagnosticAnswer1 = "";
-            string DiagnosticAnswer2 = "";
-            string DiagnosticAnswer3 = "";
-            string DiagnosticAnswer4 = "";
-            string DiagnosticAnswer5 = "";
-
             List<string> DiagnosisAnswerKey1 = new List<string>();
             List<string> DiagnosisAnswerKey2 = new List<string>();
             List<string> DiagnosisAnswerKey3 = new List<string>();
@@ -144,122 +134,55 @@ namespace CRESME.Controllers
             //assigns correct database answers as keys for physical and diagnostic answers, and constructs the free response answer key 
 
             //COLUMN ONE
-            AssignColumnKeys(ParentQuiz, "column1", ref PhysicalAnswer1, ref DiagnosticAnswer1, ref DiagnosisAnswerKey1);
+            AssignColumnKeys(ParentQuiz, "column1", ref DiagnosisAnswerKey1);
             //COLUMN TWO
-            AssignColumnKeys(ParentQuiz, "column2", ref PhysicalAnswer2, ref DiagnosticAnswer2, ref DiagnosisAnswerKey2);
+            AssignColumnKeys(ParentQuiz, "column2", ref DiagnosisAnswerKey2);
             //COLUMN THREE
-            AssignColumnKeys(ParentQuiz, "column3", ref PhysicalAnswer3, ref DiagnosticAnswer3, ref DiagnosisAnswerKey3);
+            AssignColumnKeys(ParentQuiz, "column3", ref DiagnosisAnswerKey3);
             //COLUMN FOUR
-            AssignColumnKeys(ParentQuiz, "column4", ref PhysicalAnswer4, ref DiagnosticAnswer4, ref DiagnosisAnswerKey4);
+            AssignColumnKeys(ParentQuiz, "column4", ref DiagnosisAnswerKey4);
             //COLUMN FIVE
             if (ParentQuiz.NumColumns == 5) {
-                AssignColumnKeys(ParentQuiz, "column5", ref PhysicalAnswer5, ref DiagnosticAnswer5, ref DiagnosisAnswerKey5);
+                AssignColumnKeys(ParentQuiz, "column5", ref DiagnosisAnswerKey5);
             }
+
+
             //  SCORING 
             attempt.Score = 0;
+
+
+            //Determing duplicate free response answers
+            
+
             //COLUMN ONE
-            if (attempt.FreeResponseA != null)
-            {
-                foreach (string key in DiagnosisAnswerKey1)
-                {
-                    if (attempt.FreeResponseA.Contains(key))
-                    {
-                        attempt.ColumnAGrade += 3;
-                        if (attempt.PhysicalAnswerA == PhysicalAnswer1)
-                        {
-                            attempt.ColumnAGrade += 1;
-                        }
-                        if (attempt.DiagnosticAnswerA == DiagnosticAnswer1)
-                        {
-                            attempt.ColumnAGrade += 1;
-                        }
-                        break;
-                    }
-                }
-            }
+            attempt.ColumnAGrade = GradeColumn(attempt.FreeResponseA, attempt.PhysicalAnswerA, attempt.DiagnosticAnswerA, attempt.NumColumns,
+                               "Column1", "Column2", "Column3", "Column4", "Column5",
+                                DiagnosisAnswerKey1, DiagnosisAnswerKey2, DiagnosisAnswerKey3, DiagnosisAnswerKey4, DiagnosisAnswerKey5);
+
+
             //COLUMN TWO
-            if (attempt.FreeResponseB != null)
-            {
-                foreach (string key in DiagnosisAnswerKey2)
-                {
-                    if (attempt.FreeResponseB.Contains(key))
-                    {
-                        attempt.ColumnBGrade += 3;
-                        if (attempt.PhysicalAnswerB == PhysicalAnswer2)
-                        {
-                            attempt.ColumnBGrade += 1;
-                        }
-                        if (attempt.DiagnosticAnswerB == DiagnosticAnswer2)
-                        {
-                            attempt.ColumnBGrade += 1;
-                        }
+            attempt.ColumnBGrade = GradeColumn(attempt.FreeResponseB, attempt.PhysicalAnswerB, attempt.DiagnosticAnswerB, attempt.NumColumns,
+                           "Column2", "Column1", "Column3", "Column4", "Column5",
+                            DiagnosisAnswerKey2, DiagnosisAnswerKey1, DiagnosisAnswerKey3, DiagnosisAnswerKey4, DiagnosisAnswerKey5);
 
-                        break;
-                    }
-                }
-            }
+
             //COLUMN THREE
-            if (attempt.FreeResponseC != null)
-            {
-                foreach (string key in DiagnosisAnswerKey3)
-                {
-                    if (attempt.FreeResponseC.Contains(key))
-                    {
-                        attempt.ColumnCGrade += 3;
-                        if (attempt.PhysicalAnswerC == PhysicalAnswer3)
-                        {
-                            attempt.ColumnCGrade += 1;
-                        }
-                        if (attempt.DiagnosticAnswerC == DiagnosticAnswer3)
-                        {
-                            attempt.ColumnCGrade += 1;
-                        }
+            attempt.ColumnCGrade = GradeColumn(attempt.FreeResponseC, attempt.PhysicalAnswerC, attempt.DiagnosticAnswerC, attempt.NumColumns,
+                           "Column3", "Column2", "Column1", "Column4", "Column5",
+                            DiagnosisAnswerKey3, DiagnosisAnswerKey2, DiagnosisAnswerKey1, DiagnosisAnswerKey4, DiagnosisAnswerKey5);
 
-                        break;
-                    }
-                }
-            }
+
             //COLUMN FOUR
-            if (attempt.FreeResponseD != null)
-            {
-                foreach (string key in DiagnosisAnswerKey4)
-                {
-                    if (attempt.FreeResponseD.Contains(key))
-                    {
-                        attempt.ColumnDGrade += 3;
-                        if (attempt.PhysicalAnswerD == PhysicalAnswer4)
-                        {
-                            attempt.ColumnDGrade += 1;
-                        }
-                        if (attempt.DiagnosticAnswerD == DiagnosticAnswer4)
-                        {
-                            attempt.ColumnDGrade += 1;
-                        }
+            attempt.ColumnDGrade = GradeColumn(attempt.FreeResponseD, attempt.PhysicalAnswerD, attempt.DiagnosticAnswerD, attempt.NumColumns,
+                           "Column4", "Column2", "Column3", "Column1", "Column5",
+                            DiagnosisAnswerKey4, DiagnosisAnswerKey2, DiagnosisAnswerKey3, DiagnosisAnswerKey1, DiagnosisAnswerKey5);
 
-                        break;
-                    }
-                }
-            }
+
             //COLUMN FIVE
-            if (attempt.FreeResponseE != null)
-            {
-                foreach (string key in DiagnosisAnswerKey5)
-                {
-                    if (attempt.FreeResponseE.Contains(key))
-                    {
-                        attempt.ColumnEGrade += 3;
-                        if (attempt.PhysicalAnswerE == PhysicalAnswer5)
-                        {
-                            attempt.ColumnEGrade += 1;
-                        }
-                        if (attempt.DiagnosticAnswerE == DiagnosticAnswer5)
-                        {
-                            attempt.ColumnEGrade += 1;
-                        }
-
-                        break;
-                    }
-                }
+            if (attempt.NumColumns==5) {
+                attempt.ColumnEGrade = GradeColumn(attempt.FreeResponseE, attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.NumColumns,
+                               "Column5", "Column2", "Column3", "Column4", "Column1",
+                                DiagnosisAnswerKey5, DiagnosisAnswerKey2, DiagnosisAnswerKey3, DiagnosisAnswerKey4, DiagnosisAnswerKey1);
             }
 
             attempt.Score = attempt.ColumnAGrade + attempt.ColumnBGrade + attempt.ColumnCGrade + attempt.ColumnDGrade + attempt.ColumnEGrade;
@@ -341,52 +264,126 @@ namespace CRESME.Controllers
 
 
 
-        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, ref string PhysicalAnswer, ref string DiagnosticAnswer, ref List<string> DiagnosisAnswerKey)
+        public void AssignColumnKeys(Quiz ParentQuiz, string columnID, ref List<string> DiagnosisAnswerKey)
         {     
             if (Request.Form[columnID] == "1")
             {
-                PhysicalAnswer = "1";
-                DiagnosticAnswer = "1";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz                        
                                         .DiagnosisKeyWordsA.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces   
             }
             else if (Request.Form[columnID] == "2")
             {
-                PhysicalAnswer = "2";
-                DiagnosticAnswer = "2";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsB.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == "3")
             {
-                PhysicalAnswer = "3";
-                DiagnosticAnswer = "3";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsC.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == "4")
             {
-                PhysicalAnswer = "4";
-                DiagnosticAnswer = "4";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsD.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else if (Request.Form[columnID] == "5")
             {
-                PhysicalAnswer = "5";
-                DiagnosticAnswer = "5";
                 DiagnosisAnswerKey = new List<string>(ParentQuiz
                                         .DiagnosisKeyWordsE.Split(',')                 //finds and splits free response key
                                         .Select(x => x.Trim()).ToList());              //Trims leading and trailing spaces 
             }
             else
             {
-                PhysicalAnswer = "error";
+                throw new Exception("Unrecognized column id when assigning keys.");
             }
+        }
+
+        int GradeColumn( string FreeResponse, string PhysicalAnswer, string DiagnosticAnswer, int? NumColumns,
+                               string C1, string C2, string C3, string C4, string C5, 
+                               List<string> DiagnosisAnswerKey1, List<string> DiagnosisAnswerKey2, List<string> DiagnosisAnswerKey3, List<string> DiagnosisAnswerKey4, List<string> DiagnosisAnswerKey5) {
+
+            int ColumnGrade = 0;
+            List<string> totalDiagnosisBank = Enumerable.Concat(Enumerable.Concat(Enumerable.Concat(Enumerable.Concat(DiagnosisAnswerKey1, DiagnosisAnswerKey2), DiagnosisAnswerKey3), DiagnosisAnswerKey4), DiagnosisAnswerKey5).ToList();
+            HashSet<string> hashset = new HashSet<string>();
+            List<string> duplicates = totalDiagnosisBank.Where(e => !hashset.Add(e)).ToList();
+
+            if (FreeResponse != null)
+            {
+
+                foreach (string key in DiagnosisAnswerKey1)
+                {
+                    if (FreeResponse.Contains(key))
+                    {
+                        ColumnGrade += 3;
+                        break;
+                    }
+                }
+
+                foreach (string key in DiagnosisAnswerKey2)
+                {
+                    if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C2] || DiagnosticAnswer == Request.Form[C2]))
+                    {
+                        ColumnGrade += 3;
+                        break;
+                    }
+                }
+
+                foreach (string key in DiagnosisAnswerKey3)
+                {
+                    if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C3] || DiagnosticAnswer == Request.Form[C3]))
+                    {
+                        ColumnGrade += 3;
+                        break;
+                    }
+                }
+
+                foreach (string key in DiagnosisAnswerKey4)
+                {
+                    if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C4] || DiagnosticAnswer == Request.Form[C4]))
+                    {
+                        ColumnGrade += 3;
+                        break;
+                    }
+                }
+
+                if (NumColumns == 5)
+                {
+                    foreach (string key in DiagnosisAnswerKey5)
+                    {
+                        if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C5] || DiagnosticAnswer == Request.Form[C5]))
+                        {
+                            ColumnGrade += 3;
+                            break;
+                        }
+                    }
+                }
+
+                if (ColumnGrade == 3)
+                {
+                    if (PhysicalAnswer == Request.Form[C1] && DiagnosticAnswer == Request.Form[C1])
+                    {
+                        ColumnGrade += 2;
+                    }
+                    else if ((PhysicalAnswer == Request.Form[C1] || DiagnosticAnswer == Request.Form[C1]) || PhysicalAnswer == DiagnosticAnswer)
+                    {
+                        ColumnGrade += 1;
+                        foreach (string dupe in duplicates)
+                        {
+                            if (FreeResponse.Contains(dupe))
+                            {
+                                ColumnGrade -= 4;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return ColumnGrade;
         }
 
         (string, string, string) UnshuffleColumn(string ColumnID, string[] attemptAnswers) {
