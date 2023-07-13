@@ -294,19 +294,8 @@
                 </label>
                 <i class="col-1 fa-solid fa-check" id="coverCheckMark"></i>
                 <div class="w-100"></div>
-                @{
-                    int coverdot = Model.quiz.CoverImage.IndexOf(".");
-                    coverdot = Model.quiz.CoverImage.Length - coverdot -1;
-                    if (Model.quiz.CoverImage != "/images/CoverImage.png")
-                    {
-                        string coverpath = Model.quiz.CoverImage[16..^(36 + coverdot)];
-                    }
-                    else {
-                        coverpath = "DefaultCoverImage"
-                                    }
-
-                }
-                <div class="col-6 text-center" id="coverName" style="font-weight: bold;">@coverpath</div>
+                
+                <div class="col-6 text-center" id="coverName" style="font-weight: bold;">Cover Image</div>
                 <div class="w-100"></div>
 
                 
