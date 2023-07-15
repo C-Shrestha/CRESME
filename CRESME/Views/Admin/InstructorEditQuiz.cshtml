@@ -111,23 +111,23 @@
                     <div class="w-100"></div>
                 }
 
-
+                @*feedback means practice*@
                 @if (Model.quiz.FeedBackEnabled == "Yes")
                 {
-                    <div class="col-3" style="font-weight: bold;">Feedback</div>
+                    <div class="col-3" style="font-weight: bold;">Practice</div>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-3" style="font-weight: bold;">Feedback</div>
+                    <div class="col-3" style="font-weight: bold;">Practice</div>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1">
                     <div class="w-100"></div>
                 }
 
                 @if (Model.quiz.ShuffleEnabled == "Yes")
                 {
-                <div class="col-3" style="font-weight: bold;">ShuffleEnabled</div>
+                <div class="col-3" style="font-weight: bold;">Shuffle</div>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" checked>
                 <div class="w-100"></div>
                 }
