@@ -2407,40 +2407,23 @@ namespace CRESME.Controllers
             var blockList = user.Block.Split(",");
             var courseList = user.Course.Split(",");
             var termList = user.Term.Split(",");
-            List<Quiz> removeList = new List<Quiz>();
+            List<Quiz> assignedQuizes = new List<Quiz>();
 
 
             for (int i = 0; i < blockList.Count(); i++)
             {
                 // list of CRESMES assinged to the user that are NOT practice(FeedbackEnabled) CRESMES
-                var assignedQuizes = _context.Quiz
+                 var quizList = _context.Quiz
                             .FromSqlInterpolated($"select * from Quiz where Course = {courseList[i].Trim()} and Block = {blockList[i].Trim()} and Term = {termList[i].Trim()} and FeedBackEnabled = {"No"} and Published = {"Yes"}")
                             .ToList();
 
-                // check if the assigned cresme's start time AND end time is already in the past
-                // if both are in the past, remove quiz
-                /*
-                 start         end 
-                 past          past
-                 future        future
-
-                  past-past     don't show
-                  past-future   show
-                  future-future show
-                  future-past   (cannot happen bc of previous checks)
-                 */
-                foreach (var quiz in assignedQuizes)
+                // check if the start time has begun AND end time has not already passed
+                foreach (var quiz in quizList)
                 {
-                    if (quiz.StartDate < DateTime.Now && quiz.EndDate < DateTime.Now)
+                    if (quiz.StartDate < DateTime.Now && quiz.EndDate > DateTime.Now)
                     {
-                        removeList.Add(quiz);
+                        assignedQuizes.Add(quiz);
                     }
-                }
-
-                // remove the list of quizes whose start time and end time has already passed
-                foreach(var quiz in removeList)
-                {
-                    assignedQuizes.Remove(quiz); 
                 }
 
 
