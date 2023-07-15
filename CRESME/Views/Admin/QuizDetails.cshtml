@@ -59,6 +59,7 @@
                     double maxScore = 0.0;
                     double minScore = 0.0;
                     double medianValue = 0.0;
+                    var numColumns = 0; 
 
 
                     List<double> scoreList = new List<double>();
@@ -66,7 +67,7 @@
                     TimeSpan totalDuration = TimeSpan.Zero;
                     TimeSpan averageDuration = TimeSpan.Zero;
 
-
+                    // since the controller sends an empty attempt with ID = 0 if no attempts have been taken already
                     if ((Model.Count() == 1) && (Model.FirstOrDefault().AttemptId == 0))
                     {
                         ;
@@ -124,6 +125,12 @@
                     }
 
 
+                    // here if an empty attempt is sent by the controller, then the value will be null
+                    // and it will show the column E
+                    if (Model.FirstOrDefault().NumColumns == 5 || Model.FirstOrDefault().NumColumns == null)
+                    {
+                         numColumns = 5; 
+                    }
 
                 }
 
@@ -225,9 +232,14 @@
                                 <th scope="col" class="table-dark">
                                     Column D Score
                                 </th>
-                                <th scope="col" class="table-dark">
+
+                                @if(numColumns == 5)
+                                {
+                                    <th scope="col" class="table-dark">
                                     Column E Score
-                                </th>
+                                    </th>
+                                }
+                                
 
 
                                 @*DO NOT delete the empty tags below, they are needed for dataTable column counts to be equal between "thead" and "tbody"*@
@@ -282,9 +294,14 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ColumnDGrade)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ColumnEGrade)
-                                    </td>
+
+                                    @if(numColumns == 5)
+                                    {
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ColumnEGrade)
+                                        </td>
+                                    }
+                                    
 
                                 </tr>
                             }

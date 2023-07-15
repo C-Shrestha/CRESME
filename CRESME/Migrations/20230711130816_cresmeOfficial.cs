@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRESME.Migrations
 {
-    public partial class asdfasdf : Migration
+    public partial class cresmeOfficial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
