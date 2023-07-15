@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using DocumentFormat.OpenXml.EMMA;
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CRESME.Controllers
 {
@@ -152,35 +153,37 @@ namespace CRESME.Controllers
 
 
             //Determing duplicate free response answers
-            
+            List<string> totalDiagnosisBank = new List<string> { attempt.FreeResponseA, attempt.FreeResponseB, attempt.FreeResponseC, attempt.FreeResponseD, attempt.FreeResponseE };
+            HashSet<string> hashset = new HashSet<string>();
+            List<string> duplicates = totalDiagnosisBank.Where(e => !hashset.Add(e)).ToList();
 
             //COLUMN ONE
-            attempt.ColumnAGrade = GradeColumn(attempt.FreeResponseA, attempt.PhysicalAnswerA, attempt.DiagnosticAnswerA, attempt.NumColumns,
+            attempt.ColumnAGrade = GradeColumn(attempt.FreeResponseA, attempt.PhysicalAnswerA, attempt.DiagnosticAnswerA, attempt.NumColumns, duplicates,
                                "Column1", "Column2", "Column3", "Column4", "Column5",
                                 DiagnosisAnswerKey1, DiagnosisAnswerKey2, DiagnosisAnswerKey3, DiagnosisAnswerKey4, DiagnosisAnswerKey5);
 
 
             //COLUMN TWO
-            attempt.ColumnBGrade = GradeColumn(attempt.FreeResponseB, attempt.PhysicalAnswerB, attempt.DiagnosticAnswerB, attempt.NumColumns,
+            attempt.ColumnBGrade = GradeColumn(attempt.FreeResponseB, attempt.PhysicalAnswerB, attempt.DiagnosticAnswerB, attempt.NumColumns, duplicates,
                            "Column2", "Column1", "Column3", "Column4", "Column5",
                             DiagnosisAnswerKey2, DiagnosisAnswerKey1, DiagnosisAnswerKey3, DiagnosisAnswerKey4, DiagnosisAnswerKey5);
 
 
             //COLUMN THREE
-            attempt.ColumnCGrade = GradeColumn(attempt.FreeResponseC, attempt.PhysicalAnswerC, attempt.DiagnosticAnswerC, attempt.NumColumns,
+            attempt.ColumnCGrade = GradeColumn(attempt.FreeResponseC, attempt.PhysicalAnswerC, attempt.DiagnosticAnswerC, attempt.NumColumns, duplicates,
                            "Column3", "Column2", "Column1", "Column4", "Column5",
                             DiagnosisAnswerKey3, DiagnosisAnswerKey2, DiagnosisAnswerKey1, DiagnosisAnswerKey4, DiagnosisAnswerKey5);
 
 
             //COLUMN FOUR
-            attempt.ColumnDGrade = GradeColumn(attempt.FreeResponseD, attempt.PhysicalAnswerD, attempt.DiagnosticAnswerD, attempt.NumColumns,
+            attempt.ColumnDGrade = GradeColumn(attempt.FreeResponseD, attempt.PhysicalAnswerD, attempt.DiagnosticAnswerD, attempt.NumColumns, duplicates,
                            "Column4", "Column2", "Column3", "Column1", "Column5",
                             DiagnosisAnswerKey4, DiagnosisAnswerKey2, DiagnosisAnswerKey3, DiagnosisAnswerKey1, DiagnosisAnswerKey5);
 
 
             //COLUMN FIVE
             if (attempt.NumColumns==5) {
-                attempt.ColumnEGrade = GradeColumn(attempt.FreeResponseE, attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.NumColumns,
+                attempt.ColumnEGrade = GradeColumn(attempt.FreeResponseE, attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.NumColumns, duplicates,
                                "Column5", "Column2", "Column3", "Column4", "Column1",
                                 DiagnosisAnswerKey5, DiagnosisAnswerKey2, DiagnosisAnswerKey3, DiagnosisAnswerKey4, DiagnosisAnswerKey1);
             }
@@ -302,14 +305,12 @@ namespace CRESME.Controllers
             }
         }
 
-        int GradeColumn( string FreeResponse, string PhysicalAnswer, string DiagnosticAnswer, int? NumColumns,
+        int GradeColumn( string FreeResponse, string PhysicalAnswer, string DiagnosticAnswer, int? NumColumns, List<string> duplicates,
                                string C1, string C2, string C3, string C4, string C5, 
                                List<string> DiagnosisAnswerKey1, List<string> DiagnosisAnswerKey2, List<string> DiagnosisAnswerKey3, List<string> DiagnosisAnswerKey4, List<string> DiagnosisAnswerKey5) {
 
             int ColumnGrade = 0;
-            List<string> totalDiagnosisBank = Enumerable.Concat(Enumerable.Concat(Enumerable.Concat(Enumerable.Concat(DiagnosisAnswerKey1, DiagnosisAnswerKey2), DiagnosisAnswerKey3), DiagnosisAnswerKey4), DiagnosisAnswerKey5).ToList();
-            HashSet<string> hashset = new HashSet<string>();
-            List<string> duplicates = totalDiagnosisBank.Where(e => !hashset.Add(e)).ToList();
+            
 
             if (FreeResponse != null)
             {
@@ -319,6 +320,24 @@ namespace CRESME.Controllers
                     if (FreeResponse.Contains(key))
                     {
                         ColumnGrade += 3;
+                        if (PhysicalAnswer == Request.Form[C1] && DiagnosticAnswer == Request.Form[C1])
+                        {
+                            ColumnGrade += 2;
+                        }
+                        else if ((PhysicalAnswer == Request.Form[C1] || DiagnosticAnswer == Request.Form[C1]))
+                        {
+                            ColumnGrade += 1;
+                        }
+                        else {
+                            foreach (string dupe in duplicates)
+                            {
+                                if (FreeResponse.Contains(dupe))
+                                {
+                                    ColumnGrade -= 3;
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -328,6 +347,21 @@ namespace CRESME.Controllers
                     if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C2] || DiagnosticAnswer == Request.Form[C2]))
                     {
                         ColumnGrade += 3;
+                        if (PhysicalAnswer == Request.Form[C2] && DiagnosticAnswer == Request.Form[C2])
+                        {
+                            ColumnGrade += 1;
+                        }
+                        else
+                        {
+                            foreach (string dupe in duplicates)
+                            {
+                                if (FreeResponse.Contains(dupe))
+                                {
+                                    ColumnGrade -= 3;
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -337,6 +371,21 @@ namespace CRESME.Controllers
                     if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C3] || DiagnosticAnswer == Request.Form[C3]))
                     {
                         ColumnGrade += 3;
+                        if (PhysicalAnswer == Request.Form[C3] && DiagnosticAnswer == Request.Form[C3])
+                        {
+                            ColumnGrade += 1;
+                        }
+                        else
+                        {
+                            foreach (string dupe in duplicates)
+                            {
+                                if (FreeResponse.Contains(dupe))
+                                {
+                                    ColumnGrade -= 3;
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -346,6 +395,21 @@ namespace CRESME.Controllers
                     if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C4] || DiagnosticAnswer == Request.Form[C4]))
                     {
                         ColumnGrade += 3;
+                        if (PhysicalAnswer == Request.Form[C4] && DiagnosticAnswer == Request.Form[C4])
+                        {
+                            ColumnGrade += 1;
+                        }
+                        else
+                        {
+                            foreach (string dupe in duplicates)
+                            {
+                                if (FreeResponse.Contains(dupe))
+                                {
+                                    ColumnGrade -= 3;
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -357,30 +421,26 @@ namespace CRESME.Controllers
                         if (FreeResponse.Contains(key) && (PhysicalAnswer == Request.Form[C5] || DiagnosticAnswer == Request.Form[C5]))
                         {
                             ColumnGrade += 3;
+                            if (PhysicalAnswer == Request.Form[C5] && DiagnosticAnswer == Request.Form[C5])
+                            {
+                                ColumnGrade += 1;
+                            }
+                            else
+                            {
+                                foreach (string dupe in duplicates)
+                                {
+                                    if (FreeResponse.Contains(dupe))
+                                    {
+                                        ColumnGrade -= 3;
+                                        break;
+                                    }
+                                }
+                            }
                             break;
                         }
                     }
                 }
 
-                if (ColumnGrade == 3)
-                {
-                    if (PhysicalAnswer == Request.Form[C1] && DiagnosticAnswer == Request.Form[C1])
-                    {
-                        ColumnGrade += 2;
-                    }
-                    else if ((PhysicalAnswer == Request.Form[C1] || DiagnosticAnswer == Request.Form[C1]) || PhysicalAnswer == DiagnosticAnswer)
-                    {
-                        ColumnGrade += 1;
-                        foreach (string dupe in duplicates)
-                        {
-                            if (FreeResponse.Contains(dupe))
-                            {
-                                ColumnGrade -= 4;
-                                break;
-                            }
-                        }
-                    }
-                }
             }
 
             return ColumnGrade;

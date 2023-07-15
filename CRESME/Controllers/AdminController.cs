@@ -1904,6 +1904,10 @@ namespace CRESME.Controllers
                 ImagePos = Request.Form[currentpos];
                 ImageAlt = Request.Form[currentalt];
                 Image = UploadImagetoFile(Request.Form.Files[currentrequest]);
+                if(currentImage + 1 <= previousCount)
+                {
+                    ImagesToDelete.Add(imagenames[currentImage]);
+                }
             }
             else if (currentImage + 1 <= previousCount)
             { //image is already in database
