@@ -121,7 +121,7 @@
 
 
 
-<div id="startView" class="container-fluid flex-column" style="height: 90.2vh; width: 70%; position: relative; min-height: 800px; min-width: 900px;">
+<div id="startView" class="container-fluid flex-column" style="height: 100%; width: 70%; min-height: 720px;">
 
     <div class="row">
         <h1 class="text-center mt-7" style="color: #4472c4; font-weight: bold; margin-top: 4vh;">
@@ -130,15 +130,15 @@
     </div>
     
 
-    <div class="row" style="max-height: 220px; margin-bottom: 3%;">
-        <div style="display: flex; justify-content: center; margin-top: 2%;">
+    <div class="row" style="max-height: 220px;">
+        <div style="display: flex; justify-content: center;">
             <img src="@Model.CoverImage" style="max-height: 220px;">
         </div>
     </div>
     
 
-    <div class="row" style="height: 160px;">
-        <h4 class="text-center" style="margin-top: 3%;">
+    <div class="row">
+        <h4 class="text-center">
             <strong><u>Introduction:</u></strong>
             <span id="introduction" style="white-space: pre-line;">@Html.DisplayFor(model => model.PatientIntro)</span>
         </h4>
@@ -157,17 +157,23 @@
         </h4>
     </div>
     
-    <div class="row" style="position: absolute; bottom: 10px; width: 100%; margin-bottom: 60px;">
-        <img src="/images/CollegeMedicine.png" alt="UCF College of Medicine LOGO" style="max-height: 80px; width: 265px; display:flex; align-items: start; margin-left: 3%;"/>
+    <div class="row" style="position:absolute; bottom: 70px; width:70%;">
+        <img src="/images/CollegeMedicine.png" alt="UCF College of Medicine LOGO" style="max-height: 80px; width: 265px; display:flex; align-items: start;"/>
         <h4 class="text-center">
             Authors: @Model.AuthorNames
         </h4>
     </div>
-
 </div>
 
 
+
+
 <style>
+    .footer {
+        position: fixed !important;
+        bottom:0px !important;
+    }
+
     #quizView1 {
         display: none;
     }
@@ -2684,24 +2690,23 @@
 </script>
 
 
-<div id="quizView1" class="container-fluid" style="height: calc(100vh - 165px); margin-top: 4px; margin-bottom: 85px; min-height: 800px;">
+<div id="quizView1" class="container-fluid" style="height: 100%;">
     <div class="container-fluid">
         <form id="Form1-quizView1" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
-            <div class="row bg-white" style="min-height: 800px;">
+            <div class="row bg-white" style="height: 100%;">
 
-                <div class="col-4" style="height: 81vh; padding-left: 0px; margin-left:5px; min-height: 800px;">
+                <div class="col-4" style="padding-left: 0px; margin-left:5px; height: calc(100vh - 160px); margin-bottom: 3vh;">
 
-                    <div class="row" style="height: 5%;">
+                    <div class="row" style="height: 6%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
                             Drag and Drop
                         </p>
                     </div>
-                    <div class="row" style="height: 22.5%;">
+                    <div class="row" style="height: 22%;">
                         @if (answerCell1 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
                                     <div id="PhysicalButtons1-quizView1" >
-                                        <div id="PhysicalBox1-quizView1" style="white-space: pre-line; display: inline-block;"></div>
                                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#staticBackdropPhysicalA">
                                             Expand
                                         </button>
@@ -2816,7 +2821,7 @@
                             </div>
                         }
                     </div>
-                    <div class="row" style="height: 22.5%;">
+                    <div class="row" style="height: 22%;">
                         @if (answerCell3 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView1">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2"  draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView1">
@@ -2935,7 +2940,7 @@
                             </div>
                         }
                     </div>
-                    <div class="row" style="height: 22.5%;">
+                    <div class="row" style="height: 22%;">
                         @if (diagnosticCell1 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
@@ -3055,7 +3060,7 @@
                             </div>
                         }
                     </div>
-                    <div class="row" style="height: 22.5%;">
+                    <div class="row" style="height: 22%;">
                         @if (diagnosticCell3 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView1">
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView1" >
@@ -3174,34 +3179,34 @@
                             </div>
                         }
                     </div>
-                    <div class="row drop-zone  rounded-bottom" style="justify-content: center; align-items: center;">
-                        <button type="button" class="btn btn-primary" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Instructions</button>
-                        <button type="button" class="btn btn-primary" onclick="showLegendModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Legend Values</button>
-                        <button type="button" class="btn btn-primary" onclick="showLabModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Lab Values</button>
-                        <button type="button" class="btn btn-primary" onclick="myFunction()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 5px;">Switch Colors</button>
+                    <div class="row drop-zone styled-scrollbar rounded-bottom" style="justify-content: center; align-items: center; overflow: auto; height: 6%; padding: 2px;">
+                        <button type="button" class="btn btn-primary mb-1" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px; min-width:145px;">Help</button>
+                        <button type="button" class="btn btn-primary mb-1" onclick="showLegendModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px; min-width:145px;">Legend Values</button>
+                        <button type="button" class="btn btn-primary mb-1" onclick="showLabModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px; min-width:145px;">Lab Values</button>
+                        <button type="button" class="btn btn-primary mb-1" onclick="myFunction()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px; min-width:145px;">Switch Colors</button>
                     </div>
                 </div>
-                <div class="col-1" style="width: 40px; height: 76vh; padding-right: 0px; min-height: 720px;">
-                    <div class="row" style="height: 3vh; min-height:28px;"></div>
-                    <div class="background-blue drop-zone h-25" style="padding: 0px; padding-top: 80px; overflow: hidden;">
+                <div class="col-1" style="width: 40px; padding-right: 0px; height: calc(100vh - 182.5px)">
+                    <div class="row" style="height: 28px;"></div>
+                    <div class="background-blue drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">HPI</span>
                     </div>
-                    <div class="background-yellow drop-zone h-25" style="padding: 0px; padding-top: 85px; overflow: hidden;">
+                    <div class="background-yellow drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">PE</span>
                     </div>
-                    <div class="background-purple drop-zone h-25" style="padding: 0px; padding-top: 80px; overflow: hidden;">
+                    <div class="background-purple drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Data</span>
                     </div>
-                    <div class="background-green drop-zone h-25" style="padding: 0px; padding-top: 55px; overflow: hidden;">
+                    <div class="background-green drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Diagonosis</span>
                     </div>
 
                 </div>
-                <div class="col" style="height: 76vh; padding-right: 0px; min-height: 720px;">
-                    <div class="row" style="height: 3vh; min-height:28px;">
-                        <p style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</p>
+                <div class="col" style="padding-right: 0px; height: calc(100vh - 182.5px)">
+                    <div class="row" style="height: 28px;">
+                        <div style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</div>
                     </div>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
                         <div class="background-blue drop-zone styled-scrollbar col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             <div>
                                 <div style="white-space: pre-line; display: inline-block;"></div>
@@ -3281,7 +3286,7 @@
                     <input type="hidden" id="PhysicalAnswer+yellow-box3-quizView1" name="PhysicalAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box4-quizView1" name="PhysicalAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box5-quizView1" name="PhysicalAnswerE" value="0" runat="server" required>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
 
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1-quizView1"></div>
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2-quizView1"></div>
@@ -3294,7 +3299,7 @@
                     <input type="hidden" id="DiagnostAnswer+purple-box3-quizView1" name="DiagnosticAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box4-quizView1" name="DiagnosticAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box5-quizView1" name="DiagnosticAnswerE" value="0" runat="server" required>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
 
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1-quizView1"></div>
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2-quizView1"></div>
@@ -3302,7 +3307,7 @@
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4-quizView1"></div>
 
                     </div>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                         </div>
@@ -3339,7 +3344,7 @@
 
                     <input type="hidden" name="QuizStringID" value=@Model.QuizId>
 
-                    <div style="display:flex;">
+                    <div class="row" style="display:flex;">
                         @if (Model.FeedBackEnabled == "No") {
                             <button type="submit" class="btn btn-primary float-right">Submit</button>
                         }
@@ -3356,17 +3361,17 @@
 
 
 
-<div id="quizView2" class="container-fluid" style="height: calc(100vh - 165px);margin-top: 4px; margin-bottom: 85px; min-height: 750px;">
+<div id="quizView2" class="container-fluid" style="height: 100%;">
     <div class="container-fluid">
         <form id="Form1-quizView2" asp-controller="Attempt" asp-action="SubmitAttempt" method="post" enctype="multipart/form-data">
-            <div class="row bg-white" style="min-height: 750px;">
-                <div class="col-4" style="height: 75vh; padding-left: 0px; margin-left:5px; min-height: 750px;">
+            <div class="row bg-white" style="height: 100%;">
+                <div class="col-4" style="height: 75vh; padding-left: 0px; margin-left:5px; height: calc(100vh - 160px)">
                     <div class="row" style="height: 6%;">
                         <p class="drop-zone rounded-top" style="text-align:center; color: white; font-weight:bold; font-size: 14pt; background-color:black; margin-bottom:0px; margin-top:5px;" >
                             Drag and Drop
                         </p>
                     </div>
-                    <div class="row" style="height: 19.5%;">
+                    <div class="row" style="height: 17.6%;">
                         @if (answerCell1 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
@@ -3516,7 +3521,7 @@
                         }
 
                     </div>
-                    <div class="row" style="height: 19.5%;">
+                    <div class="row" style="height: 17.6%;">
                         @if (answerCell3 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
@@ -3665,7 +3670,7 @@
                             </div>
                         }
                     </div>
-                    <div class="row" style="height: 19.5%;">
+                    <div class="row" style="height: 17.6%;">
                         @if (answerCell5 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-yellow-box1-quizView2">
                                 <div name="1" class="background-yellow product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+yellow-box1-quizView2";">
@@ -3815,7 +3820,7 @@
                             </div>
                         }
                     </div>
-                    <div class="row" style="height: 19.5%;">
+                    <div class="row" style="height: 17.6%;">
                         @if (diagnosticCell2 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
@@ -3964,7 +3969,7 @@
                             </div>
                         }
                     </div>
-                    <div class="row" style="height: 19.5%;">
+                    <div class="row" style="height: 17.6%;">
                         @if (diagnosticCell4 == 1) {
                             <div class="drop-zone col-6 h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone-purple-box1-quizView2">
                                 <div name="1" class="background-purple product col-12 h-100 p-2" draggable="true" ondragstart="dragStartHandler(event,'4', this);" id="+purple-box1-quizView2" ;">
@@ -4113,33 +4118,33 @@
                             </div>
                         }
                     </div>
-                    <div class="row drop-zone  rounded-bottom" style="justify-content: center; align-items: center;">
-                        <button type="button" class="btn btn-primary" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Instructions</button>
-                        <button type="button" class="btn btn-primary" onclick="showLegendModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Legend Values</button>
-                        <button type="button" class="btn btn-primary" onclick="showLabModal()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 7px;">Lab Values</button>
-                        <button type="button" class="btn btn-primary" onclick="myFunction()" form="Form1-quizView1" style="width: 22%; height: 90%; padding-top:0px; margin-right: 5px;">Switch Colors</button>
+                    <div class="row drop-zone styled-scrollbar rounded-bottom" style="justify-content: center; align-items: center; overflow: auto; height: 6%; padding: 2px;">
+                        <button type="button" class="btn btn-primary mb-1" onclick="showLegendModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px; min-width:145px;">Legend Values</button>
+                        <button type="button" class="btn btn-primary mb-1" onclick="showLabModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px; min-width:145px;">Lab Values</button>
+                        <button type="button" class="btn btn-primary mb-1" onclick="myFunction()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px; min-width:145px;">Switch Colors</button>
+                        <button type="button" class="btn btn-primary mb-1" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px; min-width:145px;">Help</button>
                     </div>
                 </div>
-                <div class="col-1" style="width: 40px; height: 76vh; padding-right: 0px; min-height: 720px;">
-                    <div class="row" style="height: 3vh; min-height:28px;"></div>
-                    <div class="background-blue drop-zone h-25" style="padding: 0px; padding-top: 80px; overflow: hidden;">
+                <div class="col-1" style="width: 40px; height: 76vh; padding-right: 0px; height: calc(100vh - 182.5px)">
+                    <div class="row" style="height: 28px;"></div>
+                    <div class="background-blue drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">HPI</span>
                     </div>
-                    <div class="background-yellow drop-zone h-25" style="padding: 0px; padding-top: 85px; overflow: hidden;">
+                    <div class="background-yellow drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">PE</span>
                     </div>
-                    <div class="background-purple drop-zone h-25" style="padding: 0px; padding-top: 80px; overflow: hidden;">
+                    <div class="background-purple drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Data</span>
                     </div>
-                    <div class="background-green drop-zone h-25" style="padding: 0px; padding-top: 55px; overflow: hidden;">
+                    <div class="background-green drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Diagonosis</span>
                     </div>
                 </div>
-                <div class="col" style="height: 76vh; padding-right: 0px; min-height: 720px;">
-                    <div class="row" style="height: 3vh; min-height:28px;">
+                <div class="col" style="height: 76vh; padding-right: 0px; height: calc(100vh - 182.5px)">
+                    <div class="row" style="height: 28px;">
                         <p style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</p>
                     </div>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
                         <div class="background-blue drop-zone styled-scrollbar col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             <div>
                                 <button type="button" class="format btn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
@@ -4231,7 +4236,7 @@
                     <input type="hidden" id="PhysicalAnswer+yellow-box3-quizView2" name="PhysicalAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box4-quizView2" name="PhysicalAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box5-quizView2" name="PhysicalAnswerE" value="0" runat="server" required>
-                    <div class="row h-25">
+                    <div class="row"  style="height: 23%;">
 
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1-quizView2"></div>
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2-quizView2"></div>
@@ -4245,7 +4250,7 @@
                     <input type="hidden" id="DiagnostAnswer+purple-box3-quizView2" name="DiagnosticAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box4-quizView2" name="DiagnosticAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box5-quizView2" name="DiagnosticAnswerE" value="0" runat="server" required>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
 
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1-quizView2"></div>
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2-quizView2"></div>
@@ -4254,7 +4259,7 @@
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area5-quizView2"></div>
 
                     </div>
-                    <div class="row h-25">
+                    <div class="row" style="height: 23%;">
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
                         </div>
@@ -4727,10 +4732,10 @@
 
 
 <!-- Feedback View 4 Column CRESME -->
-<div id="feedbackView1" class="container-fluid" style="height: calc(100vh - 165px); border: 10px solid black; border-radius: 20px; margin-top:6px; margin-bottom:55px; width:99%; min-height: 800px;">
+<div id="feedbackView1" class="container-fluid" style="height: calc(100vh - 165px); width:99%; padding-top: 10px;">
     <div class="container-fluid border rounded">
-        <div class="col" style="height: 77vh; min-height: 720px;">
-            <div class="row h-25">
+        <div class="col" style="height: calc(100vh - 165px);">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
@@ -4798,7 +4803,7 @@
                 </div>
 
             </div>
-            <div class="row h-25">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area1-feebackView1">
                     <div id="PhysicalButtons1-feedbackView1" >
@@ -4874,7 +4879,7 @@
                 </div>
 
             </div>
-            <div class="row h-25">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area1-feebackView1">
                     <div id="DiagnosticButtons1-feedbackView1" >
@@ -4950,7 +4955,7 @@
                 </div>
 
             </div>
-            <div class="row h-25">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
                     <div >
@@ -5027,10 +5032,10 @@
 
 
 <!-- Feedback View 5 Column CRESME -->
-<div id="feedbackView2" class="container-fluid" style="height: calc(100vh - 165px); border: 10px solid black; border-radius: 20px; margin-top:6px; margin-bottom:55px; width:99%; min-height: 800px;">
+<div id="feedbackView2" class="container-fluid" style="height: 100%; width:99%; padding-top: 10px;">
     <div class="container-fluid">
-        <div class="col" style="height: 77vh; min-height: 720px;">
-            <div class="row h-25">
+        <div class="col" style="height: calc(100vh - 165px);">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-blue drop-zone col styled-scrollbar h-100">
                     <div>
@@ -5124,7 +5129,7 @@
                 </div>
 
             </div>
-            <div class="row h-25">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-yellow drop-zone col styled-scrollbar h-100" id="yellow-area1-feebackView2">
                     <div id="PhysicalButtons1-feedbackView2" >
@@ -5228,7 +5233,7 @@
                 </div>
 
             </div>
-            <div class="row h-25">
+            <div class="row" style="height: 23%;">
 
                 <div class="background-purple drop-zone col styled-scrollbar h-100" id="purple-area1-feebackView2">
                     <div id="DiagnosticButtons1-feedbackView2" >
@@ -5332,7 +5337,7 @@
                 </div>
 
             </div>
-            <div class="row h-25">
+            <div class="row" style="height: 23%;">
                 
                 <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
                     <div >
@@ -5352,7 +5357,7 @@
                     else if (column1 == 5) {
                         <span style="white-space: pre-line">@Model.FeedBackE</span> }
                 </div>
-                <div class="background-green drop-zone col" id="drop-zone">
+                <div class="background-green drop-zone col styled-scrollbar h-100" id="drop-zone">
                     <div >
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropB">Expand</button>
                         <button type="button" class="format btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#feedbackBackdropFreeResponse2">
