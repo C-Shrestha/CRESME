@@ -903,12 +903,14 @@ namespace CRESME.Controllers
                     Stream entryStream;
                     FileInfo fileInfo;
                     string path;
+                    string filenameNoID;
 
                     if (quiz.Legend != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Legend));
+                        filenameNoID = Path.GetFileNameWithoutExtension(quiz.Legend)[16..^36];
+                        entry = zip.CreateEntry(filenameNoID);
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -922,7 +924,8 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image0));
+                        filenameNoID = Path.GetFileNameWithoutExtension(quiz.Image0)[16..^36];
+                        entry = zip.CreateEntry(filenameNoID);
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
