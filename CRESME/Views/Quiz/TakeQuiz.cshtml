@@ -133,37 +133,37 @@
 
     <div class="row" style="max-height: 220px;">
         <div style="display: flex; justify-content: center;">
-            <img src="@Model.CoverImage" style="max-height: 220px;">
+            <img src="@Model.CoverImage" style="max-height: 220px;" alt="Cover Image for CRESME">
         </div>
     </div>
     
     <br />
     <div class="row">
-        <h4 class="text-center">
-            <strong><u>Introduction:</u></strong>
+        <div class="text-center" style="font-size: 16pt;">
+            <strong>Introduction:</strong>
             <span id="introduction" style="white-space: pre-line;">@Html.DisplayFor(model => model.PatientIntro)</span>
-        </h4>
+        </div>
     </div>
     
     <br />
 
     <div class="row">
-        <h4 class="text-center">
-            <strong><u>Instructions:</u></strong>
+        <div class="text-center" style="font-size: 16pt;">
+            <strong>Instructions:</strong>
             For each case presention detail the anticipated "classic" physical exam
             findings and match the case and PE box to the corresponding lab findings.
             Finally, enter the lead diagnosis for each case presentation and align
             these in the column with the HPI and physical findings.
             <br /><br />
             <button type="button" class="btn btn-primary" onclick="fillImages('quizView','startView')">Start Quiz</button>
-        </h4>
+        </div>
     </div>
     
     <div class="row" style="position:absolute; bottom: 70px; width:70%;">
         <img src="/images/CollegeMedicine.png" alt="UCF College of Medicine LOGO" style="max-height: 80px; width: 265px; display:flex; align-items: start;"/>
-        <h4 class="text-center">
+        <div class="text-center" style="font-size: 16pt;">
             Authors: @Model.AuthorNames
-        </h4>
+        </div>
     </div>
 </div>
 
@@ -3321,16 +3321,28 @@
                     </div>
                     <div class="row" style="height: 23%;">
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseB" id="freeResponse2-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseB" id="freeResponse2-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseC" id="freeResponse3-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseC" id="freeResponse3-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseD" id="freeResponse4-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseD" id="freeResponse4-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                            </label>
                         </div>
                     </div>
                     <input type="hidden" id="NumImage0Clicks-quizView1" name="NumImage0Clicks" value="0" runat="server" required>
@@ -3358,7 +3370,7 @@
 
                     <div class="row" style="display:flex;">
                         @if (Model.FeedBackEnabled == "No") {
-                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                            <button type="submit" class="btn btn-primary float-right" style="margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Submit</button>
                         }
                         else{
                             <button type="button" class="btn btn-primary float-right" onclick="feedback('feedbackView', 'quizView1')" style="margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Reveal Answers</button>
@@ -4154,7 +4166,7 @@
                 </div>
                 <div class="col" style="height: 76vh; padding-right: 0px; height: calc(100vh - 182.5px)">
                     <div class="row" style="height: 28px;">
-                        <p style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</p>
+                        <div style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</div>
                     </div>
                     <div class="row" style="height: 23%;">
                         <div class="background-blue drop-zone styled-scrollbar col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
@@ -4273,19 +4285,34 @@
                     </div>
                     <div class="row" style="height: 23%;">
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseB" id="freeResponse2-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseB" id="freeResponse2-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseC" id="freeResponse3-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseC" id="freeResponse3-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseD" id="freeResponse4-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseD" id="freeResponse4-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <textarea class="form-control" name="FreeResponseE" id="freeResponse5-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                                Free Response
+                                <textarea class="form-control" name="FreeResponseE" id="freeResponse5-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                            </label>
                         </div>
                     </div>
                     <input type="hidden" id="NumImage0Clicks-quizView2" name="NumImage0Clicks" value="0" runat="server" required>
@@ -4313,7 +4340,7 @@
                     
                     <div style="display:flex;">
                         @if (Model.FeedBackEnabled == "No") {
-                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                            <button type="submit" class="btn btn-primary float-right" style="margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Submit</button>
                         }
                         else{
                             <button type="button" class="btn btn-primary float-right" onclick="feedback('feedbackView', 'quizView2')" style="margin-left: auto; margin-right: 2%; width: 165px; height: 27px; padding-top:0px; margin-top:3px;">Reveal Answers</button>
@@ -4331,7 +4358,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="choosePhysical1Columns" class="modal-body text-center">
                 <div id="physical1Column1"></div>
@@ -4349,7 +4376,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="choosePhysical2Columns" class="modal-body text-center">
                 <div id="physical2Column1"></div>
@@ -4367,7 +4394,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="choosePhysical3Columns" class="modal-body text-center">
                 <div id="physical3Column1"></div>
@@ -4385,7 +4412,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="choosePhysical4Columns" class="modal-body text-center">
                 <div id="physical4Column1"></div>
@@ -4403,7 +4430,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="choosePhysical5Columns" class="modal-body text-center">
                 <div id="physical5Column1"></div>
@@ -4422,7 +4449,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="chooseDiagnosticAColumns" class="modal-body text-center">
                 <div id="diagnosticAColumn1"></div>
@@ -4440,7 +4467,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="chooseDiagnosticBColumns" class="modal-body text-center">
                 <div id="diagnosticBColumn1"></div>
@@ -4458,7 +4485,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="chooseDiagnosticCColumns" class="modal-body text-center">
                 <div id="diagnosticCColumn1"></div>
@@ -4476,7 +4503,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="chooseDiagnosticDColumns" class="modal-body text-center">
                 <div id="diagnosticDColumn1"></div>
@@ -4494,7 +4521,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h5 class="modal-title text-center">Select a column to move to</h5>
+                <div class="modal-title text-center">Select a column to move to</div>
             </div>
             <div id="chooseDiagnosticEColumns" class="modal-body text-center">
                 <div id="diagnosticEColumn1"></div>
@@ -4508,7 +4535,7 @@
 </div>
 
 <!-- Not Answered -->
-<div class="modal fade" id="staticBackdropNoAnswer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropNoAnswer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">Not Answered</span>
@@ -4520,7 +4547,7 @@
 </div>
 
 <!-- PhysicalA -->
-<div class="modal fade" id="staticBackdropPhysicalA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropPhysicalA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.PhysicalA</span>
@@ -4532,7 +4559,7 @@
 </div>
 
 <!-- PhysicalB -->
-<div class="modal fade" id="staticBackdropPhysicalB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropPhysicalB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.PhysicalB</span>
@@ -4544,7 +4571,7 @@
 </div>
 
 <!-- PhysicalC -->
-<div class="modal fade" id="staticBackdropPhysicalC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropPhysicalC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.PhysicalC</span>
@@ -4556,7 +4583,7 @@
 </div>
 
 <!-- PhysicalD -->
-<div class="modal fade" id="staticBackdropPhysicalD" data-bs-backdrop="staticPhysicalD" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropPhysicalD" data-bs-backdrop="staticPhysicalD" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.PhysicalD</span>
@@ -4568,7 +4595,7 @@
 </div>
 
 <!-- PhysicalE -->
-<div class="modal fade" id="staticBackdropPhysicalE" data-bs-backdrop="staticPhysicalE" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropPhysicalE" data-bs-backdrop="staticPhysicalE" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.PhysicalE</span>
@@ -4580,7 +4607,7 @@
 </div>
 
 <!-- DiagnosticA -->
-<div class="modal fade" id="staticBackdropDiagnosticA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropDiagnosticA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.DiagnosticA</span>
@@ -4592,7 +4619,7 @@
 </div>
 
 <!-- DiagnosticB -->
-<div class="modal fade" id="staticBackdropDiagnosticB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropDiagnosticB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.DiagnosticB</span>
@@ -4604,7 +4631,7 @@
 </div>
 
 <!-- DiagnosticC -->
-<div class="modal fade" id="staticBackdropDiagnosticC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropDiagnosticC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.DiagnosticC</span>
@@ -4616,7 +4643,7 @@
 </div>
 
 <!-- DiagnosticD -->
-<div class="modal fade" id="staticBackdropDiagnosticD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropDiagnosticD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.DiagnosticD</span>
@@ -4628,7 +4655,7 @@
 </div>
 
 <!-- DiagnosticE -->
-<div class="modal fade" id="staticBackdropDiagnosticE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropDiagnosticE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">@Model.DiagnosticE</span>
@@ -4642,93 +4669,93 @@
 <!-- Physical 1 Image Modal -->
 <div id="image-modal1" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="image1" oncontextmenu="return false;">
+    <img class="modal-content" id="image1" oncontextmenu="return false;" alt="Physical 1 Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Physical 2 Image Modal -->
 <div id="image-modal2" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="image2" oncontextmenu="return false;">
+    <img class="modal-content" id="image2" oncontextmenu="return false;" alt="Physical 2 Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Physical 3 Image Modal -->
 <div id="image-modal3" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="image3" oncontextmenu="return false;">
+    <img class="modal-content" id="image3" oncontextmenu="return false;" alt="Physical 3 Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Physical 4 Image Modal -->
 <div id="image-modal4" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="image4" oncontextmenu="return false;">
+    <img class="modal-content" id="image4" oncontextmenu="return false;" alt="Physical 4 Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Physical 5 Image Modal -->
 <div id="image-modal5" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="image5" oncontextmenu="return false;">
+    <img class="modal-content" id="image5" oncontextmenu="return false;" alt="Physical 5 Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Diagnostic A Image Modal -->
 <div id="image-modalA" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="imageA" oncontextmenu="return false;">
+    <img class="modal-content" id="imageA" oncontextmenu="return false;" alt="Diagnostic A Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Diagnostic B Image Modal -->
 <div id="image-modalB" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="imageB" oncontextmenu="return false;">
+    <img class="modal-content" id="imageB" oncontextmenu="return false;" alt="Diagnostic B Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Diagnostic C Image Modal -->
 <div id="image-modalC" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="imageC" oncontextmenu="return false;">
+    <img class="modal-content" id="imageC" oncontextmenu="return false;" alt="Diagnostic C Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Diagnostic D Image Modal -->
 <div id="image-modalD" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="imageD" oncontextmenu="return false;">
+    <img class="modal-content" id="imageD" oncontextmenu="return false;" alt="Diagnostic D Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Diagnostic E Image Modal -->
 <div id="image-modalE" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" id="imageE" oncontextmenu="return false;">
+    <img class="modal-content" id="imageE" oncontextmenu="return false;" alt="Diagnostic E Image for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Legend Image Modal -->
 <div id="legend-image" class="modal fade">
     <span class="close"></span>
-    <img class="modal-content" oncontextmenu="return false;" src="@Model.Legend">
+    <img class="modal-content" oncontextmenu="return false;" src="@Model.Legend" alt="Legend Values for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Lab Value Image Modal -->
 <div id="labValues-image" class="modal-xl fade">
     <span class="close"></span>
-    <img class="modal-content" oncontextmenu="return false;" src="/images/CRESMELabValues.png" style="max-width: 1200px;">
+    <img class="modal-content" oncontextmenu="return false;" src="/images/CRESMELabValues.png" style="max-width: 1200px;" alt="Lab Values for CRESME">
     <div class="modal-dialog justify-content-center" style="color:white"></div>
 </div>
 
 <!-- Instructions Modal -->
-<div class="modal fade" id="instructions-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="instructions-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
-                    <strong><u>Instructions:</u></strong>
+                    <strong>Instructions:</strong>
                     For each case presention detail the anticipated "classic" physical exam
                     findings and match the case and PE box to the corresponding lab findings.
 
@@ -5453,7 +5480,7 @@
 
 
 <!-- HistoryA -->
-<div class="modal fade" id="feedbackBackdropHistoryA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropHistoryA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5476,7 +5503,7 @@
 </div>
 
 <!-- HistoryB -->
-<div class="modal fade" id="feedbackBackdropHistoryB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropHistoryB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5499,7 +5526,7 @@
 </div>
 
 <!-- HistoryC -->
-<div class="modal fade" id="feedbackBackdropHistoryC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropHistoryC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5522,7 +5549,7 @@
 </div>
 
 <!-- HistoryD -->
-<div class="modal fade" id="feedbackBackdropHistoryD" data-bs-backdrop="staticHistoryD" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropHistoryD" data-bs-backdrop="staticHistoryD" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5545,7 +5572,7 @@
 </div>
 
 <!-- HistoryE -->
-<div class="modal fade" id="feedbackBackdropHistoryE" data-bs-backdrop="staticHistoryE" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropHistoryE" data-bs-backdrop="staticHistoryE" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5568,7 +5595,7 @@
 </div>
 
 <!-- PhysicalA -->
-<div class="modal fade" id="feedbackBackdropPhysicalA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropPhysicalA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5591,7 +5618,7 @@
 </div>
 
 <!-- PhysicalB -->
-<div class="modal fade" id="feedbackBackdropPhysicalB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropPhysicalB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5614,7 +5641,7 @@
 </div>
 
 <!-- PhysicalC -->
-<div class="modal fade" id="feedbackBackdropPhysicalC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropPhysicalC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5637,7 +5664,7 @@
 </div>
 
 <!-- PhysicalD -->
-<div class="modal fade" id="feedbackBackdropPhysicalD" data-bs-backdrop="staticPhysicalD" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropPhysicalD" data-bs-backdrop="staticPhysicalD" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5660,7 +5687,7 @@
 </div>
 
 <!-- PhysicalE -->
-<div class="modal fade" id="feedbackBackdropPhysicalE" data-bs-backdrop="staticPhysicalE" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropPhysicalE" data-bs-backdrop="staticPhysicalE" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5683,7 +5710,7 @@
 </div>
 
 <!-- DiagnosticA -->
-<div class="modal fade" id="feedbackBackdropDiagnosticA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropDiagnosticA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5706,7 +5733,7 @@
 </div>
 
 <!-- DiagnosticB -->
-<div class="modal fade" id="feedbackBackdropDiagnosticB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropDiagnosticB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5729,7 +5756,7 @@
 </div>
 
 <!-- DiagnosticC -->
-<div class="modal fade" id="feedbackBackdropDiagnosticC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropDiagnosticC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5752,7 +5779,7 @@
 </div>
 
 <!-- DiagnosticD -->
-<div class="modal fade" id="feedbackBackdropDiagnosticD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropDiagnosticD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5775,7 +5802,7 @@
 </div>
 
 <!-- DiagnosticE -->
-<div class="modal fade" id="feedbackBackdropDiagnosticE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropDiagnosticE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5799,7 +5826,7 @@
 
 
 <!-- FeedbackA -->
-<div class="modal fade" id="feedbackBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5822,7 +5849,7 @@
 </div>
 
 <!-- FeedbackB -->
-<div class="modal fade" id="feedbackBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5845,7 +5872,7 @@
 </div>
 
 <!-- FeedbackC -->
-<div class="modal fade" id="feedbackBackdropC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropC" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5868,7 +5895,7 @@
 </div>
 
 <!-- FeedbackD -->
-<div class="modal fade" id="feedbackBackdropD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5891,7 +5918,7 @@
 </div>
 
 <!-- FeedbackE -->
-<div class="modal fade" id="feedbackBackdropE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropE" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span style="white-space: pre-line; font-size:18pt;">
@@ -5915,7 +5942,7 @@
 
 
 <!-- Free Respnose Column 1 -->
-<div class="modal fade" id="feedbackBackdropFreeResponse1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropFreeResponse1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span id="FreeResponse1" style="white-space: pre-line; font-size:18pt;"></span>
@@ -5927,7 +5954,7 @@
 </div>
 
 <!-- Free Respnose Column 2 -->
-<div class="modal fade" id="feedbackBackdropFreeResponse2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropFreeResponse2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span id="FreeResponse2" style="white-space: pre-line; font-size:18pt;"></span>
@@ -5939,7 +5966,7 @@
 </div>
 
 <!-- Free Respnose Column 3 -->
-<div class="modal fade" id="feedbackBackdropFreeResponse3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropFreeResponse3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span id="FreeResponse3" style="white-space: pre-line; font-size:18pt;"></span>
@@ -5951,7 +5978,7 @@
 </div>
 
 <!-- Free Respnose Column 4 -->
-<div class="modal fade" id="feedbackBackdropFreeResponse4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropFreeResponse4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span id="FreeResponse4" style="white-space: pre-line; font-size:18pt;"></span>
@@ -5963,7 +5990,7 @@
 </div>
 
 <!-- Free Respnose Column 5 -->
-<div class="modal fade" id="feedbackBackdropFreeResponse5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="feedbackBackdropFreeResponse5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  >
     <div class="modal-dialog">
         <div class="modal-content text-center p-2">
             <span id="FreeResponse5" style="white-space: pre-line; font-size:18pt;"></span>
