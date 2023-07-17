@@ -25,7 +25,7 @@
     {
         <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
             <div class="toast-header">
-                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="UCF Logo">
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -39,7 +39,7 @@
     {
         <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
             <div class="toast-header">
-                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="UCF Logo">
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -73,19 +73,30 @@
                 <div class="col-10" style="height: 5px; background-color: #f1c400;"></div>
 
                 <div class="w-100"></div>
-                <input class="col-4  input-field" type="text" name="QuizName" value="@Model.quiz.QuizName" placeholder="Enter CRESME Name" required style="background-color:#FCF5D8;">
+                <label for="QuizName" class="col-4" style="font-weight: bold; display: none;">CRESME Name</label>
+
+                <div class="w-100"></div>
+                <input class="col-4  input-field" type="text" id="QuizName" name="QuizName" value="@Model.quiz.QuizName" placeholder="Enter CRESME Name" required style="background-color:#FCF5D8;">
 
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="PatientIntro" value="@Model.quiz.PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
+                <div class="w-100"></div>
+                <label for="PatientIntro" class="col-4" style="font-weight: bold; display: none;">Patient Intro</label>
+
+                <input class="col-4  input-field" type="text" id="PatientIntro" name="PatientIntro" value="@Model.quiz.PatientIntro" placeholder="Enter Chief Complaint" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <input class="col-4  input-field" type="text" name="AuthorNames" placeholder="Enter Authors' Names" value="@Model.quiz.AuthorNames" required style="background-color:#FCF5D8;">
+                <div class="w-100"></div>
+                <label for="AuthorNames" class="col-4" style="font-weight: bold; display: none;">Author Names</label>
+
+                <input class="col-4  input-field" type="text" id="AuthorNames" name="AuthorNames" placeholder="Enter Authors' Names" value="@Model.quiz.AuthorNames" required style="background-color:#FCF5D8;">
                 <div class="w-100"></div>
 
-                <div class="col-5 text-center" style="font-weight: bold;">Start Date</div>
+
+
+                <label for="startDate" class="col-5 text-center bg-light" style="font-weight: bold;">Start Date</label>
                 <div class="col-1 text-center"></div>
-                <div class="col-5 text-center" style="font-weight: bold;">End Date</div>
+                <label for="endDate" class="col-5 text-center bg-light" style="font-weight: bold;">End Date</label>
                 <div class="w-100"></div>
 
                
@@ -100,13 +111,13 @@
 
                 @if (Model.quiz.Published == "Yes")
                 {
-                    <div class="col-3" style="font-weight: bold;">Published</div>
+                    <label for="Published" class="col-3 bg-light" style="font-weight: bold;">Published</label>
                     <input class="col-1" type="checkbox" id="Published" name="Published" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-3" style="font-weight: bold;">Published</div>
+                    <label for="Published" class="col-3 bg-light" style="font-weight: bold;">Published</label>
                     <input class="col-1" type="checkbox" id="Published" name="Published" value="1">
                     <div class="w-100"></div>
                 }
@@ -114,30 +125,29 @@
                 @*feedback means practice*@
                 @if (Model.quiz.FeedBackEnabled == "Yes")
                 {
-                    <div class="col-3" style="font-weight: bold;">Practice</div>
+                    <label for="FeedBackEnabled" class="col-3 bg-light" style="font-weight: bold;">Practice</label>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1" checked>
                     <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-3" style="font-weight: bold;">Practice</div>
+                    <label for="FeedBackEnabled" class="col-3 bg-light" style="font-weight: bold;">Practice</label>
                     <input class="col-1" type="checkbox" id="FeedBackEnabled" name="FeedBackEnabled" value="1">
                     <div class="w-100"></div>
                 }
 
                 @if (Model.quiz.ShuffleEnabled == "Yes")
                 {
-                <div class="col-3" style="font-weight: bold;">Shuffle</div>
+                <label for="ShuffleEnabled" class="col-3 bg-light" style="font-weight: bold;">Shuffle</label>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1" checked>
                 <div class="w-100"></div>
                 }
                 else
                 {
-                    <div class="col-3" style="font-weight: bold;">ShuffleEnabled</div>
+                    <label for="ShuffleEnabled" class="col-3 bg-light" style="font-weight: bold;">ShuffleEnabled</label>
                 <input class="col-1" type="checkbox" id="ShuffleEnabled" name="ShuffleEnabled" value="1">
                 <div class="w-100"></div>
                 }
-
 
 
 
@@ -148,11 +158,11 @@
                 {
                     <div class="form-check form-check-inline col-1">
                         <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4" checked>
-                        <label class="form-check-label bg-light" for="NumColumns">4</label>
+                        <label class="form-check-label bg-light" for="NumColumns1">4</label>
                     </div>
                     <div class="form-check form-check-inline col-1">
                         <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5">
-                        <label class="form-check-label bg-light" for="NumColumns">5</label>
+                        <label class="form-check-label bg-light" for="NumColumns2">5</label>
                     </div>
                     <div class="w-100"></div>
                 }
@@ -160,11 +170,11 @@
                 {
                     <div class="form-check form-check-inline col-1">
                         <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns1" value="4" >
-                        <label class="form-check-label bg-light" for="NumColumns">4</label>
+                        <label class="form-check-label bg-light" for="NumColumns1">4</label>
                     </div>
                     <div class="form-check form-check-inline col-1">
                         <input class="form-check-input" type="radio" name="NumColumns" id="NumColumns2" value="5" checked>
-                        <label class="form-check-label bg-light" for="NumColumns">5</label>
+                        <label class="form-check-label bg-light" for="NumColumns2">5</label>
                     </div>
                     <div class="w-100"></div>
                 }
@@ -215,9 +225,9 @@
                     
                     string hiddenid = "HiddenPath" + i;
 
-                        <input type="hidden" id=@hiddenid  value=@imagenames[i] name=@hiddenid>
+                    <input type="hidden" id=@hiddenid  value=@imagenames[i] name=@hiddenid>
                     <input type="file" name=@imagestring  id=@imagestring accept="image/*" onchange="checkForImage(this.id)" style="display: none;">
-                    <label class="col-4 row justify-content-center border" for=@imagestring id=@labelstring style="border-color: black !important;"><i class="text-center fa-solid fa-image"></i></label>
+                    <label class="col-4 row justify-content-center border" for=@imagestring id=@labelstring style="border-color: black !important;"><div style="display: none;">Empty Div</div><i class="text-center fa-solid fa-image"></i></label>
 
                     
                     string hrdiv2string = "hrDiv2" + i;
@@ -260,6 +270,9 @@
 
                     <input class="col-6  input-field" type="text" name=@imageAlt id=@altText value="@alt[i]" placeholder="Enter Alt Text">
 
+                    string altLabel = "altLabel" + i;
+                    <label for=@altText id=@altLabel style="display: none;">Empty Label</label>
+
                     string newBreak1 = "newBreak1" + i;
 
                     <div class="w-100" id=@newBreak1></div>
@@ -291,6 +304,7 @@
 
                 <label  class="col-4 row justify-content-center border" id="coverLabel" for="CoverImage" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-panorama"></i>
+                    <div style="display: none;">Empty Div</div>
                 </label>
                 <i class="col-1 fa-solid fa-check" id="coverCheckMark"></i>
                 <div class="w-100"></div>
@@ -304,6 +318,7 @@
                 <input type="file" name="Legend" id="Legend"  accept="image/*" style="display: none;"  />
                 <label class="col-4 row justify-content-center border" id="legendLabel" for="Legend" style="border-color: black !important;">
                     <i class="text-center fa-solid fa-flag"></i>
+                    <div style="display: none;">Empty Div</div>
                 </label>
                 
                 <i class="col-1 fa-solid fa-check" id="legendCheckMark"></i>
@@ -318,6 +333,7 @@
                 <input type="file" name="ExcelFileUpload" id="excelButton" accept=".xlsx" style="display: none;"  />
                 <label class="col-4 row justify-content-center border" id="excelLabel" for="excelButton" style="border-color: black !important;">
                     <i class="text-center fa-sharp fa-solid fa-upload"></i>
+                    <div style="display: none;">Empty Div</div>
                 </label>
 
                 <i class="col-1 fa-solid fa-check" id="excelCheckMark"></i>
@@ -476,6 +492,7 @@
         var hrDiv1 = document.getElementById('hrDiv1' + k);
         var hrDiv2 = document.getElementById('hrDiv2' + k);
         var altText = document.getElementById('altText' + k);
+        var altLabel = document.getElementById('altLabel' + k);
         var checkMark = document.getElementById('imgCheckMark' + k);
         var imageName = document.getElementById('imageName' + k);
         var break1 = document.getElementById('newBreak1' + k);
@@ -495,6 +512,7 @@
         hrDiv1.remove();
         hrDiv2.remove();
         altText.remove();
+        altLabel.remove();
         vrDiv1.remove();
 
         if (checkMark != null) {
@@ -543,6 +561,10 @@
             var altText = document.getElementById('altText' + k);
             altText.setAttribute("name", 'Image' + (k-1) + 'Alt');
             altText.setAttribute("id", 'altText' + (k-1));
+
+            var altLabel = document.getElementById('altLabel' + k);
+            altLabel.setAttribute("id", 'altLabel' + (k - 1));
+            altLabel.setAttribute("for", 'altText' + (k - 1));
 
 
             var newlabel = document.getElementById('imageLabel' + k);
@@ -661,6 +683,12 @@
         altText.setAttribute("id", 'altText' + i);
         altText.setAttribute("placeholder", 'Enter Alt Text');
 
+        var altLabel = document.createElement("label");
+        altLabel.setAttribute("for", 'altText' + i);
+        altLabel.setAttribute("id", 'altLabel' + i);
+        altLabel.innerHTML = "Empty Label";
+        altLabel.style.display = "none";
+
 
         var newlabel = document.createElement("Label");
         newlabel.setAttribute("class", 'col-4 row justify-content-center border');
@@ -669,8 +697,15 @@
         newlabel.style.setProperty("border-color", "black", "important");
 
         newi = document.createElement("i");
-            newi.setAttribute("class", "text-center fa-solid fa-image");
+        newi.setAttribute("class", "text-center fa-solid fa-image");
+
+        emptyDiv = document.createElement("div");
+        emptyDiv.style.display = "none";
+        emptyDiv.innerHTML = "Empty Div";
+
         newlabel.appendChild(newi);
+        newlabel.appendChild(emptyDiv);
+
 
         imageButton.after(newDiv);
         newfile.after(newlabel);
@@ -681,6 +716,7 @@
 
         select.after(newDiv1);
         newDiv1.after(altText);
+        altText.after(altLabel);
 
         var breakPoint = document.createElement("div");
         breakPoint.setAttribute("class", 'col-8');
