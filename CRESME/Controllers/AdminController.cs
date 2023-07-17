@@ -307,9 +307,20 @@ namespace CRESME.Controllers
 
             if (quiz != null)
             {
-                //deletes images 0 - 9 and legend image for each quiz if they are not null
+                //deletes images 0 - 9 and legend and cover image for each quiz if they are not null
                 string path;
                 FileInfo imagefile;
+                if (quiz.CoverImage != "/images/00000000000000000000000000000000000000000000CoverImage.png") {
+                    if (quiz.CoverImage != null)
+                    {
+                        path = Path.Combine(this._environment.WebRootPath + quiz.CoverImage);
+                        imagefile = new FileInfo(path);
+                        if (imagefile.Exists)
+                        {
+                            imagefile.Delete();
+                        }
+                    }
+                }
                 if (quiz.Legend != null)
                 {
                     path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
@@ -932,8 +943,20 @@ namespace CRESME.Controllers
                             fileStream.CopyTo(entryStream);
                         }
                     }
+                    if (quiz.CoverImage != "/images/00000000000000000000000000000000000000000000CoverImage.png") {
+                        if (quiz.CoverImage != "")
+                        {
+                            path = Path.Combine(this._environment.WebRootPath + quiz.CoverImage);
+                            fileInfo = new FileInfo(path);
+                            entry = zip.CreateEntry(quiz.CoverImage.Substring(52));
 
-
+                            using (fileStream = fileInfo.OpenRead())
+                            using (entryStream = entry.Open())
+                            {
+                                fileStream.CopyTo(entryStream);
+                            }
+                        }
+                    }
                     if (quiz.Image0 != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
@@ -1957,9 +1980,7 @@ namespace CRESME.Controllers
             try
             {
                 string RootPath = this._environment.WebRootPath;
-                string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
-                string newImageName = ImageName + ImageGuidExtension;
+                string newImageName = Guid.NewGuid().ToString() + ImageUpload.FileName;
 
                 System.IO.Directory.CreateDirectory(RootPath + "/uploadedImages/"); //will create uploadedImages folder if doesnt exist, doesnt do anything if folder exists
                 string savepath = Path.Combine(RootPath + "/uploadedImages/", newImageName);
@@ -1977,7 +1998,7 @@ namespace CRESME.Controllers
         }
 
 
-        
+
 
 
         /*-----------------------------------------Multiple Users--------------------------------------------------*/
