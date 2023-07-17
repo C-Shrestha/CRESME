@@ -302,7 +302,8 @@ namespace CRESME.Controllers
         {
             
             var quiz =  _context.Quiz.Find(QuizId);
-
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(currentUserId);
 
             if (quiz != null)
             {
@@ -413,12 +414,27 @@ namespace CRESME.Controllers
                 _context.Remove(quiz);
                 _context.SaveChanges();
                 TempData["Success"] = "CRESME deleted sucessfully!";
-                return RedirectToAction("ListAllQuizes");
+               
+                if (user.Role == "Admin")
+                {
+                    return RedirectToAction("ListAllQuizes");
+                }
+                else
+                {
+                    return RedirectToAction("InstructorQuizesView");
+                }
 
             }
-            
 
-            return RedirectToAction("ListAllQuizes");
+
+            if (user.Role == "Admin")
+            {
+                return RedirectToAction("ListAllQuizes");
+            }
+            else
+            {
+                return RedirectToAction("InstructorQuizesView");
+            }
         }
 
 
@@ -1647,27 +1663,27 @@ namespace CRESME.Controllers
                     quiz.ShuffleEnabled = "No";
                 }
 
+
+                List<string> ImagesToDelete = new List<string>();
+
                 if (Request.Form.Files["CoverImage"] != null)
                 {
+                    if (quiz.CoverImage != "/images/00000000000000000000000000000000000000000000CoverImage.png") {
+                        ImagesToDelete.Add(quiz.CoverImage);
+                    }
                     quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
-                }
-                
+                }                
 
                 if (Request.Form.Files["Legend"] != null)
                 {
+                    ImagesToDelete.Add(quiz.Legend);
                     quiz.Legend = UploadImagetoFile(Request.Form.Files["Legend"]);
                 }
 
-              
-                 
-                
-
-             
-                
 
 
                 quiz.ImageCount = 0;
-                List<string> ImagesToDelete = new List<string>();
+                
                 List<string> newPath = new List<string>();
                 for (int i = 0; i<10; i++) {
                     string formpath = "HiddenPath" + i;
@@ -1961,131 +1977,7 @@ namespace CRESME.Controllers
         }
 
 
-        /*Located in InstructorQuizView.cshtml. Delete a CRESME*/
-        [HttpPost]
-        [Authorize(Roles = "Admin, Instructor")]
-        public async Task<IActionResult> InstructorDeleteQuiz(int QuizId)
-        {
-
-            var quiz = _context.Quiz.Find(QuizId);
-
-
-            if (quiz != null)
-            {
-                //deletes images 0 - 9 and legend image for each quiz if they are not null
-                string path;
-                FileInfo imagefile;
-                if (quiz.Legend != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image0 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image1 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image2 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image3 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image4 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image5 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image6 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image7 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image8 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-                if (quiz.Image9 != null)
-                {
-                    path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
-                    imagefile = new FileInfo(path);
-                    if (imagefile.Exists)
-                    {
-                        imagefile.Delete();
-                    }
-                }
-
-
-                _context.Remove(quiz);
-                _context.SaveChanges();
-                TempData["Success"] = "CRESME deleted sucessfully!";
-                return RedirectToAction("InstructorQuizesView");
-
-            }
-
-
-            return RedirectToAction("InstructorQuizesView");
-        }
+        
 
 
         /*-----------------------------------------Multiple Users--------------------------------------------------*/
