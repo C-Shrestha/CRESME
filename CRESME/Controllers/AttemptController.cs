@@ -165,45 +165,49 @@ namespace CRESME.Controllers
             int AnswerECount = 0;
             foreach (string response in StudentResponses)
             {
-                foreach (string key in DiagnosisAnswerKey1)
+                if (response != null)
                 {
-                    if (response.Contains(key))
-                    {
-                        AnswerACount++;
-                        break;
-                    }
-                }
-                foreach (string key in DiagnosisAnswerKey2)
-                {
-                    if (response.Contains(key))
-                    {
-                        AnswerBCount++;
-                        break;
-                    }
-                }
-                foreach (string key in DiagnosisAnswerKey3)
-                {
-                    if (response.Contains(key))
-                    {
-                        AnswerCCount++;
-                        break;
-                    }
-                }
-                foreach (string key in DiagnosisAnswerKey4)
-                {
-                    if (response.Contains(key))
-                    {
-                        AnswerDCount++;
-                        break;
-                    }
-                }
-                if (attempt.NumColumns==5) {
-                    foreach (string key in DiagnosisAnswerKey5)
+                    foreach (string key in DiagnosisAnswerKey1)
                     {
                         if (response.Contains(key))
                         {
-                            AnswerECount++;
+                            AnswerACount++;
                             break;
+                        }
+                    }
+                    foreach (string key in DiagnosisAnswerKey2)
+                    {
+                        if (response.Contains(key))
+                        {
+                            AnswerBCount++;
+                            break;
+                        }
+                    }
+                    foreach (string key in DiagnosisAnswerKey3)
+                    {
+                        if (response.Contains(key))
+                        {
+                            AnswerCCount++;
+                            break;
+                        }
+                    }
+                    foreach (string key in DiagnosisAnswerKey4)
+                    {
+                        if (response.Contains(key))
+                        {
+                            AnswerDCount++;
+                            break;
+                        }
+                    }
+                    if (attempt.NumColumns == 5)
+                    {
+                        foreach (string key in DiagnosisAnswerKey5)
+                        {
+                            if (response.Contains(key))
+                            {
+                                AnswerECount++;
+                                break;
+                            }
                         }
                     }
                 }
