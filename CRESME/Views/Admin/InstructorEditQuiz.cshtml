@@ -189,7 +189,7 @@
                     for(int j = 0; j<10; j++)
                     {
                         if (imagenames[j] != "")
-                            trueImageNames[j] = imagenames[j][16..^40];
+                            trueImageNames[j] = imagenames[j].Substring(52);
                         else
                             break;
                     };
@@ -295,7 +295,7 @@
                 <i class="col-1 fa-solid fa-check" id="coverCheckMark"></i>
                 <div class="w-100"></div>
                 
-                <div class="col-6 text-center" id="coverName" style="font-weight: bold;">Cover Image</div>
+                <div class="col-6 text-center" id="coverName" style="font-weight: bold;">@Model.quiz.CoverImage.Substring(52)</div>
                 <div class="w-100"></div>
 
                 
@@ -308,7 +308,7 @@
                 
                 <i class="col-1 fa-solid fa-check" id="legendCheckMark"></i>
                 <div class="w-100"></div>
-                <div class="col-6 text-center" id="legendName" style="font-weight: bold;">@Model.quiz.Legend[16..^40]</div>
+                <div class="col-6 text-center" id="legendName" style="font-weight: bold;">@Model.quiz.Legend.Substring(52)</div>
                 <div class="w-100"></div>
 
 

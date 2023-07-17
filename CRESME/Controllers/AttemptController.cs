@@ -259,46 +259,47 @@ namespace CRESME.Controllers
                 (attempt.PhysicalAnswerE, attempt.DiagnosticAnswerE, attempt.FreeResponseE) = UnshuffleColumn("5", OriginalAttemptAnswers);
             }
 
-            
+
             //CRESME meta data
-            if (ParentQuiz.Image0 != "") {
-                attempt.Image0Name = ParentQuiz.Image0[16..^40];
+            if (ParentQuiz.Image0 != "")
+            {
+                attempt.Image0Name = ParentQuiz.Image0.Substring(52);
             }
             if (ParentQuiz.Image1 != "")
             {
-                attempt.Image1Name = ParentQuiz.Image1[16..^40];
+                attempt.Image1Name = ParentQuiz.Image1.Substring(52);
             }
             if (ParentQuiz.Image2 != "")
             {
-                attempt.Image2Name = ParentQuiz.Image2[16..^40];
+                attempt.Image2Name = ParentQuiz.Image2.Substring(52);
             }
             if (ParentQuiz.Image3 != "")
             {
-                attempt.Image3Name = ParentQuiz.Image3[16..^40];
+                attempt.Image3Name = ParentQuiz.Image3.Substring(52);
             }
             if (ParentQuiz.Image4 != "")
             {
-                attempt.Image4Name = ParentQuiz.Image4[16..^40];
+                attempt.Image4Name = ParentQuiz.Image4.Substring(52);
             }
             if (ParentQuiz.Image5 != "")
             {
-                attempt.Image5Name = ParentQuiz.Image5[16..^40];
+                attempt.Image5Name = ParentQuiz.Image5.Substring(52);
             }
             if (ParentQuiz.Image6 != "")
             {
-                attempt.Image6Name = ParentQuiz.Image6[16..^40];
+                attempt.Image6Name = ParentQuiz.Image6.Substring(52);
             }
             if (ParentQuiz.Image7 != "")
             {
-                attempt.Image7Name = ParentQuiz.Image7[16..^40];
+                attempt.Image7Name = ParentQuiz.Image7.Substring(52);
             }
             if (ParentQuiz.Image8 != "")
             {
-                attempt.Image8Name = ParentQuiz.Image8[16..^40];
+                attempt.Image8Name = ParentQuiz.Image8.Substring(52);
             }
             if (ParentQuiz.Image9 != "")
             {
-                attempt.Image9Name = ParentQuiz.Image9[16..^40];
+                attempt.Image9Name = ParentQuiz.Image9.Substring(52);
             }
            
 
