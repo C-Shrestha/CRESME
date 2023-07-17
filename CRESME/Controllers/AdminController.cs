@@ -418,7 +418,7 @@ namespace CRESME.Controllers
             }
             
 
-            return RedirectToAction("CreateAccounts");
+            return RedirectToAction("ListAllQuizes");
         }
 
 
@@ -903,12 +903,12 @@ namespace CRESME.Controllers
                     Stream entryStream;
                     FileInfo fileInfo;
                     string path;
-
+                    
                     if (quiz.Legend != "")
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Legend));
+                        entry = zip.CreateEntry(quiz.Legend.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -922,7 +922,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image0));
+                        entry = zip.CreateEntry(quiz.Image0.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -934,7 +934,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image1));
+                        entry = zip.CreateEntry(quiz.Image1.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -946,7 +946,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image2));
+                        entry = zip.CreateEntry(quiz.Image2.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -958,7 +958,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image3));
+                        entry = zip.CreateEntry(quiz.Image3.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -970,7 +970,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image4));
+                        entry = zip.CreateEntry(quiz.Image4.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -982,7 +982,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image5));
+                        entry = zip.CreateEntry(quiz.Image5.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -994,7 +994,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image6));
+                        entry = zip.CreateEntry(quiz.Image6.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1006,7 +1006,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image7));
+                        entry = zip.CreateEntry(quiz.Image7.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1018,7 +1018,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image8));
+                        entry = zip.CreateEntry(quiz.Image8.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1030,7 +1030,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(Path.GetFileName(quiz.Image9));
+                        entry = zip.CreateEntry(quiz.Image9.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1420,14 +1420,14 @@ namespace CRESME.Controllers
             await DeleteAll();
 
             //remove all images from the database, redundant as DeleteAllQuizes call DeleteQuiz, which removes images for each quiz
-            
+            /*
             string RootPath = this._environment.WebRootPath;
             string dirpath = RootPath + "/uploadedImages/";
             System.IO.DirectoryInfo dir = new DirectoryInfo(dirpath);
             foreach (FileInfo file in dir.GetFiles()) { 
                 file.Delete();
             }            
-           
+           */
 
             TempData["AlertMessage"] = "Entire database has been deleted!";
 

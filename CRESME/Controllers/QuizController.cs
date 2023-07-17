@@ -184,7 +184,7 @@ namespace CRESME.Controllers
                 quiz.CoverImage = UploadImagetoFile(Request.Form.Files["CoverImage"]);
             }
             else {
-                quiz.CoverImage = "/images/CoverImage.png";
+                quiz.CoverImage = "/images/00000000000000000000000000000000000000000000CoverImage.png";
             }
 
             //checks for image upload and image position input, only saves image if both are present
@@ -260,8 +260,47 @@ namespace CRESME.Controllers
                 quiz.ImagePos9 = Request.Form["ImagePos9"];
                 quiz.ImageCount++;
             }
-            
 
+            if (quiz.Image0Alt == null) {
+                quiz.Image0Alt = "";
+            }
+            if (quiz.Image1Alt == null)
+            {
+                quiz.Image1Alt = "";
+            }
+            if (quiz.Image2Alt == null)
+            {
+                quiz.Image2Alt = "";
+            }
+            if (quiz.Image3Alt == null)
+            {
+                quiz.Image3Alt = "";
+            }
+            if (quiz.Image4Alt == null)
+            {
+                quiz.Image4Alt = "";
+            }
+            if (quiz.Image5Alt == null)
+            {
+                quiz.Image5Alt = "";
+            }
+            if (quiz.Image6Alt == null)
+            {
+                quiz.Image6Alt = "";
+            }
+            if (quiz.Image7Alt == null)
+            {
+                quiz.Image7Alt = "";
+            }
+            if (quiz.Image8Alt == null)
+            {
+                quiz.Image8Alt = "";
+            }
+            if (quiz.Image9Alt == null)
+            {
+                quiz.Image9Alt = "";
+            }
+         
 
             if (ModelState.IsValid)
             {
@@ -283,9 +322,7 @@ namespace CRESME.Controllers
             try
             {
                 string RootPath = this._environment.WebRootPath;
-                string ImageName = Path.GetFileNameWithoutExtension(ImageUpload.FileName);
-                string ImageGuidExtension = Guid.NewGuid().ToString() + Path.GetExtension(ImageUpload.FileName); //GUID ensures that the image file path is unique
-                string newImageName = ImageName + ImageGuidExtension;
+                string newImageName = Guid.NewGuid().ToString() + ImageUpload.FileName;
 
                 System.IO.Directory.CreateDirectory(RootPath + "/uploadedImages/"); //will create uploadedImages folder if doesnt exist, doesnt do anything if folder exists
                 string savepath = Path.Combine(RootPath + "/uploadedImages/", newImageName);
