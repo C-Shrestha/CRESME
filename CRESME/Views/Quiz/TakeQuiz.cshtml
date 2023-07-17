@@ -121,7 +121,7 @@
 
 
 
-<div id="startView" class="container-fluid flex-column" style="height: 100%; width: 70%; min-height: 720px;">
+<div id="startView" class="container-fluid flex-column" style="height: 100%; width: 70%; min-height: 720px; margin-bottom: 100px;">
 
     <div class="row">
         <h1 class="text-center mt-7" style="color: #4472c4; font-weight: bold; margin-top: 4vh;">
@@ -171,6 +171,10 @@
 
 
 <style>
+    main {
+        margin-bottom: 0px !important;
+    }
+
     .footer {
         position: fixed !important;
         bottom:0px !important;
@@ -3192,24 +3196,24 @@
                         }
                     </div>
                     <div class="row drop-zone styled-scrollbar rounded-bottom" style="justify-content: center; align-items: center; overflow: auto; height: 6%; padding: 2px;">
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px;" >Help</button>
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLegendModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px;">Legend Values</button>
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLabModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px;">Lab Values</button>
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="myFunction()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px;">Switch Colors</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showInstructionsModal()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 5px;">Help</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLegendModal()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 5px;">Legend Values</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLabModal()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 5px;">Lab Values</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="myFunction()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 5px;">Switch Colors</button>
                     </div>
                 </div>
                 <div class="col-1" style="width: 40px; padding-right: 0px; height: calc(100vh - 182.5px)">
                     <div class="row" style="height: 28px;"></div>
-                    <div class="background-blue drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-blue drop-zone" style="height: 23.5%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">HPI</span>
                     </div>
-                    <div class="background-yellow drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-yellow drop-zone" style="height: 23.5%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">PE</span>
                     </div>
-                    <div class="background-purple drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-purple drop-zone" style="height: 23.5%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Data</span>
                     </div>
-                    <div class="background-green drop-zone" style="height: 23%;padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-green drop-zone" style="height: 23.5%;padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Diagonosis</span>
                     </div>
 
@@ -3218,7 +3222,7 @@
                     <div class="row" style="height: 28px;">
                         <div style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</div>
                     </div>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
                         <div class="background-blue drop-zone styled-scrollbar col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             <div>
                                 <div style="white-space: pre-line; display: inline-block;"></div>
@@ -3298,7 +3302,7 @@
                     <input type="hidden" id="PhysicalAnswer+yellow-box3-quizView1" name="PhysicalAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box4-quizView1" name="PhysicalAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box5-quizView1" name="PhysicalAnswerE" value="0" runat="server" required>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
 
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1-quizView1"></div>
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2-quizView1"></div>
@@ -3311,7 +3315,7 @@
                     <input type="hidden" id="DiagnostAnswer+purple-box3-quizView1" name="DiagnosticAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box4-quizView1" name="DiagnosticAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box5-quizView1" name="DiagnosticAnswerE" value="0" runat="server" required>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
 
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1-quizView1"></div>
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2-quizView1"></div>
@@ -3319,29 +3323,29 @@
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area4-quizView1"></div>
 
                     </div>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 background-green">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseA" id="freeResponse1-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 background-green">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseB" id="freeResponse2-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseB" id="freeResponse2-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 background-green">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseC" id="freeResponse3-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseC" id="freeResponse3-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 background-green">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseD" id="freeResponse4-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseD" id="freeResponse4-quizView1" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView1"></textarea>
                             </label>
                         </div>
                     </div>
@@ -4143,24 +4147,24 @@
                         }
                     </div>
                     <div class="row drop-zone styled-scrollbar rounded-bottom" style="justify-content: center; align-items: center; overflow: auto; height: 6%; padding: 2px;">
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLegendModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px;">Legend Values</button>
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLabModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px;">Lab Values</button>
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="myFunction()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 5px;">Switch Colors</button>
-                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showInstructionsModal()" form="Form1-quizView1" style="width: 22%; height: 28px; padding-top:0px; margin-right: 7px;">Help</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLegendModal()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 5px;">Legend Values</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showLabModal()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 7px;">Lab Values</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="myFunction()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 5px;">Switch Colors</button>
+                        <button type="button" class="btn btn-primary mb-1 btn-sm" onclick="showInstructionsModal()" form="Form1-quizView1" style="min-width: 120px; width: 22%; padding-top:0px; margin-right: 7px;">Help</button>
                     </div>
                 </div>
                 <div class="col-1" style="width: 40px; height: 76vh; padding-right: 0px; height: calc(100vh - 182.5px)">
                     <div class="row" style="height: 28px;"></div>
-                    <div class="background-blue drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-blue drop-zone" style="height: 23.5%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">HPI</span>
                     </div>
-                    <div class="background-yellow drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-yellow drop-zone" style="height: 23.5%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">PE</span>
                     </div>
-                    <div class="background-purple drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-purple drop-zone" style="height: 23.5%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Data</span>
                     </div>
-                    <div class="background-green drop-zone" style="height: 23%; padding: 0px; padding-top: 10px; overflow: hidden;">
+                    <div class="background-green drop-zone" style="height: 23.5%; padding: 0px; padding-top: 10px; overflow: hidden;">
                         <span class="vertical">Diagonosis</span>
                     </div>
                 </div>
@@ -4168,7 +4172,7 @@
                     <div class="row" style="height: 28px;">
                         <div style="text-align:center; font-weight:bold; font-size: 14pt;">@Html.DisplayFor(model => model.PatientIntro)</div>
                     </div>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
                         <div class="background-blue drop-zone styled-scrollbar col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
                             <div>
                                 <button type="button" class="format btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#feedbackBackdropHistoryA">
@@ -4260,7 +4264,7 @@
                     <input type="hidden" id="PhysicalAnswer+yellow-box3-quizView2" name="PhysicalAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box4-quizView2" name="PhysicalAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="PhysicalAnswer+yellow-box5-quizView2" name="PhysicalAnswerE" value="0" runat="server" required>
-                    <div class="row"  style="height: 23%;">
+                    <div class="row"  style="height: 23.5%;">
 
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area1-quizView2"></div>
                         <div class="background-yellow drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+yellow-area2-quizView2"></div>
@@ -4274,7 +4278,7 @@
                     <input type="hidden" id="DiagnostAnswer+purple-box3-quizView2" name="DiagnosticAnswerC" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box4-quizView2" name="DiagnosticAnswerD" value="0" runat="server" required>
                     <input type="hidden" id="DiagnostAnswer+purple-box5-quizView2" name="DiagnosticAnswerE" value="0" runat="server" required>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
 
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area1-quizView2"></div>
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area2-quizView2"></div>
@@ -4283,35 +4287,35 @@
                         <div class="background-purple drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone+purple-area5-quizView2"></div>
 
                     </div>
-                    <div class="row" style="height: 23%;">
+                    <div class="row" style="height: 23.5%;">
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 h-100">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseA" id="freeResponse1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseA" id="freeResponse1-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 h-100">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseB" id="freeResponse2-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseB" id="freeResponse2-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 h-100">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseC" id="freeResponse3-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseC" id="freeResponse3-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 h-100">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseD" id="freeResponse4-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseD" id="freeResponse4-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
                             </label>
                         </div>
                         <div class="background-green drop-zone col h-100" ondragover="dragOverHandler(event);" ondrop="dropHandler(event)" id="drop-zone">
-                            <label type="hidden" title="Free Response for CRESME" class="text-center">
+                            <label type="hidden" title="Free Response for CRESME" class="text-center w-100 h-100">
                                 Free Response
-                                <textarea class="form-control" name="FreeResponseE" id="freeResponse5-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
+                                <textarea class="form-control background-green h-75" name="FreeResponseE" id="freeResponse5-quizView2" rows="3" placeholder="Type your diagnosis here" form="Form1-quizView2"></textarea>
                             </label>
                         </div>
                     </div>
