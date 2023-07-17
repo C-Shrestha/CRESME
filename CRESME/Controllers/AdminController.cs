@@ -935,7 +935,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Legend);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Legend.Substring(52));
+                        entry = zip.CreateEntry("Legend - " + quiz.Legend.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -948,7 +948,7 @@ namespace CRESME.Controllers
                         {
                             path = Path.Combine(this._environment.WebRootPath + quiz.CoverImage);
                             fileInfo = new FileInfo(path);
-                            entry = zip.CreateEntry(quiz.CoverImage.Substring(52));
+                            entry = zip.CreateEntry("Cover - " + quiz.CoverImage.Substring(52));
 
                             using (fileStream = fileInfo.OpenRead())
                             using (entryStream = entry.Open())
@@ -961,7 +961,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image0);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image0.Substring(52));
+                        entry = zip.CreateEntry("Position "+ quiz.ImagePos0 + " - "  + quiz.Image0.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -973,7 +973,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image1);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image1.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos1 + " - " + quiz.Image1.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -985,7 +985,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image2);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image2.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos2 + " - " + quiz.Image2.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -997,7 +997,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image3);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image3.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos3 + " - " + quiz.Image3.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1009,7 +1009,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image4);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image4.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos4 + " - " + quiz.Image4.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1021,7 +1021,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image5);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image5.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos5 + " - " + quiz.Image5.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1033,7 +1033,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image6);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image6.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos6 + " - " + quiz.Image6.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1045,7 +1045,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image7);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image7.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos7 + " - " + quiz.Image7.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1057,7 +1057,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image8);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image8.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos8 + " - " + quiz.Image8.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
@@ -1069,7 +1069,7 @@ namespace CRESME.Controllers
                     {
                         path = Path.Combine(this._environment.WebRootPath + quiz.Image9);
                         fileInfo = new FileInfo(path);
-                        entry = zip.CreateEntry(quiz.Image9.Substring(52));
+                        entry = zip.CreateEntry("Position " + quiz.ImagePos9 + " - " + quiz.Image9.Substring(52));
 
                         using (fileStream = fileInfo.OpenRead())
                         using (entryStream = entry.Open())
