@@ -193,7 +193,11 @@
             for (let i = 0; i < length; i++) {
 
                 if (links[i].innerHTML == "@ViewData["Title"]")
+                {
                     links[i].classList.add("active");
+                    links[i].removeAttribute("href");
+                }
+                    
 
                 
             }

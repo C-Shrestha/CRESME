@@ -14,7 +14,7 @@
     {
         <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
             <div class="toast-header">
-                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="UCF Logo">
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -29,7 +29,7 @@
     {
         <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
             <div class="toast-header">
-                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="UCF Logo">
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -288,8 +288,8 @@
 
 
                     <td class="table-secondary">
-                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post" onclick="return confirm('Are you sure you want to DELETE this quiz?')">
-                                <button type="submit" class="btn btn-sm btn-danger">
+                        <form asp-controller="Admin" asp-action="DeleteQuiz" asp-route-QuizId="@item.QuizId" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to DELETE this quiz?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                     Delete
                                 </button>

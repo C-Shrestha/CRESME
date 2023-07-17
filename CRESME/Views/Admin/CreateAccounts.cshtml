@@ -8,7 +8,7 @@
     {
         <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
             <div class="toast-header">
-                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="UCF Logo">
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -23,7 +23,7 @@
     {
         <div class="toast  " role="alert" aria-live="assertive" style="position: fixed" aria-atomic="true">
             <div class="toast-header">
-                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2">
+                <img src="../images/canvas3.png" width="30" height="30" class="rounded me-2" alt="UCF Logo">
                 <strong class="me-auto">CRESME</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -65,6 +65,7 @@
 
                 <input  type="file" name="file" id="file" accept=".xlsx" style="display: none;" required />
                 <label class="col-4 row justify-content-center border" id="excelLabel" for="file" style="border-color: black !important;">
+                        <div style="display: none;">Empty Div</div>
                         <i class="col-md-auto fa-sharp fa-solid fa-upload"></i>
                 </label>
 
@@ -146,6 +147,7 @@
                 img.setAttribute("width", '30');
                 img.setAttribute("height", '30');
                 img.setAttribute("class", 'rounded mr-2');
+                img.setAttribute("alt", 'UCF Logo');
 
                 var strong = document.createElement("strong");
                 strong.innerHTML = "CRESME";
