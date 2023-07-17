@@ -840,6 +840,18 @@ namespace CRESME.Controllers
                 // Set the row values
                 for (int i = 0; i < userList.Count; i++)
                 {
+                    if (i==0) {
+                        worksheet.Cell(1, 27).Value = userList[i].Image0Name + " clicks";
+                        worksheet.Cell(1, 28).Value = userList[i].Image1Name + " clicks";
+                        worksheet.Cell(1, 29).Value = userList[i].Image2Name + " clicks";
+                        worksheet.Cell(1, 30).Value = userList[i].Image3Name + " clicks";
+                        worksheet.Cell(1, 31).Value = userList[i].Image4Name + " clicks";
+                        worksheet.Cell(1, 32).Value = userList[i].Image5Name + " clicks";
+                        worksheet.Cell(1, 33).Value = userList[i].Image6Name + " clicks";
+                        worksheet.Cell(1, 34).Value = userList[i].Image7Name + " clicks";
+                        worksheet.Cell(1, 35).Value = userList[i].Image8Name + " clicks";
+                        worksheet.Cell(1, 36).Value = userList[i].Image9Name + " clicks";
+                    }
                     worksheet.Cell(i + 2, 1).Value = userList[i].AttemptId;
                     worksheet.Cell(i + 2, 2).Value = userList[i].StudentNID;
                     worksheet.Cell(i + 2, 3).Value = userList[i].StudentName;
