@@ -29,7 +29,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddControllersWithViews();
 
 
-//SwaggerHub Integration
+// SwaggerHub Integration
 // Searches for endpoints by headers in the code and generates them in Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
