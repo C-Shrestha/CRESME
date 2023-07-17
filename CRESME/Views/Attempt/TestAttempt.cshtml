@@ -143,9 +143,11 @@
             @Model.QuizName
         </h1>
 
+        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
+            Student Name: <span class="s1">  @Model.StudentName  </span>
+        </h2>
 
-
-        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        
         <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
             Directions:
             <span class="s1">
@@ -153,13 +155,13 @@
                 to the assignment in Webcourses.
             </span>
         </h2>
-        <p style="text-indent: 0pt; text-align: left"><br /></p>
-
+       
+        @*
         <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
             Date: <span class="s1">  @DateTime.Now  </span>
         </h2>
-
-        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        *@
+      
         <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
             Start Time: <span class="s1">  @Model.StartTime </span>
             &nbsp;
@@ -168,7 +170,7 @@
             <span class="s1">  @Model.EndTime  </span>
         </h2>
 
-        <br />
+        
         @*<p style="text-indent: 0pt; text-align: left"><br /></p>*@
         @*<h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
         Student&#39;s Name:
@@ -182,9 +184,7 @@
         @Model.StudentName
         </p>*@
 
-        <h2 style="padding-left: 6pt; text-indent: 0pt; text-align: left">
-            Student Name: <span class="s1">  @Model.StudentName  </span>
-        </h2>
+      
 
 
         @*<p style="text-indent: 0pt; text-align: left"><br /></p>
@@ -307,8 +307,10 @@
         </p>
 
 
-
-
+        
+        <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+            Images Viewed
+        </h2>
 
 
         @if (@Model.Image0Name != null)
@@ -361,7 +363,10 @@
             <p>@Model.Image9Name: @Model.NumImage9Clicks clicks</p>
         }
 
-        <p style="text-indent: 0pt; text-align: left"><br /></p>
+       
+
+
+
         <h2 style="padding-left: 5pt; text-indent: 0pt; text-align: left">
             Lab Values Viewed
         </h2>

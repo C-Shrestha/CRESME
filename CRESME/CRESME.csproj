@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="Views\Quiz\" />
     <Folder Include="wwwroot\DataTable\" />
+    <Folder Include="wwwroot\uploadedImages\" />
   </ItemGroup>
 
   <ItemGroup>
